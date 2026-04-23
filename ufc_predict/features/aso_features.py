@@ -238,13 +238,20 @@ def _apply_shrinkage(
 
 def _compute_wc_means(weight_class: str, session: Session) -> dict[str, float]:
     """Compute weight-class mean stats from all fighters' career averages."""
-    # Simplified: return global means — a full per-WC impl would be a heavier query
     sql = text("""
         SELECT
             SUM(s.sig_strikes_landed) * 1.0 / NULLIF(SUM(f.time_ended_sec)/60.0, 0) AS slpm,
-            SUM(s.takedowns_landed) * 1.0 / NULLIF(SUM(f.time_ended_sec)/60.0, 0) AS td_pm,
+            SUM(s.sig_strikes_attempted) * 1.0 / NULLIF(SUM(f.time_ended_sec)/60.0, 0) AS sapm,
+            AVG(CASE WHEN f.winner_fighter_id = s.fighter_id THEN 1.0 ELSE 0.0 END) AS win_rate,
+            AVG(CASE WHEN f.method IN ('KO','TKO','SUB') THEN 1.0 ELSE 0.0 END) AS finish_rate,
             AVG(CASE WHEN f.method IN ('KO','TKO') THEN 1.0 ELSE 0.0 END) AS ko_rate,
-            AVG(CASE WHEN f.method = 'SUB' THEN 1.0 ELSE 0.0 END) AS sub_rate
+            AVG(CASE WHEN f.method = 'SUB'
+                      AND f.winner_fighter_id = s.fighter_id THEN 1.0 ELSE 0.0 END) AS sub_rate,
+            SUM(s.sig_strikes_landed) * 1.0 / NULLIF(SUM(s.sig_strikes_attempted), 0) AS sig_acc,
+            SUM(s.takedowns_landed) * 1.0 / NULLIF(SUM(f.time_ended_sec)/60.0, 0) AS td_per_min,
+            SUM(s.takedowns_landed) * 1.0 / NULLIF(SUM(s.takedowns_attempted), 0) AS td_acc,
+            SUM(s.submission_attempts) * 1.0 / NULLIF(SUM(f.time_ended_sec)/60.0, 0) AS sub_per_min,
+            SUM(s.control_time_sec) * 1.0 / NULLIF(SUM(f.time_ended_sec), 0) AS ctrl_ratio
         FROM fights f
         JOIN fight_stats_round s ON s.fight_id = f.fight_id AND s.round = 0
         WHERE f.weight_class = :wc AND f.method IS NOT NULL
@@ -253,10 +260,17 @@ def _compute_wc_means(weight_class: str, session: Session) -> dict[str, float]:
     if row is None:
         return {}
     return {
-        "slpm": row[0] or 0.0,
-        "td_per_min": row[1] or 0.0,
-        "ko_rate": row[2] or 0.0,
-        "sub_rate": row[3] or 0.0,
+        "slpm":        row[0] or 0.0,
+        "sapm":        row[1] or 0.0,
+        "win_rate":    row[2] or 0.0,
+        "finish_rate": row[3] or 0.0,
+        "ko_rate":     row[4] or 0.0,
+        "sub_rate":    row[5] or 0.0,
+        "sig_acc":     row[6] or 0.0,
+        "td_per_min":  row[7] or 0.0,
+        "td_acc":      row[8] or 0.0,
+        "sub_per_min": row[9] or 0.0,
+        "ctrl_ratio":  row[10] or 0.0,
     }
 
 
@@ -379,39 +393,54 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
     return df
 
 
-def build_symmetric_rows(session: Session, since_year: int = 2001) -> pd.DataFrame:
+def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
     """
-    Returns DOUBLED feature matrix (each fight appears twice with A/B swapped
-    and label flipped). Used for training only — not inference.
-    Swapped pairs share the same fight_id so they stay in the same CV fold.
+    Double a feature DataFrame by swapping A/B and flipping labels.
+    Call this AFTER attach_ratings() so rating columns are included in the swap.
     """
-    base = build_fight_feature_rows(session, since_year)
-
     if base.empty or "label" not in base.columns:
-        log.warning("build_symmetric_rows: no fights found — returning empty DataFrame")
         return base
 
     diff_cols = [c for c in base.columns if c.startswith("diff_")]
-    swap_cols = {
-        "fighter_a_id": "fighter_b_id",
-        "a_n_fights": "b_n_fights",
-        "a_short_notice": "b_short_notice",
-        "a_missed_weight": "b_missed_weight",
-        "a_days_since_last": "b_days_since_last",
-        "a_age": "b_age",
-    }
-    swap_cols.update({v: k for k, v in swap_cols.items()})
+
+    # Explicit swap pairs — add rating columns when present
+    _swap_pairs = [
+        ("fighter_a_id",    "fighter_b_id"),
+        ("a_n_fights",      "b_n_fights"),
+        ("a_short_notice",  "b_short_notice"),
+        ("a_missed_weight", "b_missed_weight"),
+        ("a_days_since_last", "b_days_since_last"),
+        ("a_age",           "b_age"),
+        ("elo_a",           "elo_b"),
+        ("glicko_a",        "glicko_b"),
+        ("glicko_rd_a",     "glicko_rd_b"),
+    ]
+    swap_pairs = [(a, b) for a, b in _swap_pairs if a in base.columns and b in base.columns]
 
     mirrored = base.copy()
     mirrored["label"] = 1 - mirrored["label"]
     for col in diff_cols:
         mirrored[col] = -mirrored[col]
-    for a_col, b_col in list(swap_cols.items())[:len(swap_cols)//2]:
+    for a_col, b_col in swap_pairs:
         mirrored[a_col], mirrored[b_col] = base[b_col].copy(), base[a_col].copy()
 
     result = pd.concat([base, mirrored], ignore_index=True)
     result = result.sort_values("date").reset_index(drop=True)
     return result
+
+
+def build_symmetric_rows(session: Session, since_year: int = 2001) -> pd.DataFrame:
+    """
+    Returns base feature rows (without ratings).
+    NOTE: build_matrix.py calls build_fight_feature_rows → attach_ratings → symmetrize_rows
+    instead of this function, so that ratings are computed on N rows not 2N rows.
+    This function is kept for any callers that don't need ratings columns.
+    """
+    base = build_fight_feature_rows(session, since_year)
+    if base.empty or "label" not in base.columns:
+        log.warning("build_symmetric_rows: no fights found — returning empty DataFrame")
+        return base
+    return symmetrize_rows(base)
 
 
 def _fighter_age(fighter_id: str, fight_date: date, session: Session) -> float | None:

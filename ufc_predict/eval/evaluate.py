@@ -192,11 +192,12 @@ def kelly_roi_simulation(
         else:
             bet_side = "B"
             our_prob = 1 - prob_a
-            dec_odds_b = american_to_decimal(-odds_a)  # approximate B odds
+            # Approximate B odds from A's implied probability (no vig removal)
+            dec_odds_b = dec_odds_a / (dec_odds_a - 1) if dec_odds_a > 1.0 else 2.0
             dec_odds = dec_odds_b
             outcome = 1 - int(won)
 
-        frac = kelly_fraction_fn(our_prob, dec_odds, kelly_fraction)
+        frac = kelly_fraction(our_prob, dec_odds, kelly_fraction)
         bet_amount = bankroll * frac
 
         pnl = bet_amount * (dec_odds - 1) if outcome == 1 else -bet_amount
@@ -223,13 +224,6 @@ def kelly_roi_simulation(
             len(df), bankroll, total_roi * 100,
         )
     return df
-
-
-def kelly_fraction_fn(prob_win: float, decimal_odds: float, fraction: float = KELLY_FRACTION) -> float:
-    b = decimal_odds - 1.0
-    q = 1 - prob_win
-    kelly = (b * prob_win - q) / b
-    return max(0.0, kelly * fraction)
 
 
 # ---------------------------------------------------------------------------

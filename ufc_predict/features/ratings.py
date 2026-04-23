@@ -127,7 +127,8 @@ def _g(phi: float) -> float:
 
 
 def _E(mu: float, mu_j: float, phi_j: float) -> float:
-    return 1.0 / (1 + math.exp(-_g(phi_j) * (mu - mu_j)))
+    arg = max(-500.0, min(500.0, -_g(phi_j) * (mu - mu_j)))
+    return 1.0 / (1 + math.exp(arg))
 
 
 def _update_glicko2(
@@ -148,12 +149,12 @@ def _update_glicko2(
         return GlickoState(mu=player.mu, phi=phi_star, sigma=player.sigma,
                            n_fights=player.n_fights, last_fight_date=player.last_fight_date)
 
-    # Step 3: compute v
+    # Step 3: compute v (cap to prevent overflow in downstream squaring)
     v_inv = sum(
         _g(opp.phi)**2 * _E(player.mu, opp.mu, opp.phi) * (1 - _E(player.mu, opp.mu, opp.phi))
         for opp, _ in opponents
     )
-    v = 1.0 / v_inv if v_inv > 0 else 1e6
+    v = min(1.0 / v_inv if v_inv > 1e-10 else 1e10, 1e10)
 
     # Step 4: delta
     delta = v * sum(
@@ -166,7 +167,7 @@ def _update_glicko2(
     eps = 1e-6
 
     def f(x: float) -> float:
-        ex = math.exp(x)
+        ex = math.exp(min(x, 350.0))
         d2 = delta**2
         phi2 = phi_star**2
         return (
@@ -198,7 +199,8 @@ def _update_glicko2(
     new_sigma = math.exp(A / 2)
 
     # Step 6–7: new phi, mu
-    phi_star2 = math.sqrt(phi_star**2 + new_sigma**2)
+    # Step 6 uses player.phi (original pre-period RD), not phi_star (inactivity-inflated)
+    phi_star2 = math.sqrt(player.phi**2 + new_sigma**2)
     new_phi = 1.0 / math.sqrt(1.0 / phi_star2**2 + 1.0 / v)
     new_mu = player.mu + new_phi**2 * sum(
         _g(opp.phi) * (score - _E(player.mu, opp.mu, opp.phi))

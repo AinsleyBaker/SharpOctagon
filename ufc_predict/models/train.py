@@ -204,6 +204,7 @@ def train_bootstrap_ensemble(df: pd.DataFrame, n: int = N_BOOTSTRAP) -> list[tup
     ensemble = []
     rng = np.random.default_rng(seed=0)
 
+    all_indices = np.arange(len(df))
     cal_cutoff = pd.Timestamp(date.today()) - pd.DateOffset(years=2)
     cal_mask = pd.to_datetime(df["date"]) >= cal_cutoff
 
@@ -216,7 +217,15 @@ def train_bootstrap_ensemble(df: pd.DataFrame, n: int = N_BOOTSTRAP) -> list[tup
         model = lgb.LGBMClassifier(**params)
         model.fit(X_bag, y_bag, callbacks=[lgb.log_evaluation(0)])
 
-        X_cal, y_cal = _X_y(df[cal_mask])
+        # Calibrate on out-of-bag samples (unseen by this bag's model).
+        # Fall back to global recent data if OOB set is too small.
+        oob_mask = np.ones(len(df), dtype=bool)
+        oob_mask[np.unique(idx)] = False
+        oob_df = df.iloc[oob_mask]
+        if len(oob_df) >= 50:
+            X_cal, y_cal = _X_y(oob_df)
+        else:
+            X_cal, y_cal = _X_y(df[cal_mask])
         iso = fit_isotonic_calibration(model, X_cal, y_cal)
 
         ensemble.append((model, iso))

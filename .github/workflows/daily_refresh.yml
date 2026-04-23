@@ -1,0 +1,55 @@
+name: Daily Data Refresh + Predictions
+
+on:
+  schedule:
+    # Runs 06:00 UTC daily. Fight week (Fri-Sat) also at 12:00 and 18:00 UTC.
+    - cron: "0 6 * * *"
+    - cron: "0 12 * * 5,6"   # Friday + Saturday extra polls (fight week)
+    - cron: "0 18 * * 5,6"
+  workflow_dispatch:           # allow manual trigger
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write          # needed to commit updated site/ and data/
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Pull Greco1899 CSVs
+        run: python -m ufc_predict.ingest.pull_greco
+
+      - name: Initialise / migrate DB
+        run: python -c "from ufc_predict.db.session import init_db; init_db()"
+
+      - name: Load CSVs into DB
+        run: python -m ufc_predict.ingest.greco_loader data/raw/greco1899
+
+      - name: Poll upcoming cards (UFC.com + ESPN)
+        run: python -m ufc_predict.ingest.upcoming_poller
+
+      - name: Fetch closing odds (eval + Kelly sizing)
+        run: python -m ufc_predict.ingest.odds_scraper
+
+      - name: Run predictions
+        run: python -m ufc_predict.models.predict
+
+      - name: Build dashboard
+        run: python -m ufc_predict.serve.build_dashboard
+
+      - name: Commit updated predictions + dashboard
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/predictions.json site/
+          git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
+          git push

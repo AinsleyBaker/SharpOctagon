@@ -1,0 +1,55 @@
+name: Weekly Model Retrain
+
+on:
+  schedule:
+    # Every Monday at 08:00 UTC — after weekend events have been ingested
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Pull latest CSVs
+        run: python -m ufc_predict.ingest.pull_greco
+
+      - name: Init DB and load data
+        run: |
+          python -c "from ufc_predict.db.session import init_db; init_db()"
+          python -m ufc_predict.ingest.greco_loader data/raw/greco1899
+
+      - name: Build feature matrix
+        run: python -m ufc_predict.features.build_matrix
+
+      - name: Train model
+        run: python -m ufc_predict.models.train_runner
+
+      - name: Calibrate conformal intervals
+        run: python -m ufc_predict.models.calibrate_conformal
+
+      - name: Run predictions on upcoming card
+        run: python -m ufc_predict.models.predict
+
+      - name: Build dashboard
+        run: python -m ufc_predict.serve.build_dashboard
+
+      - name: Commit artifacts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models/ data/predictions.json site/
+          git diff --cached --quiet || git commit -m "chore: weekly retrain $(date -u +%Y-%m-%dT%H:%M)"
+          git push

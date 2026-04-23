@@ -1,0 +1,14 @@
+# Normalise all text files to LF in the repo, checkout as-is on Windows
+* text=auto eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.html text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+
+# Binaries
+*.pkl binary
+*.parquet binary
+*.db binary

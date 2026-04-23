@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UFC Fight Predictions</title>
+<style>
+  :root {
+    --red:    #e63946;
+    --blue:   #457b9d;
+    --dark:   #1d1d1d;
+    --mid:    #2b2b2b;
+    --light:  #f1faee;
+    --muted:  #a8a8b3;
+    --gold:   #f4a261;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--dark); color: var(--light); font-family: system-ui, sans-serif; }
+
+  header {
+    background: var(--mid);
+    padding: 1.2rem 2rem;
+    border-bottom: 2px solid var(--red);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  header h1 { font-size: 1.4rem; letter-spacing: 0.05em; }
+  header .meta { font-size: 0.75rem; color: var(--muted); }
+
+  main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+
+  .event-card {
+    background: var(--mid);
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .event-header {
+    background: #333;
+    padding: 0.75rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .event-header h2 { font-size: 1rem; }
+  .event-header .date { font-size: 0.8rem; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { background: #222; color: var(--muted); text-transform: uppercase;
+       font-size: 0.7rem; letter-spacing: 0.08em; padding: 0.5rem 1rem; text-align: left; }
+  td { padding: 0.75rem 1rem; border-bottom: 1px solid #333; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .fighter-cell { font-weight: 600; }
+  .vs { color: var(--muted); font-size: 0.75rem; padding: 0 0.3rem; }
+
+  .bar-wrap { display: flex; align-items: center; gap: 0.5rem; min-width: 180px; }
+  .bar { height: 8px; border-radius: 4px; }
+  .bar-a { background: var(--red); }
+  .bar-b { background: var(--blue); }
+  .prob-label { font-size: 0.85rem; font-weight: 700; }
+
+  .fav-a .fighter-a { color: var(--red); }
+  .fav-b .fighter-b { color: var(--blue); }
+  .fav-toss .fighter-a, .fav-toss .fighter-b { color: var(--gold); }
+
+  .ci { font-size: 0.75rem; color: var(--muted); }
+  .kelly { font-size: 0.8rem; color: var(--gold); }
+  .badge-title {
+    background: var(--gold); color: #000;
+    font-size: 0.65rem; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
+  }
+
+  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.75rem; }
+  .disclaimer {
+    background: #2a2a1a; border: 1px solid #5a5a2a; border-radius: var(--radius);
+    padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #b8b870;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>UFC Fight Predictions</h1>
+  <span class="meta">Generated {{ generated_at }} · {{ n_bouts }} bouts</span>
+</header>
+
+<main>
+
+  <div class="disclaimer">
+    <strong>Research use only.</strong>
+    Probabilities are model estimates, not guarantees. Kelly fractions are shown for analytical
+    purposes — always size bets according to your own risk tolerance and bankroll management rules.
+    Never bet more than you can afford to lose.
+  </div>
+
+  {% if not events %}
+    <p style="color:var(--muted);text-align:center;padding:3rem;">
+      No upcoming predictions yet. Run <code>ufc-predict</code> to generate.
+    </p>
+  {% endif %}
+
+  {% for event in events %}
+  <div class="event-card">
+    <div class="event-header">
+      <h2>{{ event.event_name }}</h2>
+      <span class="date">{{ event.event_date }}</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Matchup</th>
+          <th>Weight</th>
+          <th>Win Probability</th>
+          <th>90% CI</th>
+          <th>Uncertainty</th>
+          <th>Kelly</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for bout in event.bouts %}
+        <tr class="fav-{{ bout.favourite }}">
+          <td class="fighter-cell">
+            {% if bout.is_title_bout %}<span class="badge-title">Title</span> {% endif %}
+            <span class="fighter-a">{{ bout.fighter_a_name }}</span>
+            <span class="vs">vs</span>
+            <span class="fighter-b">{{ bout.fighter_b_name }}</span>
+          </td>
+          <td>{{ bout.weight_class or '—' }}</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar bar-a" style="width:{{ (bout.prob_a_wins or 0.5) * 100 | int }}px"></div>
+              <span class="prob-label">{{ bout.prob_a_pct }}</span>
+              <span style="color:var(--muted);font-size:0.75rem">·</span>
+              <span class="prob-label" style="color:var(--blue)">{{ bout.prob_b_pct }}</span>
+            </div>
+          </td>
+          <td><span class="ci">{{ bout.ci_display or '—' }}</span></td>
+          <td><span class="ci">± {{ bout.std_pct }}</span></td>
+          <td><span class="kelly">{{ bout.kelly_display }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+
+</main>
+
+<footer>
+  Model: LightGBM + isotonic calibration + bootstrap conformal intervals ·
+  Data: UFCStats.com · Closing odds for evaluation only
+</footer>
+
+</body>
+</html>

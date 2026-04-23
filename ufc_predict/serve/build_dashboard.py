@@ -1,8 +1,8 @@
 """
 Stage 12 — Static HTML dashboard generator.
 
-Reads data/predictions.json and renders a fight-card dashboard to site/index.html.
-Designed to be committed to GitHub Pages or served from any static host.
+Reads data/predictions.json and renders a fight-card dashboard to docs/index.html.
+Designed to be committed to GitHub Pages (branch deploy from /docs) or any static host.
 Regenerated after every prediction run.
 """
 
@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 PREDICTIONS_PATH = Path("data/predictions.json")
 TEMPLATES_DIR    = Path(__file__).parent / "templates"
-OUTPUT_DIR       = Path("site")
+OUTPUT_DIR       = Path("docs")
 
 
 def load_predictions() -> list[dict]:

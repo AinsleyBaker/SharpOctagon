@@ -21,6 +21,12 @@ def run(db_url: str | None = None, since_year: int = 2001) -> None:
         log.info("Building feature matrix (since %d)…", since_year)
         df = build_symmetric_rows(session, since_year=since_year)
 
+    if df.empty:
+        raise RuntimeError(
+            "Feature matrix is empty — no fights were loaded from the DB. "
+            "Check that greco_loader ran successfully and the DB has fight rows."
+        )
+
     df = attach_ratings(df)
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -387,6 +387,10 @@ def build_symmetric_rows(session: Session, since_year: int = 2001) -> pd.DataFra
     """
     base = build_fight_feature_rows(session, since_year)
 
+    if base.empty or "label" not in base.columns:
+        log.warning("build_symmetric_rows: no fights found — returning empty DataFrame")
+        return base
+
     diff_cols = [c for c in base.columns if c.startswith("diff_")]
     swap_cols = {
         "fighter_a_id": "fighter_b_id",

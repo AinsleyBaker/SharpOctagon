@@ -149,6 +149,9 @@ def kelly_fraction(prob_win: float, decimal_odds: float, fraction: float = KELLY
     return max(0.0, kelly * fraction)
 
 
+kelly_fraction_fn = kelly_fraction  # alias kept for existing imports
+
+
 def american_to_decimal(american: float) -> float:
     if american >= 0:
         return american / 100.0 + 1.0

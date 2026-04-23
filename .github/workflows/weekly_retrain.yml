@@ -40,6 +40,13 @@ jobs:
       - name: Calibrate conformal intervals
         run: python -m ufc_predict.models.calibrate_conformal
 
+      - name: Fetch closing odds
+        continue-on-error: true
+        run: python -m ufc_predict.ingest.odds_scraper
+
+      - name: Poll upcoming cards
+        run: python -m ufc_predict.ingest.upcoming_poller
+
       - name: Run predictions on upcoming card
         run: python -m ufc_predict.models.predict
 
@@ -50,6 +57,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add models/ data/predictions.json docs/
+          git add models/ docs/
+          [ -f data/predictions.json ] && git add data/predictions.json || true
           git diff --cached --quiet || git commit -m "chore: weekly retrain $(date -u +%Y-%m-%dT%H:%M)"
           git push

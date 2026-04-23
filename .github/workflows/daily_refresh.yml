@@ -12,7 +12,7 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     permissions:
-      contents: write          # needed to commit updated docs/ and data/
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
       - name: Pull Greco1899 CSVs
         run: python -m ufc_predict.ingest.pull_greco
 
-      - name: Initialise / migrate DB
+      - name: Initialise DB
         run: python -c "from ufc_predict.db.session import init_db; init_db()"
 
       - name: Load CSVs into DB
@@ -38,9 +38,13 @@ jobs:
         run: python -m ufc_predict.ingest.upcoming_poller
 
       - name: Fetch closing odds (eval + Kelly sizing)
+        # Allowed to fail — site may be unavailable or no upcoming odds yet
+        continue-on-error: true
         run: python -m ufc_predict.ingest.odds_scraper
 
       - name: Run predictions
+        # Allowed to fail on first run before model is trained
+        continue-on-error: true
         run: python -m ufc_predict.models.predict
 
       - name: Build dashboard
@@ -50,6 +54,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/predictions.json docs/
+          git add docs/
+          # Only add predictions.json if it exists
+          [ -f data/predictions.json ] && git add data/predictions.json || true
           git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
           git push

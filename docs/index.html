@@ -3,21 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UFC Fight Predictions</title>
+<title>SharpOctagon — UFC Predictions</title>
 <style>
   :root {
     --red:    #e63946;
     --blue:   #457b9d;
     --dark:   #1d1d1d;
     --mid:    #2b2b2b;
+    --card:   #252525;
     --light:  #f1faee;
     --muted:  #a8a8b3;
     --gold:   #f4a261;
+    --green:  #2dc653;
     --radius: 8px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--dark); color: var(--light); font-family: system-ui, sans-serif; }
 
+  /* ---- Header ---- */
   header {
     background: var(--mid);
     padding: 1.2rem 2rem;
@@ -27,13 +30,37 @@
   header h1 { font-size: 1.4rem; letter-spacing: 0.05em; }
   header .meta { font-size: 0.75rem; color: var(--muted); }
 
-  main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
-
-  .event-card {
+  /* ---- Nav tabs ---- */
+  nav {
     background: var(--mid);
+    border-bottom: 1px solid #333;
+    display: flex; gap: 0;
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 10;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none;
+    padding: 0.7rem 1.2rem; font-size: 0.85rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s;
+  }
+  nav a:hover, nav a.active { color: var(--light); border-bottom-color: var(--red); }
+
+  main { max-width: 1080px; margin: 2rem auto; padding: 0 1rem; }
+
+  /* ---- Disclaimer ---- */
+  .disclaimer {
+    background: #2a2a1a; border: 1px solid #5a5a2a; border-radius: var(--radius);
+    padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #b8b870;
+  }
+
+  /* ---- Event card ---- */
+  .event-card {
+    background: var(--card);
     border-radius: var(--radius);
     margin-bottom: 2rem;
     overflow: hidden;
+    border: 1px solid #333;
   }
   .event-header {
     background: #333;
@@ -43,362 +70,819 @@
   .event-header h2 { font-size: 1rem; }
   .event-header .date { font-size: 0.8rem; color: var(--muted); }
 
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  th { background: #222; color: var(--muted); text-transform: uppercase;
-       font-size: 0.7rem; letter-spacing: 0.08em; padding: 0.5rem 1rem; text-align: left; }
-  td { padding: 0.75rem 1rem; border-bottom: 1px solid #333; vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.03); }
+  /* ---- Fight row ---- */
+  .fight-block { border-bottom: 1px solid #333; }
+  .fight-block:last-child { border-bottom: none; }
 
-  .fighter-cell { font-weight: 600; }
-  .vs { color: var(--muted); font-size: 0.75rem; padding: 0 0.3rem; }
+  /* Main win-prob row */
+  .fight-main {
+    display: grid;
+    grid-template-columns: 2.5fr 0.9fr 1.6fr 1fr 0.85fr 0.85fr;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+  .fight-main:hover { background: rgba(255,255,255,0.03); }
 
-  .bar-wrap { display: flex; align-items: center; gap: 0.5rem; min-width: 180px; }
-  .bar { height: 8px; border-radius: 4px; }
+  .fighter-cell { font-weight: 600; font-size: 0.92rem; }
+  .vs { color: var(--muted); font-size: 0.75rem; margin: 0 0.3rem; }
+
+  .bar-wrap { display: flex; align-items: center; gap: 0.4rem; }
+  .bar { height: 7px; border-radius: 4px; flex-shrink: 0; }
   .bar-a { background: var(--red); }
   .bar-b { background: var(--blue); }
-  .prob-label { font-size: 0.85rem; font-weight: 700; }
+  .prob-label { font-size: 0.84rem; font-weight: 700; }
 
   .fav-a .fighter-a { color: var(--red); }
   .fav-b .fighter-b { color: var(--blue); }
-  .fav-toss .fighter-a, .fav-toss .fighter-b { color: var(--gold); }
+  .fav-toss-up .fighter-a, .fav-toss-up .fighter-b { color: var(--gold); }
 
-  .ci { font-size: 0.75rem; color: var(--muted); }
-  .kelly { font-size: 0.8rem; color: var(--gold); }
+  .ci-label   { font-size: 0.72rem; color: var(--muted); }
+  .kelly-label { font-size: 0.78rem; color: var(--gold); }
   .badge-title {
     background: var(--gold); color: #000;
-    font-size: 0.65rem; font-weight: 700;
-    padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
+    font-size: 0.62rem; font-weight: 700;
+    padding: 2px 5px; border-radius: 3px; text-transform: uppercase; margin-right: 4px;
+  }
+  .badge-sb {
+    font-size: 0.7rem; color: var(--muted);
+    border: 1px solid #555; padding: 1px 5px; border-radius: 3px;
+    margin-left: 4px; white-space: nowrap;
+  }
+  .expand-icon { color: var(--muted); font-size: 0.7rem; user-select: none; }
+
+  /* ---- Expandable details ---- */
+  .fight-details { display: none; padding: 0 1.25rem 1.25rem; }
+  .fight-details.open { display: block; }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+  @media (max-width: 700px) {
+    .details-grid { grid-template-columns: 1fr; }
+    .fight-main { grid-template-columns: 1fr 1fr; }
   }
 
-  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.75rem; }
-  .disclaimer {
-    background: #2a2a1a; border: 1px solid #5a5a2a; border-radius: var(--radius);
-    padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #b8b870;
+  .detail-box {
+    background: #1e1e1e;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
   }
+  .detail-box h4 {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+
+  /* mini table inside detail box */
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .mini-table th {
+    color: var(--muted); font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 0.25rem 0.4rem; text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  .mini-table td { padding: 0.3rem 0.4rem; border-bottom: 1px solid #2a2a2a; }
+  .mini-table tr:last-child td { border-bottom: none; }
+
+  /* EV colouring */
+  .ev-pos  { color: var(--green); font-weight: 700; }
+  .ev-neg  { color: #777; }
+  .ev-zero { color: var(--muted); }
+  .value-badge {
+    background: var(--green); color: #000;
+    font-size: 0.6rem; font-weight: 700;
+    padding: 1px 4px; border-radius: 3px; text-transform: uppercase;
+    margin-left: 4px;
+  }
+
+  /* ---- Top bets panel ---- */
+  #fights-panel { display: block; }
+
+  .section-title {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.4rem;
+    border-bottom: 1px solid #333;
+  }
+
+  .top-bets-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .top-bets-table th {
+    background: #222; color: var(--muted); text-transform: uppercase;
+    font-size: 0.67rem; letter-spacing: 0.08em; padding: 0.5rem 0.75rem; text-align: left;
+  }
+  .top-bets-table td {
+    padding: 0.55rem 0.75rem; border-bottom: 1px solid #2a2a2a;
+  }
+  .top-bets-table tr:last-child td { border-bottom: none; }
+  .top-bets-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.72rem; }
+
+  /* ---- Round bar ---- */
+  .round-bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-top: 6px; }
+  .round-bar-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .round-bar-inner {
+    width: 100%; background: var(--blue); border-radius: 3px 3px 0 0;
+    transition: height 0.2s;
+  }
+  .round-bar-label { font-size: 0.6rem; color: var(--muted); margin-top: 2px; }
+
+  /* hidden class used by JS */
+  .hidden { display: none; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>UFC Fight Predictions</h1>
-  <span class="meta">Generated 2026-04-23 13:21 UTC · 13 bouts</span>
+  <h1>⬡ SharpOctagon</h1>
+  <span class="meta">Generated 2026-04-24 01:49 UTC · 13 bouts</span>
 </header>
+
+<nav>
+  <a href="#" id="tab-fights" class="active" onclick="showTab('fights',this);return false;">
+    Upcoming Fights
+  </a>
+  <a href="#" id="tab-bets" onclick="showTab('bets',this);return false;">
+    🔥 Top Value Bets
+  </a>
+</nav>
 
 <main>
 
   <div class="disclaimer">
     <strong>Research use only.</strong>
-    Probabilities are model estimates, not guarantees. Kelly fractions are shown for analytical
-    purposes — always size bets according to your own risk tolerance and bankroll management rules.
-    Never bet more than you can afford to lose.
+    Probabilities are model estimates, not guarantees. EV and Kelly are shown for analysis —
+    always size bets to your own risk tolerance. Never bet more than you can afford to lose.
+    Odds sourced from SportsBet Australia. Verify before placing any bet.
   </div>
 
-  
+  <!-- ===== Fights panel ===== -->
+  <div id="fights-panel">
 
-  
-  <div class="event-card">
-    <div class="event-header">
-      <h2>UFC Fight Night: Sterling vs. Zalal</h2>
-      <span class="date">2026-04-25</span>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Matchup</th>
-          <th>Weight</th>
-          <th>Win Probability</th>
-          <th>90% CI</th>
-          <th>Uncertainty</th>
-          <th>Kelly</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        <tr class="fav-a">
-          <td class="fighter-cell">
+    
+
+    
+    <div class="event-card">
+      <div class="event-header">
+        <h2>UFC Fight Night: Sterling vs. Zalal</h2>
+        <span class="date">2026-04-25</span>
+      </div>
+
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-a"
+             onclick="toggleDetails('1-0')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Julia Polastri</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Talita Alencar</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:54.598127640970304px"></div>
-              <span class="prob-label">54.6%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">45.4%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 7.8%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-a">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:54px"></div>
+            <span class="prob-label">54.6%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">45.4%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 7.8%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-1-0">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-1-0">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-a"
+             onclick="toggleDetails('2-1')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Max Griffin</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Victor Valenzuela</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:62.153948732503736px"></div>
-              <span class="prob-label">62.2%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">37.8%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 8.1%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:62px"></div>
+            <span class="prob-label">62.2%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">37.8%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 8.1%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-2-1">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-2-1">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('3-2')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Lucas Brennan</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Francis Marshall</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:48.23803899692926px"></div>
-              <span class="prob-label">48.2%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">51.8%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 7.7%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-b">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:48px"></div>
+            <span class="prob-label">48.2%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">51.8%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 7.7%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-3-2">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-3-2">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-b"
+             onclick="toggleDetails('4-3')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Jafel Filho</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Cody Durden</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:33.13323645310456px"></div>
-              <span class="prob-label">33.1%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">66.9%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 8.1%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:33px"></div>
+            <span class="prob-label">33.1%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">66.9%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 8.1%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-4-3">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-4-3">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('5-4')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Mayra Bueno Silva</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Michelle Montague</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:50.38876771327393px"></div>
-              <span class="prob-label">50.4%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">49.6%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 9.8%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:50px"></div>
+            <span class="prob-label">50.4%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">49.6%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 9.8%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-5-4">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-5-4">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('6-5')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Sedriques Dumas</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Jackson McVey</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:52.80233906619563px"></div>
-              <span class="prob-label">52.8%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">47.2%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 6.7%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-b">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:52px"></div>
+            <span class="prob-label">52.8%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">47.2%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 6.7%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-6-5">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-6-5">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-b"
+             onclick="toggleDetails('7-6')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Eric McConico</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Rodolfo Vieira</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:44.22179677467034px"></div>
-              <span class="prob-label">44.2%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">55.8%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 6.7%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-a">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:44px"></div>
+            <span class="prob-label">44.2%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">55.8%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 6.7%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-7-6">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-7-6">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-a"
+             onclick="toggleDetails('8-7')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Ryan Spann</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Marcus Buchecha</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:54.878138020717124px"></div>
-              <span class="prob-label">54.9%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">45.1%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 4.9%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-a">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:54px"></div>
+            <span class="prob-label">54.9%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">45.1%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 4.9%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-8-7">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-8-7">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-a"
+             onclick="toggleDetails('9-8')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Raoni Barcelos</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Montel Jackson</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:59.79357300382135px"></div>
-              <span class="prob-label">59.8%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">40.2%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 8.6%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:59px"></div>
+            <span class="prob-label">59.8%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">40.2%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 8.6%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-9-8">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-9-8">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('10-9')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Davey Grant</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Adrian Luna Martinetti</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:48.34902056452457px"></div>
-              <span class="prob-label">48.3%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">51.7%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 8.8%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-b">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:48px"></div>
+            <span class="prob-label">48.3%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">51.7%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 8.8%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-10-9">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-10-9">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-b"
+             onclick="toggleDetails('11-10')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Alexander Hernandez</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Rafa Garcia</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:42.79592944060326px"></div>
-              <span class="prob-label">42.8%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">57.2%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 6.4%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:42px"></div>
+            <span class="prob-label">42.8%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">57.2%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 6.4%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-11-10">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-11-10">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('12-11')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Joselyne Edwards</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Norma Dumont</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:48.79134429335202px"></div>
-              <span class="prob-label">48.8%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">51.2%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 6.4%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-        <tr class="fav-toss-up">
-          <td class="fighter-cell">
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:48px"></div>
+            <span class="prob-label">48.8%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">51.2%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 6.4%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-12-11">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-12-11">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+      <div class="fight-block">
+
+        <!-- Win probability row -->
+        <div class="fight-main fav-toss-up"
+             onclick="toggleDetails('13-12')">
+
+          <div class="fighter-cell">
             
             <span class="fighter-a">Aljamain Sterling</span>
             <span class="vs">vs</span>
             <span class="fighter-b">Youssef Zalal</span>
-          </td>
-          <td>—</td>
-          <td>
-            <div class="bar-wrap">
-              <div class="bar bar-a" style="width:49.766534431758494px"></div>
-              <span class="prob-label">49.8%</span>
-              <span style="color:var(--muted);font-size:0.75rem">·</span>
-              <span class="prob-label" style="color:var(--blue)">50.2%</span>
-            </div>
-          </td>
-          <td><span class="ci">0–100%</span></td>
-          <td><span class="ci">± 9.0%</span></td>
-          <td><span class="kelly">—</span></td>
-        </tr>
-        
-      </tbody>
-    </table>
-  </div>
-  
+            
+          </div>
+
+          <div style="font-size:0.75rem;color:var(--muted)">—</div>
+
+          <div class="bar-wrap">
+            <div class="bar bar-a" style="width:49px"></div>
+            <span class="prob-label">49.8%</span>
+            <span style="color:var(--muted);font-size:0.72rem"> · </span>
+            <span class="prob-label" style="color:var(--blue)">50.2%</span>
+          </div>
+
+          <div><span class="ci-label">0–100%</span></div>
+
+          <div><span class="ci-label">± 9.0%</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="kelly-label">—</span>
+            
+            <span class="expand-icon" id="icon-13-12">▼</span>
+          </div>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="fight-details" id="details-13-12">
+          <div class="details-grid">
+
+            
+
+            
+
+          </div><!-- details-grid -->
+        </div><!-- fight-details -->
+
+      </div><!-- fight-block -->
+      
+
+    </div><!-- event-card -->
+    
+
+  </div><!-- fights-panel -->
+
+
+  <!-- ===== Top Value Bets panel ===== -->
+  <div id="top-bets" class="hidden">
+
+    
+    <p style="color:var(--muted);text-align:center;padding:3rem;">
+      No value bets identified yet — SportsBet odds may not be published for upcoming fights.
+    </p>
+    
+
+  </div><!-- top-bets -->
 
 </main>
 
 <footer>
-  Model: LightGBM + isotonic calibration + bootstrap conformal intervals ·
-  Data: UFCStats.com · Closing odds for evaluation only
+  SharpOctagon · LightGBM + isotonic calibration + bootstrap conformal intervals ·
+  Data: UFCStats via Greco1899 · Closing odds: SportsBet Australia (research only)
 </footer>
+
+<script>
+function toggleDetails(id) {
+  const d = document.getElementById('details-' + id);
+  const i = document.getElementById('icon-' + id);
+  if (!d) return;
+  const open = d.classList.toggle('open');
+  if (i) i.textContent = open ? '▲' : '▼';
+}
+
+function showTab(tab, el) {
+  document.getElementById('fights-panel').classList.toggle('hidden', tab !== 'fights');
+  document.getElementById('top-bets').classList.toggle('hidden', tab !== 'bets');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
 
 </body>
 </html>

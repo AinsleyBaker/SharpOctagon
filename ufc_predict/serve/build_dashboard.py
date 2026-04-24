@@ -190,14 +190,34 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["b_streak"] = _streak_display(
                 bout.get("b_win_streak"), bout.get("b_loss_streak")
             )
-            def _l3(v):
+
+            def _nan_pct(v, decimals=0):
                 if v is None or (isinstance(v, float) and v != v):
                     return "—"
-                return f"{float(v)*100:.0f}%"
-            bout["a_l3"] = _l3(bout.get("a_l3_win_rate"))
-            bout["b_l3"] = _l3(bout.get("b_l3_win_rate"))
+                return f"{float(v)*100:.{decimals}f}%"
+
+            def _nan_f(v, fmt=".1f"):
+                if v is None or (isinstance(v, float) and v != v):
+                    return "—"
+                return format(float(v), fmt)
+
+            bout["a_l3"] = _nan_pct(bout.get("a_l3_win_rate"))
+            bout["b_l3"] = _nan_pct(bout.get("b_l3_win_rate"))
             bout["a_n_fights"] = int(bout.get("a_n_fights") or 0)
             bout["b_n_fights"] = int(bout.get("b_n_fights") or 0)
+            # Fighter pace & finish stats for the betting context panel
+            bout["a_slpm"]        = _nan_f(bout.get("a_slpm"))
+            bout["b_slpm"]        = _nan_f(bout.get("b_slpm"))
+            bout["a_sapm"]        = _nan_f(bout.get("a_sapm"))
+            bout["b_sapm"]        = _nan_f(bout.get("b_sapm"))
+            bout["a_finish_rate"] = _nan_pct(bout.get("a_finish_rate"))
+            bout["b_finish_rate"] = _nan_pct(bout.get("b_finish_rate"))
+            bout["a_ko_rate"]     = _nan_pct(bout.get("a_ko_rate"))
+            bout["b_ko_rate"]     = _nan_pct(bout.get("b_ko_rate"))
+            bout["a_sub_rate"]    = _nan_pct(bout.get("a_sub_rate"))
+            bout["b_sub_rate"]    = _nan_pct(bout.get("b_sub_rate"))
+            bout["a_td_per_min"]  = _nan_f(bout.get("a_td_per_min"), ".2f")
+            bout["b_td_per_min"]  = _nan_f(bout.get("b_td_per_min"), ".2f")
 
             # Prop probabilities
             _enrich_props(bout)

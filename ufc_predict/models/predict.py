@@ -177,8 +177,9 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         row["a_l3_win_rate"] = a_feat.get("l3_win_rate")
         row["b_l3_win_rate"] = b_feat.get("l3_win_rate")
 
-        # Absolute finish rates (see aso_features.py — used by prop model)
-        for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min"):
+        # Absolute per-fighter rates (prop model features + dashboard display)
+        for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
+                  "slpm", "sapm", "sig_acc", "ctrl_ratio"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
 
@@ -250,6 +251,13 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     upcoming_df["has_edge"] = False
 
     # Format output
+    _abs_stat_cols = [
+        f"{side}_{stat}"
+        for side in ("a", "b")
+        for stat in ("ko_rate", "sub_rate", "finish_rate", "slpm", "sapm",
+                     "sig_acc", "td_per_min", "sub_per_min", "ctrl_ratio")
+        if f"{side}_{stat}" in upcoming_df.columns
+    ]
     output = upcoming_df[[
         "upcoming_bout_id", "event_date", "event_name",
         "fighter_a_name", "fighter_b_name", "weight_class",
@@ -257,6 +265,7 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         "a_n_fights", "b_n_fights",
         "a_win_streak", "b_win_streak", "a_loss_streak", "b_loss_streak",
         "a_l3_win_rate", "b_l3_win_rate",
+        *_abs_stat_cols,
         "prob_a_wins", "prob_b_wins", "uncertainty_std",
         *(c for c in upcoming_df.columns if c.startswith("ci_")),
         "kelly_fraction", "has_edge",

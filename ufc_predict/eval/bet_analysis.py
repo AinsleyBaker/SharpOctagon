@@ -123,16 +123,21 @@ def _fighter_side(selection_name: str, name_a: str, name_b: str) -> str | None:
 # Total rounds market parsing
 # ---------------------------------------------------------------------------
 
-def _parse_total_rounds_line(selection_name: str) -> tuple[str, float] | None:
+def _parse_total_rounds_line(
+    selection_name: str, is_five_round: bool = False
+) -> tuple[str, float] | None:
     """
-    Parse 'Over 2.5 Rounds' → ('over', 2.5), 'Under 2.5 Rounds' → ('under', 2.5).
-    Returns None if unrecognised.
+    Parse 'Over 2.5 Rounds' → ('over', 2.5).
+    Bare 'Over'/'Under' (SportsBet omits the line): infer from fight type.
+      3-round fights → 2.5  (over = fight reaches R3)
+      5-round fights → 2.5  (standard UFC title-fight line)
     """
     m = re.search(r"(over|under)\s+(\d+\.?\d*)", selection_name, re.IGNORECASE)
     if m:
-        direction = m.group(1).lower()
-        line = float(m.group(2))
-        return direction, line
+        return m.group(1).lower(), float(m.group(2))
+    lname = selection_name.lower().strip()
+    if lname in ("over", "under"):
+        return lname, 2.5
     return None
 
 
@@ -156,14 +161,7 @@ def _prob_over_under(prob_rounds: dict[str, float], direction: str, line: float)
 def analyze_fight_bets(prediction: dict) -> list[dict]:
     """
     Compute EV + Kelly for every available SportsBet market for one fight.
-
-    prediction must contain:
-      - fighter_a_name, fighter_b_name
-      - prob_a_wins, prob_b_wins
-      - props (from prop_models.predict_props)
-      - sportsbet_odds (from sportsbet_scraper.match_odds_to_predictions)
-
-    Returns list of bet dicts sorted by EV descending.
+    Returns list of bet dicts sorted by EV descending, value bets first.
     """
     sb = prediction.get("sportsbet_odds") or {}
     props = prediction.get("props") or {}
@@ -171,105 +169,167 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
     name_b = prediction.get("fighter_b_name") or "Fighter B"
     prob_a = float(prediction.get("prob_a_wins") or 0.5)
     prob_b = float(prediction.get("prob_b_wins") or (1 - prob_a))
+    is_five_round = bool(prediction.get("is_five_round"))
+
+    prob_rounds = props.get("prob_rounds") or {}
+    prob_dec    = float(props.get("prob_decision", 0))
+    prob_finish = float(props.get("prob_finish", 1 - prob_dec))
+
+    # Neutral method totals (used by method_neutral + method_combo)
+    prob_ko_any  = float(props.get("prob_a_wins_ko_tko", 0)) + float(props.get("prob_b_wins_ko_tko", 0))
+    prob_sub_any = float(props.get("prob_a_wins_sub", 0))    + float(props.get("prob_b_wins_sub", 0))
 
     bets: list[dict] = []
 
+    def _add(bet_type, label, our_p, odds):
+        b = _bet_row(bet_type, label, our_p, odds)
+        if b:
+            bets.append(b)
+
     # ---- Moneyline --------------------------------------------------------
-    odds_a = sb.get("moneyline_a")
-    odds_b = sb.get("moneyline_b")
-    if odds_a and odds_a > MIN_ODDS:
-        b = _bet_row("moneyline", f"{name_a} wins", prob_a, odds_a)
-        if b:
-            bets.append(b)
-    if odds_b and odds_b > MIN_ODDS:
-        b = _bet_row("moneyline", f"{name_b} wins", prob_b, odds_b)
-        if b:
-            bets.append(b)
+    for name, prob, key in [(name_a, prob_a, "moneyline_a"), (name_b, prob_b, "moneyline_b")]:
+        odds = sb.get(key)
+        if odds and odds > MIN_ODDS:
+            _add("moneyline", f"{name} wins", prob, odds)
 
-    # ---- Method of victory -----------------------------------------------
-    method_market = sb.get("method") or {}
-    if method_market and props:
-        for sel_name, odds in method_market.items():
-            if odds < MIN_ODDS:
-                continue
-            side   = _fighter_side(sel_name, name_a, name_b)
-            method = _classify_method_selection(sel_name)
+    # ---- Method of victory (fighter-attributed) ---------------------------
+    for sel_name, odds in (sb.get("method") or {}).items():
+        if odds < MIN_ODDS or not props:
+            continue
+        side   = _fighter_side(sel_name, name_a, name_b)
+        method = _classify_method_selection(sel_name)
+        if side == "A":
+            our_p = props.get(f"prob_a_wins_{method.lower()}", 0)
+            label = f"{name_a} wins by {method.replace('_', '/')}"
+        elif side == "B":
+            our_p = props.get(f"prob_b_wins_{method.lower()}", 0)
+            label = f"{name_b} wins by {method.replace('_', '/')}"
+        else:
+            continue
+        _add("method", label, our_p, odds)
 
-            if side == "A":
-                if method == "KO_TKO":
-                    our_p = props.get("prob_a_wins_ko_tko", 0)
-                elif method == "SUB":
-                    our_p = props.get("prob_a_wins_sub", 0)
-                else:
-                    our_p = props.get("prob_a_wins_dec", 0)
-                label = f"{name_a} wins by {method.replace('_', '/')}"
-            elif side == "B":
-                if method == "KO_TKO":
-                    our_p = props.get("prob_b_wins_ko_tko", 0)
-                elif method == "SUB":
-                    our_p = props.get("prob_b_wins_sub", 0)
-                else:
-                    our_p = props.get("prob_b_wins_dec", 0)
-                label = f"{name_b} wins by {method.replace('_', '/')}"
-            else:
-                continue
+    # ---- Method neutral ("How fight will End") ----------------------------
+    for sel_name, odds in (sb.get("method_neutral") or {}).items():
+        if odds < MIN_ODDS or not props:
+            continue
+        lname = sel_name.lower()
+        if "ko" in lname or "tko" in lname:
+            _add("method_neutral", "Fight ends by KO/TKO", prob_ko_any, odds)
+        elif "sub" in lname:
+            _add("method_neutral", "Fight ends by Submission", prob_sub_any, odds)
+        elif any(w in lname for w in ("point", "dec", "judge")):
+            _add("method_neutral", "Fight goes to Decision", prob_dec, odds)
 
-            b = _bet_row("method", label, our_p, odds)
-            if b:
-                bets.append(b)
+    # ---- Double chance (method combo per fighter) -------------------------
+    for sel_name, odds in (sb.get("method_combo") or {}).items():
+        if odds < MIN_ODDS or not props:
+            continue
+        side = _fighter_side(sel_name, name_a, name_b)
+        if side == "A":
+            ko, sub, dec = (float(props.get("prob_a_wins_ko_tko", 0)),
+                            float(props.get("prob_a_wins_sub", 0)),
+                            float(props.get("prob_a_wins_dec", 0)))
+            pfx = name_a
+        elif side == "B":
+            ko, sub, dec = (float(props.get("prob_b_wins_ko_tko", 0)),
+                            float(props.get("prob_b_wins_sub", 0)),
+                            float(props.get("prob_b_wins_dec", 0)))
+            pfx = name_b
+        else:
+            continue
+        lname = sel_name.lower()
+        if "ko" in lname and "sub" in lname:
+            _add("method_combo", f"{pfx} wins by KO or Sub", ko + sub, odds)
+        elif "ko" in lname and any(w in lname for w in ("point", "dec")):
+            _add("method_combo", f"{pfx} wins by KO or Decision", ko + dec, odds)
+        elif "sub" in lname and any(w in lname for w in ("point", "dec")):
+            _add("method_combo", f"{pfx} wins by Sub or Decision", sub + dec, odds)
 
     # ---- Go the distance --------------------------------------------------
-    distance_market = sb.get("distance") or {}
-    prob_dec = props.get("prob_decision", 0)
-    if distance_market and prob_dec > 0:
-        for sel_name, odds in distance_market.items():
-            if odds < MIN_ODDS:
-                continue
-            lname = sel_name.lower()
-            if "yes" in lname or "go" in lname:
-                b = _bet_row("distance", "Fight goes to decision", prob_dec, odds)
-            elif "no" in lname or "not" in lname:
-                b = _bet_row("distance", "Fight ends before decision", 1.0 - prob_dec, odds)
-            else:
-                continue
-            if b:
-                bets.append(b)
+    for sel_name, odds in (sb.get("distance") or {}).items():
+        if odds < MIN_ODDS or not props:
+            continue
+        lname = sel_name.lower()
+        if "yes" in lname or "go" in lname:
+            _add("distance", "Fight goes to decision", prob_dec, odds)
+        elif "no" in lname or "not" in lname:
+            _add("distance", "Fight ends before decision", prob_finish, odds)
 
-    # ---- Total rounds (over/under) ----------------------------------------
-    total_rounds_market = sb.get("total_rounds") or {}
-    prob_rounds = props.get("prob_rounds") or {}
-    if total_rounds_market and prob_rounds:
-        for sel_name, odds in total_rounds_market.items():
-            if odds < MIN_ODDS:
-                continue
-            parsed = _parse_total_rounds_line(sel_name)
-            if parsed is None:
-                continue
-            direction, line = parsed
-            our_p = _prob_over_under(prob_rounds, direction, line)
-            label = f"{'Over' if direction == 'over' else 'Under'} {line} rounds"
-            b = _bet_row("total_rounds", label, our_p, odds)
-            if b:
-                bets.append(b)
+    # ---- Total rounds (over/under line) ----------------------------------
+    for sel_name, odds in (sb.get("total_rounds") or {}).items():
+        if odds < MIN_ODDS or not prob_rounds:
+            continue
+        parsed = _parse_total_rounds_line(sel_name, is_five_round)
+        if parsed is None:
+            continue
+        direction, line = parsed
+        our_p = _prob_over_under(prob_rounds, direction, line)
+        label = f"{'Over' if direction == 'over' else 'Under'} {line} rounds"
+        _add("total_rounds", label, our_p, odds)
 
-    # ---- Winning round ----------------------------------------------------
-    winning_round_market = sb.get("winning_round") or {}
-    if winning_round_market and prob_rounds:
-        for sel_name, odds in winning_round_market.items():
-            if odds < MIN_ODDS:
-                continue
-            m = re.search(r"round\s+(\d)", sel_name, re.IGNORECASE)
-            if not m:
-                continue
-            rnum = int(m.group(1))
-            rkey = f"R{rnum}"
-            our_p = prob_rounds.get(rkey, 0)
-            # Winning round bets are typically for finishes only — scale by finish prob
-            finish_prob = props.get("prob_finish", 1.0)
-            our_p_finish = our_p * finish_prob
-            b = _bet_row("winning_round", f"Fight ends in Round {rnum}", our_p_finish, odds)
-            if b:
-                bets.append(b)
+    # ---- Round survival ("Fight To Start Round X") -----------------------
+    for sel_name, odds in (sb.get("round_survival") or {}).items():
+        if odds < MIN_ODDS or not prob_rounds:
+            continue
+        # Key format: "Start R2 Yes" / "Start R2 No"
+        m = re.search(r"Start R(\d)", sel_name)
+        if not m:
+            continue
+        rnum = int(m.group(1))
+        # P(fight starts round X) = 1 - sum(P(end in R1..R(X-1)))
+        p_survives = 1.0 - sum(
+            prob_rounds.get(f"R{i}", 0) for i in range(1, rnum)
+        )
+        if "yes" in sel_name.lower():
+            _add("round_survival", f"Fight reaches Round {rnum}", p_survives, odds)
+        elif "no" in sel_name.lower():
+            _add("round_survival", f"Fight ends before Round {rnum}", 1 - p_survives, odds)
+
+    # ---- Alt finish timing ("Round 1 or 2" / "Round 3 or Decision") -----
+    for sel_name, odds in (sb.get("alt_finish_timing") or {}).items():
+        if odds < MIN_ODDS or not prob_rounds:
+            continue
+        lname = sel_name.lower()
+        if "1 or 2" in lname:
+            our_p = prob_rounds.get("R1", 0) + prob_rounds.get("R2", 0)
+            _add("alt_finish_timing", "Ends in Round 1 or 2", our_p, odds)
+        elif "3" in lname:
+            our_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6))
+            _add("alt_finish_timing", "Ends in Round 3+ / Decision", our_p, odds)
+
+    # ---- Alt round betting (fighter + timing combo) ----------------------
+    for sel_name, odds in (sb.get("alt_round") or {}).items():
+        if odds < MIN_ODDS or not prob_rounds:
+            continue
+        side = _fighter_side(sel_name, name_a, name_b)
+        if side == "A":
+            winner_p, pfx = prob_a, name_a
+        elif side == "B":
+            winner_p, pfx = prob_b, name_b
+        else:
+            continue
+        lname = sel_name.lower()
+        if "1 or 2" in lname:
+            timing_p = prob_rounds.get("R1", 0) + prob_rounds.get("R2", 0)
+            _add("alt_round", f"{pfx} wins in R1 or R2",
+                 winner_p * timing_p, odds)
+        elif "3" in lname or "dec" in lname:
+            timing_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6))
+            _add("alt_round", f"{pfx} wins in R3 or by Decision",
+                 winner_p * timing_p, odds)
+
+    # ---- Winning round (fighter-attributed) ------------------------------
+    for sel_name, odds in (sb.get("winning_round") or {}).items():
+        if odds < MIN_ODDS or not prob_rounds:
+            continue
+        m = re.search(r"round\s+(\d)", sel_name, re.IGNORECASE)
+        if not m:
+            continue
+        rnum = int(m.group(1))
+        rkey = f"R{rnum}"
+        # Scale by finish prob — round bets pay only on finishes
+        our_p = prob_rounds.get(rkey, 0) * prob_finish
+        _add("winning_round", f"Fight ends in Round {rnum}", our_p, odds)
 
     # Sort: value bets first, then by EV descending
     bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))

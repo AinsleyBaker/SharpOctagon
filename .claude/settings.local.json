@@ -12,7 +12,12 @@
       "Bash(git push *)",
       "Bash(git commit -m 'fix: restore kelly_fraction_fn alias broken by previous cleanup *)",
       "Bash(python *)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(py *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)"
     ]
   }
 }

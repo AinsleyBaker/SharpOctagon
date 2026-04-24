@@ -33,11 +33,16 @@ ROUND_CLASSES  = ["R1", "R2", "R3", "R4", "R5"]
 # These capture "both fighters are KO artists" — a signal that cancels out in
 # diff features but is critical for method/round prediction.
 PROP_EXTRA_COLS = [
-    "a_ko_rate", "b_ko_rate",
-    "a_sub_rate", "b_sub_rate",
-    "a_finish_rate", "b_finish_rate",
-    "a_sub_per_min", "b_sub_per_min",
+    "a_ko_rate",    "b_ko_rate",
+    "a_sub_rate",   "b_sub_rate",
+    "a_finish_rate","b_finish_rate",
+    "a_sub_per_min","b_sub_per_min",
     "a_td_per_min", "b_td_per_min",
+    # Strike pace — high combined slpm → more KO likelihood, longer fights have more volume
+    "a_slpm",       "b_slpm",
+    "a_sapm",       "b_sapm",
+    "a_sig_acc",    "b_sig_acc",
+    "a_ctrl_ratio", "b_ctrl_ratio",
 ]
 
 _CAL_SPLIT = 0.80  # 80/20 chronological split for calibration

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -96,27 +97,46 @@ def _fetch_markets(event_id: int) -> list[dict]:
 
 # Maps substring of market name → canonical type
 _MARKET_MAP: dict[str, str] = {
-    "match betting":              "moneyline",
-    "fight winner":               "moneyline",
-    "fight outcome":              "moneyline",
-    "match winner":               "moneyline",
-    "head to head":               "moneyline",
-    "method of victory":          "method",
-    "method of winning":          "method",
-    "fight method":               "method",
-    "winning method":             "method",
-    "to go the distance":         "distance",
-    "fight to go distance":       "distance",
-    "go the distance":            "distance",
-    "goes the distance":          "distance",
-    "total rounds":               "total_rounds",
-    "over/under":                 "total_rounds",
-    "round betting":              "winning_round",
-    "winning round":              "winning_round",
-    "what round will fight end":  "winning_round",
-    "round of victory":           "winning_round",
-    "round winner":               "winning_round",
-    "fight to end":               "winning_round",
+    # Moneyline
+    "match betting":                "moneyline",
+    "fight winner":                 "moneyline",
+    "fight outcome":                "moneyline",
+    "match winner":                 "moneyline",
+    "head to head":                 "moneyline",
+    "decision no bet":              "moneyline_no_dec",
+    # Method — fighter-attributed
+    "method of victory":            "method",
+    "method of winning":            "method",
+    "fight method":                 "method",
+    "winning method":               "method",
+    # Method — neutral (no fighter attribution)
+    "how fight will end":           "method_neutral",
+    "how will the fight end":       "method_neutral",
+    "how will fight end":           "method_neutral",
+    # Method combo (double chance)
+    "double chance":                "method_combo",
+    # Distance
+    "will the fight go the distance": "distance",
+    "to go the distance":           "distance",
+    "fight to go distance":         "distance",
+    "go the distance":              "distance",
+    "goes the distance":            "distance",
+    # Total rounds over/under
+    "total rounds":                 "total_rounds",
+    "over/under":                   "total_rounds",
+    # Winning round — fighter-attributed
+    "round betting":                "winning_round",
+    "winning round":                "winning_round",
+    "what round will fight end":    "winning_round",
+    "round of victory":             "winning_round",
+    "round winner":                 "winning_round",
+    "fight to end":                 "winning_round",
+    # Round survival (will the fight START round X?)
+    "fight to start round":         "round_survival",
+    # Alt grouped finish timing (Round 1 or 2 / Round 3 or decision)
+    "alt. when will the fight end": "alt_finish_timing",
+    "alt. when will fight end":     "alt_finish_timing",
+    "alt. round betting":           "alt_round",
 }
 
 
@@ -153,6 +173,31 @@ def _parse_selections(raw: list) -> dict[str, float]:
     return out
 
 
+def _annotate_round_survival(raw_markets: list[dict], out: dict) -> None:
+    """
+    'Fight To Start Round 2' / 'Fight To Start Round 3' markets don't encode
+    the round number in the selection name — only in the market name itself.
+    Store them as 'round_survival' with selection keys like 'Start R2 Yes'.
+    """
+    for m in raw_markets:
+        mname = m.get("name") or ""
+        if "fight to start round" not in mname.lower():
+            continue
+        rnum_match = re.search(r"round\s+(\d)", mname, re.IGNORECASE)
+        if not rnum_match:
+            continue
+        rnum = rnum_match.group(1)
+        sels_raw = m.get("selections") or []
+        for sel in sels_raw:
+            sname = (sel.get("name") or "").strip()
+            price = _extract_price(sel)
+            if price and sname:
+                key = f"Start R{rnum} {sname}"
+                if "round_survival" not in out:
+                    out["round_survival"] = {}
+                out["round_survival"][key] = price
+
+
 def _parse_markets(raw_markets: list[dict]) -> dict[str, dict[str, float]]:
     out: dict[str, dict] = {}
     for m in raw_markets:
@@ -166,6 +211,8 @@ def _parse_markets(raw_markets: list[dict]) -> dict[str, dict[str, float]]:
             if mtype not in out:
                 out[mtype] = {}
             out[mtype].update(sels)
+    # Round-survival markets need special handling (round number is in market name)
+    _annotate_round_survival(raw_markets, out)
     return out
 
 
@@ -281,10 +328,15 @@ def match_odds_to_predictions(
                 "match_score": best_score,
                 "moneyline_a": _find_odds_by_name(moneyline, fa_key or ""),
                 "moneyline_b": _find_odds_by_name(moneyline, fb_key or ""),
-                "method":         markets.get("method", {}),
-                "distance":       markets.get("distance", {}),
-                "total_rounds":   markets.get("total_rounds", {}),
-                "winning_round":  markets.get("winning_round", {}),
+                "method":            markets.get("method", {}),
+                "method_neutral":    markets.get("method_neutral", {}),
+                "method_combo":      markets.get("method_combo", {}),
+                "distance":          markets.get("distance", {}),
+                "total_rounds":      markets.get("total_rounds", {}),
+                "winning_round":     markets.get("winning_round", {}),
+                "round_survival":    markets.get("round_survival", {}),
+                "alt_finish_timing": markets.get("alt_finish_timing", {}),
+                "alt_round":         markets.get("alt_round", {}),
             }
             log.info(
                 "Matched '%s vs %s' ↔ '%s' (score=%d)",

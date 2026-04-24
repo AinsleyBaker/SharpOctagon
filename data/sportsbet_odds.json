@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-24T03:59:25.954475+00:00",
+  "fetched_at": "2026-04-24T04:16:08.256189+00:00",
   "fights": [
     {
       "sportsbet_event_id": "10374928",
@@ -54,6 +54,20 @@
           "Julia Polastri Round 1 or 2": 5.4,
           "Julia Polastri Round 3 or by Decision": 1.73
         },
+        "method_combo": {
+          "Talita Alencar by KO/TKO or Submission": 8.75,
+          "Talita Alencar by KO/TKO or on Points": 4.0,
+          "Talita Alencar by Submission or on Points": 3.3,
+          "Draw": 51.0,
+          "Julia Polastri by KO/TKO or Submission": 3.9,
+          "Julia Polastri by KO/TKO or on Points": 1.41,
+          "Julia Polastri by Submission or on Points": 1.84
+        },
+        "method_neutral": {
+          "KO/TKO": 4.1,
+          "Submission": 7.75,
+          "Points": 1.36
+        },
         "distance": {
           "Yes": 1.37,
           "No": 2.92
@@ -61,6 +75,22 @@
         "total_rounds": {
           "Over": 1.3,
           "Under": 3.2
+        },
+        "moneyline_no_dec": {
+          "Talita Alencar": 3.2,
+          "Julia Polastri": 1.3
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 4.0,
+          "Round 3 or by Decision": 1.22
+        },
+        "round_survival": {
+          "Yes": 1.22,
+          "No": 4.0,
+          "Start R2 Yes": 1.08,
+          "Start R2 No": 6.5,
+          "Start R3 Yes": 1.22,
+          "Start R3 No": 4.0
         }
       }
     },
@@ -117,6 +147,20 @@
           "Max Griffin Round 1 or 2": 6.5,
           "Max Griffin Round 3 or by Decision": 3.0
         },
+        "method_combo": {
+          "Victor Valenzuela by KO/TKO or Submission": 3.45,
+          "Victor Valenzuela by KO/TKO or on Points": 1.78,
+          "Victor Valenzuela by Submission or on Points": 2.7,
+          "Draw": 51.0,
+          "Max Griffin by KO/TKO or Submission": 5.0,
+          "Max Griffin by KO/TKO or on Points": 2.25,
+          "Max Griffin by Submission or on Points": 3.15
+        },
+        "method_neutral": {
+          "KO/TKO": 2.45,
+          "Submission": 12.0,
+          "Points": 1.63
+        },
         "distance": {
           "Yes": 1.65,
           "No": 2.16
@@ -124,6 +168,22 @@
         "total_rounds": {
           "Over": 1.5,
           "Under": 2.5
+        },
+        "moneyline_no_dec": {
+          "Victor Valenzuela": 1.56,
+          "Max Griffin": 2.3
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 2.83,
+          "Round 3 or by Decision": 1.39
+        },
+        "round_survival": {
+          "Yes": 1.39,
+          "No": 2.83,
+          "Start R2 Yes": 1.17,
+          "Start R2 No": 4.65,
+          "Start R3 Yes": 1.39,
+          "Start R3 No": 2.83
         }
       }
     },
@@ -180,9 +240,39 @@
           "Lucas Brennan Round 1 or 2": 10.0,
           "Lucas Brennan Round 3 or by Decision": 8.25
         },
+        "method_combo": {
+          "Francis Marshall by KO/TKO or Submission": 1.99,
+          "Francis Marshall by KO/TKO or on Points": 1.71,
+          "Francis Marshall by Submission or on Points": 1.5,
+          "Draw": 51.0,
+          "Lucas Brennan by KO/TKO or Submission": 8.25,
+          "Lucas Brennan by KO/TKO or on Points": 7.5,
+          "Lucas Brennan by Submission or on Points": 5.8
+        },
+        "method_neutral": {
+          "KO/TKO": 4.0,
+          "Submission": 2.65,
+          "Points": 2.1
+        },
         "distance": {
           "Yes": 2.13,
           "No": 1.66
+        },
+        "moneyline_no_dec": {
+          "Francis Marshall": 1.13,
+          "Lucas Brennan": 5.2
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 2.0,
+          "Round 3 or by Decision": 1.74
+        },
+        "round_survival": {
+          "Yes": 1.74,
+          "No": 2.0,
+          "Start R2 Yes": 1.3,
+          "Start R2 No": 3.32,
+          "Start R3 Yes": 1.74,
+          "Start R3 No": 2.0
         }
       }
     },
@@ -252,6 +342,20 @@
           "Michelle Montague Round 1 or 2": 3.6,
           "Michelle Montague Round 3 or by Decision": 1.8
         },
+        "method_combo": {
+          "Mayra Bueno Silva by KO/TKO or Submission": 10.0,
+          "Mayra Bueno Silva by KO/TKO or on Points": 5.0,
+          "Mayra Bueno Silva by Submission or on Points": 4.3,
+          "Draw": 51.0,
+          "Michelle Montague by KO/TKO or Submission": 2.8,
+          "Michelle Montague by KO/TKO or on Points": 1.67,
+          "Michelle Montague by Submission or on Points": 1.44
+        },
+        "method_neutral": {
+          "KO/TKO": 6.0,
+          "Submission": 3.4,
+          "Points": 1.55
+        },
         "distance": {
           "Yes": 1.56,
           "No": 2.33
@@ -259,6 +363,22 @@
         "total_rounds": {
           "Over": 1.44,
           "Under": 2.62
+        },
+        "moneyline_no_dec": {
+          "Mayra Bueno Silva": 3.8,
+          "Michelle Montague": 1.16
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 3.07,
+          "Round 3 or by Decision": 1.34
+        },
+        "round_survival": {
+          "Yes": 1.34,
+          "No": 3.07,
+          "Start R2 Yes": 1.14,
+          "Start R2 No": 5.2,
+          "Start R3 Yes": 1.34,
+          "Start R3 No": 3.07
         }
       }
     },
@@ -315,6 +435,20 @@
           "Sedriques Dumas Round 1 or 2": 3.7,
           "Sedriques Dumas Round 3 or by Decision": 6.75
         },
+        "method_combo": {
+          "Jackson McVey by KO/TKO or Submission": 1.72,
+          "Jackson McVey by KO/TKO or on Points": 2.55,
+          "Jackson McVey by Submission or on Points": 2.55,
+          "Draw": 51.0,
+          "Sedriques Dumas by KO/TKO or Submission": 3.2,
+          "Sedriques Dumas by KO/TKO or on Points": 3.9,
+          "Sedriques Dumas by Submission or on Points": 3.9
+        },
+        "method_neutral": {
+          "KO/TKO": 2.2,
+          "Submission": 2.2,
+          "Points": 4.9
+        },
         "distance": {
           "Yes": 4.8,
           "No": 1.16
@@ -322,6 +456,22 @@
         "total_rounds": {
           "Over": 2.25,
           "Under": 1.57
+        },
+        "moneyline_no_dec": {
+          "Jackson McVey": 1.4,
+          "Sedriques Dumas": 2.75
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 1.3,
+          "Round 3 or by Decision": 3.31
+        },
+        "round_survival": {
+          "Yes": 3.31,
+          "No": 1.3,
+          "Start R2 Yes": 1.76,
+          "Start R2 No": 1.99,
+          "Start R3 Yes": 3.31,
+          "Start R3 No": 1.3
         }
       }
     },
@@ -378,6 +528,20 @@
           "Eric McConico Round 1 or 2": 9.0,
           "Eric McConico Round 3 or by Decision": 4.4
         },
+        "method_combo": {
+          "Rodolfo Vieira by KO/TKO or Submission": 2.15,
+          "Rodolfo Vieira by KO/TKO or on Points": 2.25,
+          "Rodolfo Vieira by Submission or on Points": 1.63,
+          "Draw": 51.0,
+          "Eric McConico by KO/TKO or Submission": 7.25,
+          "Eric McConico by KO/TKO or on Points": 3.3,
+          "Eric McConico by Submission or on Points": 4.5
+        },
+        "method_neutral": {
+          "KO/TKO": 3.9,
+          "Submission": 2.9,
+          "Points": 1.99
+        },
         "distance": {
           "Yes": 2.01,
           "No": 1.74
@@ -385,6 +549,22 @@
         "total_rounds": {
           "Over": 1.72,
           "Under": 2.0
+        },
+        "moneyline_no_dec": {
+          "Rodolfo Vieira": 1.18,
+          "Eric McConico": 4.4
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 2.21,
+          "Round 3 or by Decision": 1.61
+        },
+        "round_survival": {
+          "Yes": 1.61,
+          "No": 2.21,
+          "Start R2 Yes": 1.25,
+          "Start R2 No": 3.7,
+          "Start R3 Yes": 1.61,
+          "Start R3 No": 2.21
         }
       }
     },
@@ -441,6 +621,20 @@
           "Ryan Spann Round 1 or 2": 2.9,
           "Ryan Spann Round 3 or by Decision": 7.5
         },
+        "method_combo": {
+          "Marcus Buchecha by KO/TKO or Submission": 2.0,
+          "Marcus Buchecha by KO/TKO or on Points": 3.6,
+          "Marcus Buchecha by Submission or on Points": 2.12,
+          "Draw": 51.0,
+          "Ryan Spann by KO/TKO or Submission": 2.55,
+          "Ryan Spann by KO/TKO or on Points": 2.75,
+          "Ryan Spann by Submission or on Points": 5.6
+        },
+        "method_neutral": {
+          "KO/TKO": 2.25,
+          "Submission": 2.2,
+          "Points": 4.8
+        },
         "distance": {
           "Yes": 4.65,
           "No": 1.17
@@ -448,6 +642,22 @@
         "total_rounds": {
           "Over": 2.25,
           "Under": 1.57
+        },
+        "moneyline_no_dec": {
+          "Marcus Buchecha": 1.68,
+          "Ryan Spann": 2.1
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 1.31,
+          "Round 3 or by Decision": 3.27
+        },
+        "round_survival": {
+          "Yes": 3.27,
+          "No": 1.31,
+          "Start R2 Yes": 1.81,
+          "Start R2 No": 1.92,
+          "Start R3 Yes": 3.27,
+          "Start R3 No": 1.31
         }
       }
     },
@@ -504,6 +714,20 @@
           "Raoni Barcelos Round 1 or 2": 7.75,
           "Raoni Barcelos Round 3 or by Decision": 3.25
         },
+        "method_combo": {
+          "Montel Jackson by KO/TKO or Submission": 3.0,
+          "Montel Jackson by KO/TKO or on Points": 1.72,
+          "Montel Jackson by Submission or on Points": 2.4,
+          "Draw": 51.0,
+          "Raoni Barcelos by KO/TKO or Submission": 6.25,
+          "Raoni Barcelos by KO/TKO or on Points": 3.05,
+          "Raoni Barcelos by Submission or on Points": 2.75
+        },
+        "method_neutral": {
+          "KO/TKO": 3.2,
+          "Submission": 5.7,
+          "Points": 1.64
+        },
         "distance": {
           "Yes": 1.65,
           "No": 2.15
@@ -511,6 +735,22 @@
         "total_rounds": {
           "Over": 1.5,
           "Under": 2.5
+        },
+        "moneyline_no_dec": {
+          "Montel Jackson": 1.36,
+          "Raoni Barcelos": 2.9
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 2.81,
+          "Round 3 or by Decision": 1.4
+        },
+        "round_survival": {
+          "Yes": 1.4,
+          "No": 2.81,
+          "Start R2 Yes": 1.17,
+          "Start R2 No": 4.65,
+          "Start R3 Yes": 1.4,
+          "Start R3 No": 2.81
         }
       }
     },
@@ -567,6 +807,20 @@
           "Juan Martinetti Round 1 or 2": 5.4,
           "Juan Martinetti Round 3 or by Decision": 3.0
         },
+        "method_combo": {
+          "Davey Grant by KO/TKO or Submission": 3.5,
+          "Davey Grant by KO/TKO or on Points": 1.91,
+          "Davey Grant by Submission or on Points": 2.85,
+          "Draw": 51.0,
+          "Juan Martinetti by KO/TKO or Submission": 4.25,
+          "Juan Martinetti by KO/TKO or on Points": 2.7,
+          "Juan Martinetti by Submission or on Points": 2.4
+        },
+        "method_neutral": {
+          "KO/TKO": 3.05,
+          "Submission": 5.1,
+          "Points": 1.73
+        },
         "distance": {
           "Yes": 1.74,
           "No": 2.01
@@ -574,6 +828,22 @@
         "total_rounds": {
           "Over": 1.53,
           "Under": 2.37
+        },
+        "moneyline_no_dec": {
+          "Davey Grant": 1.64,
+          "Juan Martinetti": 2.1
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 2.61,
+          "Round 3 or by Decision": 1.45
+        },
+        "round_survival": {
+          "Yes": 1.45,
+          "No": 2.61,
+          "Start R2 Yes": 1.2,
+          "Start R2 No": 4.25,
+          "Start R3 Yes": 1.45,
+          "Start R3 No": 2.61
         }
       }
     },
@@ -630,6 +900,20 @@
           "Alexander Hernandez Round 1 or 2": 5.2,
           "Alexander Hernandez Round 3 or by Decision": 2.5
         },
+        "method_combo": {
+          "Rafa Garcia by KO/TKO or Submission": 5.3,
+          "Rafa Garcia by KO/TKO or on Points": 2.5,
+          "Rafa Garcia by Submission or on Points": 2.35,
+          "Draw": 51.0,
+          "Alexander Hernandez by KO/TKO or Submission": 4.1,
+          "Alexander Hernandez by KO/TKO or on Points": 1.82,
+          "Alexander Hernandez by Submission or on Points": 2.65
+        },
+        "method_neutral": {
+          "KO/TKO": 3.5,
+          "Submission": 6.75,
+          "Points": 1.49
+        },
         "distance": {
           "Yes": 1.5,
           "No": 2.47
@@ -637,6 +921,22 @@
         "total_rounds": {
           "Over": 1.4,
           "Under": 2.75
+        },
+        "moneyline_no_dec": {
+          "Rafa Garcia": 2.15,
+          "Alexander Hernandez": 1.64
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 3.18,
+          "Round 3 or by Decision": 1.33
+        },
+        "round_survival": {
+          "Yes": 1.33,
+          "No": 3.18,
+          "Start R2 Yes": 1.14,
+          "Start R2 No": 5.2,
+          "Start R3 Yes": 1.33,
+          "Start R3 No": 3.18
         }
       }
     },
@@ -693,6 +993,20 @@
           "Joselyne Edwards Round 1 or 2": 9.75,
           "Joselyne Edwards Round 3 or by Decision": 3.7
         },
+        "method_combo": {
+          "Norma Dumont by KO/TKO or Submission": 7.25,
+          "Norma Dumont by KO/TKO or on Points": 1.53,
+          "Norma Dumont by Submission or on Points": 1.5,
+          "Draw": 51.0,
+          "Joselyne Edwards by KO/TKO or Submission": 7.25,
+          "Joselyne Edwards by KO/TKO or on Points": 3.45,
+          "Joselyne Edwards by Submission or on Points": 3.35
+        },
+        "method_neutral": {
+          "KO/TKO": 8.0,
+          "Submission": 6.75,
+          "Points": 1.2
+        },
         "distance": {
           "Yes": 1.22,
           "No": 4.0
@@ -700,6 +1014,22 @@
         "total_rounds": {
           "Over": 1.16,
           "Under": 4.5
+        },
+        "moneyline_no_dec": {
+          "Norma Dumont": 1.88,
+          "Joselyne Edwards": 1.88
+        },
+        "alt_finish_timing": {
+          "Round 1 or 2": 5.4,
+          "Round 3 or by Decision": 1.13
+        },
+        "round_survival": {
+          "Yes": 1.13,
+          "No": 5.4,
+          "Start R2 Yes": 1.05,
+          "Start R2 No": 8.5,
+          "Start R3 Yes": 1.13,
+          "Start R3 No": 5.4
         }
       }
     },
@@ -772,6 +1102,20 @@
           "Youssef Zalal Round 1, 2, or 3": 5.5,
           "Youssef Zalal Round 4, 5, or by Decision": 2.35
         },
+        "method_combo": {
+          "Aljamain Sterling by KO/TKO or Submission": 4.4,
+          "Aljamain Sterling by KO/TKO or on Points": 3.1,
+          "Aljamain Sterling by Submission or on Points": 2.25,
+          "Draw": 51.0,
+          "Youssef Zalal by KO/TKO or Submission": 4.0,
+          "Youssef Zalal by KO/TKO or on Points": 1.91,
+          "Youssef Zalal by Submission or on Points": 2.4
+        },
+        "method_neutral": {
+          "KO/TKO": 4.3,
+          "Submission": 4.1,
+          "Points": 1.59
+        },
         "distance": {
           "Yes": 1.6,
           "No": 2.24
@@ -779,6 +1123,26 @@
         "total_rounds": {
           "Over": 1.53,
           "Under": 2.37
+        },
+        "moneyline_no_dec": {
+          "Aljamain Sterling": 1.96,
+          "Youssef Zalal": 1.8
+        },
+        "alt_finish_timing": {
+          "Round 1, 2, or 3": 3.14,
+          "Round 4, 5, or by Decision": 1.33
+        },
+        "round_survival": {
+          "Yes": 1.46,
+          "No": 2.58,
+          "Start R2 Yes": 1.08,
+          "Start R2 No": 6.5,
+          "Start R3 Yes": 1.2,
+          "Start R3 No": 4.25,
+          "Start R4 Yes": 1.33,
+          "Start R4 No": 3.14,
+          "Start R5 Yes": 1.46,
+          "Start R5 No": 2.58
         }
       }
     },
@@ -982,6 +1346,20 @@
           "Ciryl Gane Round 1, 2, or 3": 3.9,
           "Ciryl Gane Round 4, 5, or by Decision": 3.25
         },
+        "method_combo": {
+          "Alex Pereira by KO/TKO or Submission": 2.35,
+          "Alex Pereira by KO/TKO or on Points": 2.03,
+          "Alex Pereira by Submission or on Points": 6.25,
+          "Draw": 51.0,
+          "Ciryl Gane by KO/TKO or Submission": 2.9,
+          "Ciryl Gane by KO/TKO or on Points": 2.12,
+          "Ciryl Gane by Submission or on Points": 3.35
+        },
+        "method_neutral": {
+          "KO/TKO": 1.58,
+          "Submission": 7.5,
+          "Points": 2.95
+        },
         "distance": {
           "Yes": 3.05,
           "No": 1.35
@@ -989,6 +1367,26 @@
         "total_rounds": {
           "Over": 1.72,
           "Under": 2.0
+        },
+        "moneyline_no_dec": {
+          "Alex Pereira": 1.68,
+          "Ciryl Gane": 2.1
+        },
+        "alt_finish_timing": {
+          "Round 1, 2, or 3": 1.71,
+          "Round 4, 5, or by Decision": 2.05
+        },
+        "round_survival": {
+          "Yes": 2.53,
+          "No": 1.48,
+          "Start R2 Yes": 1.22,
+          "Start R2 No": 4.0,
+          "Start R3 Yes": 1.6,
+          "Start R3 No": 2.25,
+          "Start R4 Yes": 2.05,
+          "Start R4 No": 1.71,
+          "Start R5 Yes": 2.53,
+          "Start R5 No": 1.48
         }
       }
     },
@@ -1036,6 +1434,20 @@
           "Justin Gaethje Round 1, 2, or 3": 11.0,
           "Justin Gaethje Round 4, 5, or by Decision": 9.5
         },
+        "method_combo": {
+          "Ilia Topuria by KO/TKO or Submission": 1.2,
+          "Ilia Topuria by KO/TKO or on Points": 1.36,
+          "Ilia Topuria by Submission or on Points": 4.2,
+          "Draw": 51.0,
+          "Justin Gaethje by KO/TKO or Submission": 8.0,
+          "Justin Gaethje by KO/TKO or on Points": 6.0,
+          "Justin Gaethje by Submission or on Points": 11.0
+        },
+        "method_neutral": {
+          "KO/TKO": 1.31,
+          "Submission": 5.1,
+          "Points": 6.75
+        },
         "distance": {
           "Yes": 6.0,
           "No": 1.1
@@ -1043,6 +1455,26 @@
         "total_rounds": {
           "Over": 1.57,
           "Under": 2.25
+        },
+        "moneyline_no_dec": {
+          "Ilia Topuria": 1.08,
+          "Justin Gaethje": 6.5
+        },
+        "alt_finish_timing": {
+          "Round 1, 2, or 3": 1.36,
+          "Round 4, 5, or by Decision": 3.0
+        },
+        "round_survival": {
+          "Yes": 4.6,
+          "No": 1.17,
+          "Start R2 Yes": 1.36,
+          "Start R2 No": 2.98,
+          "Start R3 Yes": 2.01,
+          "Start R3 No": 1.74,
+          "Start R4 Yes": 3.0,
+          "Start R4 No": 1.36,
+          "Start R5 Yes": 4.6,
+          "Start R5 No": 1.17
         }
       }
     }

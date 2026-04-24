@@ -297,7 +297,7 @@
 
             <!-- Fighter form + data quality (always shown) -->
             <div class="detail-box">
-              <h4>Recent Form</h4>
+              <h4>Recent Form &amp; Style</h4>
               <table class="mini-table">
                 <thead>
                   <tr><th></th><th>{{ bout.fighter_a_name.split()[-1] }}</th><th>{{ bout.fighter_b_name.split()[-1] }}</th></tr>
@@ -306,6 +306,33 @@
                   <tr><td>Streak</td><td>{{ bout.a_streak }}</td><td>{{ bout.b_streak }}</td></tr>
                   <tr><td>Last 3 Win%</td><td>{{ bout.a_l3 }}</td><td>{{ bout.b_l3 }}</td></tr>
                   <tr><td>UFC fights</td><td>{{ bout.a_n_fights }}</td><td>{{ bout.b_n_fights }}</td></tr>
+                  <tr><td>Finish rate</td><td>{{ bout.a_finish_rate }}</td><td>{{ bout.b_finish_rate }}</td></tr>
+                  <tr><td>KO/TKO rate</td><td>{{ bout.a_ko_rate }}</td><td>{{ bout.b_ko_rate }}</td></tr>
+                  <tr><td>Sub rate</td><td>{{ bout.a_sub_rate }}</td><td>{{ bout.b_sub_rate }}</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Strike volume / grappling (always shown) -->
+            <div class="detail-box">
+              <h4>Pace &amp; Volume</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>{{ bout.fighter_a_name.split()[-1] }}</th><th>{{ bout.fighter_b_name.split()[-1] }}</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sig strikes/min <span style="font-size:0.65rem;color:var(--muted)">(landed)</span></td>
+                    <td>{{ bout.a_slpm }}</td><td>{{ bout.b_slpm }}</td>
+                  </tr>
+                  <tr>
+                    <td>Sig strikes/min <span style="font-size:0.65rem;color:var(--muted)">(absorbed)</span></td>
+                    <td>{{ bout.a_sapm }}</td><td>{{ bout.b_sapm }}</td>
+                  </tr>
+                  <tr>
+                    <td>Takedowns/min</td>
+                    <td>{{ bout.a_td_per_min }}</td><td>{{ bout.b_td_per_min }}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>

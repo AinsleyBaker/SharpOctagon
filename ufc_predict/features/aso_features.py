@@ -386,7 +386,8 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
         # Absolute per-fighter finish rates — used by the prop model only.
         # Diff features cancel out when both fighters have similar styles;
         # absolute rates retain the signal that "both fighters are KO artists".
-        for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min"):
+        for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
+                  "slpm", "sapm", "sig_acc", "ctrl_ratio"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
 
@@ -421,12 +422,16 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         ("elo_a",           "elo_b"),
         ("glicko_a",        "glicko_b"),
         ("glicko_rd_a",     "glicko_rd_b"),
-        # Absolute finish rates (must swap with A/B, not negated like diffs)
+        # Absolute per-fighter rates (must swap with A/B, not negated like diffs)
         ("a_ko_rate",     "b_ko_rate"),
         ("a_sub_rate",    "b_sub_rate"),
         ("a_finish_rate", "b_finish_rate"),
         ("a_sub_per_min", "b_sub_per_min"),
         ("a_td_per_min",  "b_td_per_min"),
+        ("a_slpm",        "b_slpm"),
+        ("a_sapm",        "b_sapm"),
+        ("a_sig_acc",     "b_sig_acc"),
+        ("a_ctrl_ratio",  "b_ctrl_ratio"),
     ]
     swap_pairs = [(a, b) for a, b in _swap_pairs if a in base.columns and b in base.columns]
 

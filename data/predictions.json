@@ -108,21 +108,6 @@
         "Round 1": 7.0,
         "Round 2": 7.5,
         "Round 3": 8.5,
-        "1st Minute of Round 1": 31.0,
-        "2nd Minute of Round 1": 23.0,
-        "3rd Minute of Round 1": 23.0,
-        "4th Minute of Round 1": 20.0,
-        "5th Minute of Round 1": 23.0,
-        "1st Minute of Round 2": 34.0,
-        "2nd Minute of Round 2": 26.0,
-        "3rd Minute of Round 2": 26.0,
-        "4th Minute of Round 2": 21.0,
-        "5th Minute of Round 2": 26.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 23.0,
-        "5th Minute of Round 3": 26.0,
         "Talita Alencar Round 1 or 2": 11.5,
         "Talita Alencar Round 3 or by Decision": 3.9,
         "Julia Polastri Round 1 or 2": 5.4,
@@ -145,83 +130,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.203,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.1707,
-        "ev_pct": 529.3,
-        "kelly_pct": 4.41,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1516,
-        "sb_odds": 34.0,
-        "implied_prob": 0.0294,
-        "edge": 0.1222,
-        "ev_pct": 415.44,
-        "kelly_pct": 3.15,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.203,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.1595,
-        "ev_pct": 366.9,
-        "kelly_pct": 4.17,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.203,
-        "sb_odds": 20.0,
-        "implied_prob": 0.05,
-        "edge": 0.153,
-        "ev_pct": 306.0,
-        "kelly_pct": 4.03,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1516,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.1131,
-        "ev_pct": 294.16,
-        "kelly_pct": 2.94,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1516,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.104,
-        "ev_pct": 218.36,
-        "kelly_pct": 2.73,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0819,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0541,
-        "ev_pct": 194.84,
-        "kelly_pct": 1.39,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Talita Alencar wins by finish in Round 1",
         "our_prob": 0.2121,
         "sb_odds": 12.0,
@@ -229,17 +137,6 @@
         "edge": 0.1288,
         "ev_pct": 154.53,
         "kelly_pct": 3.51,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Talita Alencar wins by finish in Round 1",
-        "our_prob": 0.2121,
-        "sb_odds": 11.5,
-        "implied_prob": 0.087,
-        "edge": 0.1251,
-        "ev_pct": 143.92,
-        "kelly_pct": 3.43,
         "is_value": true
       },
       {
@@ -265,17 +162,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0819,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0434,
-        "ev_pct": 112.94,
-        "kelly_pct": 1.13,
-        "is_value": true
-      },
-      {
         "bet_type": "method",
         "description": "Talita Alencar wins by SUB",
         "our_prob": 0.1876,
@@ -295,17 +181,6 @@
         "edge": 0.1057,
         "ev_pct": 92.5,
         "kelly_pct": 2.98,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0819,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.0384,
-        "ev_pct": 88.37,
-        "kelly_pct": 1.0,
         "is_value": true
       },
       {
@@ -339,6 +214,17 @@
         "edge": 0.0712,
         "ev_pct": 60.5,
         "kelly_pct": 2.02,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Talita Alencar wins by Decision",
+        "our_prob": 0.3501,
+        "sb_odds": 4.5,
+        "implied_prob": 0.2222,
+        "edge": 0.1279,
+        "ev_pct": 57.55,
+        "kelly_pct": 4.11,
         "is_value": true
       },
       {
@@ -419,17 +305,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Julia Polastri wins by finish in Round 1",
-        "our_prob": 0.2529,
-        "sb_odds": 5.4,
-        "implied_prob": 0.1852,
-        "edge": 0.0677,
-        "ev_pct": 36.54,
-        "kelly_pct": 2.08,
-        "is_value": true
-      },
-      {
         "bet_type": "round_survival",
         "description": "Finish before Round 2",
         "our_prob": 0.203,
@@ -449,6 +324,17 @@
         "edge": 0.0941,
         "ev_pct": 27.49,
         "kelly_pct": 3.58,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Talita Alencar wins in R3+ or by Decision",
+        "our_prob": 0.2944,
+        "sb_odds": 3.9,
+        "implied_prob": 0.2564,
+        "edge": 0.038,
+        "ev_pct": 14.81,
+        "kelly_pct": 1.28,
         "is_value": true
       },
       {
@@ -628,6 +514,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Julia Polastri wins in R3+ or by Decision",
+        "our_prob": 0.3509,
+        "sb_odds": 1.73,
+        "implied_prob": 0.578,
+        "edge": -0.2271,
+        "ev_pct": -39.29,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method_combo",
         "description": "Julia Polastri wins by KO or Decision",
         "our_prob": 0.3825,
@@ -650,6 +547,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Julia Polastri wins by Decision",
+        "our_prob": 0.2133,
+        "sb_odds": 2.0,
+        "implied_prob": 0.5,
+        "edge": -0.2867,
+        "ev_pct": -57.34,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Julia Polastri wins by DEC",
         "our_prob": 0.2133,
@@ -657,28 +565,6 @@
         "implied_prob": 0.5051,
         "edge": -0.2918,
         "ev_pct": -57.77,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Talita Alencar wins by finish in Round 3",
-        "our_prob": 0.0856,
-        "sb_odds": 3.9,
-        "implied_prob": 0.2564,
-        "edge": -0.1708,
-        "ev_pct": -66.63,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Julia Polastri wins by finish in Round 3",
-        "our_prob": 0.102,
-        "sb_odds": 1.73,
-        "implied_prob": 0.578,
-        "edge": -0.476,
-        "ev_pct": -82.35,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -793,21 +679,6 @@
         "Round 1": 4.75,
         "Round 2": 5.9,
         "Round 3": 8.0,
-        "1st Minute of Round 1": 21.0,
-        "2nd Minute of Round 1": 15.0,
-        "3rd Minute of Round 1": 15.0,
-        "4th Minute of Round 1": 13.0,
-        "5th Minute of Round 1": 15.0,
-        "1st Minute of Round 2": 26.0,
-        "2nd Minute of Round 2": 20.0,
-        "3rd Minute of Round 2": 20.0,
-        "4th Minute of Round 2": 15.0,
-        "5th Minute of Round 2": 20.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 21.0,
-        "5th Minute of Round 3": 26.0,
         "Victor Valenzuela Round 1 or 2": 4.4,
         "Victor Valenzuela Round 3 or by Decision": 2.55,
         "Max Griffin Round 1 or 2": 6.5,
@@ -830,50 +701,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3129,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.2653,
-        "ev_pct": 557.09,
-        "kelly_pct": 6.96,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3129,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.2462,
-        "ev_pct": 369.35,
-        "kelly_pct": 6.6,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3129,
-        "sb_odds": 13.0,
-        "implied_prob": 0.0769,
-        "edge": 0.236,
-        "ev_pct": 306.77,
-        "kelly_pct": 6.39,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1533,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.1148,
-        "ev_pct": 298.58,
-        "kelly_pct": 2.99,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Max Griffin wins by finish in Round 1",
         "our_prob": 0.3784,
         "sb_odds": 9.5,
@@ -881,17 +708,6 @@
         "edge": 0.2732,
         "ev_pct": 259.5,
         "kelly_pct": 7.63,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1533,
-        "sb_odds": 20.0,
-        "implied_prob": 0.05,
-        "edge": 0.1033,
-        "ev_pct": 206.6,
-        "kelly_pct": 2.72,
         "is_value": true
       },
       {
@@ -903,28 +719,6 @@
         "edge": 0.061,
         "ev_pct": 158.7,
         "kelly_pct": 1.59,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Max Griffin wins by finish in Round 1",
-        "our_prob": 0.3784,
-        "sb_odds": 6.5,
-        "implied_prob": 0.1538,
-        "edge": 0.2246,
-        "ev_pct": 145.97,
-        "kelly_pct": 6.64,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1533,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.0866,
-        "ev_pct": 129.95,
-        "kelly_pct": 2.32,
         "is_value": true
       },
       {
@@ -1082,6 +876,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Max Griffin wins by Decision",
+        "our_prob": 0.3585,
+        "sb_odds": 3.25,
+        "implied_prob": 0.3077,
+        "edge": 0.0508,
+        "ev_pct": 16.51,
+        "kelly_pct": 1.83,
+        "is_value": true
+      },
+      {
         "bet_type": "distance",
         "description": "Fight ends before decision",
         "our_prob": 0.5087,
@@ -1093,17 +898,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0425,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0147,
-        "ev_pct": 53.0,
-        "kelly_pct": 0.38,
-        "is_value": false
-      },
-      {
         "bet_type": "method",
         "description": "Victor Valenzuela wins by SUB",
         "our_prob": 0.0805,
@@ -1112,28 +906,6 @@
         "edge": 0.0279,
         "ev_pct": 52.95,
         "kelly_pct": 0.74,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0425,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.004,
-        "ev_pct": 10.5,
-        "kelly_pct": 0.1,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Victor Valenzuela wins by finish in Round 1",
-        "our_prob": 0.2367,
-        "sb_odds": 4.4,
-        "implied_prob": 0.2273,
-        "edge": 0.0094,
-        "ev_pct": 4.14,
-        "kelly_pct": 0.3,
         "is_value": false
       },
       {
@@ -1149,23 +921,23 @@
       },
       {
         "bet_type": "winning_round",
+        "description": "Max Griffin wins in R3+ or by Decision",
+        "our_prob": 0.3284,
+        "sb_odds": 3.0,
+        "implied_prob": 0.3333,
+        "edge": -0.0049,
+        "ev_pct": -1.48,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 2",
         "our_prob": 0.1533,
         "sb_odds": 5.9,
         "implied_prob": 0.1695,
         "edge": -0.0162,
         "ev_pct": -9.55,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0425,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": -0.0051,
-        "ev_pct": -10.75,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -1291,6 +1063,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Victor Valenzuela wins in R3+ or by Decision",
+        "our_prob": 0.2054,
+        "sb_odds": 2.55,
+        "implied_prob": 0.3922,
+        "edge": -0.1868,
+        "ev_pct": -47.62,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Victor Valenzuela wins by KO/TKO",
         "our_prob": 0.1111,
@@ -1325,6 +1108,17 @@
       },
       {
         "bet_type": "winning_round",
+        "description": "Victor Valenzuela wins by Decision",
+        "our_prob": 0.1328,
+        "sb_odds": 3.0,
+        "implied_prob": 0.3333,
+        "edge": -0.2005,
+        "ev_pct": -60.16,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 3",
         "our_prob": 0.0425,
         "sb_odds": 8.0,
@@ -1342,28 +1136,6 @@
         "implied_prob": 0.1,
         "edge": -0.0679,
         "ev_pct": -67.85,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Max Griffin wins by finish in Round 3",
-        "our_prob": 0.0514,
-        "sb_odds": 3.0,
-        "implied_prob": 0.3333,
-        "edge": -0.2819,
-        "ev_pct": -84.58,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Victor Valenzuela wins by finish in Round 3",
-        "our_prob": 0.0321,
-        "sb_odds": 2.55,
-        "implied_prob": 0.3922,
-        "edge": -0.36,
-        "ev_pct": -91.8,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -1475,21 +1247,6 @@
         "Round 1": 3.25,
         "Round 2": 4.7,
         "Round 3": 8.25,
-        "1st Minute of Round 1": 14.0,
-        "2nd Minute of Round 1": 11.0,
-        "3rd Minute of Round 1": 11.0,
-        "4th Minute of Round 1": 9.0,
-        "5th Minute of Round 1": 11.0,
-        "1st Minute of Round 2": 20.0,
-        "2nd Minute of Round 2": 15.0,
-        "3rd Minute of Round 2": 15.0,
-        "4th Minute of Round 2": 13.0,
-        "5th Minute of Round 2": 15.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 23.0,
-        "5th Minute of Round 3": 26.0,
         "Francis Marshall Round 1 or 2": 2.35,
         "Francis Marshall Round 3 or by Decision": 2.15,
         "Lucas Brennan Round 1 or 2": 10.0,
@@ -1510,39 +1267,6 @@
       "alt_round": {}
     },
     "bet_analysis": [
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2758,
-        "sb_odds": 14.0,
-        "implied_prob": 0.0714,
-        "edge": 0.2044,
-        "ev_pct": 286.12,
-        "kelly_pct": 5.5,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1599,
-        "sb_odds": 20.0,
-        "implied_prob": 0.05,
-        "edge": 0.1099,
-        "ev_pct": 219.8,
-        "kelly_pct": 2.89,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2758,
-        "sb_odds": 11.0,
-        "implied_prob": 0.0909,
-        "edge": 0.1849,
-        "ev_pct": 203.38,
-        "kelly_pct": 5.08,
-        "is_value": true
-      },
       {
         "bet_type": "winning_round",
         "description": "Lucas Brennan wins by finish in Round 1",
@@ -1566,17 +1290,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Lucas Brennan wins by finish in Round 1",
-        "our_prob": 0.2588,
-        "sb_odds": 10.0,
-        "implied_prob": 0.1,
-        "edge": 0.1588,
-        "ev_pct": 158.82,
-        "kelly_pct": 4.41,
-        "is_value": true
-      },
-      {
         "bet_type": "moneyline",
         "description": "Lucas Brennan wins",
         "our_prob": 0.4732,
@@ -1585,28 +1298,6 @@
         "edge": 0.2845,
         "ev_pct": 150.77,
         "kelly_pct": 8.77,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2758,
-        "sb_odds": 9.0,
-        "implied_prob": 0.1111,
-        "edge": 0.1647,
-        "ev_pct": 148.22,
-        "kelly_pct": 4.63,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0686,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0408,
-        "ev_pct": 146.96,
-        "kelly_pct": 1.05,
         "is_value": true
       },
       {
@@ -1622,13 +1313,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1599,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.0932,
-        "ev_pct": 139.85,
-        "kelly_pct": 2.5,
+        "description": "Lucas Brennan wins in R3+ or by Decision",
+        "our_prob": 0.267,
+        "sb_odds": 8.25,
+        "implied_prob": 0.1212,
+        "edge": 0.1458,
+        "ev_pct": 120.32,
+        "kelly_pct": 4.15,
         "is_value": true
       },
       {
@@ -1640,17 +1331,6 @@
         "edge": 0.035,
         "ev_pct": 118.88,
         "kelly_pct": 0.9,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1599,
-        "sb_odds": 13.0,
-        "implied_prob": 0.0769,
-        "edge": 0.083,
-        "ev_pct": 107.87,
-        "kelly_pct": 2.25,
         "is_value": true
       },
       {
@@ -1676,6 +1356,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Lucas Brennan wins by Decision",
+        "our_prob": 0.2014,
+        "sb_odds": 9.5,
+        "implied_prob": 0.1053,
+        "edge": 0.0961,
+        "ev_pct": 91.33,
+        "kelly_pct": 2.69,
+        "is_value": true
+      },
+      {
         "bet_type": "method_combo",
         "description": "Lucas Brennan wins by KO or Sub",
         "our_prob": 0.2177,
@@ -1684,17 +1375,6 @@
         "edge": 0.0965,
         "ev_pct": 79.6,
         "kelly_pct": 2.74,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0686,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0301,
-        "ev_pct": 78.36,
-        "kelly_pct": 0.78,
         "is_value": true
       },
       {
@@ -1707,17 +1387,6 @@
         "ev_pct": 72.61,
         "kelly_pct": 3.78,
         "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0686,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.0251,
-        "ev_pct": 57.78,
-        "kelly_pct": 0.66,
-        "is_value": false
       },
       {
         "bet_type": "winning_round",
@@ -1874,6 +1543,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Francis Marshall wins by Decision",
+        "our_prob": 0.2944,
+        "sb_odds": 2.62,
+        "implied_prob": 0.3817,
+        "edge": -0.0873,
+        "ev_pct": -22.87,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Francis Marshall wins by DEC",
         "our_prob": 0.2944,
@@ -1941,12 +1621,12 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Francis Marshall wins by finish in Round 1",
-        "our_prob": 0.2882,
-        "sb_odds": 2.35,
-        "implied_prob": 0.4255,
-        "edge": -0.1373,
-        "ev_pct": -32.28,
+        "description": "Francis Marshall wins in R3+ or by Decision",
+        "our_prob": 0.2974,
+        "sb_odds": 2.15,
+        "implied_prob": 0.4651,
+        "edge": -0.1678,
+        "ev_pct": -36.07,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -1995,17 +1675,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Lucas Brennan wins by finish in Round 3",
-        "our_prob": 0.0644,
-        "sb_odds": 8.25,
-        "implied_prob": 0.1212,
-        "edge": -0.0568,
-        "ev_pct": -46.89,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "method",
         "description": "Francis Marshall wins by KO/TKO",
         "our_prob": 0.1075,
@@ -2013,17 +1682,6 @@
         "implied_prob": 0.2222,
         "edge": -0.1147,
         "ev_pct": -51.62,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Francis Marshall wins by finish in Round 3",
-        "our_prob": 0.0717,
-        "sb_odds": 2.15,
-        "implied_prob": 0.4651,
-        "edge": -0.3934,
-        "ev_pct": -84.59,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -2238,21 +1896,6 @@
         "Round 1": 5.0,
         "Round 2": 6.25,
         "Round 3": 8.25,
-        "1st Minute of Round 1": 21.0,
-        "2nd Minute of Round 1": 17.0,
-        "3rd Minute of Round 1": 17.0,
-        "4th Minute of Round 1": 14.0,
-        "5th Minute of Round 1": 17.0,
-        "1st Minute of Round 2": 26.0,
-        "2nd Minute of Round 2": 21.0,
-        "3rd Minute of Round 2": 21.0,
-        "4th Minute of Round 2": 17.0,
-        "5th Minute of Round 2": 21.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 23.0,
-        "5th Minute of Round 3": 26.0,
         "Mayra Bueno Silva Round 1 or 2": 13.0,
         "Mayra Bueno Silva Round 3 or by Decision": 5.1,
         "Michelle Montague Round 1 or 2": 3.6,
@@ -2275,39 +1918,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1828,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.1443,
-        "ev_pct": 375.28,
-        "kelly_pct": 3.75,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1828,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.1352,
-        "ev_pct": 283.88,
-        "kelly_pct": 3.55,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1685,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.1209,
-        "ev_pct": 253.85,
-        "kelly_pct": 3.17,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Mayra Bueno Silva wins by finish in Round 2",
         "our_prob": 0.2196,
         "sb_odds": 15.0,
@@ -2315,17 +1925,6 @@
         "edge": 0.1529,
         "ev_pct": 229.42,
         "kelly_pct": 4.1,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1828,
-        "sb_odds": 17.0,
-        "implied_prob": 0.0588,
-        "edge": 0.124,
-        "ev_pct": 210.76,
-        "kelly_pct": 3.29,
         "is_value": true
       },
       {
@@ -2352,17 +1951,6 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1685,
-        "sb_odds": 17.0,
-        "implied_prob": 0.0588,
-        "edge": 0.1097,
-        "ev_pct": 186.45,
-        "kelly_pct": 2.91,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Mayra Bueno Silva wins by finish in Round 1",
         "our_prob": 0.2024,
         "sb_odds": 13.0,
@@ -2370,17 +1958,6 @@
         "edge": 0.1255,
         "ev_pct": 163.16,
         "kelly_pct": 3.4,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0715,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0437,
-        "ev_pct": 157.4,
-        "kelly_pct": 1.12,
         "is_value": true
       },
       {
@@ -2392,17 +1969,6 @@
         "edge": 0.1453,
         "ev_pct": 145.3,
         "kelly_pct": 4.04,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1685,
-        "sb_odds": 14.0,
-        "implied_prob": 0.0714,
-        "edge": 0.0971,
-        "ev_pct": 135.9,
-        "kelly_pct": 2.61,
         "is_value": true
       },
       {
@@ -2439,17 +2005,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0715,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.033,
-        "ev_pct": 85.9,
-        "kelly_pct": 0.86,
-        "is_value": true
-      },
-      {
         "bet_type": "method",
         "description": "Mayra Bueno Silva wins by SUB",
         "our_prob": 0.1388,
@@ -2461,6 +2016,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Mayra Bueno Silva wins in R3+ or by Decision",
+        "our_prob": 0.3295,
+        "sb_odds": 5.1,
+        "implied_prob": 0.1961,
+        "edge": 0.1334,
+        "ev_pct": 68.03,
+        "kelly_pct": 4.15,
+        "is_value": true
+      },
+      {
         "bet_type": "method",
         "description": "Mayra Bueno Silva wins by DEC",
         "our_prob": 0.2936,
@@ -2469,6 +2035,17 @@
         "edge": 0.1182,
         "ev_pct": 67.35,
         "kelly_pct": 3.58,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Mayra Bueno Silva wins by Decision",
+        "our_prob": 0.2936,
+        "sb_odds": 5.5,
+        "implied_prob": 0.1818,
+        "edge": 0.1118,
+        "ev_pct": 61.48,
+        "kelly_pct": 3.42,
         "is_value": true
       },
       {
@@ -2503,17 +2080,6 @@
         "ev_pct": 10.77,
         "kelly_pct": 1.66,
         "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0715,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.028,
-        "ev_pct": 64.45,
-        "kelly_pct": 0.73,
-        "is_value": false
       },
       {
         "bet_type": "winning_round",
@@ -2681,17 +2247,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Michelle Montague wins by finish in Round 1",
-        "our_prob": 0.1962,
-        "sb_odds": 3.6,
-        "implied_prob": 0.2778,
-        "edge": -0.0816,
-        "ev_pct": -29.37,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "method_neutral",
         "description": "Fight ends by Submission",
         "our_prob": 0.2044,
@@ -2737,12 +2292,34 @@
       },
       {
         "bet_type": "winning_round",
+        "description": "Michelle Montague wins by Decision",
+        "our_prob": 0.2837,
+        "sb_odds": 2.1,
+        "implied_prob": 0.4762,
+        "edge": -0.1925,
+        "ev_pct": -40.42,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 3",
         "our_prob": 0.0715,
         "sb_odds": 8.25,
         "implied_prob": 0.1212,
         "edge": -0.0497,
         "ev_pct": -41.01,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Michelle Montague wins in R3+ or by Decision",
+        "our_prob": 0.3193,
+        "sb_odds": 1.8,
+        "implied_prob": 0.5556,
+        "edge": -0.2362,
+        "ev_pct": -42.52,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -2769,17 +2346,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Mayra Bueno Silva wins by finish in Round 3",
-        "our_prob": 0.0859,
-        "sb_odds": 5.1,
-        "implied_prob": 0.1961,
-        "edge": -0.1102,
-        "ev_pct": -56.19,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "method",
         "description": "Michelle Montague wins by SUB",
         "our_prob": 0.0656,
@@ -2787,17 +2353,6 @@
         "implied_prob": 0.2353,
         "edge": -0.1697,
         "ev_pct": -72.12,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Michelle Montague wins by finish in Round 3",
-        "our_prob": 0.0833,
-        "sb_odds": 1.8,
-        "implied_prob": 0.5556,
-        "edge": -0.4723,
-        "ev_pct": -85.01,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -2912,21 +2467,6 @@
         "Round 1": 1.97,
         "Round 2": 3.6,
         "Round 3": 8.0,
-        "1st Minute of Round 1": 9.0,
-        "2nd Minute of Round 1": 7.0,
-        "3rd Minute of Round 1": 7.0,
-        "4th Minute of Round 1": 6.0,
-        "5th Minute of Round 1": 7.0,
-        "1st Minute of Round 2": 15.0,
-        "2nd Minute of Round 2": 12.0,
-        "3rd Minute of Round 2": 12.0,
-        "4th Minute of Round 2": 10.0,
-        "5th Minute of Round 2": 12.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 21.0,
-        "5th Minute of Round 3": 26.0,
         "Jackson McVey Round 1 or 2": 1.94,
         "Jackson McVey Round 3 or by Decision": 5.8,
         "Sedriques Dumas Round 1 or 2": 3.7,
@@ -2948,28 +2488,6 @@
     },
     "bet_analysis": [
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3102,
-        "sb_odds": 9.0,
-        "implied_prob": 0.1111,
-        "edge": 0.1991,
-        "ev_pct": 179.18,
-        "kelly_pct": 5.6,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1799,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.1132,
-        "ev_pct": 169.85,
-        "kelly_pct": 3.03,
-        "is_value": true
-      },
-      {
         "bet_type": "method",
         "description": "Jackson McVey wins by DEC",
         "our_prob": 0.2598,
@@ -2982,13 +2500,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0637,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0359,
-        "ev_pct": 129.32,
-        "kelly_pct": 0.92,
+        "description": "Jackson McVey wins by Decision",
+        "our_prob": 0.2598,
+        "sb_odds": 8.5,
+        "implied_prob": 0.1176,
+        "edge": 0.1422,
+        "ev_pct": 120.83,
+        "kelly_pct": 4.03,
         "is_value": true
       },
       {
@@ -3000,28 +2518,6 @@
         "edge": 0.2421,
         "ev_pct": 118.64,
         "kelly_pct": 7.6,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3102,
-        "sb_odds": 7.0,
-        "implied_prob": 0.1429,
-        "edge": 0.1673,
-        "ev_pct": 117.14,
-        "kelly_pct": 4.88,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1799,
-        "sb_odds": 12.0,
-        "implied_prob": 0.0833,
-        "edge": 0.0966,
-        "ev_pct": 115.88,
-        "kelly_pct": 2.63,
         "is_value": true
       },
       {
@@ -3037,24 +2533,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.3102,
-        "sb_odds": 6.0,
-        "implied_prob": 0.1667,
-        "edge": 0.1435,
-        "ev_pct": 86.12,
-        "kelly_pct": 4.31,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1799,
-        "sb_odds": 10.0,
-        "implied_prob": 0.1,
-        "edge": 0.0799,
-        "ev_pct": 79.9,
-        "kelly_pct": 2.22,
+        "description": "Sedriques Dumas wins in R3+ or by Decision",
+        "our_prob": 0.269,
+        "sb_odds": 6.75,
+        "implied_prob": 0.1481,
+        "edge": 0.1208,
+        "ev_pct": 81.57,
+        "kelly_pct": 3.55,
         "is_value": true
       },
       {
@@ -3102,6 +2587,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Sedriques Dumas wins by Decision",
+        "our_prob": 0.1865,
+        "sb_odds": 8.5,
+        "implied_prob": 0.1176,
+        "edge": 0.0689,
+        "ev_pct": 58.53,
+        "kelly_pct": 1.95,
+        "is_value": true
+      },
+      {
         "bet_type": "method_combo",
         "description": "Sedriques Dumas wins by Sub or Decision",
         "our_prob": 0.3677,
@@ -3110,6 +2606,17 @@
         "edge": 0.1113,
         "ev_pct": 43.4,
         "kelly_pct": 3.74,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Jackson McVey wins in R3+ or by Decision",
+        "our_prob": 0.2409,
+        "sb_odds": 5.8,
+        "implied_prob": 0.1724,
+        "edge": 0.0685,
+        "ev_pct": 39.73,
+        "kelly_pct": 2.07,
         "is_value": true
       },
       {
@@ -3157,28 +2664,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0637,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0252,
-        "ev_pct": 65.62,
-        "kelly_pct": 0.66,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0637,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.0161,
-        "ev_pct": 33.77,
-        "kelly_pct": 0.42,
-        "is_value": false
-      },
-      {
         "bet_type": "method_combo",
         "description": "Sedriques Dumas wins by KO or Decision",
         "our_prob": 0.284,
@@ -3187,17 +2672,6 @@
         "edge": 0.0276,
         "ev_pct": 10.76,
         "kelly_pct": 0.93,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Sedriques Dumas wins by finish in Round 1",
-        "our_prob": 0.2955,
-        "sb_odds": 3.7,
-        "implied_prob": 0.2703,
-        "edge": 0.0252,
-        "ev_pct": 9.33,
-        "kelly_pct": 0.86,
         "is_value": false
       },
       {
@@ -3422,17 +2896,6 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Jackson McVey wins by finish in Round 1",
-        "our_prob": 0.2646,
-        "sb_odds": 1.94,
-        "implied_prob": 0.5155,
-        "edge": -0.2508,
-        "ev_pct": -48.66,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 3",
         "our_prob": 0.0637,
         "sb_odds": 8.0,
@@ -3450,28 +2913,6 @@
         "implied_prob": 0.5814,
         "edge": -0.3063,
         "ev_pct": -52.68,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Sedriques Dumas wins by finish in Round 3",
-        "our_prob": 0.0607,
-        "sb_odds": 6.75,
-        "implied_prob": 0.1481,
-        "edge": -0.0875,
-        "ev_pct": -59.04,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Jackson McVey wins by finish in Round 3",
-        "our_prob": 0.0543,
-        "sb_odds": 5.8,
-        "implied_prob": 0.1724,
-        "edge": -0.1181,
-        "ev_pct": -68.48,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -3597,21 +3038,6 @@
         "Round 1": 3.6,
         "Round 2": 5.0,
         "Round 3": 7.0,
-        "1st Minute of Round 1": 15.0,
-        "2nd Minute of Round 1": 12.0,
-        "3rd Minute of Round 1": 12.0,
-        "4th Minute of Round 1": 10.0,
-        "5th Minute of Round 1": 12.0,
-        "1st Minute of Round 2": 21.0,
-        "2nd Minute of Round 2": 17.0,
-        "3rd Minute of Round 2": 17.0,
-        "4th Minute of Round 2": 14.0,
-        "5th Minute of Round 2": 17.0,
-        "1st Minute of Round 3": 31.0,
-        "2nd Minute of Round 3": 23.0,
-        "3rd Minute of Round 3": 23.0,
-        "4th Minute of Round 3": 20.0,
-        "5th Minute of Round 3": 23.0,
         "Rodolfo Vieira Round 1 or 2": 2.7,
         "Rodolfo Vieira Round 3 or by Decision": 2.5,
         "Eric McConico Round 1 or 2": 9.0,
@@ -3633,61 +3059,6 @@
     },
     "bet_analysis": [
       {
-        "bet_type": "method",
-        "description": "Rodolfo Vieira wins by DEC",
-        "our_prob": 0.379,
-        "sb_odds": 51.0,
-        "implied_prob": 0.0196,
-        "edge": 0.3594,
-        "ev_pct": 1832.9,
-        "kelly_pct": 9.16,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1548,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.1072,
-        "ev_pct": 225.08,
-        "kelly_pct": 2.81,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2065,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.1398,
-        "ev_pct": 209.75,
-        "kelly_pct": 3.75,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1548,
-        "sb_odds": 17.0,
-        "implied_prob": 0.0588,
-        "edge": 0.096,
-        "ev_pct": 163.16,
-        "kelly_pct": 2.55,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2065,
-        "sb_odds": 12.0,
-        "implied_prob": 0.0833,
-        "edge": 0.1232,
-        "ev_pct": 147.8,
-        "kelly_pct": 3.36,
-        "is_value": true
-      },
-      {
         "bet_type": "winning_round",
         "description": "Eric McConico wins by finish in Round 1",
         "our_prob": 0.2164,
@@ -3696,39 +3067,6 @@
         "edge": 0.1212,
         "ev_pct": 127.27,
         "kelly_pct": 3.35,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1548,
-        "sb_odds": 14.0,
-        "implied_prob": 0.0714,
-        "edge": 0.0834,
-        "ev_pct": 116.72,
-        "kelly_pct": 2.24,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2065,
-        "sb_odds": 10.0,
-        "implied_prob": 0.1,
-        "edge": 0.1065,
-        "ev_pct": 106.5,
-        "kelly_pct": 2.96,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Eric McConico wins by finish in Round 1",
-        "our_prob": 0.2164,
-        "sb_odds": 9.0,
-        "implied_prob": 0.1111,
-        "edge": 0.1053,
-        "ev_pct": 94.8,
-        "kelly_pct": 2.96,
         "is_value": true
       },
       {
@@ -3751,6 +3089,17 @@
         "edge": 0.1326,
         "ev_pct": 42.84,
         "kelly_pct": 4.8,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Eric McConico wins in R3+ or by Decision",
+        "our_prob": 0.2824,
+        "sb_odds": 4.4,
+        "implied_prob": 0.2273,
+        "edge": 0.0551,
+        "ev_pct": 24.26,
+        "kelly_pct": 1.78,
         "is_value": true
       },
       {
@@ -3787,6 +3136,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Rodolfo Vieira wins by Decision",
+        "our_prob": 0.379,
+        "sb_odds": 3.2,
+        "implied_prob": 0.3125,
+        "edge": 0.0665,
+        "ev_pct": 21.28,
+        "kelly_pct": 2.42,
+        "is_value": true
+      },
+      {
         "bet_type": "distance",
         "description": "Fight goes to decision",
         "our_prob": 0.5781,
@@ -3809,17 +3169,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0605,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.0282,
-        "ev_pct": 87.55,
-        "kelly_pct": 0.73,
-        "is_value": false
-      },
-      {
         "bet_type": "method",
         "description": "Eric McConico wins by SUB",
         "our_prob": 0.0459,
@@ -3828,28 +3177,6 @@
         "edge": 0.0165,
         "ev_pct": 56.06,
         "kelly_pct": 0.42,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0605,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.017,
-        "ev_pct": 39.15,
-        "kelly_pct": 0.44,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0605,
-        "sb_odds": 20.0,
-        "implied_prob": 0.05,
-        "edge": 0.0105,
-        "ev_pct": 21.0,
-        "kelly_pct": 0.28,
         "is_value": false
       },
       {
@@ -3919,6 +3246,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Eric McConico wins by Decision",
+        "our_prob": 0.1991,
+        "sb_odds": 5.0,
+        "implied_prob": 0.2,
+        "edge": -0.0009,
+        "ev_pct": -0.45,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "total_rounds",
         "description": "Over 2.5 rounds",
         "our_prob": 0.5782,
@@ -3970,6 +3308,17 @@
         "implied_prob": 0.6135,
         "edge": -0.053,
         "ev_pct": -8.64,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Rodolfo Vieira wins in R3+ or by Decision",
+        "our_prob": 0.3562,
+        "sb_odds": 2.5,
+        "implied_prob": 0.4,
+        "edge": -0.0438,
+        "ev_pct": -10.95,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -4073,17 +3422,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Rodolfo Vieira wins by finish in Round 1",
-        "our_prob": 0.273,
-        "sb_odds": 2.7,
-        "implied_prob": 0.3704,
-        "edge": -0.0974,
-        "ev_pct": -26.29,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "distance",
         "description": "Fight ends before decision",
         "our_prob": 0.4219,
@@ -4157,28 +3495,6 @@
         "implied_prob": 0.1429,
         "edge": -0.0824,
         "ev_pct": -57.65,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Eric McConico wins by finish in Round 3",
-        "our_prob": 0.0634,
-        "sb_odds": 4.4,
-        "implied_prob": 0.2273,
-        "edge": -0.1639,
-        "ev_pct": -72.1,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Rodolfo Vieira wins by finish in Round 3",
-        "our_prob": 0.08,
-        "sb_odds": 2.5,
-        "implied_prob": 0.4,
-        "edge": -0.32,
-        "ev_pct": -80.0,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -4293,21 +3609,6 @@
         "Round 1": 1.9,
         "Round 2": 3.9,
         "Round 3": 7.75,
-        "1st Minute of Round 1": 9.0,
-        "2nd Minute of Round 1": 7.0,
-        "3rd Minute of Round 1": 7.0,
-        "4th Minute of Round 1": 6.0,
-        "5th Minute of Round 1": 7.0,
-        "1st Minute of Round 2": 17.0,
-        "2nd Minute of Round 2": 13.0,
-        "3rd Minute of Round 2": 13.0,
-        "4th Minute of Round 2": 11.0,
-        "5th Minute of Round 2": 13.0,
-        "1st Minute of Round 3": 34.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 21.0,
-        "5th Minute of Round 3": 26.0,
         "Marcus Buchecha Round 1 or 2": 2.25,
         "Marcus Buchecha Round 3 or by Decision": 5.25,
         "Ryan Spann Round 1 or 2": 2.9,
@@ -4328,17 +3629,6 @@
       "alt_round": {}
     },
     "bet_analysis": [
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1857,
-        "sb_odds": 17.0,
-        "implied_prob": 0.0588,
-        "edge": 0.1269,
-        "ev_pct": 215.69,
-        "kelly_pct": 3.37,
-        "is_value": true
-      },
       {
         "bet_type": "method_neutral",
         "description": "Fight goes to Decision",
@@ -4374,13 +3664,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1857,
-        "sb_odds": 13.0,
-        "implied_prob": 0.0769,
-        "edge": 0.1088,
-        "ev_pct": 141.41,
-        "kelly_pct": 2.95,
+        "description": "Ryan Spann wins in R3+ or by Decision",
+        "our_prob": 0.3135,
+        "sb_odds": 7.5,
+        "implied_prob": 0.1333,
+        "edge": 0.1802,
+        "ev_pct": 135.16,
+        "kelly_pct": 5.2,
         "is_value": true
       },
       {
@@ -4396,13 +3686,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2477,
-        "sb_odds": 9.0,
-        "implied_prob": 0.1111,
-        "edge": 0.1366,
-        "ev_pct": 122.93,
-        "kelly_pct": 3.84,
+        "description": "Marcus Buchecha wins by Decision",
+        "our_prob": 0.3272,
+        "sb_odds": 7.0,
+        "implied_prob": 0.1429,
+        "edge": 0.1843,
+        "ev_pct": 129.04,
+        "kelly_pct": 5.38,
         "is_value": true
       },
       {
@@ -4418,13 +3708,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1857,
-        "sb_odds": 11.0,
-        "implied_prob": 0.0909,
-        "edge": 0.0948,
-        "ev_pct": 104.27,
-        "kelly_pct": 2.61,
+        "description": "Ryan Spann wins by Decision",
+        "our_prob": 0.1924,
+        "sb_odds": 10.0,
+        "implied_prob": 0.1,
+        "edge": 0.0924,
+        "ev_pct": 92.4,
+        "kelly_pct": 2.57,
         "is_value": true
       },
       {
@@ -4447,17 +3737,6 @@
         "edge": 0.2607,
         "ev_pct": 85.25,
         "kelly_pct": 9.39,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2477,
-        "sb_odds": 7.0,
-        "implied_prob": 0.1429,
-        "edge": 0.1048,
-        "ev_pct": 73.39,
-        "kelly_pct": 3.06,
         "is_value": true
       },
       {
@@ -4494,17 +3773,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2477,
-        "sb_odds": 6.0,
-        "implied_prob": 0.1667,
-        "edge": 0.081,
-        "ev_pct": 48.62,
-        "kelly_pct": 2.43,
-        "is_value": true
-      },
-      {
         "bet_type": "round_survival",
         "description": "Fight reaches Round 2",
         "our_prob": 0.7523,
@@ -4513,6 +3781,17 @@
         "edge": 0.1998,
         "ev_pct": 36.17,
         "kelly_pct": 11.16,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Marcus Buchecha wins in R3+ or by Decision",
+        "our_prob": 0.253,
+        "sb_odds": 5.25,
+        "implied_prob": 0.1905,
+        "edge": 0.0625,
+        "ev_pct": 32.8,
+        "kelly_pct": 1.93,
         "is_value": true
       },
       {
@@ -4550,28 +3829,6 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0469,
-        "sb_odds": 34.0,
-        "implied_prob": 0.0294,
-        "edge": 0.0175,
-        "ev_pct": 59.46,
-        "kelly_pct": 0.45,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0469,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0084,
-        "ev_pct": 21.94,
-        "kelly_pct": 0.22,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Marcus Buchecha wins by finish in Round 2",
         "our_prob": 0.1726,
         "sb_odds": 6.0,
@@ -4582,17 +3839,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0469,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": -0.0007,
-        "ev_pct": -1.51,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "method_combo",
         "description": "Ryan Spann wins by KO or Decision",
         "our_prob": 0.3185,
@@ -4600,17 +3846,6 @@
         "implied_prob": 0.3636,
         "edge": -0.0451,
         "ev_pct": -12.41,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Ryan Spann wins by finish in Round 1",
-        "our_prob": 0.2854,
-        "sb_odds": 2.9,
-        "implied_prob": 0.3448,
-        "edge": -0.0595,
-        "ev_pct": -17.24,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -4758,17 +3993,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Marcus Buchecha wins by finish in Round 1",
-        "our_prob": 0.2302,
-        "sb_odds": 2.25,
-        "implied_prob": 0.4444,
-        "edge": -0.2142,
-        "ev_pct": -48.2,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "round_survival",
         "description": "Finish before Round 2",
         "our_prob": 0.2477,
@@ -4814,17 +4038,6 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Ryan Spann wins by finish in Round 3",
-        "our_prob": 0.054,
-        "sb_odds": 7.5,
-        "implied_prob": 0.1333,
-        "edge": -0.0793,
-        "ev_pct": -59.47,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 3",
         "our_prob": 0.0469,
         "sb_odds": 7.75,
@@ -4842,17 +4055,6 @@
         "implied_prob": 0.5,
         "edge": -0.3327,
         "ev_pct": -66.54,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Marcus Buchecha wins by finish in Round 3",
-        "our_prob": 0.0436,
-        "sb_odds": 5.25,
-        "implied_prob": 0.1905,
-        "edge": -0.1469,
-        "ev_pct": -77.11,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -4978,21 +4180,6 @@
         "Round 1": 4.75,
         "Round 2": 5.8,
         "Round 3": 8.0,
-        "1st Minute of Round 1": 21.0,
-        "2nd Minute of Round 1": 15.0,
-        "3rd Minute of Round 1": 15.0,
-        "4th Minute of Round 1": 13.0,
-        "5th Minute of Round 1": 15.0,
-        "1st Minute of Round 2": 23.0,
-        "2nd Minute of Round 2": 19.0,
-        "3rd Minute of Round 2": 19.0,
-        "4th Minute of Round 2": 15.0,
-        "5th Minute of Round 2": 19.0,
-        "1st Minute of Round 3": 36.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 21.0,
-        "5th Minute of Round 3": 26.0,
         "Montel Jackson Round 1 or 2": 3.9,
         "Montel Jackson Round 3 or by Decision": 2.4,
         "Raoni Barcelos Round 1 or 2": 7.75,
@@ -5015,28 +4202,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2845,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.2369,
-        "ev_pct": 497.45,
-        "kelly_pct": 6.22,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2845,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.2178,
-        "ev_pct": 326.75,
-        "kelly_pct": 5.83,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Raoni Barcelos wins by finish in Round 1",
         "our_prob": 0.3783,
         "sb_odds": 10.0,
@@ -5044,61 +4209,6 @@
         "edge": 0.2783,
         "ev_pct": 278.32,
         "kelly_pct": 7.73,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2845,
-        "sb_odds": 13.0,
-        "implied_prob": 0.0769,
-        "edge": 0.2076,
-        "ev_pct": 269.85,
-        "kelly_pct": 5.62,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1394,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.0959,
-        "ev_pct": 220.62,
-        "kelly_pct": 2.51,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Raoni Barcelos wins by finish in Round 1",
-        "our_prob": 0.3783,
-        "sb_odds": 7.75,
-        "implied_prob": 0.129,
-        "edge": 0.2493,
-        "ev_pct": 193.2,
-        "kelly_pct": 7.16,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1394,
-        "sb_odds": 19.0,
-        "implied_prob": 0.0526,
-        "edge": 0.0868,
-        "ev_pct": 164.86,
-        "kelly_pct": 2.29,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1394,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.0727,
-        "ev_pct": 109.1,
-        "kelly_pct": 1.95,
         "is_value": true
       },
       {
@@ -5257,25 +4367,14 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0494,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0216,
-        "ev_pct": 77.84,
-        "kelly_pct": 0.56,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0494,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0109,
-        "ev_pct": 28.44,
-        "kelly_pct": 0.28,
-        "is_value": false
+        "description": "Raoni Barcelos wins in R3+ or by Decision",
+        "our_prob": 0.3626,
+        "sb_odds": 3.25,
+        "implied_prob": 0.3077,
+        "edge": 0.0549,
+        "ev_pct": 17.84,
+        "kelly_pct": 1.98,
+        "is_value": true
       },
       {
         "bet_type": "method",
@@ -5290,13 +4389,13 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0494,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.0018,
-        "ev_pct": 3.74,
-        "kelly_pct": 0.05,
+        "description": "Raoni Barcelos wins by Decision",
+        "our_prob": 0.3077,
+        "sb_odds": 3.5,
+        "implied_prob": 0.2857,
+        "edge": 0.022,
+        "ev_pct": 7.69,
+        "kelly_pct": 0.77,
         "is_value": false
       },
       {
@@ -5329,17 +4428,6 @@
         "implied_prob": 0.6061,
         "edge": -0.0794,
         "ev_pct": -13.09,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Montel Jackson wins by finish in Round 1",
-        "our_prob": 0.2228,
-        "sb_odds": 3.9,
-        "implied_prob": 0.2564,
-        "edge": -0.0336,
-        "ev_pct": -13.12,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -5465,6 +4553,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Montel Jackson wins by Decision",
+        "our_prob": 0.219,
+        "sb_odds": 2.87,
+        "implied_prob": 0.3484,
+        "edge": -0.1294,
+        "ev_pct": -37.15,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method_combo",
         "description": "Montel Jackson wins by KO or Sub",
         "our_prob": 0.2018,
@@ -5498,6 +4597,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Montel Jackson wins in R3+ or by Decision",
+        "our_prob": 0.2135,
+        "sb_odds": 2.4,
+        "implied_prob": 0.4167,
+        "edge": -0.2032,
+        "ev_pct": -48.76,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Montel Jackson wins by KO/TKO",
         "our_prob": 0.1172,
@@ -5527,28 +4637,6 @@
         "implied_prob": 0.1053,
         "edge": -0.0666,
         "ev_pct": -63.25,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Raoni Barcelos wins by finish in Round 3",
-        "our_prob": 0.0657,
-        "sb_odds": 3.25,
-        "implied_prob": 0.3077,
-        "edge": -0.242,
-        "ev_pct": -78.65,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Montel Jackson wins by finish in Round 3",
-        "our_prob": 0.0387,
-        "sb_odds": 2.4,
-        "implied_prob": 0.4167,
-        "edge": -0.378,
-        "ev_pct": -90.72,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -5663,21 +4751,6 @@
         "Round 1": 4.25,
         "Round 2": 5.8,
         "Round 3": 7.5,
-        "1st Minute of Round 1": 18.0,
-        "2nd Minute of Round 1": 14.0,
-        "3rd Minute of Round 1": 14.0,
-        "4th Minute of Round 1": 12.0,
-        "5th Minute of Round 1": 14.0,
-        "1st Minute of Round 2": 23.0,
-        "2nd Minute of Round 2": 19.0,
-        "3rd Minute of Round 2": 19.0,
-        "4th Minute of Round 2": 15.0,
-        "5th Minute of Round 2": 19.0,
-        "1st Minute of Round 3": 34.0,
-        "2nd Minute of Round 3": 26.0,
-        "3rd Minute of Round 3": 26.0,
-        "4th Minute of Round 3": 21.0,
-        "5th Minute of Round 3": 26.0,
         "Davey Grant Round 1 or 2": 4.4,
         "Davey Grant Round 3 or by Decision": 2.75,
         "Juan Martinetti Round 1 or 2": 5.4,
@@ -5700,83 +4773,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2794,
-        "sb_odds": 18.0,
-        "implied_prob": 0.0556,
-        "edge": 0.2238,
-        "ev_pct": 402.92,
-        "kelly_pct": 5.93,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2794,
-        "sb_odds": 14.0,
-        "implied_prob": 0.0714,
-        "edge": 0.208,
-        "ev_pct": 291.16,
-        "kelly_pct": 5.6,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.162,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.1185,
-        "ev_pct": 272.6,
-        "kelly_pct": 3.1,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2794,
-        "sb_odds": 12.0,
-        "implied_prob": 0.0833,
-        "edge": 0.1961,
-        "ev_pct": 235.28,
-        "kelly_pct": 5.35,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.162,
-        "sb_odds": 19.0,
-        "implied_prob": 0.0526,
-        "edge": 0.1094,
-        "ev_pct": 207.8,
-        "kelly_pct": 2.89,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0796,
-        "sb_odds": 34.0,
-        "implied_prob": 0.0294,
-        "edge": 0.0502,
-        "ev_pct": 170.64,
-        "kelly_pct": 1.29,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.162,
-        "sb_odds": 15.0,
-        "implied_prob": 0.0667,
-        "edge": 0.0953,
-        "ev_pct": 143.0,
-        "kelly_pct": 2.55,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Adrian Luna Martinetti wins by finish in Round 1",
         "our_prob": 0.2811,
         "sb_odds": 8.0,
@@ -5784,17 +4780,6 @@
         "edge": 0.1561,
         "ev_pct": 124.91,
         "kelly_pct": 4.46,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0796,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0411,
-        "ev_pct": 106.96,
-        "kelly_pct": 1.07,
         "is_value": true
       },
       {
@@ -5806,17 +4791,6 @@
         "edge": 0.1036,
         "ev_pct": 98.45,
         "kelly_pct": 2.9,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.0796,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.032,
-        "ev_pct": 67.16,
-        "kelly_pct": 0.84,
         "is_value": true
       },
       {
@@ -5850,17 +4824,6 @@
         "edge": 0.0577,
         "ev_pct": 54.86,
         "kelly_pct": 1.61,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Adrian Luna Martinetti wins by finish in Round 1",
-        "our_prob": 0.2811,
-        "sb_odds": 5.4,
-        "implied_prob": 0.1852,
-        "edge": 0.0959,
-        "ev_pct": 51.81,
-        "kelly_pct": 2.94,
         "is_value": true
       },
       {
@@ -5963,17 +4926,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Davey Grant wins by finish in Round 1",
-        "our_prob": 0.2552,
-        "sb_odds": 4.4,
-        "implied_prob": 0.2273,
-        "edge": 0.028,
-        "ev_pct": 12.31,
-        "kelly_pct": 0.9,
-        "is_value": false
-      },
-      {
         "bet_type": "method_combo",
         "description": "Davey Grant wins by Sub or Decision",
         "our_prob": 0.3705,
@@ -6047,6 +4999,28 @@
         "implied_prob": 0.0909,
         "edge": -0.0108,
         "ev_pct": -11.9,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Adrian Luna Martinetti wins in R3+ or by Decision",
+        "our_prob": 0.2928,
+        "sb_odds": 3.0,
+        "implied_prob": 0.3333,
+        "edge": -0.0405,
+        "ev_pct": -12.15,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Davey Grant wins by Decision",
+        "our_prob": 0.2713,
+        "sb_odds": 3.2,
+        "implied_prob": 0.3125,
+        "edge": -0.0412,
+        "ev_pct": -13.18,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -6139,8 +5113,30 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Davey Grant wins in R3+ or by Decision",
+        "our_prob": 0.2659,
+        "sb_odds": 2.75,
+        "implied_prob": 0.3636,
+        "edge": -0.0978,
+        "ev_pct": -26.89,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Adrian Luna Martinetti wins by DEC",
+        "our_prob": 0.2078,
+        "sb_odds": 3.5,
+        "implied_prob": 0.2857,
+        "edge": -0.0779,
+        "ev_pct": -27.27,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Adrian Luna Martinetti wins by Decision",
         "our_prob": 0.2078,
         "sb_odds": 3.5,
         "implied_prob": 0.2857,
@@ -6212,28 +5208,6 @@
         "implied_prob": 0.2381,
         "edge": -0.1322,
         "ev_pct": -55.52,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Adrian Luna Martinetti wins by finish in Round 3",
-        "our_prob": 0.0801,
-        "sb_odds": 3.0,
-        "implied_prob": 0.3333,
-        "edge": -0.2532,
-        "ev_pct": -75.97,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Davey Grant wins by finish in Round 3",
-        "our_prob": 0.0727,
-        "sb_odds": 2.75,
-        "implied_prob": 0.3636,
-        "edge": -0.2909,
-        "ev_pct": -80.0,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -6348,21 +5322,6 @@
         "Round 1": 5.1,
         "Round 2": 6.75,
         "Round 3": 9.25,
-        "1st Minute of Round 1": 21.0,
-        "2nd Minute of Round 1": 17.0,
-        "3rd Minute of Round 1": 17.0,
-        "4th Minute of Round 1": 14.0,
-        "5th Minute of Round 1": 17.0,
-        "1st Minute of Round 2": 26.0,
-        "2nd Minute of Round 2": 23.0,
-        "3rd Minute of Round 2": 23.0,
-        "4th Minute of Round 2": 19.0,
-        "5th Minute of Round 2": 23.0,
-        "1st Minute of Round 3": 41.0,
-        "2nd Minute of Round 3": 31.0,
-        "3rd Minute of Round 3": 31.0,
-        "4th Minute of Round 3": 26.0,
-        "5th Minute of Round 3": 31.0,
         "Rafa Garcia Round 1 or 2": 6.75,
         "Rafa Garcia Round 3 or by Decision": 2.7,
         "Alexander Hernandez Round 1 or 2": 5.2,
@@ -6385,50 +5344,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1577,
-        "sb_odds": 21.0,
-        "implied_prob": 0.0476,
-        "edge": 0.1101,
-        "ev_pct": 231.17,
-        "kelly_pct": 2.89,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1182,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0797,
-        "ev_pct": 207.32,
-        "kelly_pct": 2.07,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1182,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.0747,
-        "ev_pct": 171.86,
-        "kelly_pct": 1.95,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1577,
-        "sb_odds": 17.0,
-        "implied_prob": 0.0588,
-        "edge": 0.0989,
-        "ev_pct": 168.09,
-        "kelly_pct": 2.63,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Rafa Garcia wins by finish in Round 1",
         "our_prob": 0.2673,
         "sb_odds": 9.5,
@@ -6440,28 +5355,6 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1182,
-        "sb_odds": 19.0,
-        "implied_prob": 0.0526,
-        "edge": 0.0656,
-        "ev_pct": 124.58,
-        "kelly_pct": 1.73,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.1577,
-        "sb_odds": 14.0,
-        "implied_prob": 0.0714,
-        "edge": 0.0863,
-        "ev_pct": 120.78,
-        "kelly_pct": 2.32,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Rafa Garcia wins by finish in Round 2",
         "our_prob": 0.2003,
         "sb_odds": 10.5,
@@ -6469,17 +5362,6 @@
         "edge": 0.1051,
         "ev_pct": 110.36,
         "kelly_pct": 2.9,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Rafa Garcia wins by finish in Round 1",
-        "our_prob": 0.2673,
-        "sb_odds": 6.75,
-        "implied_prob": 0.1481,
-        "edge": 0.1191,
-        "ev_pct": 80.42,
-        "kelly_pct": 3.5,
         "is_value": true
       },
       {
@@ -6527,6 +5409,17 @@
         "is_value": true
       },
       {
+        "bet_type": "winning_round",
+        "description": "Rafa Garcia wins by Decision",
+        "our_prob": 0.3939,
+        "sb_odds": 3.0,
+        "implied_prob": 0.3333,
+        "edge": 0.0606,
+        "ev_pct": 18.17,
+        "kelly_pct": 2.27,
+        "is_value": true
+      },
+      {
         "bet_type": "moneyline",
         "description": "Rafa Garcia wins",
         "our_prob": 0.5575,
@@ -6550,36 +5443,14 @@
       },
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.053,
-        "sb_odds": 41.0,
-        "implied_prob": 0.0244,
-        "edge": 0.0286,
-        "ev_pct": 117.3,
-        "kelly_pct": 0.73,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.053,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.0207,
-        "ev_pct": 64.3,
-        "kelly_pct": 0.54,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.053,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0145,
-        "ev_pct": 37.8,
-        "kelly_pct": 0.38,
-        "is_value": false
+        "description": "Rafa Garcia wins in R3+ or by Decision",
+        "our_prob": 0.4037,
+        "sb_odds": 2.7,
+        "implied_prob": 0.3704,
+        "edge": 0.0333,
+        "ev_pct": 8.99,
+        "kelly_pct": 1.32,
+        "is_value": true
       },
       {
         "bet_type": "method",
@@ -6590,17 +5461,6 @@
         "edge": 0.0062,
         "ev_pct": 16.22,
         "kelly_pct": 0.16,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Alexander Hernandez wins by finish in Round 1",
-        "our_prob": 0.2122,
-        "sb_odds": 5.2,
-        "implied_prob": 0.1923,
-        "edge": 0.0199,
-        "ev_pct": 10.34,
-        "kelly_pct": 0.62,
         "is_value": false
       },
       {
@@ -6792,12 +5652,34 @@
       },
       {
         "bet_type": "winning_round",
+        "description": "Alexander Hernandez wins in R3+ or by Decision",
+        "our_prob": 0.3204,
+        "sb_odds": 2.5,
+        "implied_prob": 0.4,
+        "edge": -0.0796,
+        "ev_pct": -19.89,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 2",
         "our_prob": 0.1182,
         "sb_odds": 6.75,
         "implied_prob": 0.1481,
         "edge": -0.0299,
         "ev_pct": -20.22,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Alexander Hernandez wins by Decision",
+        "our_prob": 0.2772,
+        "sb_odds": 2.87,
+        "implied_prob": 0.3484,
+        "edge": -0.0712,
+        "ev_pct": -20.44,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -6897,28 +5779,6 @@
         "implied_prob": 0.1081,
         "edge": -0.0551,
         "ev_pct": -50.98,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Rafa Garcia wins by finish in Round 3",
-        "our_prob": 0.0898,
-        "sb_odds": 2.7,
-        "implied_prob": 0.3704,
-        "edge": -0.2805,
-        "ev_pct": -75.75,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Alexander Hernandez wins by finish in Round 3",
-        "our_prob": 0.0713,
-        "sb_odds": 2.5,
-        "implied_prob": 0.4,
-        "edge": -0.3287,
-        "ev_pct": -82.17,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -7033,21 +5893,6 @@
         "Round 1": 9.75,
         "Round 2": 10.0,
         "Round 3": 11.0,
-        "1st Minute of Round 1": 41.0,
-        "2nd Minute of Round 1": 34.0,
-        "3rd Minute of Round 1": 34.0,
-        "4th Minute of Round 1": 26.0,
-        "5th Minute of Round 1": 34.0,
-        "1st Minute of Round 2": 46.0,
-        "2nd Minute of Round 2": 36.0,
-        "3rd Minute of Round 2": 36.0,
-        "4th Minute of Round 2": 26.0,
-        "5th Minute of Round 2": 36.0,
-        "1st Minute of Round 3": 51.0,
-        "2nd Minute of Round 3": 36.0,
-        "3rd Minute of Round 3": 36.0,
-        "4th Minute of Round 3": 31.0,
-        "5th Minute of Round 3": 36.0,
         "Norma Dumont Round 1 or 2": 10.0,
         "Norma Dumont Round 3 or by Decision": 1.57,
         "Joselyne Edwards Round 1 or 2": 9.75,
@@ -7070,105 +5915,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1081,
-        "sb_odds": 51.0,
-        "implied_prob": 0.0196,
-        "edge": 0.0885,
-        "ev_pct": 451.31,
-        "kelly_pct": 2.26,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.133,
-        "sb_odds": 41.0,
-        "implied_prob": 0.0244,
-        "edge": 0.1086,
-        "ev_pct": 445.3,
-        "kelly_pct": 2.78,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1033,
-        "sb_odds": 46.0,
-        "implied_prob": 0.0217,
-        "edge": 0.0816,
-        "ev_pct": 375.18,
-        "kelly_pct": 2.08,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.133,
-        "sb_odds": 34.0,
-        "implied_prob": 0.0294,
-        "edge": 0.1036,
-        "ev_pct": 352.2,
-        "kelly_pct": 2.67,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1081,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0803,
-        "ev_pct": 289.16,
-        "kelly_pct": 2.07,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1033,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.0755,
-        "ev_pct": 271.88,
-        "kelly_pct": 1.94,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.133,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0945,
-        "ev_pct": 245.8,
-        "kelly_pct": 2.46,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1081,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.0758,
-        "ev_pct": 235.11,
-        "kelly_pct": 1.96,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1033,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0648,
-        "ev_pct": 168.58,
-        "kelly_pct": 1.69,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Norma Dumont wins by finish in Round 1",
         "our_prob": 0.1986,
         "sb_odds": 12.0,
@@ -7187,17 +5933,6 @@
         "edge": 0.1043,
         "ev_pct": 125.1,
         "kelly_pct": 2.84,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Norma Dumont wins by finish in Round 1",
-        "our_prob": 0.1986,
-        "sb_odds": 10.0,
-        "implied_prob": 0.1,
-        "edge": 0.0986,
-        "ev_pct": 98.59,
-        "kelly_pct": 2.74,
         "is_value": true
       },
       {
@@ -7231,17 +5966,6 @@
         "edge": 0.0709,
         "ev_pct": 85.1,
         "kelly_pct": 1.93,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Joselyne Edwards wins by finish in Round 1",
-        "our_prob": 0.1876,
-        "sb_odds": 9.75,
-        "implied_prob": 0.1026,
-        "edge": 0.085,
-        "ev_pct": 82.9,
-        "kelly_pct": 2.37,
         "is_value": true
       },
       {
@@ -7334,6 +6058,17 @@
       },
       {
         "bet_type": "winning_round",
+        "description": "Joselyne Edwards wins in R3+ or by Decision",
+        "our_prob": 0.371,
+        "sb_odds": 3.7,
+        "implied_prob": 0.2703,
+        "edge": 0.1007,
+        "ev_pct": 37.26,
+        "kelly_pct": 3.45,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
         "description": "Fight ends by finish in Round 1",
         "our_prob": 0.133,
         "sb_odds": 9.75,
@@ -7385,6 +6120,17 @@
         "edge": 0.0529,
         "ev_pct": 22.48,
         "kelly_pct": 1.73,
+        "is_value": true
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Joselyne Edwards wins by Decision",
+        "our_prob": 0.2882,
+        "sb_odds": 4.0,
+        "implied_prob": 0.25,
+        "edge": 0.0382,
+        "ev_pct": 15.28,
+        "kelly_pct": 1.27,
         "is_value": true
       },
       {
@@ -7553,6 +6299,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Norma Dumont wins in R3+ or by Decision",
+        "our_prob": 0.3927,
+        "sb_odds": 1.57,
+        "implied_prob": 0.6369,
+        "edge": -0.2442,
+        "ev_pct": -38.34,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "method",
         "description": "Norma Dumont wins by DEC",
         "our_prob": 0.3674,
@@ -7560,6 +6317,17 @@
         "implied_prob": 0.5988,
         "edge": -0.2314,
         "ev_pct": -38.64,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Norma Dumont wins by Decision",
+        "our_prob": 0.3674,
+        "sb_odds": 1.66,
+        "implied_prob": 0.6024,
+        "edge": -0.235,
+        "ev_pct": -39.01,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -7575,17 +6343,6 @@
         "is_value": false
       },
       {
-        "bet_type": "winning_round",
-        "description": "Joselyne Edwards wins by finish in Round 3",
-        "our_prob": 0.1525,
-        "sb_odds": 3.7,
-        "implied_prob": 0.2703,
-        "edge": -0.1178,
-        "ev_pct": -43.59,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
         "bet_type": "method",
         "description": "Norma Dumont wins by SUB",
         "our_prob": 0.0377,
@@ -7593,17 +6350,6 @@
         "implied_prob": 0.0833,
         "edge": -0.0456,
         "ev_pct": -54.76,
-        "kelly_pct": 0.0,
-        "is_value": false
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Norma Dumont wins by finish in Round 3",
-        "our_prob": 0.1614,
-        "sb_odds": 1.57,
-        "implied_prob": 0.6369,
-        "edge": -0.4755,
-        "ev_pct": -74.66,
         "kelly_pct": 0.0,
         "is_value": false
       }
@@ -7724,31 +6470,6 @@
         "Round 3": 9.5,
         "Round 4": 11.5,
         "Round 5": 13.0,
-        "1st Minute of Round 1": 31.0,
-        "2nd Minute of Round 1": 23.0,
-        "3rd Minute of Round 1": 23.0,
-        "4th Minute of Round 1": 20.0,
-        "5th Minute of Round 1": 23.0,
-        "1st Minute of Round 2": 36.0,
-        "2nd Minute of Round 2": 26.0,
-        "3rd Minute of Round 2": 26.0,
-        "4th Minute of Round 2": 23.0,
-        "5th Minute of Round 2": 26.0,
-        "1st Minute of Round 3": 41.0,
-        "2nd Minute of Round 3": 31.0,
-        "3rd Minute of Round 3": 31.0,
-        "4th Minute of Round 3": 26.0,
-        "5th Minute of Round 3": 31.0,
-        "1st Minute of Round 4": 51.0,
-        "2nd Minute of Round 4": 41.0,
-        "3rd Minute of Round 4": 41.0,
-        "4th Minute of Round 4": 31.0,
-        "5th Minute of Round 4": 41.0,
-        "1st Minute of Round 5": 67.0,
-        "2nd Minute of Round 5": 46.0,
-        "3rd Minute of Round 5": 46.0,
-        "4th Minute of Round 5": 36.0,
-        "5th Minute of Round 5": 46.0,
         "Aljamain Sterling Round 1, 2, or 3": 6.0,
         "Aljamain Sterling Round 4, 5, or by Decision": 2.95,
         "Youssef Zalal Round 1, 2, or 3": 5.5,
@@ -7775,94 +6496,6 @@
     "bet_analysis": [
       {
         "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2877,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.2554,
-        "ev_pct": 791.87,
-        "kelly_pct": 6.6,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1961,
-        "sb_odds": 36.0,
-        "implied_prob": 0.0278,
-        "edge": 0.1683,
-        "ev_pct": 605.96,
-        "kelly_pct": 4.33,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2877,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.2442,
-        "ev_pct": 561.71,
-        "kelly_pct": 6.38,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 1",
-        "our_prob": 0.2877,
-        "sb_odds": 20.0,
-        "implied_prob": 0.05,
-        "edge": 0.2377,
-        "ev_pct": 475.4,
-        "kelly_pct": 6.26,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1246,
-        "sb_odds": 41.0,
-        "implied_prob": 0.0244,
-        "edge": 0.1002,
-        "ev_pct": 410.86,
-        "kelly_pct": 2.57,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1961,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.1576,
-        "ev_pct": 409.86,
-        "kelly_pct": 4.1,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 2",
-        "our_prob": 0.1961,
-        "sb_odds": 23.0,
-        "implied_prob": 0.0435,
-        "edge": 0.1526,
-        "ev_pct": 351.03,
-        "kelly_pct": 3.99,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1246,
-        "sb_odds": 31.0,
-        "implied_prob": 0.0323,
-        "edge": 0.0923,
-        "ev_pct": 286.26,
-        "kelly_pct": 2.39,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
         "description": "Aljamain Sterling wins by finish in Round 1",
         "our_prob": 0.2355,
         "sb_odds": 14.0,
@@ -7870,17 +6503,6 @@
         "edge": 0.1641,
         "ev_pct": 229.77,
         "kelly_pct": 4.42,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Fight ends by finish in Round 3",
-        "our_prob": 0.1246,
-        "sb_odds": 26.0,
-        "implied_prob": 0.0385,
-        "edge": 0.0861,
-        "ev_pct": 223.96,
-        "kelly_pct": 2.24,
         "is_value": true
       },
       {
@@ -8060,17 +6682,6 @@
         "is_value": true
       },
       {
-        "bet_type": "winning_round",
-        "description": "Aljamain Sterling wins by finish in Round 1",
-        "our_prob": 0.2355,
-        "sb_odds": 6.0,
-        "implied_prob": 0.1667,
-        "edge": 0.0689,
-        "ev_pct": 41.33,
-        "kelly_pct": 2.07,
-        "is_value": true
-      },
-      {
         "bet_type": "distance",
         "description": "Fight ends before decision",
         "our_prob": 0.6084,
@@ -8079,17 +6690,6 @@
         "edge": 0.162,
         "ev_pct": 36.28,
         "kelly_pct": 7.31,
-        "is_value": true
-      },
-      {
-        "bet_type": "winning_round",
-        "description": "Youssef Zalal wins by finish in Round 1",
-        "our_prob": 0.2373,
-        "sb_odds": 5.5,
-        "implied_prob": 0.1818,
-        "edge": 0.0555,
-        "ev_pct": 30.53,
-        "kelly_pct": 1.7,
         "is_value": true
       },
       {
@@ -8247,13 +6847,13 @@
         "is_value": false
       },
       {
-        "bet_type": "alt_finish_timing",
-        "description": "Ends in Round 3+ / Decision",
-        "our_prob": 0.5162,
-        "sb_odds": 1.33,
-        "implied_prob": 0.7519,
-        "edge": -0.2357,
-        "ev_pct": -31.35,
+        "bet_type": "winning_round",
+        "description": "Aljamain Sterling wins by Decision",
+        "our_prob": 0.1933,
+        "sb_odds": 3.6,
+        "implied_prob": 0.2778,
+        "edge": -0.0845,
+        "ev_pct": -30.41,
         "kelly_pct": 0.0,
         "is_value": false
       },
@@ -8302,6 +6902,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Aljamain Sterling wins in R4+ or by Decision",
+        "our_prob": 0.1951,
+        "sb_odds": 2.95,
+        "implied_prob": 0.339,
+        "edge": -0.1439,
+        "ev_pct": -42.46,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "round_survival",
         "description": "Fight reaches Round 5",
         "our_prob": 0.3916,
@@ -8324,6 +6935,17 @@
         "is_value": false
       },
       {
+        "bet_type": "winning_round",
+        "description": "Youssef Zalal wins by Decision",
+        "our_prob": 0.1984,
+        "sb_odds": 2.8,
+        "implied_prob": 0.3571,
+        "edge": -0.1587,
+        "ev_pct": -44.45,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
         "bet_type": "round_survival",
         "description": "Fight reaches Round 4",
         "our_prob": 0.3916,
@@ -8331,6 +6953,17 @@
         "implied_prob": 0.7519,
         "edge": -0.3603,
         "ev_pct": -47.92,
+        "kelly_pct": 0.0,
+        "is_value": false
+      },
+      {
+        "bet_type": "winning_round",
+        "description": "Youssef Zalal wins in R4+ or by Decision",
+        "our_prob": 0.1965,
+        "sb_odds": 2.35,
+        "implied_prob": 0.4255,
+        "edge": -0.229,
+        "ev_pct": -53.81,
         "kelly_pct": 0.0,
         "is_value": false
       }

@@ -89,9 +89,17 @@ _METHOD_RE = re.compile(
 )
 
 
-def _classify_method_selection(name: str) -> str:
-    """Map a SportsBet selection name to one of: KO_TKO | SUB | DEC."""
+def _classify_method_selection(name: str) -> str | None:
+    """
+    Map a SportsBet selection name to KO_TKO | SUB | DEC, or None to skip.
+    Returns None for Draw entries — they have no fighter attribution and
+    DEC would be a wrong label.
+    """
     lname = name.lower()
+    if lname.strip() in ("draw", "draw."):
+        return None
+    if "draw" == lname.split()[0]:  # "Draw" as standalone word at start
+        return None
     if "ko/tko" in lname or "tko" in lname or " ko" in lname:
         return "KO_TKO"
     if "sub" in lname:
@@ -204,8 +212,10 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
     for sel_name, odds in (sb.get("method") or {}).items():
         if odds < MIN_ODDS or not props:
             continue
-        side   = _fighter_side(sel_name, name_a, name_b)
         method = _classify_method_selection(sel_name)
+        if method is None:
+            continue  # Draw or unrecognised — skip
+        side = _fighter_side(sel_name, name_a, name_b)
         if side == "A":
             our_p = props.get(f"prob_a_wins_{method.lower()}", 0)
             label = f"{name_a} wins by {method.replace('_', '/')}"
@@ -231,6 +241,8 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
     # ---- Double chance (method combo per fighter) -------------------------
     for sel_name, odds in (sb.get("method_combo") or {}).items():
         if odds < MIN_ODDS or not props:
+            continue
+        if sel_name.lower().strip() == "draw":
             continue
         side = _fighter_side(sel_name, name_a, name_b)
         if side == "A":
@@ -329,41 +341,78 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
                  winner_p * timing_p, odds)
 
     # ---- Winning round ---------------------------------------------------
-    # "Round Betting" = fighter-specific (only pays if that fighter wins in Rn)
-    # "What Round will Fight End" = neutral (pays if anyone finishes in Rn)
-    # Use different probabilities accordingly.
+    # Covers three selection types from SportsBet:
+    #   "Fighter A to Win in Round N"   → fighter-specific finish
+    #   "Round N"                       → neutral finish in that round
+    #   "Fighter A to Win by Decision"  → fighter wins by decision
+    # Also present but explicitly skipped:
+    #   "X Minute of Round N"           → too granular, model can't predict
+    #   "Draw"                          → no fighter attribution
     for sel_name, odds in (sb.get("winning_round") or {}).items():
-        if odds < MIN_ODDS or not prob_rounds:
+        if odds < MIN_ODDS:
             continue
+        lname = sel_name.lower()
+
+        # Skip sub-minute entries ("Winning Round & Minute" market bleeds in)
+        if "minute" in lname:
+            continue
+        # Skip draws
+        if lname.strip() == "draw":
+            continue
+
+        # "Fighter A to Win by Decision" / "to Win by Points"
+        if ("decision" in lname or "points" in lname) and "round" not in lname:
+            if not props:
+                continue
+            side = _fighter_side(sel_name, name_a, name_b)
+            if side == "A":
+                _add("winning_round", f"{name_a} wins by Decision", float(props.get("prob_a_wins_dec", 0)), odds)
+            elif side == "B":
+                _add("winning_round", f"{name_b} wins by Decision", float(props.get("prob_b_wins_dec", 0)), odds)
+            continue
+
+        # "Fighter A Round X or by Decision" (alt_round entries that bled into winning_round)
+        if ("or by decision" in lname or "or by dec" in lname) and prob_rounds:
+            side = _fighter_side(sel_name, name_a, name_b)
+            m_rn = re.search(r"round\s+(\d)", sel_name, re.IGNORECASE)
+            rnum = int(m_rn.group(1)) if m_rn else None
+            if side and rnum and props:
+                winner_p = prob_a if side == "A" else prob_b
+                pfx      = name_a if side == "A" else name_b
+                timing_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(rnum, 6))
+                our_p    = winner_p * timing_p + (prob_a if side == "A" else prob_b) * prob_dec
+                _add("winning_round", f"{pfx} wins in R{rnum}+ or by Decision", our_p, odds)
+            continue
+
+        # Standard: "Fighter A to Win in Round N" or neutral "Round N"
         m = re.search(r"round\s+(\d)", sel_name, re.IGNORECASE)
-        if not m:
+        if not m or not prob_rounds:
             continue
         rnum = int(m.group(1))
         rkey = f"R{rnum}"
-        p_finish_rn = prob_rounds.get(rkey, 0)     # P(finish in Rn)
+        p_finish_rn = prob_rounds.get(rkey, 0)
 
         side = _fighter_side(sel_name, name_a, name_b)
         if side == "A":
-            # P(A wins by finish in Rn) = P(A wins) × P(Rn | finish)
-            cond = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
+            cond  = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
             our_p = prob_a * cond
             _add("winning_round", f"{name_a} wins by finish in Round {rnum}", our_p, odds)
         elif side == "B":
-            cond = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
+            cond  = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
             our_p = prob_b * cond
             _add("winning_round", f"{name_b} wins by finish in Round {rnum}", our_p, odds)
         else:
-            # Neutral — any fighter finishing in that round
             _add("winning_round", f"Fight ends by finish in Round {rnum}", p_finish_rn, odds)
 
-    # Deduplicate: same description + same odds is the same bet from two markets
-    seen: set[tuple] = set()
-    unique_bets: list[dict] = []
+    # Deduplicate: keep the best-EV entry per unique outcome description.
+    # Same outcome (e.g. "Fight ends in Round 1") can appear at different odds
+    # from overlapping markets — keep only the highest EV one.
+    best: dict[str, dict] = {}
     for bet in bets:
-        key = (bet.get("description"), bet.get("sb_odds"))
-        if key not in seen:
-            seen.add(key)
-            unique_bets.append(bet)
+        key = bet.get("description", "")
+        if key not in best or bet.get("ev_pct", 0) > best[key].get("ev_pct", 0):
+            best[key] = bet
+    unique_bets = list(best.values())
 
     # Sort: value bets first, then by EV descending
     unique_bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))

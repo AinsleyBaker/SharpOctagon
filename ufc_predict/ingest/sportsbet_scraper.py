@@ -124,7 +124,9 @@ _MARKET_MAP: dict[str, str] = {
     # Total rounds over/under
     "total rounds":                 "total_rounds",
     "over/under":                   "total_rounds",
-    # Winning round — fighter-attributed
+    # Winning round — fighter-attributed (more specific keys must come first)
+    "winning round & minute":       "other",   # too granular — exclude
+    "gone in 60 seconds":           "other",   # exclude
     "round betting":                "winning_round",
     "winning round":                "winning_round",
     "what round will fight end":    "winning_round",

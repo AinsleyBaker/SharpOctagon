@@ -141,17 +141,25 @@ def _parse_total_rounds_line(
     return None
 
 
-def _prob_over_under(prob_rounds: dict[str, float], direction: str, line: float) -> float:
+def _prob_over_under(
+    prob_rounds: dict[str, float], direction: str, line: float, prob_dec: float = 0.0
+) -> float:
     """
-    Compute P(over/under X.5) from a round-probability distribution.
-    prob_rounds: {"R1": ..., "R2": ..., "R3": ..., "R4": ..., "R5": ...}
+    Compute P(over/under X.5 rounds).
+
+    prob_rounds values are P(finish in round X) — they sum to prob_finish, NOT 1.
+    Decisions are NOT in prob_rounds; pass prob_dec separately.
+
+    "Under X.5" = fight ends (by finish) in round 1..X
+    "Over X.5"  = fight lasts past X rounds
+                = 1 - P(finish in rounds 1..X)
+                which naturally includes decisions (they survive all rounds).
     """
-    threshold = int(line + 0.5)  # e.g. 2.5 → 2, so "over 2.5" means round >= 3
-    total_over  = sum(v for k, v in prob_rounds.items() if int(k[1:]) > threshold)
-    total_under = sum(v for k, v in prob_rounds.items() if int(k[1:]) <= threshold)
-    if direction == "over":
-        return total_over
-    return total_under
+    threshold = int(line + 0.5)  # e.g. 2.5 → 2
+    under_prob = sum(v for k, v in prob_rounds.items() if int(k[1:]) <= threshold)
+    if direction == "under":
+        return under_prob
+    return max(0.0, 1.0 - under_prob)  # includes decisions implicitly
 
 
 # ---------------------------------------------------------------------------
@@ -263,7 +271,7 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         if parsed is None:
             continue
         direction, line = parsed
-        our_p = _prob_over_under(prob_rounds, direction, line)
+        our_p = _prob_over_under(prob_rounds, direction, line, prob_dec)
         label = f"{'Over' if direction == 'over' else 'Under'} {line} rounds"
         _add("total_rounds", label, our_p, odds)
 
@@ -276,14 +284,14 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         if not m:
             continue
         rnum = int(m.group(1))
-        # P(fight starts round X) = 1 - sum(P(end in R1..R(X-1)))
-        p_survives = 1.0 - sum(
-            prob_rounds.get(f"R{i}", 0) for i in range(1, rnum)
-        )
+        # P(fight starts round X) = 1 - P(finish in any earlier round)
+        # Decisions always survive to their max round, so they're included in "Yes".
+        p_early_finish = sum(prob_rounds.get(f"R{i}", 0) for i in range(1, rnum))
+        p_survives = max(0.0, 1.0 - p_early_finish)
         if "yes" in sel_name.lower():
             _add("round_survival", f"Fight reaches Round {rnum}", p_survives, odds)
         elif "no" in sel_name.lower():
-            _add("round_survival", f"Fight ends before Round {rnum}", 1 - p_survives, odds)
+            _add("round_survival", f"Finish before Round {rnum}", p_early_finish, odds)
 
     # ---- Alt finish timing ("Round 1 or 2" / "Round 3 or Decision") -----
     for sel_name, odds in (sb.get("alt_finish_timing") or {}).items():
@@ -291,10 +299,12 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         lname = sel_name.lower()
         if "1 or 2" in lname:
+            # Only finishes end here — no decisions
             our_p = prob_rounds.get("R1", 0) + prob_rounds.get("R2", 0)
             _add("alt_finish_timing", "Ends in Round 1 or 2", our_p, odds)
-        elif "3" in lname:
-            our_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6))
+        elif "3" in lname or "dec" in lname:
+            # Finishes in R3+ PLUS all decisions (they definitely go to R3)
+            our_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6)) + prob_dec
             _add("alt_finish_timing", "Ends in Round 3+ / Decision", our_p, odds)
 
     # ---- Alt round betting (fighter + timing combo) ----------------------
@@ -327,9 +337,10 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         rnum = int(m.group(1))
         rkey = f"R{rnum}"
-        # Scale by finish prob — round bets pay only on finishes
-        our_p = prob_rounds.get(rkey, 0) * prob_finish
-        _add("winning_round", f"Fight ends in Round {rnum}", our_p, odds)
+        # prob_rounds[Rx] is already P(finish in Rx) = P(Rx | finish) × prob_finish
+        # No further scaling needed — this is the absolute finish probability.
+        our_p = prob_rounds.get(rkey, 0)
+        _add("winning_round", f"Fight ends by finish in Round {rnum}", our_p, odds)
 
     # Sort: value bets first, then by EV descending
     bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))

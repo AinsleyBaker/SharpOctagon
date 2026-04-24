@@ -116,12 +116,20 @@ def _enrich_props(bout: dict) -> None:
         {"label": "Goes to Decision",       "prob": pct("prob_decision")},
     ]
 
+    # prob_rounds values are P(finish in Rx) — they sum to prob_finish, not 1.
+    # Show finish-round rows then a separate "Goes to Decision" row so it's clear
+    # that "Ends in Round 3" means a KO/Sub in R3, NOT a decision.
     prob_rounds = props.get("prob_rounds") or {}
+    prob_dec = props.get("prob_decision", 0)
     bout["round_rows"] = [
-        {"label": f"Ends in Round {i}", "prob": f"{float(prob_rounds.get(f'R{i}', 0))*100:.1f}%"}
+        {"label": f"Finish in Round {i}", "prob": f"{float(prob_rounds.get(f'R{i}', 0))*100:.1f}%"}
         for i in range(1, 6)
-        if prob_rounds.get(f"R{i}", 0) > 0
+        if prob_rounds.get(f"R{i}", 0) > 0.005
     ]
+    if prob_dec and prob_dec > 0.005:
+        bout["round_rows"].append(
+            {"label": "Goes to Decision", "prob": f"{float(prob_dec)*100:.1f}%"}
+        )
 
 
 def _enrich_bet_analysis(bout: dict) -> None:

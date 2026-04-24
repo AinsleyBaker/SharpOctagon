@@ -70,13 +70,13 @@ def _method_class(label: int, method: str) -> str:
 
 def _round_class(round_ended, is_five_round: int) -> str:
     """
-    Convert fight-ending round to R1-R5.
-    For decisions, use max rounds (3 or 5).
+    Round the fight ended by FINISH (KO/TKO/Sub).
+    Returns "DEC" for decisions/draws — these rows are excluded from round
+    model training so the model learns P(round | finish), not P(round | any result).
     """
     if round_ended is None or (isinstance(round_ended, float) and np.isnan(round_ended)):
-        r = 5 if is_five_round else 3
-    else:
-        r = int(round_ended)
+        return "DEC"
+    r = int(round_ended)
     r = max(1, min(5, r))
     return f"R{r}"
 
@@ -204,22 +204,44 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     log.info("Method model trained (%d trees)", method_model.best_iteration_ or method_model.n_estimators)
 
     # -----------------------------------------------------------------------
-    # Round model
+    # Round model — trained on FINISHES ONLY (decisions excluded).
+    #
+    # The model learns P(round X | finish occurred).  At inference time we
+    # multiply by prob_finish to get the absolute P(fight ends in round X by
+    # finish).  This prevents decisions from inflating any single round bucket
+    # (historically the last round of 3- and 5-round bouts).
     # -----------------------------------------------------------------------
+    df_finish = (
+        df[df["round_class"] != "DEC"]
+        .sort_values("date")
+        .reset_index(drop=True)
+    )
+    if len(df_finish) < 50:
+        log.warning("Very few finish rows (%d) — skipping round model", len(df_finish))
+        artifacts["round_model"] = None
+        artifacts["round_isos"] = []
+        artifacts["round_classes"] = ROUND_CLASSES
+        artifacts["feature_cols"] = available
+        return artifacts
+
+    split_f = int(len(df_finish) * _CAL_SPLIT)
+    X_tr_f  = df_finish[available].iloc[:split_f]
+    X_val_f = df_finish[available].iloc[split_f:]
+
     round_enc = {cls: i for i, cls in enumerate(ROUND_CLASSES)}
-    y_round = df["round_class"].map(round_enc).fillna(2).astype(int)  # fallback → R3
-    y_tr_r = y_round.iloc[:split].values
-    y_val_r = y_round.iloc[split:].values
+    y_round_f = df_finish["round_class"].map(round_enc).fillna(0).astype(int)
+    y_tr_r    = y_round_f.iloc[:split_f].values
+    y_val_r   = y_round_f.iloc[split_f:].values
 
     round_params = {**method_params, "num_class": len(ROUND_CLASSES)}
     round_model = lgb.LGBMClassifier(**round_params)
     round_model.fit(
-        X_tr, y_tr_r,
-        eval_set=[(X_val.values, y_val_r)],
+        X_tr_f, y_tr_r,
+        eval_set=[(X_val_f.values, y_val_r)],
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(period=-1)],
     )
 
-    val_probs_r = round_model.predict_proba(X_val)
+    val_probs_r = round_model.predict_proba(X_val_f)
     round_isos: list[IsotonicRegression] = []
     for cls_idx in range(len(ROUND_CLASSES)):
         iso = IsotonicRegression(out_of_bounds="clip")
@@ -351,19 +373,23 @@ def predict_props(
             prop["prob_decision"] = round(base_dec / total, 4)
 
         # ---- round probabilities -----------------------------------------
+        # Round model outputs P(round X | finish).  Multiply by prob_finish
+        # to get absolute P(fight ends in round X by finish).
+        # Decisions are NOT in this distribution — use prob_decision separately.
+        prob_finish_val = float(prop.get("prob_finish", 1.0))
         if round_model:
             raw_r = round_model.predict_proba(row)[0]
             cal_r = _apply_isos(raw_r, round_isos) if round_isos else raw_r
 
             prob_rounds: dict[str, float] = {}
             for j, cls in enumerate(ROUND_CLASSES):
-                prob_rounds[cls] = round(float(cal_r[j]), 4)
+                prob_rounds[cls] = round(float(cal_r[j]) * prob_finish_val, 4)
             prop["prob_rounds"] = prob_rounds
         else:
-            # Flat prior over 3 rounds (typical non-title fight)
-            prop["prob_rounds"] = {
-                "R1": 0.18, "R2": 0.18, "R3": 0.22, "R4": 0.21, "R5": 0.21,
-            }
+            # Flat conditional prior (P(Ri | finish) ≈ equal weight each round)
+            # scaled to absolute probability
+            base = prob_finish_val / 5
+            prop["prob_rounds"] = {cls: round(base, 4) for cls in ROUND_CLASSES}
 
         results.append(prop)
 

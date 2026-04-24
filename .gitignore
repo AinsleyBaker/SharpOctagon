@@ -21,6 +21,9 @@ models/oof_predictions.parquet
 # Small model config files (feature_cols.json, conformal_quantiles.json,
 # cv_metrics.csv, etc.) ARE tracked so the predictor works without retraining.
 
+# Prediction snapshots — kept locally, too many small files for git
+data/prediction_history/
+
 # site/ is intentionally NOT ignored — committed by GitHub Actions for Pages.
 
 .ruff_cache/

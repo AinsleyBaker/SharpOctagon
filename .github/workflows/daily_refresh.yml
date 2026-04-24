@@ -56,12 +56,18 @@ jobs:
       - name: Build dashboard
         run: python -m ufc_predict.serve.build_dashboard
 
+      - name: Evaluate past predictions against fight results
+        # Runs after results are ingested — measures model accuracy, Brier, log-loss
+        continue-on-error: true
+        run: python -m ufc_predict.eval.track_predictions
+
       - name: Commit updated predictions + dashboard
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
-          [ -f data/predictions.json ]    && git add data/predictions.json    || true
-          [ -f data/sportsbet_odds.json ] && git add data/sportsbet_odds.json || true
+          [ -f data/predictions.json ]       && git add data/predictions.json       || true
+          [ -f data/sportsbet_odds.json ]    && git add data/sportsbet_odds.json    || true
+          [ -f data/model_performance.json ] && git add data/model_performance.json || true
           git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
           git push

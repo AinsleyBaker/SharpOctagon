@@ -68,16 +68,24 @@ def _method_class(label: int, method: str) -> str:
     return f"{prefix}_{base}"
 
 
-def _round_class(round_ended, is_five_round: int) -> str:
+_DEC_KEYWORDS = ("DEC", "DRAW", "SPLIT", "MAJORITY", "UNANIM", "POINTS")
+
+
+def _round_class(round_ended, method: str) -> str:
     """
-    Round the fight ended by FINISH (KO/TKO/Sub).
-    Returns "DEC" for decisions/draws — these rows are excluded from round
-    model training so the model learns P(round | finish), not P(round | any result).
+    Round of fight-ending FINISH only.  Returns 'DEC' for decisions/draws.
+
+    Crucially: checks the METHOD string directly, not just whether round_ended
+    is None.  Some data sources record round_ended=3 for decisions (the last
+    round), which would otherwise mis-label those fights as R3 finishes and
+    inflate the round model's R3 probability.
     """
+    m = str(method).upper().strip()
+    if any(kw in m for kw in _DEC_KEYWORDS):
+        return "DEC"
     if round_ended is None or (isinstance(round_ended, float) and np.isnan(round_ended)):
         return "DEC"
-    r = int(round_ended)
-    r = max(1, min(5, r))
+    r = max(1, min(5, int(round_ended)))
     return f"R{r}"
 
 
@@ -120,7 +128,7 @@ def _load_labeled_matrix(db_url: str | None = None) -> pd.DataFrame:
         lambda r: _method_class(int(r["label"]), r["method"]), axis=1
     )
     df["round_class"] = df.apply(
-        lambda r: _round_class(r["round_ended"], int(r["is_five_round"])), axis=1
+        lambda r: _round_class(r["round_ended"], r["method"]), axis=1
     )
 
     log.info(
@@ -211,8 +219,10 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     # finish).  This prevents decisions from inflating any single round bucket
     # (historically the last round of 3- and 5-round bouts).
     # -----------------------------------------------------------------------
+    # Keep only genuine finishes: filter by both round_class AND method_class
+    # so that any decision with a numeric round_ended cannot slip through.
     df_finish = (
-        df[df["round_class"] != "DEC"]
+        df[(df["round_class"] != "DEC") & (~df["method_class"].str.endswith("_DEC"))]
         .sort_values("date")
         .reset_index(drop=True)
     )

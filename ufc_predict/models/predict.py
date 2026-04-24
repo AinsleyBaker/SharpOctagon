@@ -314,6 +314,15 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     predictions_list = analyze_all_fights(predictions_list)
 
     _save_predictions_list(predictions_list)
+
+    # -- Snapshot for post-fight evaluation --------------------------------
+    # Archive this prediction set so we can compare to actual results later.
+    try:
+        from ufc_predict.eval.track_predictions import snapshot_predictions
+        snapshot_predictions(predictions_list)
+    except Exception as exc:
+        log.warning("Prediction snapshot failed (non-critical): %s", exc)
+
     log.info("Generated predictions for %d upcoming bouts", len(predictions_list))
     return output
 

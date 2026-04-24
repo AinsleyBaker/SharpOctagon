@@ -55,6 +55,36 @@ def _format_ci(lo, hi) -> str:
     return f"{float(lo)*100:.0f}–{float(hi)*100:.0f}%"
 
 
+def _confidence_tier(std) -> str:
+    if std is None or (isinstance(std, float) and std != std):
+        return "—"
+    s = float(std)
+    if s < 0.07:
+        return "High"
+    if s < 0.12:
+        return "Medium"
+    return "Low"
+
+
+def _data_quality(a_n, b_n) -> str:
+    n = min(int(a_n or 0), int(b_n or 0))
+    if n >= 10:
+        return "good"
+    if n >= 5:
+        return "limited"
+    return "sparse"
+
+
+def _streak_display(win_s, loss_s) -> str:
+    win_s  = int(win_s  or 0)
+    loss_s = int(loss_s or 0)
+    if win_s > 0:
+        return f"{win_s}W"
+    if loss_s > 0:
+        return f"{loss_s}L"
+    return "—"
+
+
 def _kelly_display(frac) -> str:
     if frac is None or (isinstance(frac, float) and frac != frac) or frac == 0:
         return "—"
@@ -148,6 +178,26 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 bout["favourite"] = "a"
             else:
                 bout["favourite"] = "b"
+
+            # Confidence tier and data quality
+            bout["confidence_tier"] = _confidence_tier(bout.get("uncertainty_std"))
+            bout["data_quality"] = _data_quality(
+                bout.get("a_n_fights"), bout.get("b_n_fights")
+            )
+            bout["a_streak"] = _streak_display(
+                bout.get("a_win_streak"), bout.get("a_loss_streak")
+            )
+            bout["b_streak"] = _streak_display(
+                bout.get("b_win_streak"), bout.get("b_loss_streak")
+            )
+            def _l3(v):
+                if v is None or (isinstance(v, float) and v != v):
+                    return "—"
+                return f"{float(v)*100:.0f}%"
+            bout["a_l3"] = _l3(bout.get("a_l3_win_rate"))
+            bout["b_l3"] = _l3(bout.get("b_l3_win_rate"))
+            bout["a_n_fights"] = int(bout.get("a_n_fights") or 0)
+            bout["b_n_fights"] = int(bout.get("b_n_fights") or 0)
 
             # Prop probabilities
             _enrich_props(bout)

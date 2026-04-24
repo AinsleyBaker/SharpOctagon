@@ -159,7 +159,6 @@
   }
 
   /* ---- Top bets panel ---- */
-  #fights-panel { display: block; }
 
   .section-title {
     font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
@@ -180,6 +179,20 @@
 
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.72rem; }
 
+  /* ---- Confidence badge ---- */
+  .conf-badge {
+    font-size: 0.62rem; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase; margin-left: 4px;
+  }
+  .conf-high    { background: var(--green); color: #000; }
+  .conf-medium  { background: var(--gold);  color: #000; }
+  .conf-low     { background: #888;         color: #000; }
+
+  /* ---- Data quality ---- */
+  .dq-good    { color: var(--green); }
+  .dq-limited { color: var(--gold); }
+  .dq-sparse  { color: var(--red); }
+
   /* ---- Round bar ---- */
   .round-bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-top: 6px; }
   .round-bar-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
@@ -197,7 +210,7 @@
 
 <header>
   <h1>⬡ SharpOctagon</h1>
-  <span class="meta">Generated 2026-04-24 01:49 UTC · 13 bouts</span>
+  <span class="meta">Generated 2026-04-24 02:00 UTC · 13 bouts</span>
 </header>
 
 <nav>
@@ -249,14 +262,19 @@
 
           <div class="bar-wrap">
             <div class="bar bar-a" style="width:54px"></div>
-            <span class="prob-label">54.6%</span>
+            <span class="prob-label">54.4%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">45.4%</span>
+            <span class="prob-label" style="color:var(--blue)">45.6%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 7.8%</span></div>
+          <div>
+            <span class="ci-label">± 7.2%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -269,8 +287,97 @@
         <div class="fight-details" id="details-1-0">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Polastri</th><th>Alencar</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>7.2%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Julia Polastri wins by KO/TKO</td><td>27.3%</td></tr>
+                  
+                  <tr><td>Julia Polastri wins by Submission</td><td>7.1%</td></tr>
+                  
+                  <tr><td>Julia Polastri wins by Decision</td><td>27.5%</td></tr>
+                  
+                  <tr><td>Talita Alencar wins by KO/TKO</td><td>0.0%</td></tr>
+                  
+                  <tr><td>Talita Alencar wins by Submission</td><td>17.5%</td></tr>
+                  
+                  <tr><td>Talita Alencar wins by Decision</td><td>20.7%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>48.1%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>23.9%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>15.8%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>60.2%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -295,15 +402,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:62px"></div>
-            <span class="prob-label">62.2%</span>
+            <div class="bar bar-a" style="width:61px"></div>
+            <span class="prob-label">61.5%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">37.8%</span>
+            <span class="prob-label" style="color:var(--blue)">38.5%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 8.1%</span></div>
+          <div>
+            <span class="ci-label">± 8.2%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -316,8 +428,97 @@
         <div class="fight-details" id="details-2-1">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Griffin</th><th>Valenzuela</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>8.2%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Max Griffin wins by KO/TKO</td><td>21.8%</td></tr>
+                  
+                  <tr><td>Max Griffin wins by Submission</td><td>18.5%</td></tr>
+                  
+                  <tr><td>Max Griffin wins by Decision</td><td>19.1%</td></tr>
+                  
+                  <tr><td>Victor Valenzuela wins by KO/TKO</td><td>19.8%</td></tr>
+                  
+                  <tr><td>Victor Valenzuela wins by Submission</td><td>10.2%</td></tr>
+                  
+                  <tr><td>Victor Valenzuela wins by Decision</td><td>10.5%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>29.7%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>36.9%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>19.3%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>43.9%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -342,15 +543,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:48px"></div>
-            <span class="prob-label">48.2%</span>
+            <div class="bar bar-a" style="width:47px"></div>
+            <span class="prob-label">47.3%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">51.8%</span>
+            <span class="prob-label" style="color:var(--blue)">52.7%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 7.7%</span></div>
+          <div>
+            <span class="ci-label">± 7.6%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -363,8 +569,97 @@
         <div class="fight-details" id="details-3-2">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Brennan</th><th>Marshall</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>7.6%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Lucas Brennan wins by KO/TKO</td><td>12.8%</td></tr>
+                  
+                  <tr><td>Lucas Brennan wins by Submission</td><td>8.0%</td></tr>
+                  
+                  <tr><td>Lucas Brennan wins by Decision</td><td>17.6%</td></tr>
+                  
+                  <tr><td>Francis Marshall wins by KO/TKO</td><td>18.2%</td></tr>
+                  
+                  <tr><td>Francis Marshall wins by Submission</td><td>15.4%</td></tr>
+                  
+                  <tr><td>Francis Marshall wins by Decision</td><td>27.9%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>45.5%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>29.2%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>15.3%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>55.5%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -389,15 +684,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:33px"></div>
-            <span class="prob-label">33.1%</span>
+            <div class="bar bar-a" style="width:34px"></div>
+            <span class="prob-label">34.9%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">66.9%</span>
+            <span class="prob-label" style="color:var(--blue)">65.1%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 8.1%</span></div>
+          <div>
+            <span class="ci-label">± 8.5%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -410,8 +710,97 @@
         <div class="fight-details" id="details-4-3">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Filho</th><th>Durden</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>8.5%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Jafel Filho wins by KO/TKO</td><td>6.1%</td></tr>
+                  
+                  <tr><td>Jafel Filho wins by Submission</td><td>14.8%</td></tr>
+                  
+                  <tr><td>Jafel Filho wins by Decision</td><td>17.3%</td></tr>
+                  
+                  <tr><td>Cody Durden wins by KO/TKO</td><td>17.1%</td></tr>
+                  
+                  <tr><td>Cody Durden wins by Submission</td><td>5.8%</td></tr>
+                  
+                  <tr><td>Cody Durden wins by Decision</td><td>39.0%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>56.3%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>24.1%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>15.2%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>60.7%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -437,14 +826,19 @@
 
           <div class="bar-wrap">
             <div class="bar bar-a" style="width:50px"></div>
-            <span class="prob-label">50.4%</span>
+            <span class="prob-label">50.8%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">49.6%</span>
+            <span class="prob-label" style="color:var(--blue)">49.2%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 9.8%</span></div>
+          <div>
+            <span class="ci-label">± 10.4%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -457,8 +851,97 @@
         <div class="fight-details" id="details-5-4">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Silva</th><th>Montague</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>10.4%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Mayra Bueno Silva wins by KO/TKO</td><td>6.6%</td></tr>
+                  
+                  <tr><td>Mayra Bueno Silva wins by Submission</td><td>18.0%</td></tr>
+                  
+                  <tr><td>Mayra Bueno Silva wins by Decision</td><td>26.0%</td></tr>
+                  
+                  <tr><td>Michelle Montague wins by KO/TKO</td><td>14.5%</td></tr>
+                  
+                  <tr><td>Michelle Montague wins by Submission</td><td>9.0%</td></tr>
+                  
+                  <tr><td>Michelle Montague wins by Decision</td><td>26.0%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>51.9%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>22.3%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>16.5%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>61.3%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -491,7 +974,12 @@
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 6.7%</span></div>
+          <div>
+            <span class="ci-label">± 6.8%</span>
+            
+            <span class="conf-badge conf-high">High</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -504,8 +992,97 @@
         <div class="fight-details" id="details-6-5">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Dumas</th><th>McVey</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-high">High</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>6.8%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Sedriques Dumas wins by KO/TKO</td><td>6.2%</td></tr>
+                  
+                  <tr><td>Sedriques Dumas wins by Submission</td><td>16.8%</td></tr>
+                  
+                  <tr><td>Sedriques Dumas wins by Decision</td><td>21.5%</td></tr>
+                  
+                  <tr><td>Jackson McVey wins by KO/TKO</td><td>18.0%</td></tr>
+                  
+                  <tr><td>Jackson McVey wins by Submission</td><td>7.1%</td></tr>
+                  
+                  <tr><td>Jackson McVey wins by Decision</td><td>30.4%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>51.9%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>24.1%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>13.4%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>62.5%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -538,7 +1115,12 @@
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 6.7%</span></div>
+          <div>
+            <span class="ci-label">± 6.7%</span>
+            
+            <span class="conf-badge conf-high">High</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -551,8 +1133,97 @@
         <div class="fight-details" id="details-7-6">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>McConico</th><th>Vieira</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-high">High</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>6.7%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Eric McConico wins by KO/TKO</td><td>13.5%</td></tr>
+                  
+                  <tr><td>Eric McConico wins by Submission</td><td>4.3%</td></tr>
+                  
+                  <tr><td>Eric McConico wins by Decision</td><td>18.4%</td></tr>
+                  
+                  <tr><td>Rodolfo Vieira wins by KO/TKO</td><td>7.8%</td></tr>
+                  
+                  <tr><td>Rodolfo Vieira wins by Submission</td><td>16.4%</td></tr>
+                  
+                  <tr><td>Rodolfo Vieira wins by Decision</td><td>39.7%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>58.1%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>22.5%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>13.7%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>63.8%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -577,15 +1248,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:54px"></div>
-            <span class="prob-label">54.9%</span>
+            <div class="bar bar-a" style="width:55px"></div>
+            <span class="prob-label">55.3%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">45.1%</span>
+            <span class="prob-label" style="color:var(--blue)">44.7%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 4.9%</span></div>
+          <div>
+            <span class="ci-label">± 5.0%</span>
+            
+            <span class="conf-badge conf-high">High</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -598,8 +1274,97 @@
         <div class="fight-details" id="details-8-7">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Spann</th><th>Buchecha</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-high">High</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>5.0%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ryan Spann wins by KO/TKO</td><td>10.2%</td></tr>
+                  
+                  <tr><td>Ryan Spann wins by Submission</td><td>23.9%</td></tr>
+                  
+                  <tr><td>Ryan Spann wins by Decision</td><td>20.1%</td></tr>
+                  
+                  <tr><td>Marcus Buchecha wins by KO/TKO</td><td>8.5%</td></tr>
+                  
+                  <tr><td>Marcus Buchecha wins by Submission</td><td>17.6%</td></tr>
+                  
+                  <tr><td>Marcus Buchecha wins by Decision</td><td>19.7%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>39.8%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>23.8%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>16.2%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>60.0%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -624,15 +1389,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:59px"></div>
-            <span class="prob-label">59.8%</span>
+            <div class="bar bar-a" style="width:62px"></div>
+            <span class="prob-label">62.9%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">40.2%</span>
+            <span class="prob-label" style="color:var(--blue)">37.1%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 8.6%</span></div>
+          <div>
+            <span class="ci-label">± 9.1%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -645,8 +1415,95 @@
         <div class="fight-details" id="details-9-8">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Barcelos</th><th>Jackson</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>9.1%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Raoni Barcelos wins by KO/TKO</td><td>12.5%</td></tr>
+                  
+                  <tr><td>Raoni Barcelos wins by Submission</td><td>6.2%</td></tr>
+                  
+                  <tr><td>Raoni Barcelos wins by Decision</td><td>32.4%</td></tr>
+                  
+                  <tr><td>Montel Jackson wins by KO/TKO</td><td>13.3%</td></tr>
+                  
+                  <tr><td>Montel Jackson wins by Submission</td><td>8.3%</td></tr>
+                  
+                  <tr><td>Montel Jackson wins by Decision</td><td>27.3%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>59.7%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>27.8%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>72.2%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -671,15 +1528,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:48px"></div>
-            <span class="prob-label">48.3%</span>
+            <div class="bar bar-a" style="width:47px"></div>
+            <span class="prob-label">47.6%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">51.7%</span>
+            <span class="prob-label" style="color:var(--blue)">52.4%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 8.8%</span></div>
+          <div>
+            <span class="ci-label">± 9.5%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -692,8 +1554,97 @@
         <div class="fight-details" id="details-10-9">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Grant</th><th>Martinetti</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>9.5%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Davey Grant wins by KO/TKO</td><td>13.9%</td></tr>
+                  
+                  <tr><td>Davey Grant wins by Submission</td><td>11.8%</td></tr>
+                  
+                  <tr><td>Davey Grant wins by Decision</td><td>23.5%</td></tr>
+                  
+                  <tr><td>Adrian Luna Martinetti wins by KO/TKO</td><td>21.7%</td></tr>
+                  
+                  <tr><td>Adrian Luna Martinetti wins by Submission</td><td>9.2%</td></tr>
+                  
+                  <tr><td>Adrian Luna Martinetti wins by Decision</td><td>20.0%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>43.5%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>31.4%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>16.4%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>52.2%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -718,15 +1669,20 @@
           <div style="font-size:0.75rem;color:var(--muted)">—</div>
 
           <div class="bar-wrap">
-            <div class="bar bar-a" style="width:42px"></div>
-            <span class="prob-label">42.8%</span>
+            <div class="bar bar-a" style="width:44px"></div>
+            <span class="prob-label">44.3%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">57.2%</span>
+            <span class="prob-label" style="color:var(--blue)">55.7%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 6.4%</span></div>
+          <div>
+            <span class="ci-label">± 5.7%</span>
+            
+            <span class="conf-badge conf-high">High</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -739,8 +1695,97 @@
         <div class="fight-details" id="details-11-10">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Hernandez</th><th>Garcia</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-high">High</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>5.7%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Alexander Hernandez wins by KO/TKO</td><td>13.3%</td></tr>
+                  
+                  <tr><td>Alexander Hernandez wins by Submission</td><td>6.6%</td></tr>
+                  
+                  <tr><td>Alexander Hernandez wins by Decision</td><td>18.1%</td></tr>
+                  
+                  <tr><td>Rafa Garcia wins by KO/TKO</td><td>14.1%</td></tr>
+                  
+                  <tr><td>Rafa Garcia wins by Submission</td><td>8.8%</td></tr>
+                  
+                  <tr><td>Rafa Garcia wins by Decision</td><td>39.2%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>57.3%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>24.5%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>13.7%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>61.8%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -766,14 +1811,19 @@
 
           <div class="bar-wrap">
             <div class="bar bar-a" style="width:48px"></div>
-            <span class="prob-label">48.8%</span>
+            <span class="prob-label">48.6%</span>
             <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">51.2%</span>
+            <span class="prob-label" style="color:var(--blue)">51.4%</span>
           </div>
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 6.4%</span></div>
+          <div>
+            <span class="ci-label">± 6.1%</span>
+            
+            <span class="conf-badge conf-high">High</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -786,8 +1836,97 @@
         <div class="fight-details" id="details-12-11">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Edwards</th><th>Dumont</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-high">High</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>6.1%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Joselyne Edwards wins by KO/TKO</td><td>12.6%</td></tr>
+                  
+                  <tr><td>Joselyne Edwards wins by Submission</td><td>10.7%</td></tr>
+                  
+                  <tr><td>Joselyne Edwards wins by Decision</td><td>27.5%</td></tr>
+                  
+                  <tr><td>Norma Dumont wins by KO/TKO</td><td>10.8%</td></tr>
+                  
+                  <tr><td>Norma Dumont wins by Submission</td><td>8.3%</td></tr>
+                  
+                  <tr><td>Norma Dumont wins by Decision</td><td>30.1%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>57.6%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>22.5%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>13.7%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>63.8%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->
@@ -820,7 +1959,12 @@
 
           <div><span class="ci-label">0–100%</span></div>
 
-          <div><span class="ci-label">± 9.0%</span></div>
+          <div>
+            <span class="ci-label">± 10.3%</span>
+            
+            <span class="conf-badge conf-medium">Medium</span>
+            
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">—</span>
@@ -833,8 +1977,97 @@
         <div class="fight-details" id="details-13-12">
           <div class="details-grid">
 
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>Sterling</th><th>Zalal</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>—</td><td>—</td></tr>
+                  <tr><td>Last 3 Win%</td><td>—</td><td>—</td></tr>
+                  <tr><td>UFC fights</td><td>0</td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      
+                      <span class="conf-badge conf-medium">Medium</span>
+                      
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>10.3%</td></tr>
+                  <tr><td>90% CI</td><td>0–100%</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-sparse">Sparse</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+            <!-- Method breakdown -->
+            <div class="detail-box">
+              <h4>Method of Victory Probabilities</h4>
+              <table class="mini-table">
+                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Aljamain Sterling wins by KO/TKO</td><td>8.3%</td></tr>
+                  
+                  <tr><td>Aljamain Sterling wins by Submission</td><td>8.5%</td></tr>
+                  
+                  <tr><td>Aljamain Sterling wins by Decision</td><td>22.9%</td></tr>
+                  
+                  <tr><td>Youssef Zalal wins by KO/TKO</td><td>30.9%</td></tr>
+                  
+                  <tr><td>Youssef Zalal wins by Submission</td><td>8.9%</td></tr>
+                  
+                  <tr><td>Youssef Zalal wins by Decision</td><td>20.5%</td></tr>
+                  
+                  <tr><td>Goes to Decision</td><td>43.4%</td></tr>
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Round breakdown -->
+            <div class="detail-box">
+              <h4>Ending Round Distribution</h4>
+              
+              <table class="mini-table">
+                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
+                <tbody>
+                  
+                  <tr><td>Ends in Round 1</td><td>29.9%</td></tr>
+                  
+                  <tr><td>Ends in Round 2</td><td>13.2%</td></tr>
+                  
+                  <tr><td>Ends in Round 3</td><td>56.9%</td></tr>
+                  
+                </tbody>
+              </table>
+              
+            </div>
             
 
+            
+            <div class="detail-box" style="grid-column: 1 / -1;">
+              <h4>Bet Analysis</h4>
+              <p style="color:var(--muted);font-size:0.78rem;">
+                SportsBet odds not yet available for this fight.
+                Probabilities are shown above; EV will appear once odds are published.
+              </p>
+            </div>
             
 
           </div><!-- details-grid -->

@@ -159,7 +159,6 @@
   }
 
   /* ---- Top bets panel ---- */
-  #fights-panel { display: block; }
 
   .section-title {
     font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
@@ -179,6 +178,20 @@
   .top-bets-table tr:hover td { background: rgba(255,255,255,0.03); }
 
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.72rem; }
+
+  /* ---- Confidence badge ---- */
+  .conf-badge {
+    font-size: 0.62rem; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase; margin-left: 4px;
+  }
+  .conf-high    { background: var(--green); color: #000; }
+  .conf-medium  { background: var(--gold);  color: #000; }
+  .conf-low     { background: #888;         color: #000; }
+
+  /* ---- Data quality ---- */
+  .dq-good    { color: var(--green); }
+  .dq-limited { color: var(--gold); }
+  .dq-sparse  { color: var(--red); }
 
   /* ---- Round bar ---- */
   .round-bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-top: 6px; }
@@ -262,7 +275,12 @@
 
           <div><span class="ci-label">{{ bout.ci_display or '—' }}</span></div>
 
-          <div><span class="ci-label">± {{ bout.std_pct }}</span></div>
+          <div>
+            <span class="ci-label">± {{ bout.std_pct }}</span>
+            {% if bout.confidence_tier != '—' %}
+            <span class="conf-badge conf-{{ bout.confidence_tier|lower }}">{{ bout.confidence_tier }}</span>
+            {% endif %}
+          </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <span class="kelly-label">{{ bout.kelly_display }}</span>
@@ -276,6 +294,43 @@
         <!-- Expandable details -->
         <div class="fight-details" id="details-{{ loop.index }}-{{ loop.index0 }}">
           <div class="details-grid">
+
+            <!-- Fighter form + data quality (always shown) -->
+            <div class="detail-box">
+              <h4>Recent Form</h4>
+              <table class="mini-table">
+                <thead>
+                  <tr><th></th><th>{{ bout.fighter_a_name.split()[-1] }}</th><th>{{ bout.fighter_b_name.split()[-1] }}</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Streak</td><td>{{ bout.a_streak }}</td><td>{{ bout.b_streak }}</td></tr>
+                  <tr><td>Last 3 Win%</td><td>{{ bout.a_l3 }}</td><td>{{ bout.b_l3 }}</td></tr>
+                  <tr><td>UFC fights</td><td>{{ bout.a_n_fights }}</td><td>{{ bout.b_n_fights }}</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-box">
+              <h4>Model Confidence</h4>
+              <table class="mini-table">
+                <tbody>
+                  <tr>
+                    <td>Confidence</td>
+                    <td>
+                      {% if bout.confidence_tier != '—' %}
+                      <span class="conf-badge conf-{{ bout.confidence_tier|lower }}">{{ bout.confidence_tier }}</span>
+                      {% else %}—{% endif %}
+                    </td>
+                  </tr>
+                  <tr><td>Uncertainty (±)</td><td>{{ bout.std_pct }}</td></tr>
+                  <tr><td>90% CI</td><td>{{ bout.ci_display or '—' }}</td></tr>
+                  <tr>
+                    <td>Data quality</td>
+                    <td class="dq-{{ bout.data_quality }}">{{ bout.data_quality|title }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             {% if bout.has_props %}
             <!-- Method breakdown -->

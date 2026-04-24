@@ -170,6 +170,13 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         else:
             row["diff_age"] = np.nan
 
+        row["a_win_streak"]  = int(a_feat.get("win_streak",  0) or 0)
+        row["b_win_streak"]  = int(b_feat.get("win_streak",  0) or 0)
+        row["a_loss_streak"] = int(a_feat.get("loss_streak", 0) or 0)
+        row["b_loss_streak"] = int(b_feat.get("loss_streak", 0) or 0)
+        row["a_l3_win_rate"] = a_feat.get("l3_win_rate")
+        row["b_l3_win_rate"] = b_feat.get("l3_win_rate")
+
         rows.append(row)
 
     return pd.DataFrame(rows) if rows else pd.DataFrame()
@@ -242,6 +249,9 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         "upcoming_bout_id", "event_date", "event_name",
         "fighter_a_name", "fighter_b_name", "weight_class",
         "is_title_bout", "is_five_round",
+        "a_n_fights", "b_n_fights",
+        "a_win_streak", "b_win_streak", "a_loss_streak", "b_loss_streak",
+        "a_l3_win_rate", "b_l3_win_rate",
         "prob_a_wins", "prob_b_wins", "uncertainty_std",
         *(c for c in upcoming_df.columns if c.startswith("ci_")),
         "kelly_fraction", "has_edge",

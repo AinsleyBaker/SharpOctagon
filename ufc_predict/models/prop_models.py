@@ -252,6 +252,10 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     artifacts["round_isos"] = round_isos
     artifacts["round_classes"] = ROUND_CLASSES
     artifacts["feature_cols"] = available
+    # Version flag — consumers check this to know round probs are finish-conditional.
+    # v1 (absent) = old model trained on all fights (decisions mixed in, do not use).
+    # v2 = trained on finishes only; output × prob_finish = P(finish in Rx).
+    artifacts["prop_schema_v"] = 2
 
     log.info("Round model trained (%d trees)", round_model.best_iteration_ or round_model.n_estimators)
     return artifacts
@@ -373,23 +377,38 @@ def predict_props(
             prop["prob_decision"] = round(base_dec / total, 4)
 
         # ---- round probabilities -----------------------------------------
-        # Round model outputs P(round X | finish).  Multiply by prob_finish
+        # Round model v2 outputs P(round X | finish); we scale by prob_finish
         # to get absolute P(fight ends in round X by finish).
-        # Decisions are NOT in this distribution — use prob_decision separately.
+        # Old models (v1, no prop_schema_v key) mixed decisions into R3/R5 —
+        # those are silently ignored and replaced with the empirical prior.
         prob_finish_val = float(prop.get("prob_finish", 1.0))
-        if round_model:
+        schema_v = artifacts.get("prop_schema_v", 1)
+
+        is_five_r = False
+        try:
+            v = row["is_five_round"]
+            is_five_r = bool(int(v.iloc[0]) if hasattr(v, "iloc") else int(v))
+        except Exception:
+            pass
+
+        if round_model and schema_v >= 2:
             raw_r = round_model.predict_proba(row)[0]
             cal_r = _apply_isos(raw_r, round_isos) if round_isos else raw_r
-
             prob_rounds: dict[str, float] = {}
             for j, cls in enumerate(ROUND_CLASSES):
                 prob_rounds[cls] = round(float(cal_r[j]) * prob_finish_val, 4)
             prop["prob_rounds"] = prob_rounds
         else:
-            # Flat conditional prior (P(Ri | finish) ≈ equal weight each round)
-            # scaled to absolute probability
-            base = prob_finish_val / 5
-            prop["prob_rounds"] = {cls: round(base, 4) for cls in ROUND_CLASSES}
+            # Empirical UFC finish-round prior (approximate historical distribution).
+            # Scaled to sum to prob_finish so all downstream maths stays consistent.
+            if is_five_r:
+                cond = {"R1": 0.26, "R2": 0.20, "R3": 0.20, "R4": 0.18, "R5": 0.16}
+            else:
+                cond = {"R1": 0.38, "R2": 0.28, "R3": 0.34, "R4": 0.00, "R5": 0.00}
+            prop["prob_rounds"] = {
+                cls: round(cond.get(cls, 0) * prob_finish_val, 4)
+                for cls in ROUND_CLASSES
+            }
 
         results.append(prop)
 

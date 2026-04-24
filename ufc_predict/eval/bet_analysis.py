@@ -328,7 +328,10 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             _add("alt_round", f"{pfx} wins in R3 or by Decision",
                  winner_p * timing_p, odds)
 
-    # ---- Winning round (fighter-attributed) ------------------------------
+    # ---- Winning round ---------------------------------------------------
+    # "Round Betting" = fighter-specific (only pays if that fighter wins in Rn)
+    # "What Round will Fight End" = neutral (pays if anyone finishes in Rn)
+    # Use different probabilities accordingly.
     for sel_name, odds in (sb.get("winning_round") or {}).items():
         if odds < MIN_ODDS or not prob_rounds:
             continue
@@ -337,14 +340,34 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         rnum = int(m.group(1))
         rkey = f"R{rnum}"
-        # prob_rounds[Rx] is already P(finish in Rx) = P(Rx | finish) × prob_finish
-        # No further scaling needed — this is the absolute finish probability.
-        our_p = prob_rounds.get(rkey, 0)
-        _add("winning_round", f"Fight ends by finish in Round {rnum}", our_p, odds)
+        p_finish_rn = prob_rounds.get(rkey, 0)     # P(finish in Rn)
+
+        side = _fighter_side(sel_name, name_a, name_b)
+        if side == "A":
+            # P(A wins by finish in Rn) = P(A wins) × P(Rn | finish)
+            cond = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
+            our_p = prob_a * cond
+            _add("winning_round", f"{name_a} wins by finish in Round {rnum}", our_p, odds)
+        elif side == "B":
+            cond = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
+            our_p = prob_b * cond
+            _add("winning_round", f"{name_b} wins by finish in Round {rnum}", our_p, odds)
+        else:
+            # Neutral — any fighter finishing in that round
+            _add("winning_round", f"Fight ends by finish in Round {rnum}", p_finish_rn, odds)
+
+    # Deduplicate: same description + same odds is the same bet from two markets
+    seen: set[tuple] = set()
+    unique_bets: list[dict] = []
+    for bet in bets:
+        key = (bet.get("description"), bet.get("sb_odds"))
+        if key not in seen:
+            seen.add(key)
+            unique_bets.append(bet)
 
     # Sort: value bets first, then by EV descending
-    bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))
-    return bets
+    unique_bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))
+    return unique_bets
 
 
 def analyze_all_fights(predictions: list[dict]) -> list[dict]:

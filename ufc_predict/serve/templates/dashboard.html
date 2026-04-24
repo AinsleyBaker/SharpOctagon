@@ -8,201 +8,301 @@
   :root {
     --red:    #e63946;
     --blue:   #457b9d;
-    --dark:   #1d1d1d;
-    --mid:    #2b2b2b;
-    --card:   #252525;
+    --dark:   #141414;
+    --mid:    #1e1e1e;
+    --card:   #1a1a1a;
+    --border: #2a2a2a;
     --light:  #f1faee;
-    --muted:  #a8a8b3;
+    --muted:  #888;
     --gold:   #f4a261;
     --green:  #2dc653;
-    --radius: 8px;
+    --radius: 10px;
+    --sm:     0.75rem;
+    --xs:     0.65rem;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--dark); color: var(--light); font-family: system-ui, sans-serif; }
+  body { background: var(--dark); color: var(--light); font-family: system-ui, -apple-system, sans-serif; font-size: 0.88rem; }
 
   /* ---- Header ---- */
   header {
     background: var(--mid);
-    padding: 1.2rem 2rem;
+    padding: 1rem 2rem;
     border-bottom: 2px solid var(--red);
     display: flex; align-items: center; justify-content: space-between;
   }
-  header h1 { font-size: 1.4rem; letter-spacing: 0.05em; }
-  header .meta { font-size: 0.75rem; color: var(--muted); }
+  header h1 { font-size: 1.3rem; letter-spacing: 0.04em; }
+  header .meta { font-size: var(--xs); color: var(--muted); }
 
-  /* ---- Nav tabs ---- */
+  /* ---- Nav ---- */
   nav {
     background: var(--mid);
-    border-bottom: 1px solid #333;
-    display: flex; gap: 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
     padding: 0 2rem;
     position: sticky; top: 0; z-index: 10;
   }
   nav a {
     color: var(--muted); text-decoration: none;
-    padding: 0.7rem 1.2rem; font-size: 0.85rem;
+    padding: 0.65rem 1.1rem; font-size: var(--sm);
     border-bottom: 2px solid transparent;
     transition: color 0.15s;
   }
   nav a:hover, nav a.active { color: var(--light); border-bottom-color: var(--red); }
 
-  main { max-width: 1080px; margin: 2rem auto; padding: 0 1rem; }
+  main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
 
-  /* ---- Disclaimer ---- */
   .disclaimer {
-    background: #2a2a1a; border: 1px solid #5a5a2a; border-radius: var(--radius);
-    padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #b8b870;
+    background: #1a1a10; border: 1px solid #3a3a20;
+    border-radius: var(--radius); padding: 0.7rem 1rem;
+    margin-bottom: 1.2rem; font-size: var(--xs); color: #a0a060;
   }
 
-  /* ---- Event card ---- */
-  .event-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    margin-bottom: 2rem;
-    overflow: hidden;
-    border: 1px solid #333;
-  }
+  /* ---- Event header ---- */
+  .event-card { margin-bottom: 2rem; }
   .event-header {
-    background: #333;
-    padding: 0.75rem 1.25rem;
+    background: var(--mid); border: 1px solid var(--border);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 0.6rem 1.2rem;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .event-header h2 { font-size: 1rem; }
-  .event-header .date { font-size: 0.8rem; color: var(--muted); }
+  .event-header h2 { font-size: 0.95rem; }
+  .event-header .date { font-size: var(--xs); color: var(--muted); }
 
-  /* ---- Fight row ---- */
-  .fight-block { border-bottom: 1px solid #333; }
-  .fight-block:last-child { border-bottom: none; }
+  /* ---- Fight card ---- */
+  .fight-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: none;
+  }
+  .fight-block:last-child { border-radius: 0 0 var(--radius) var(--radius); }
 
-  /* Main win-prob row */
+  /* Main clickable row */
   .fight-main {
-    display: grid;
-    grid-template-columns: 2.5fr 0.9fr 1.6fr 1fr 0.85fr 0.85fr;
+    display: flex;
     align-items: center;
-    padding: 0.75rem 1.25rem;
-    gap: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    gap: 1rem;
     cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
   }
   .fight-main:hover { background: rgba(255,255,255,0.03); }
 
-  .fighter-cell { font-weight: 600; font-size: 0.92rem; }
-  .vs { color: var(--muted); font-size: 0.75rem; margin: 0 0.3rem; }
+  /* Fighter cards */
+  .fighters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .fighter-card {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .fighter-card.right { flex-direction: row-reverse; text-align: right; }
 
-  .bar-wrap { display: flex; align-items: center; gap: 0.4rem; }
-  .bar { height: 7px; border-radius: 4px; flex-shrink: 0; }
-  .bar-a { background: var(--red); }
-  .bar-b { background: var(--blue); }
-  .prob-label { font-size: 0.84rem; font-weight: 700; }
+  /* Avatar */
+  .avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #2a2a3a;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: var(--muted);
+    border: 2px solid var(--border);
+    overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .fav-a .avatar.avatar-a { border-color: var(--red); }
+  .fav-b .avatar.avatar-b { border-color: var(--blue); }
 
-  .fav-a .fighter-a { color: var(--red); }
-  .fav-b .fighter-b { color: var(--blue); }
-  .fav-toss-up .fighter-a, .fav-toss-up .fighter-b { color: var(--gold); }
+  .fighter-info { min-width: 0; }
+  .fighter-name {
+    font-weight: 700; font-size: 0.9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .fav-a .fighter-card:not(.right) .fighter-name { color: var(--red); }
+  .fav-b .fighter-card.right .fighter-name { color: var(--blue); }
+  .fav-toss-up .fighter-name { color: var(--gold); }
 
-  .ci-label   { font-size: 0.72rem; color: var(--muted); }
-  .kelly-label { font-size: 0.78rem; color: var(--gold); }
+  .fighter-meta {
+    font-size: var(--xs); color: var(--muted);
+    display: flex; align-items: center; gap: 0.3rem;
+    margin-top: 1px;
+    flex-wrap: wrap;
+  }
+  .fighter-card.right .fighter-meta { justify-content: flex-end; }
+  .flag { font-size: 0.85rem; }
+  .type-badge {
+    font-size: 0.6rem; font-weight: 600; padding: 1px 5px;
+    border-radius: 3px; text-transform: uppercase;
+    background: #333; color: var(--muted);
+  }
+
+  /* VS / probability section */
+  .vs-section {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; flex-shrink: 0; min-width: 120px;
+  }
+  .vs-label { font-size: var(--xs); color: var(--muted); }
+  .prob-row {
+    display: flex; align-items: center; gap: 6px;
+    font-weight: 700; font-size: 1rem;
+  }
+  .prob-a { color: var(--red); }
+  .prob-b { color: var(--blue); }
+  .prob-sep { color: var(--muted); font-weight: 300; }
+  .prob-bar {
+    display: flex; height: 4px; border-radius: 2px;
+    overflow: hidden; width: 100%;
+  }
+  .prob-bar .bar-a { background: var(--red); }
+  .prob-bar .bar-b { background: var(--blue); flex: 1; }
+
+  /* Right-side meta */
+  .fight-right {
+    display: flex; align-items: center; gap: 1rem;
+    flex-shrink: 0;
+  }
+  .wc-label { font-size: var(--xs); color: var(--muted); max-width: 100px; text-align: right; }
+
   .badge-title {
     background: var(--gold); color: #000;
-    font-size: 0.62rem; font-weight: 700;
-    padding: 2px 5px; border-radius: 3px; text-transform: uppercase; margin-right: 4px;
+    font-size: var(--xs); font-weight: 700;
+    padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
   }
-  .badge-sb {
-    font-size: 0.7rem; color: var(--muted);
-    border: 1px solid #555; padding: 1px 5px; border-radius: 3px;
-    margin-left: 4px; white-space: nowrap;
+  .value-count-badge {
+    background: var(--green); color: #000;
+    font-size: var(--xs); font-weight: 700;
+    padding: 2px 6px; border-radius: 3px;
+    white-space: nowrap;
   }
-  .expand-icon { color: var(--muted); font-size: 0.7rem; user-select: none; }
+  .expand-icon { color: var(--muted); font-size: var(--xs); }
 
-  /* ---- Expandable details ---- */
-  .fight-details { display: none; padding: 0 1.25rem 1.25rem; }
+  /* ---- Details panel ---- */
+  .fight-details { display: none; }
   .fight-details.open { display: block; }
+
+  .details-inner { padding: 1rem 1.2rem; }
 
   .details-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 0.75rem;
+    gap: 0.75rem;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 680px) {
     .details-grid { grid-template-columns: 1fr; }
-    .fight-main { grid-template-columns: 1fr 1fr; }
+    .fight-main { flex-wrap: wrap; }
+    .vs-section { min-width: 80px; }
   }
 
   .detail-box {
-    background: #1e1e1e;
-    border-radius: 6px;
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     padding: 0.75rem 1rem;
   }
   .detail-box h4 {
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: var(--xs); text-transform: uppercase; letter-spacing: 0.07em;
     color: var(--muted); margin-bottom: 0.6rem;
   }
 
-  /* mini table inside detail box */
-  .mini-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-  .mini-table th {
-    color: var(--muted); font-size: 0.65rem; text-transform: uppercase;
-    letter-spacing: 0.06em; padding: 0.25rem 0.4rem; text-align: left;
-    border-bottom: 1px solid #333;
+  /* Stats table inside detail box */
+  .stat-table { width: 100%; border-collapse: collapse; font-size: var(--sm); }
+  .stat-table th {
+    color: var(--muted); font-size: var(--xs); text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 0.2rem 0.4rem; text-align: center;
+    border-bottom: 1px solid var(--border);
   }
-  .mini-table td { padding: 0.3rem 0.4rem; border-bottom: 1px solid #2a2a2a; }
-  .mini-table tr:last-child td { border-bottom: none; }
+  .stat-table th:first-child { text-align: left; }
+  .stat-table td { padding: 0.25rem 0.4rem; border-bottom: 1px solid #1e1e1e; text-align: center; }
+  .stat-table td:first-child { text-align: left; color: var(--muted); font-size: var(--xs); }
+  .stat-table tr:last-child td { border-bottom: none; }
 
-  /* EV colouring */
-  .ev-pos  { color: var(--green); font-weight: 700; }
-  .ev-neg  { color: #777; }
-  .ev-zero { color: var(--muted); }
-  .value-badge {
-    background: var(--green); color: #000;
-    font-size: 0.6rem; font-weight: 700;
-    padding: 1px 4px; border-radius: 3px; text-transform: uppercase;
-    margin-left: 4px;
+  /* ---- Bet table ---- */
+  .bet-section {
+    margin-top: 0.75rem;
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
   }
-
-  /* ---- Top bets panel ---- */
-
-  .section-title {
-    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.4rem;
-    border-bottom: 1px solid #333;
+  .bet-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--xs); text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--muted);
   }
-
-  .top-bets-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-  .top-bets-table th {
-    background: #222; color: var(--muted); text-transform: uppercase;
-    font-size: 0.67rem; letter-spacing: 0.08em; padding: 0.5rem 0.75rem; text-align: left;
+  .bet-table { width: 100%; border-collapse: collapse; font-size: var(--sm); }
+  .bet-table th {
+    background: #0d0d0d; color: var(--muted); text-transform: uppercase;
+    font-size: var(--xs); letter-spacing: 0.06em;
+    padding: 0.4rem 0.75rem; text-align: left;
   }
-  .top-bets-table td {
-    padding: 0.55rem 0.75rem; border-bottom: 1px solid #2a2a2a;
-  }
-  .top-bets-table tr:last-child td { border-bottom: none; }
-  .top-bets-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .bet-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #1a1a1a; }
+  .bet-table tr:last-child td { border-bottom: none; }
+  .bet-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.72rem; }
+  .bet-desc { font-weight: 600; }
+  .our-prob { color: var(--muted); }
+  .odds-cell { font-weight: 700; color: var(--gold); }
+  .profit-cell { color: var(--green); font-weight: 700; }
+  .stake-cell { color: var(--blue); }
+
+  .no-bets { padding: 0.75rem 1rem; color: var(--muted); font-size: var(--sm); }
+
+  /* Bet table legend */
+  .bet-legend {
+    font-size: var(--xs); color: var(--muted);
+    padding: 0.4rem 1rem;
+    border-top: 1px solid var(--border);
+  }
 
   /* ---- Confidence badge ---- */
   .conf-badge {
-    font-size: 0.62rem; font-weight: 700; padding: 1px 5px; border-radius: 3px;
-    text-transform: uppercase; margin-left: 4px;
+    font-size: var(--xs); font-weight: 700; padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase;
   }
   .conf-high    { background: var(--green); color: #000; }
   .conf-medium  { background: var(--gold);  color: #000; }
-  .conf-low     { background: #888;         color: #000; }
+  .conf-low     { background: #666;         color: #fff; }
 
   /* ---- Data quality ---- */
   .dq-good    { color: var(--green); }
   .dq-limited { color: var(--gold); }
-  .dq-sparse  { color: var(--red); }
+  .dq-sparse  { color: #888; }
 
-  /* ---- Round bar ---- */
-  .round-bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; margin-top: 6px; }
-  .round-bar-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
-  .round-bar-inner {
-    width: 100%; background: var(--blue); border-radius: 3px 3px 0 0;
-    transition: height 0.2s;
+  /* ---- SB odds badge ---- */
+  .sb-odds {
+    font-size: var(--xs); color: var(--muted);
+    border: 1px solid #444; padding: 1px 5px; border-radius: 3px;
+    white-space: nowrap;
   }
-  .round-bar-label { font-size: 0.6rem; color: var(--muted); margin-top: 2px; }
 
-  /* hidden class used by JS */
+  /* ---- Top bets panel ---- */
+  #fights-panel { display: block; }
+
+  .section-title {
+    font-size: var(--sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .top-bets-table { width: 100%; border-collapse: collapse; font-size: var(--sm); }
+  .top-bets-table th {
+    background: var(--mid); color: var(--muted); text-transform: uppercase;
+    font-size: var(--xs); letter-spacing: 0.07em; padding: 0.5rem 0.75rem; text-align: left;
+  }
+  .top-bets-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+  .top-bets-table tr:last-child td { border-bottom: none; }
+  .top-bets-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: var(--xs); }
   .hidden { display: none; }
 </style>
 </head>
@@ -210,25 +310,22 @@
 
 <header>
   <h1>⬡ SharpOctagon</h1>
-  <span class="meta">Generated {{ generated_at }} · {{ n_bouts }} bouts</span>
+  <span class="meta">Updated {{ generated_at }} &nbsp;·&nbsp; {{ n_bouts }} upcoming bouts</span>
 </header>
 
 <nav>
-  <a href="#" id="tab-fights" class="active" onclick="showTab('fights',this);return false;">
-    Upcoming Fights
-  </a>
-  <a href="#" id="tab-bets" onclick="showTab('bets',this);return false;">
-    🔥 Top Value Bets{% if top_bets %} ({{ top_bets|length }}){% endif %}
+  <a href="#" id="tab-fights" class="active" onclick="showTab('fights',this);return false;">Upcoming Fights</a>
+  <a href="#" id="tab-bets"   onclick="showTab('bets',this);return false;">
+    Top Value Bets{% if top_bets %} ({{ top_bets|length }}){% endif %}
   </a>
 </nav>
 
 <main>
 
   <div class="disclaimer">
-    <strong>Research use only.</strong>
-    Probabilities are model estimates, not guarantees. EV and Kelly are shown for analysis —
-    always size bets to your own risk tolerance. Never bet more than you can afford to lose.
-    Odds sourced from SportsBet Australia. Verify before placing any bet.
+    <strong>Research only.</strong>
+    Model estimates are not guarantees. Probabilities, EV, and recommended stakes are
+    analytical tools — always size bets to your own risk tolerance. Odds via SportsBet AU.
   </div>
 
   <!-- ===== Fights panel ===== -->
@@ -236,214 +333,222 @@
 
     {% if not events %}
       <p style="color:var(--muted);text-align:center;padding:3rem;">
-        No upcoming predictions yet. Run <code>ufc-predict</code> to generate.
+        No predictions yet. Run <code>ufc-predict</code> to generate.
       </p>
     {% endif %}
 
     {% for event in events %}
     <div class="event-card">
       <div class="event-header">
-        <h2>{{ event.event_name }}</h2>
+        <h2>{{ event.event_name }}{% if event.bouts[0].is_title_bout %} &nbsp;<span class="badge-title">Title</span>{% endif %}</h2>
         <span class="date">{{ event.event_date }}</span>
       </div>
 
       {% for bout in event.bouts %}
       <div class="fight-block">
 
-        <!-- Win probability row -->
+        <!-- ── Main clickable row ── -->
         <div class="fight-main fav-{{ bout.favourite }}"
              onclick="toggleDetails('{{ loop.index }}-{{ loop.index0 }}')">
 
-          <div class="fighter-cell">
-            {% if bout.is_title_bout %}<span class="badge-title">Title</span>{% endif %}
-            <span class="fighter-a">{{ bout.fighter_a_name }}</span>
-            <span class="vs">vs</span>
-            <span class="fighter-b">{{ bout.fighter_b_name }}</span>
+          <!-- Fighter A -->
+          <div class="fighters-row">
+            <div class="fighter-card">
+              <div class="avatar avatar-a">{{ bout.a_initials }}</div>
+              <div class="fighter-info">
+                <div class="fighter-name">{{ bout.fighter_a_name }}</div>
+                <div class="fighter-meta">
+                  {% if bout.a_flag %}<span class="flag">{{ bout.a_flag }}</span>{% endif %}
+                  <span class="type-badge">{{ bout.a_fighter_type }}</span>
+                  {% if bout.a_streak != '—' %}<span>{{ bout.a_streak }}</span>{% endif %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Win probability -->
+            <div class="vs-section">
+              <div class="prob-row">
+                <span class="prob-a">{{ bout.prob_a_pct }}</span>
+                <span class="prob-sep">·</span>
+                <span class="prob-b">{{ bout.prob_b_pct }}</span>
+              </div>
+              <div class="prob-bar">
+                <div class="bar-a" style="width:{{ ((bout.prob_a_wins or 0.5)*100)|int }}%"></div>
+                <div class="bar-b"></div>
+              </div>
+              <div class="vs-label">{{ bout.weight_class or '—' }}</div>
+            </div>
+
+            <!-- Fighter B -->
+            <div class="fighter-card right">
+              <div class="avatar avatar-b">{{ bout.b_initials }}</div>
+              <div class="fighter-info">
+                <div class="fighter-name">{{ bout.fighter_b_name }}</div>
+                <div class="fighter-meta">
+                  {% if bout.b_flag %}<span class="flag">{{ bout.b_flag }}</span>{% endif %}
+                  <span class="type-badge">{{ bout.b_fighter_type }}</span>
+                  {% if bout.b_streak != '—' %}<span>{{ bout.b_streak }}</span>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right meta -->
+          <div class="fight-right">
             {% if bout.sb_odds_a %}
-              <span class="badge-sb">SB: {{ bout.sb_odds_a }} / {{ bout.sb_odds_b or '—' }}</span>
+              <span class="sb-odds">{{ bout.sb_odds_a }} / {{ bout.sb_odds_b or '—' }}</span>
             {% endif %}
-          </div>
-
-          <div style="font-size:0.75rem;color:var(--muted)">{{ bout.weight_class or '—' }}</div>
-
-          <div class="bar-wrap">
-            <div class="bar bar-a" style="width:{{ ((bout.prob_a_wins or 0.5)*100)|int }}px"></div>
-            <span class="prob-label">{{ bout.prob_a_pct }}</span>
-            <span style="color:var(--muted);font-size:0.72rem"> · </span>
-            <span class="prob-label" style="color:var(--blue)">{{ bout.prob_b_pct }}</span>
-          </div>
-
-          <div><span class="ci-label">{{ bout.ci_display or '—' }}</span></div>
-
-          <div>
-            <span class="ci-label">± {{ bout.std_pct }}</span>
-            {% if bout.confidence_tier != '—' %}
-            <span class="conf-badge conf-{{ bout.confidence_tier|lower }}">{{ bout.confidence_tier }}</span>
-            {% endif %}
-          </div>
-
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span class="kelly-label">{{ bout.kelly_display }}</span>
             {% if bout.value_bet_count %}
-              <span class="value-badge">{{ bout.value_bet_count }} ✓</span>
+              <span class="value-count-badge">{{ bout.value_bet_count }} value bets</span>
             {% endif %}
             <span class="expand-icon" id="icon-{{ loop.index }}-{{ loop.index0 }}">▼</span>
           </div>
         </div>
 
-        <!-- Expandable details -->
+        <!-- ── Expandable details ── -->
         <div class="fight-details" id="details-{{ loop.index }}-{{ loop.index0 }}">
-          <div class="details-grid">
+          <div class="details-inner">
+            <div class="details-grid">
 
-            <!-- Fighter form + data quality (always shown) -->
-            <div class="detail-box">
-              <h4>Recent Form &amp; Style</h4>
-              <table class="mini-table">
-                <thead>
-                  <tr><th></th><th>{{ bout.fighter_a_name.split()[-1] }}</th><th>{{ bout.fighter_b_name.split()[-1] }}</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Streak</td><td>{{ bout.a_streak }}</td><td>{{ bout.b_streak }}</td></tr>
-                  <tr><td>Last 3 Win%</td><td>{{ bout.a_l3 }}</td><td>{{ bout.b_l3 }}</td></tr>
-                  <tr><td>UFC fights</td><td>{{ bout.a_n_fights }}</td><td>{{ bout.b_n_fights }}</td></tr>
-                  <tr><td>Finish rate</td><td>{{ bout.a_finish_rate }}</td><td>{{ bout.b_finish_rate }}</td></tr>
-                  <tr><td>KO/TKO rate</td><td>{{ bout.a_ko_rate }}</td><td>{{ bout.b_ko_rate }}</td></tr>
-                  <tr><td>Sub rate</td><td>{{ bout.a_sub_rate }}</td><td>{{ bout.b_sub_rate }}</td></tr>
-                </tbody>
-              </table>
-            </div>
+              <!-- Fighter stats -->
+              <div class="detail-box">
+                <h4>Fighter Statistics</h4>
+                <table class="stat-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>{{ bout.fighter_a_name.split()[-1] }}</th>
+                      <th>{{ bout.fighter_b_name.split()[-1] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>UFC fights</td><td>{{ bout.a_n_fights }}</td><td>{{ bout.b_n_fights }}</td></tr>
+                    <tr><td>Current streak</td><td>{{ bout.a_streak }}</td><td>{{ bout.b_streak }}</td></tr>
+                    <tr><td>Last 3 win %</td><td>{{ bout.a_l3 }}</td><td>{{ bout.b_l3 }}</td></tr>
+                    <tr><td>Finish rate</td><td>{{ bout.a_finish_rate }}</td><td>{{ bout.b_finish_rate }}</td></tr>
+                    <tr><td>KO/TKO rate</td><td>{{ bout.a_ko_rate }}</td><td>{{ bout.b_ko_rate }}</td></tr>
+                    <tr><td>Sub rate</td><td>{{ bout.a_sub_rate }}</td><td>{{ bout.b_sub_rate }}</td></tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <!-- Strike volume / grappling (always shown) -->
-            <div class="detail-box">
-              <h4>Pace &amp; Volume</h4>
-              <table class="mini-table">
-                <thead>
-                  <tr><th></th><th>{{ bout.fighter_a_name.split()[-1] }}</th><th>{{ bout.fighter_b_name.split()[-1] }}</th></tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Sig strikes/min <span style="font-size:0.65rem;color:var(--muted)">(landed)</span></td>
-                    <td>{{ bout.a_slpm }}</td><td>{{ bout.b_slpm }}</td>
-                  </tr>
-                  <tr>
-                    <td>Sig strikes/min <span style="font-size:0.65rem;color:var(--muted)">(absorbed)</span></td>
-                    <td>{{ bout.a_sapm }}</td><td>{{ bout.b_sapm }}</td>
-                  </tr>
-                  <tr>
-                    <td>Takedowns/min</td>
-                    <td>{{ bout.a_td_per_min }}</td><td>{{ bout.b_td_per_min }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <!-- Strike volume -->
+              <div class="detail-box">
+                <h4>Strike Pace &amp; Model Confidence</h4>
+                <table class="stat-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>{{ bout.fighter_a_name.split()[-1] }}</th>
+                      <th>{{ bout.fighter_b_name.split()[-1] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Sig strikes/min (landed)</td><td>{{ bout.a_slpm }}</td><td>{{ bout.b_slpm }}</td></tr>
+                    <tr><td>Sig strikes/min (taken)</td><td>{{ bout.a_sapm }}</td><td>{{ bout.b_sapm }}</td></tr>
+                    <tr><td>Takedowns/min</td><td>{{ bout.a_td_per_min }}</td><td>{{ bout.b_td_per_min }}</td></tr>
+                  </tbody>
+                </table>
+                <div style="margin-top:0.6rem;font-size:var(--xs);color:var(--muted)">
+                  Model confidence:
+                  {% if bout.confidence_tier != '—' %}
+                    <span class="conf-badge conf-{{ bout.confidence_tier|lower }}">{{ bout.confidence_tier }}</span>
+                  {% else %}—{% endif %}
+                  &nbsp;± {{ bout.std_pct }}
+                  &nbsp;· Data: <span class="dq-{{ bout.data_quality }}">{{ bout.data_quality|title }}</span>
+                  {% if bout.ci_display %}· 90% CI: {{ bout.ci_display }}{% endif %}
+                </div>
+              </div>
 
-            <div class="detail-box">
-              <h4>Model Confidence</h4>
-              <table class="mini-table">
-                <tbody>
-                  <tr>
-                    <td>Confidence</td>
-                    <td>
-                      {% if bout.confidence_tier != '—' %}
-                      <span class="conf-badge conf-{{ bout.confidence_tier|lower }}">{{ bout.confidence_tier }}</span>
-                      {% else %}—{% endif %}
-                    </td>
-                  </tr>
-                  <tr><td>Uncertainty (±)</td><td>{{ bout.std_pct }}</td></tr>
-                  <tr><td>90% CI</td><td>{{ bout.ci_display or '—' }}</td></tr>
-                  <tr>
-                    <td>Data quality</td>
-                    <td class="dq-{{ bout.data_quality }}">{{ bout.data_quality|title }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              {% if bout.has_props %}
+              <!-- Outcome breakdown -->
+              <div class="detail-box">
+                <h4>Outcome Probabilities</h4>
+                <table class="stat-table">
+                  <thead><tr><th>Outcome</th><th style="text-align:right">Prob</th></tr></thead>
+                  <tbody>
+                    {% for row in bout.prop_rows %}
+                    <tr>
+                      <td>{{ row.label }}</td>
+                      <td style="text-align:right;font-weight:600">{{ row.prob }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
 
-            {% if bout.has_props %}
-            <!-- Method breakdown -->
-            <div class="detail-box">
-              <h4>Method of Victory Probabilities</h4>
-              <table class="mini-table">
-                <thead><tr><th>Outcome</th><th>Probability</th></tr></thead>
-                <tbody>
-                  {% for row in bout.prop_rows %}
-                  <tr><td>{{ row.label }}</td><td>{{ row.prob }}</td></tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Round breakdown -->
-            <div class="detail-box">
-              <h4>Ending Round Distribution</h4>
-              {% if bout.round_rows %}
-              <table class="mini-table">
-                <thead><tr><th>Round</th><th>Probability</th></tr></thead>
-                <tbody>
-                  {% for row in bout.round_rows %}
-                  <tr><td>{{ row.label }}</td><td>{{ row.prob }}</td></tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              {% else %}
-              <p style="color:var(--muted);font-size:0.78rem;">No round data available</p>
+              <!-- Finish round distribution -->
+              <div class="detail-box">
+                <h4>Finish Round Distribution</h4>
+                {% if bout.round_rows %}
+                <table class="stat-table">
+                  <thead><tr><th>Scenario</th><th style="text-align:right">Prob</th></tr></thead>
+                  <tbody>
+                    {% for row in bout.round_rows %}
+                    <tr>
+                      <td>{{ row.label }}</td>
+                      <td style="text-align:right;font-weight:600">{{ row.prob }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% else %}
+                <p style="color:var(--muted);font-size:var(--sm);">No round data available</p>
+                {% endif %}
+              </div>
               {% endif %}
-            </div>
-            {% endif %}
 
+            </div><!-- details-grid -->
+
+            <!-- ── Bet table ── -->
             {% if bout.has_bets %}
-            <!-- Full bet analysis table -->
-            <div class="detail-box" style="grid-column: 1 / -1;">
-              <h4>
-                Bet Analysis — SportsBet Australia
-                {% if not bout.has_bets %}(no odds available yet){% endif %}
-              </h4>
-              <table class="mini-table">
+            <div class="bet-section">
+              <div class="bet-section-header">
+                <span>Top Value Bets — SportsBet Australia</span>
+                <span>{{ bout.value_bet_count }} bets shown</span>
+              </div>
+              <table class="bet-table">
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Our Prob</th>
+                    <th>Our Odds</th>
                     <th>SB Odds</th>
-                    <th>Implied</th>
-                    <th>Edge</th>
-                    <th>EV%</th>
-                    <th>Kelly</th>
+                    <th>If $100 wins</th>
+                    <th>Suggested stake</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for bet in bout.bet_rows %}
                   <tr>
-                    <td>
-                      {{ bet.description }}
-                      {% if bet.is_value %}<span class="value-badge">VALUE</span>{% endif %}
-                    </td>
-                    <td>{{ bet.our_prob }}</td>
-                    <td>{{ bet.sb_odds }}</td>
-                    <td>{{ bet.implied_prob }}</td>
-                    <td class="{{ 'ev-pos' if bet.is_value else 'ev-zero' }}">{{ bet.edge }}</td>
-                    <td class="{{ 'ev-pos' if bet.ev_raw > 0 else 'ev-neg' }}">{{ bet.ev_pct }}</td>
-                    <td class="kelly-label">{{ bet.kelly }}</td>
+                    <td class="bet-desc">{{ bet.description }}</td>
+                    <td class="our-prob">{{ bet.our_prob }}</td>
+                    <td class="odds-cell">{{ bet.sb_odds }}</td>
+                    <td class="profit-cell">{{ bet.est_profit }}</td>
+                    <td class="stake-cell">{{ bet.stake_pct }} of bank</td>
                   </tr>
                   {% endfor %}
                 </tbody>
               </table>
+              <div class="bet-legend">
+                <strong>Our Odds</strong> = model's probability &nbsp;·&nbsp;
+                <strong>SB Odds</strong> = decimal odds on SportsBet &nbsp;·&nbsp;
+                <strong>If $100 wins</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
+                <strong>Suggested stake</strong> = quarter-Kelly bankroll fraction
+              </div>
             </div>
             {% elif bout.has_props %}
-            <div class="detail-box" style="grid-column: 1 / -1;">
-              <h4>Bet Analysis</h4>
-              <p style="color:var(--muted);font-size:0.78rem;">
-                SportsBet odds not yet available for this fight.
-                Probabilities are shown above; EV will appear once odds are published.
-              </p>
+            <div class="bet-section">
+              <div class="no-bets">
+                SportsBet odds not yet published for this fight — check back closer to event.
+              </div>
             </div>
             {% endif %}
 
-          </div><!-- details-grid -->
+          </div><!-- details-inner -->
         </div><!-- fight-details -->
 
       </div><!-- fight-block -->
       {% endfor %}
-
     </div><!-- event-card -->
     {% endfor %}
 
@@ -455,41 +560,41 @@
 
     {% if top_bets %}
     <div class="section-title">Top Value Bets — Sorted by Expected Value</div>
-    <div class="event-card">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <table class="top-bets-table">
         <thead>
           <tr>
             <th>Fight</th>
             <th>Bet</th>
-            <th>Our Prob</th>
+            <th>Our %</th>
             <th>SB Odds</th>
-            <th>Implied</th>
-            <th>Edge</th>
-            <th>EV%</th>
-            <th>Kelly</th>
+            <th>If $100 wins</th>
+            <th>Suggested stake</th>
           </tr>
         </thead>
         <tbody>
           {% for bet in top_bets %}
           <tr>
-            <td style="font-size:0.78rem;color:var(--muted)">{{ bet.fight }}</td>
-            <td>{{ bet.description }}</td>
-            <td>{{ (bet.our_prob * 100)|round(1) }}%</td>
-            <td style="font-weight:600">{{ "%.2f"|format(bet.sb_odds) }}</td>
-            <td>{{ (bet.implied_prob * 100)|round(1) }}%</td>
-            <td class="ev-pos">{{ "%+.1f"|format(bet.edge * 100) }}%</td>
-            <td class="ev-pos" style="font-weight:700">{{ "%+.1f"|format(bet.ev_pct) }}%</td>
-            <td class="kelly-label">
-              {% if bet.kelly_pct > 0 %}{{ "%.1f"|format(bet.kelly_pct) }}% bank{% else %}—{% endif %}
+            <td style="font-size:var(--xs);color:var(--muted)">{{ bet.fight }}</td>
+            <td style="font-weight:600">{{ bet.description }}</td>
+            <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
+            <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
+            <td style="color:var(--green);font-weight:700">+${{ ((bet.sb_odds - 1) * 100)|round(0)|int }}</td>
+            <td style="color:var(--blue)">
+              {% if bet.kelly_pct > 0 %}{{ "%.1f"|format(bet.kelly_pct) }}% of bank{% else %}&lt;1%{% endif %}
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+    <div style="margin-top:0.5rem;font-size:var(--xs);color:var(--muted);padding:0 0.25rem">
+      Only bets where our model probability exceeds the implied probability by 3%+ are shown.
+      <strong>Suggested stake</strong> = quarter-Kelly criterion: bet this % of your total bankroll.
+    </div>
     {% else %}
     <p style="color:var(--muted);text-align:center;padding:3rem;">
-      No value bets identified yet — SportsBet odds may not be published for upcoming fights.
+      No value bets identified — SportsBet odds may not be published yet.
     </p>
     {% endif %}
 
@@ -498,8 +603,8 @@
 </main>
 
 <footer>
-  SharpOctagon · LightGBM + isotonic calibration + bootstrap conformal intervals ·
-  Data: UFCStats via Greco1899 · Closing odds: SportsBet Australia (research only)
+  SharpOctagon &nbsp;·&nbsp; LightGBM + isotonic calibration + conformal prediction intervals
+  &nbsp;·&nbsp; Data: UFCStats via Greco1899 &nbsp;·&nbsp; Odds: SportsBet Australia (research only)
 </footer>
 
 <script>

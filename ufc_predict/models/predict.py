@@ -128,8 +128,14 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         a_age = _fighter_age(a_id, today, session)
         b_age = _fighter_age(b_id, today, session)
 
-        a_name = session.get(Fighter, a_id).full_name if session.get(Fighter, a_id) else a_id
-        b_name = session.get(Fighter, b_id).full_name if session.get(Fighter, b_id) else b_id
+        fa_obj = session.get(Fighter, a_id)
+        fb_obj = session.get(Fighter, b_id)
+        a_name = fa_obj.full_name if fa_obj else a_id
+        b_name = fb_obj.full_name if fb_obj else b_id
+        a_nat  = fa_obj.nationality if fa_obj else None
+        b_nat  = fb_obj.nationality if fb_obj else None
+        a_stance = fa_obj.stance if fa_obj else None
+        b_stance = fb_obj.stance if fb_obj else None
 
         row = {
             "upcoming_bout_id": bout.upcoming_bout_id,
@@ -139,6 +145,10 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             "fighter_b_id": b_id,
             "fighter_a_name": a_name,
             "fighter_b_name": b_name,
+            "fighter_a_nationality": a_nat,
+            "fighter_b_nationality": b_nat,
+            "fighter_a_stance": a_stance,
+            "fighter_b_stance": b_stance,
             "weight_class": bout.weight_class,
             "is_title_bout": int(bool(bout.is_title_bout)),
             "is_five_round": int(bool(bout.is_five_round)),
@@ -261,6 +271,8 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     output = upcoming_df[[
         "upcoming_bout_id", "event_date", "event_name",
         "fighter_a_name", "fighter_b_name", "weight_class",
+        "fighter_a_nationality", "fighter_b_nationality",
+        "fighter_a_stance", "fighter_b_stance",
         "is_title_bout", "is_five_round",
         "a_n_fights", "b_n_fights",
         "a_win_streak", "b_win_streak", "a_loss_streak", "b_loss_streak",

@@ -91,6 +91,64 @@ def _kelly_display(frac) -> str:
     return f"{float(frac)*100:.1f}% of bankroll"
 
 
+# Country name → ISO 3166-1 alpha-2 for flag emoji
+_COUNTRY_ISO: dict[str, str] = {
+    "Australia": "AU", "Brazil": "BR", "United States": "US", "USA": "US",
+    "Russia": "RU", "Georgia": "GE", "England": "GB", "United Kingdom": "GB",
+    "Ireland": "IE", "Mexico": "MX", "China": "CN", "Canada": "CA",
+    "New Zealand": "NZ", "Poland": "PL", "Netherlands": "NL", "Sweden": "SE",
+    "Nigeria": "NG", "France": "FR", "Italy": "IT", "Spain": "ES",
+    "Japan": "JP", "South Korea": "KR", "South Africa": "ZA", "Jamaica": "JM",
+    "Kazakhstan": "KZ", "Kyrgyzstan": "KG", "Uzbekistan": "UZ", "Ukraine": "UA",
+    "Azerbaijan": "AZ", "Armenia": "AM", "Cameroon": "CM", "DR Congo": "CD",
+    "Senegal": "SN", "Morocco": "MA", "Ghana": "GH", "Kenya": "KE",
+    "Argentina": "AR", "Colombia": "CO", "Venezuela": "VE", "Peru": "PE",
+    "Chile": "CL", "Ecuador": "EC", "Bolivia": "BO", "Paraguay": "PY",
+    "Cuba": "CU", "Dominican Republic": "DO", "Puerto Rico": "PR",
+    "Germany": "DE", "Austria": "AT", "Switzerland": "CH", "Belgium": "BE",
+    "Portugal": "PT", "Czech Republic": "CZ", "Slovakia": "SK", "Hungary": "HU",
+    "Romania": "RO", "Bulgaria": "BG", "Serbia": "RS", "Croatia": "HR",
+    "Slovenia": "SI", "Bosnia and Herzegovina": "BA", "Albania": "AL",
+    "Greece": "GR", "Turkey": "TR", "Israel": "IL", "Iran": "IR",
+    "Saudi Arabia": "SA", "UAE": "AE", "Philippines": "PH", "Thailand": "TH",
+    "Indonesia": "ID", "Malaysia": "MY", "Vietnam": "VN", "Myanmar": "MM",
+    "Scotland": "GB-SCT", "Wales": "GB-WLS", "Northern Ireland": "GB-NIR",
+}
+
+
+def _flag_emoji(country: str | None) -> str:
+    if not country:
+        return ""
+    iso = _COUNTRY_ISO.get(country, "")
+    if not iso or len(iso) != 2:
+        return ""
+    # Convert ISO to regional indicator symbols (Unicode flag emoji)
+    return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in iso.upper())
+
+
+def _fighter_type(ko_rate, sub_rate, td_per_min, slpm, sig_acc) -> str:
+    """Classify fighting style from computed stats."""
+    ko  = float(ko_rate  or 0)
+    sub = float(sub_rate or 0)
+    td  = float(td_per_min or 0)
+    sp  = float(slpm or 0)
+    acc = float(sig_acc or 0)
+
+    if ko > 0.30:
+        return "KO Artist"
+    if sub > 0.30:
+        return "Submission"
+    if td > 2.5 and sub > 0.10:
+        return "Wrestler"
+    if td > 1.5:
+        return "Grappler"
+    if sp > 5.5 or (acc > 0.48 and sp > 4.0):
+        return "Striker"
+    if ko > 0.15 and sp > 4.0:
+        return "Power Striker"
+    return "Complete"
+
+
 def _enrich_props(bout: dict) -> None:
     """Add formatted prop probability strings to a bout dict."""
     props = bout.get("props") or {}
@@ -133,27 +191,31 @@ def _enrich_props(bout: dict) -> None:
 
 
 def _enrich_bet_analysis(bout: dict) -> None:
-    """Format bet_analysis list for display in the template."""
+    """Format bet_analysis list for display — top 10 value bets only."""
     bets = bout.get("bet_analysis") or []
+    # Take value bets first, then best EV — cap at 10
+    value_bets = [b for b in bets if b.get("is_value")][:10]
+
     formatted = []
-    for bet in bets:
-        ev = bet.get("ev_pct", 0)
-        kelly_pct = bet.get("kelly_pct", 0)
+    for bet in value_bets:
+        ev       = float(bet.get("ev_pct", 0))
+        kelly_p  = float(bet.get("kelly_pct", 0))
+        odds     = float(bet.get("sb_odds", 1.0))
+        our_p    = float(bet.get("our_prob", 0))
+        # Est. profit: for every $100 wagered, expected net gain
+        est_profit = round((odds - 1) * 100)
         formatted.append({
-            "bet_type":    bet.get("bet_type", ""),
             "description": bet.get("description", ""),
-            "our_prob":    f"{float(bet.get('our_prob', 0))*100:.1f}%",
-            "sb_odds":     f"{float(bet.get('sb_odds', 0)):.2f}",
-            "implied_prob": f"{float(bet.get('implied_prob', 0))*100:.1f}%",
-            "edge":        f"{float(bet.get('edge', 0))*100:+.1f}%",
-            "ev_pct":      f"{ev:+.1f}%",
-            "kelly":       f"{kelly_pct:.1f}% bank" if kelly_pct > 0 else "—",
-            "is_value":    bet.get("is_value", False),
+            "our_prob":    f"{our_p * 100:.0f}%",
+            "sb_odds":     f"{odds:.2f}",
+            "est_profit":  f"+${est_profit}",
+            "stake_pct":   f"{kelly_p:.1f}%" if kelly_p > 0 else "<1%",
+            "is_value":    True,
             "ev_raw":      ev,
         })
     bout["bet_rows"] = formatted
     bout["has_bets"] = bool(formatted)
-    bout["value_bet_count"] = sum(1 for b in formatted if b["is_value"])
+    bout["value_bet_count"] = len(formatted)
 
 
 def build(output_dir: Path = OUTPUT_DIR) -> None:
@@ -213,7 +275,6 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["b_l3"] = _nan_pct(bout.get("b_l3_win_rate"))
             bout["a_n_fights"] = int(bout.get("a_n_fights") or 0)
             bout["b_n_fights"] = int(bout.get("b_n_fights") or 0)
-            # Fighter pace & finish stats for the betting context panel
             bout["a_slpm"]        = _nan_f(bout.get("a_slpm"))
             bout["b_slpm"]        = _nan_f(bout.get("b_slpm"))
             bout["a_sapm"]        = _nan_f(bout.get("a_sapm"))
@@ -226,6 +287,37 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["b_sub_rate"]    = _nan_pct(bout.get("b_sub_rate"))
             bout["a_td_per_min"]  = _nan_f(bout.get("a_td_per_min"), ".2f")
             bout["b_td_per_min"]  = _nan_f(bout.get("b_td_per_min"), ".2f")
+
+            # Country flags
+            a_nat = bout.get("fighter_a_nationality") or ""
+            b_nat = bout.get("fighter_b_nationality") or ""
+            bout["a_flag"] = _flag_emoji(a_nat)
+            bout["b_flag"] = _flag_emoji(b_nat)
+            bout["a_nationality"] = a_nat
+            bout["b_nationality"] = b_nat
+
+            # Fighter type — use raw numeric values before they're formatted below
+            bout["a_fighter_type"] = _fighter_type(
+                bout.get("a_ko_rate") if not isinstance(bout.get("a_ko_rate"), str) else None,
+                bout.get("a_sub_rate") if not isinstance(bout.get("a_sub_rate"), str) else None,
+                bout.get("a_td_per_min") if not isinstance(bout.get("a_td_per_min"), str) else None,
+                bout.get("a_slpm") if not isinstance(bout.get("a_slpm"), str) else None,
+                bout.get("a_sig_acc") if not isinstance(bout.get("a_sig_acc"), str) else None,
+            )
+            bout["b_fighter_type"] = _fighter_type(
+                bout.get("b_ko_rate") if not isinstance(bout.get("b_ko_rate"), str) else None,
+                bout.get("b_sub_rate") if not isinstance(bout.get("b_sub_rate"), str) else None,
+                bout.get("b_td_per_min") if not isinstance(bout.get("b_td_per_min"), str) else None,
+                bout.get("b_slpm") if not isinstance(bout.get("b_slpm"), str) else None,
+                bout.get("b_sig_acc") if not isinstance(bout.get("b_sig_acc"), str) else None,
+            )
+
+            # Initials for avatar fallback
+            def _initials(name: str) -> str:
+                parts = (name or "").split()
+                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else name[:2].upper()
+            bout["a_initials"] = _initials(bout.get("fighter_a_name", ""))
+            bout["b_initials"] = _initials(bout.get("fighter_b_name", ""))
 
             # Prop probabilities
             _enrich_props(bout)

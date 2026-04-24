@@ -89,9 +89,12 @@ def fighter_aso_stats(
 
     df["date"] = pd.to_datetime(df["date"])
     df["won"] = (df["winner_fighter_id"] == fighter_id).astype(int)
-    df["finish"] = df["method"].isin(["KO", "TKO", "SUB"]).astype(int)
-    df["ko_tko"] = df["method"].isin(["KO", "TKO"]).astype(int)
-    df["sub_win"] = ((df["method"] == "SUB") & (df["winner_fighter_id"] == fighter_id)).astype(int)
+    # Use substring matching — DB stores methods like "KO/TKO", "Submission", etc.
+    # "KO" is also a substring of "TKO", so one contains() covers both.
+    _m = df["method"].str.upper().fillna("")
+    df["ko_tko"] = _m.str.contains("KO", na=False).astype(int)
+    df["finish"] = (df["ko_tko"] | _m.str.contains("SUB", na=False)).astype(int)
+    df["sub_win"] = (_m.str.contains("SUB", na=False) & (df["winner_fighter_id"] == fighter_id)).astype(int)
 
     # Total fight time in minutes (for per-minute rates)
     df["total_time_min"] = df["time_ended_sec"].fillna(0) / 60.0

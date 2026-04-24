@@ -29,7 +29,17 @@ FEATURE_MATRIX_PATH = Path("data/feature_matrix.parquet")
 METHOD_CLASSES = ["A_KO_TKO", "A_SUB", "A_DEC", "B_KO_TKO", "B_SUB", "B_DEC"]
 ROUND_CLASSES  = ["R1", "R2", "R3", "R4", "R5"]
 
-# Minimum edge proportion before we flag something as a training concern
+# Absolute per-fighter rates added to the prop feature set.
+# These capture "both fighters are KO artists" — a signal that cancels out in
+# diff features but is critical for method/round prediction.
+PROP_EXTRA_COLS = [
+    "a_ko_rate", "b_ko_rate",
+    "a_sub_rate", "b_sub_rate",
+    "a_finish_rate", "b_finish_rate",
+    "a_sub_per_min", "b_sub_per_min",
+    "a_td_per_min", "b_td_per_min",
+]
+
 _CAL_SPLIT = 0.80  # 80/20 chronological split for calibration
 
 
@@ -129,7 +139,10 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     from sklearn.isotonic import IsotonicRegression
 
     df = _load_labeled_matrix(db_url)
-    available = [c for c in feature_cols if c in df.columns]
+    # Extend with absolute per-fighter rates — these are in the feature matrix
+    # after the aso_features.py change but were not in the win-model feature_cols.
+    prop_cols = list(dict.fromkeys(feature_cols + PROP_EXTRA_COLS))
+    available = [c for c in prop_cols if c in df.columns]
     if not available:
         raise ValueError("No matching feature columns found in the feature matrix")
 
@@ -298,11 +311,28 @@ def predict_props(
                 float(cal_m[idx["A_DEC"]] + cal_m[idx["B_DEC"]]), 4
             )
         else:
-            # Heuristic fallback using diff_ko_rate / diff_sub_rate features
-            dko  = float(row.get("diff_ko_rate",  pd.Series([0.0]))[0] or 0)
-            dsub = float(row.get("diff_sub_rate", pd.Series([0.0]))[0] or 0)
-            base_ko  = 0.28 + np.clip(dko * 0.5, -0.12, 0.12)
-            base_sub = 0.12 + np.clip(dsub * 0.5, -0.06, 0.06)
+            # Fallback heuristic: use absolute KO/sub rates when available,
+            # falling back to diff features. The average of both fighters'
+            # rates captures "two strikers → high KO probability" correctly.
+            def _col(name: str) -> float:
+                v = row.get(name)
+                if v is None:
+                    return float("nan")
+                val = v.iloc[0] if hasattr(v, "iloc") else float(v)
+                return float(val) if val == val else float("nan")  # nan check
+
+            a_ko  = _col("a_ko_rate");  b_ko  = _col("b_ko_rate")
+            a_sub = _col("a_sub_rate"); b_sub = _col("b_sub_rate")
+
+            if a_ko == a_ko and b_ko == b_ko:
+                base_ko  = (a_ko + b_ko) / 2
+                base_sub = (a_sub + b_sub) / 2 if (a_sub == a_sub and b_sub == b_sub) else 0.12
+            else:
+                dko  = _col("diff_ko_rate")  if _col("diff_ko_rate")  == _col("diff_ko_rate")  else 0.0
+                dsub = _col("diff_sub_rate") if _col("diff_sub_rate") == _col("diff_sub_rate") else 0.0
+                base_ko  = 0.28 + np.clip(dko * 0.5, -0.12, 0.12)
+                base_sub = 0.12 + np.clip(dsub * 0.5, -0.06, 0.06)
+
             base_dec = max(0.01, 1.0 - base_ko - base_sub)
             total = base_ko + base_sub + base_dec
 

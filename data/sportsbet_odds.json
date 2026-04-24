@@ -1,0 +1,1050 @@
+{
+  "fetched_at": "2026-04-24T03:59:25.954475+00:00",
+  "fights": [
+    {
+      "sportsbet_event_id": "10374928",
+      "fight_name": "Talita Alencar v Julia Polastri",
+      "fighter_a_raw": "Talita Alencar",
+      "fighter_b_raw": "Julia Polastri",
+      "start_time": 1777151400,
+      "markets": {
+        "moneyline": {
+          "Talita Alencar": 3.21,
+          "Julia Polastri": 1.35
+        },
+        "method": {
+          "Talita Alencar by KO/TKO": 31.0,
+          "Talita Alencar by Points": 4.3,
+          "Talita Alencar by Submission": 11.0,
+          "Draw": 51.0,
+          "Julia Polastri by KO/TKO": 4.5,
+          "Julia Polastri by Points": 1.98,
+          "Julia Polastri by Submission": 19.0
+        },
+        "winning_round": {
+          "Talita Alencar to Win in Round 1": 12.0,
+          "Talita Alencar to Win in Round 2": 15.0,
+          "Talita Alencar to Win in Round 3": 15.0,
+          "Talita Alencar to Win by Decision": 4.5,
+          "Draw": 41.0,
+          "Julia Polastri to Win in Round 1": 8.5,
+          "Julia Polastri to Win in Round 2": 8.5,
+          "Julia Polastri to Win in Round 3": 9.5,
+          "Julia Polastri to Win by Decision": 2.0,
+          "Round 1": 7.0,
+          "Round 2": 7.5,
+          "Round 3": 8.5,
+          "1st Minute of Round 1": 31.0,
+          "2nd Minute of Round 1": 23.0,
+          "3rd Minute of Round 1": 23.0,
+          "4th Minute of Round 1": 20.0,
+          "5th Minute of Round 1": 23.0,
+          "1st Minute of Round 2": 34.0,
+          "2nd Minute of Round 2": 26.0,
+          "3rd Minute of Round 2": 26.0,
+          "4th Minute of Round 2": 21.0,
+          "5th Minute of Round 2": 26.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 23.0,
+          "5th Minute of Round 3": 26.0,
+          "Talita Alencar Round 1 or 2": 11.5,
+          "Talita Alencar Round 3 or by Decision": 3.9,
+          "Julia Polastri Round 1 or 2": 5.4,
+          "Julia Polastri Round 3 or by Decision": 1.73
+        },
+        "distance": {
+          "Yes": 1.37,
+          "No": 2.92
+        },
+        "total_rounds": {
+          "Over": 1.3,
+          "Under": 3.2
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10395721",
+      "fight_name": "Victor Valenzuela v Max Griffin",
+      "fighter_a_raw": "Victor Valenzuela",
+      "fighter_b_raw": "Max Griffin",
+      "start_time": 1777152900,
+      "markets": {
+        "moneyline": {
+          "Victor Valenzuela": 1.69,
+          "Max Griffin": 2.17
+        },
+        "method": {
+          "Victor Valenzuela by KO/TKO": 4.0,
+          "Victor Valenzuela by Points": 3.05,
+          "Victor Valenzuela by Submission": 19.0,
+          "Draw": 51.0,
+          "Max Griffin by KO/TKO": 5.8,
+          "Max Griffin by Points": 3.45,
+          "Max Griffin by Submission": 26.0
+        },
+        "winning_round": {
+          "Victor Valenzuela to Win in Round 1": 6.5,
+          "Victor Valenzuela to Win in Round 2": 8.5,
+          "Victor Valenzuela to Win in Round 3": 10.0,
+          "Victor Valenzuela to Win by Decision": 3.0,
+          "Draw": 41.0,
+          "Max Griffin to Win in Round 1": 9.5,
+          "Max Griffin to Win in Round 2": 10.0,
+          "Max Griffin to Win in Round 3": 12.0,
+          "Max Griffin to Win by Decision": 3.25,
+          "Round 1": 4.75,
+          "Round 2": 5.9,
+          "Round 3": 8.0,
+          "1st Minute of Round 1": 21.0,
+          "2nd Minute of Round 1": 15.0,
+          "3rd Minute of Round 1": 15.0,
+          "4th Minute of Round 1": 13.0,
+          "5th Minute of Round 1": 15.0,
+          "1st Minute of Round 2": 26.0,
+          "2nd Minute of Round 2": 20.0,
+          "3rd Minute of Round 2": 20.0,
+          "4th Minute of Round 2": 15.0,
+          "5th Minute of Round 2": 20.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 21.0,
+          "5th Minute of Round 3": 26.0,
+          "Victor Valenzuela Round 1 or 2": 4.4,
+          "Victor Valenzuela Round 3 or by Decision": 2.55,
+          "Max Griffin Round 1 or 2": 6.5,
+          "Max Griffin Round 3 or by Decision": 3.0
+        },
+        "distance": {
+          "Yes": 1.65,
+          "No": 2.16
+        },
+        "total_rounds": {
+          "Over": 1.5,
+          "Under": 2.5
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10399131",
+      "fight_name": "Francis Marshall v Lucas Brennan",
+      "fighter_a_raw": "Francis Marshall",
+      "fighter_b_raw": "Lucas Brennan",
+      "start_time": 1777154400,
+      "markets": {
+        "moneyline": {
+          "Francis Marshall": 1.16,
+          "Lucas Brennan": 5.3
+        },
+        "method": {
+          "Francis Marshall by KO/TKO": 4.5,
+          "Francis Marshall by Points": 2.6,
+          "Francis Marshall by Submission": 3.35,
+          "Draw": 51.0,
+          "Lucas Brennan by KO/TKO": 23.0,
+          "Lucas Brennan by Points": 10.0,
+          "Lucas Brennan by Submission": 11.0
+        },
+        "winning_round": {
+          "Francis Marshall to Win in Round 1": 3.75,
+          "Francis Marshall to Win in Round 2": 5.5,
+          "Francis Marshall to Win in Round 3": 9.5,
+          "Francis Marshall to Win by Decision": 2.62,
+          "Draw": 41.0,
+          "Lucas Brennan to Win in Round 1": 11.0,
+          "Lucas Brennan to Win in Round 2": 13.0,
+          "Lucas Brennan to Win in Round 3": 34.0,
+          "Lucas Brennan to Win by Decision": 9.5,
+          "Round 1": 3.25,
+          "Round 2": 4.7,
+          "Round 3": 8.25,
+          "1st Minute of Round 1": 14.0,
+          "2nd Minute of Round 1": 11.0,
+          "3rd Minute of Round 1": 11.0,
+          "4th Minute of Round 1": 9.0,
+          "5th Minute of Round 1": 11.0,
+          "1st Minute of Round 2": 20.0,
+          "2nd Minute of Round 2": 15.0,
+          "3rd Minute of Round 2": 15.0,
+          "4th Minute of Round 2": 13.0,
+          "5th Minute of Round 2": 15.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 23.0,
+          "5th Minute of Round 3": 26.0,
+          "Francis Marshall Round 1 or 2": 2.35,
+          "Francis Marshall Round 3 or by Decision": 2.15,
+          "Lucas Brennan Round 1 or 2": 10.0,
+          "Lucas Brennan Round 3 or by Decision": 8.25
+        },
+        "distance": {
+          "Yes": 2.13,
+          "No": 1.66
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10399129",
+      "fight_name": "Jafel Filho v Cody Durden",
+      "fighter_a_raw": "Jafel Filho",
+      "fighter_b_raw": "Cody Durden",
+      "start_time": 1777155900,
+      "markets": {
+        "moneyline": {
+          "Jafel Filho": 1.14,
+          "Cody Durden": 5.75
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374926",
+      "fight_name": "Mayra Bueno Silva v Michelle Montague",
+      "fighter_a_raw": "Mayra Bueno Silva",
+      "fighter_b_raw": "Michelle Montague",
+      "start_time": 1777157400,
+      "markets": {
+        "moneyline": {
+          "Mayra Bueno Silva": 4.1,
+          "Michelle Montague": 1.24
+        },
+        "method": {
+          "Mayra Bueno Silva by KO/TKO": 29.0,
+          "Mayra Bueno Silva by Points": 5.7,
+          "Mayra Bueno Silva by Submission": 13.0,
+          "Draw": 51.0,
+          "Michelle Montague by KO/TKO": 7.0,
+          "Michelle Montague by Points": 2.1,
+          "Michelle Montague by Submission": 4.25
+        },
+        "winning_round": {
+          "Mayra Bueno Silva to Win in Round 1": 13.0,
+          "Mayra Bueno Silva to Win in Round 2": 15.0,
+          "Mayra Bueno Silva to Win in Round 3": 34.0,
+          "Mayra Bueno Silva to Win by Decision": 5.5,
+          "Draw": 41.0,
+          "Michelle Montague to Win in Round 1": 6.0,
+          "Michelle Montague to Win in Round 2": 7.0,
+          "Michelle Montague to Win in Round 3": 9.5,
+          "Michelle Montague to Win by Decision": 2.1,
+          "Round 1": 5.0,
+          "Round 2": 6.25,
+          "Round 3": 8.25,
+          "1st Minute of Round 1": 21.0,
+          "2nd Minute of Round 1": 17.0,
+          "3rd Minute of Round 1": 17.0,
+          "4th Minute of Round 1": 14.0,
+          "5th Minute of Round 1": 17.0,
+          "1st Minute of Round 2": 26.0,
+          "2nd Minute of Round 2": 21.0,
+          "3rd Minute of Round 2": 21.0,
+          "4th Minute of Round 2": 17.0,
+          "5th Minute of Round 2": 21.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 23.0,
+          "5th Minute of Round 3": 26.0,
+          "Mayra Bueno Silva Round 1 or 2": 13.0,
+          "Mayra Bueno Silva Round 3 or by Decision": 5.1,
+          "Michelle Montague Round 1 or 2": 3.6,
+          "Michelle Montague Round 3 or by Decision": 1.8
+        },
+        "distance": {
+          "Yes": 1.56,
+          "No": 2.33
+        },
+        "total_rounds": {
+          "Over": 1.44,
+          "Under": 2.62
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374925",
+      "fight_name": "Jackson McVey v Sedriques Dumas",
+      "fighter_a_raw": "Jackson McVey",
+      "fighter_b_raw": "Sedriques Dumas",
+      "start_time": 1777159200,
+      "markets": {
+        "moneyline": {
+          "Jackson McVey": 1.51,
+          "Sedriques Dumas": 2.57
+        },
+        "method": {
+          "Jackson McVey by KO/TKO": 3.35,
+          "Jackson McVey by Points": 9.25,
+          "Jackson McVey by Submission": 3.35,
+          "Draw": 51.0,
+          "Sedriques Dumas by KO/TKO": 6.0,
+          "Sedriques Dumas by Points": 9.5,
+          "Sedriques Dumas by Submission": 6.0
+        },
+        "winning_round": {
+          "Jackson McVey to Win in Round 1": 2.87,
+          "Jackson McVey to Win in Round 2": 5.5,
+          "Jackson McVey to Win in Round 3": 10.0,
+          "Jackson McVey to Win by Decision": 8.5,
+          "Draw": 41.0,
+          "Sedriques Dumas to Win in Round 1": 5.5,
+          "Sedriques Dumas to Win in Round 2": 8.0,
+          "Sedriques Dumas to Win in Round 3": 12.0,
+          "Sedriques Dumas to Win by Decision": 8.5,
+          "Round 1": 1.97,
+          "Round 2": 3.6,
+          "Round 3": 8.0,
+          "1st Minute of Round 1": 9.0,
+          "2nd Minute of Round 1": 7.0,
+          "3rd Minute of Round 1": 7.0,
+          "4th Minute of Round 1": 6.0,
+          "5th Minute of Round 1": 7.0,
+          "1st Minute of Round 2": 15.0,
+          "2nd Minute of Round 2": 12.0,
+          "3rd Minute of Round 2": 12.0,
+          "4th Minute of Round 2": 10.0,
+          "5th Minute of Round 2": 12.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 21.0,
+          "5th Minute of Round 3": 26.0,
+          "Jackson McVey Round 1 or 2": 1.94,
+          "Jackson McVey Round 3 or by Decision": 5.8,
+          "Sedriques Dumas Round 1 or 2": 3.7,
+          "Sedriques Dumas Round 3 or by Decision": 6.75
+        },
+        "distance": {
+          "Yes": 4.8,
+          "No": 1.16
+        },
+        "total_rounds": {
+          "Over": 2.25,
+          "Under": 1.57
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374929",
+      "fight_name": "Rodolfo Vieira v Eric McConico",
+      "fighter_a_raw": "Rodolfo Vieira",
+      "fighter_b_raw": "Eric McConico",
+      "start_time": 1777160400,
+      "markets": {
+        "moneyline": {
+          "Rodolfo Vieira": 1.35,
+          "Eric McConico": 3.23
+        },
+        "method": {
+          "Rodolfo Vieira by KO/TKO": 6.5,
+          "Rodolfo Vieira by Points": 3.25,
+          "Rodolfo Vieira by Submission": 3.05,
+          "Draw": 51.0,
+          "Eric McConico by KO/TKO": 8.5,
+          "Eric McConico by Points": 4.9,
+          "Eric McConico by Submission": 34.0
+        },
+        "winning_round": {
+          "Rodolfo Vieira to Win in Round 1": 4.5,
+          "Rodolfo Vieira to Win in Round 2": 6.0,
+          "Rodolfo Vieira to Win in Round 3": 8.0,
+          "Rodolfo Vieira to Win by Decision": 3.2,
+          "Draw": 41.0,
+          "Eric McConico to Win in Round 1": 10.5,
+          "Eric McConico to Win in Round 2": 12.0,
+          "Eric McConico to Win in Round 3": 15.0,
+          "Eric McConico to Win by Decision": 5.0,
+          "Round 1": 3.6,
+          "Round 2": 5.0,
+          "Round 3": 7.0,
+          "1st Minute of Round 1": 15.0,
+          "2nd Minute of Round 1": 12.0,
+          "3rd Minute of Round 1": 12.0,
+          "4th Minute of Round 1": 10.0,
+          "5th Minute of Round 1": 12.0,
+          "1st Minute of Round 2": 21.0,
+          "2nd Minute of Round 2": 17.0,
+          "3rd Minute of Round 2": 17.0,
+          "4th Minute of Round 2": 14.0,
+          "5th Minute of Round 2": 17.0,
+          "1st Minute of Round 3": 31.0,
+          "2nd Minute of Round 3": 23.0,
+          "3rd Minute of Round 3": 23.0,
+          "4th Minute of Round 3": 20.0,
+          "5th Minute of Round 3": 23.0,
+          "Rodolfo Vieira Round 1 or 2": 2.7,
+          "Rodolfo Vieira Round 3 or by Decision": 2.5,
+          "Eric McConico Round 1 or 2": 9.0,
+          "Eric McConico Round 3 or by Decision": 4.4
+        },
+        "distance": {
+          "Yes": 2.01,
+          "No": 1.74
+        },
+        "total_rounds": {
+          "Over": 1.72,
+          "Under": 2.0
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374930",
+      "fight_name": "Marcus Buchecha v Ryan Spann",
+      "fighter_a_raw": "Marcus Buchecha",
+      "fighter_b_raw": "Ryan Spann",
+      "start_time": 1777162500,
+      "markets": {
+        "moneyline": {
+          "Marcus Buchecha": 1.66,
+          "Ryan Spann": 2.23
+        },
+        "method": {
+          "Marcus Buchecha by KO/TKO": 6.0,
+          "Marcus Buchecha by Points": 7.5,
+          "Marcus Buchecha by Submission": 2.8,
+          "Draw": 51.0,
+          "Ryan Spann by KO/TKO": 3.35,
+          "Ryan Spann by Points": 12.0,
+          "Ryan Spann by Submission": 8.75
+        },
+        "winning_round": {
+          "Marcus Buchecha to Win in Round 1": 3.2,
+          "Marcus Buchecha to Win in Round 2": 6.0,
+          "Marcus Buchecha to Win in Round 3": 10.0,
+          "Marcus Buchecha to Win by Decision": 7.0,
+          "Draw": 41.0,
+          "Ryan Spann to Win in Round 1": 4.0,
+          "Ryan Spann to Win in Round 2": 7.5,
+          "Ryan Spann to Win in Round 3": 11.0,
+          "Ryan Spann to Win by Decision": 10.0,
+          "Round 1": 1.9,
+          "Round 2": 3.9,
+          "Round 3": 7.75,
+          "1st Minute of Round 1": 9.0,
+          "2nd Minute of Round 1": 7.0,
+          "3rd Minute of Round 1": 7.0,
+          "4th Minute of Round 1": 6.0,
+          "5th Minute of Round 1": 7.0,
+          "1st Minute of Round 2": 17.0,
+          "2nd Minute of Round 2": 13.0,
+          "3rd Minute of Round 2": 13.0,
+          "4th Minute of Round 2": 11.0,
+          "5th Minute of Round 2": 13.0,
+          "1st Minute of Round 3": 34.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 21.0,
+          "5th Minute of Round 3": 26.0,
+          "Marcus Buchecha Round 1 or 2": 2.25,
+          "Marcus Buchecha Round 3 or by Decision": 5.25,
+          "Ryan Spann Round 1 or 2": 2.9,
+          "Ryan Spann Round 3 or by Decision": 7.5
+        },
+        "distance": {
+          "Yes": 4.65,
+          "No": 1.17
+        },
+        "total_rounds": {
+          "Over": 2.25,
+          "Under": 1.57
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374932",
+      "fight_name": "Montel Jackson v Raoni Barcelos",
+      "fighter_a_raw": "Montel Jackson",
+      "fighter_b_raw": "Raoni Barcelos",
+      "start_time": 1777164300,
+      "markets": {
+        "moneyline": {
+          "Montel Jackson": 1.55,
+          "Raoni Barcelos": 2.46
+        },
+        "method": {
+          "Montel Jackson by KO/TKO": 3.8,
+          "Montel Jackson by Points": 2.95,
+          "Montel Jackson by Submission": 11.5,
+          "Draw": 51.0,
+          "Raoni Barcelos by KO/TKO": 14.0,
+          "Raoni Barcelos by Points": 3.6,
+          "Raoni Barcelos by Submission": 9.25
+        },
+        "winning_round": {
+          "Montel Jackson to Win in Round 1": 6.0,
+          "Montel Jackson to Win in Round 2": 7.5,
+          "Montel Jackson to Win in Round 3": 9.5,
+          "Montel Jackson to Win by Decision": 2.87,
+          "Draw": 41.0,
+          "Raoni Barcelos to Win in Round 1": 10.0,
+          "Raoni Barcelos to Win in Round 2": 11.0,
+          "Raoni Barcelos to Win in Round 3": 13.0,
+          "Raoni Barcelos to Win by Decision": 3.5,
+          "Round 1": 4.75,
+          "Round 2": 5.8,
+          "Round 3": 8.0,
+          "1st Minute of Round 1": 21.0,
+          "2nd Minute of Round 1": 15.0,
+          "3rd Minute of Round 1": 15.0,
+          "4th Minute of Round 1": 13.0,
+          "5th Minute of Round 1": 15.0,
+          "1st Minute of Round 2": 23.0,
+          "2nd Minute of Round 2": 19.0,
+          "3rd Minute of Round 2": 19.0,
+          "4th Minute of Round 2": 15.0,
+          "5th Minute of Round 2": 19.0,
+          "1st Minute of Round 3": 36.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 21.0,
+          "5th Minute of Round 3": 26.0,
+          "Montel Jackson Round 1 or 2": 3.9,
+          "Montel Jackson Round 3 or by Decision": 2.4,
+          "Raoni Barcelos Round 1 or 2": 7.75,
+          "Raoni Barcelos Round 3 or by Decision": 3.25
+        },
+        "distance": {
+          "Yes": 1.65,
+          "No": 2.15
+        },
+        "total_rounds": {
+          "Over": 1.5,
+          "Under": 2.5
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374933",
+      "fight_name": "Davey Grant v Juan Martinetti",
+      "fighter_a_raw": "Davey Grant",
+      "fighter_b_raw": "Juan Martinetti",
+      "start_time": 1777166100,
+      "markets": {
+        "moneyline": {
+          "Davey Grant": 1.79,
+          "Juan Martinetti": 2.07
+        },
+        "method": {
+          "Davey Grant by KO/TKO": 4.2,
+          "Davey Grant by Points": 3.3,
+          "Davey Grant by Submission": 16.0,
+          "Draw": 51.0,
+          "Juan Martinetti by KO/TKO": 9.5,
+          "Juan Martinetti by Points": 3.5,
+          "Juan Martinetti by Submission": 6.75
+        },
+        "winning_round": {
+          "Davey Grant to Win in Round 1": 6.5,
+          "Davey Grant to Win in Round 2": 8.5,
+          "Davey Grant to Win in Round 3": 10.0,
+          "Davey Grant to Win by Decision": 3.2,
+          "Draw": 41.0,
+          "Juan Martinetti to Win in Round 1": 8.0,
+          "Juan Martinetti to Win in Round 2": 9.5,
+          "Juan Martinetti to Win in Round 3": 11.0,
+          "Juan Martinetti to Win by Decision": 3.5,
+          "Round 1": 4.25,
+          "Round 2": 5.8,
+          "Round 3": 7.5,
+          "1st Minute of Round 1": 18.0,
+          "2nd Minute of Round 1": 14.0,
+          "3rd Minute of Round 1": 14.0,
+          "4th Minute of Round 1": 12.0,
+          "5th Minute of Round 1": 14.0,
+          "1st Minute of Round 2": 23.0,
+          "2nd Minute of Round 2": 19.0,
+          "3rd Minute of Round 2": 19.0,
+          "4th Minute of Round 2": 15.0,
+          "5th Minute of Round 2": 19.0,
+          "1st Minute of Round 3": 34.0,
+          "2nd Minute of Round 3": 26.0,
+          "3rd Minute of Round 3": 26.0,
+          "4th Minute of Round 3": 21.0,
+          "5th Minute of Round 3": 26.0,
+          "Davey Grant Round 1 or 2": 4.4,
+          "Davey Grant Round 3 or by Decision": 2.75,
+          "Juan Martinetti Round 1 or 2": 5.4,
+          "Juan Martinetti Round 3 or by Decision": 3.0
+        },
+        "distance": {
+          "Yes": 1.74,
+          "No": 2.01
+        },
+        "total_rounds": {
+          "Over": 1.53,
+          "Under": 2.37
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374934",
+      "fight_name": "Rafa Garcia v Alexander Hernandez",
+      "fighter_a_raw": "Rafa Garcia",
+      "fighter_b_raw": "Alexander Hernandez",
+      "start_time": 1777167900,
+      "markets": {
+        "moneyline": {
+          "Rafa Garcia": 2.08,
+          "Alexander Hernandez": 1.78
+        },
+        "method": {
+          "Rafa Garcia by KO/TKO": 11.5,
+          "Rafa Garcia by Points": 3.05,
+          "Rafa Garcia by Submission": 8.5,
+          "Draw": 51.0,
+          "Alexander Hernandez by KO/TKO": 4.6,
+          "Alexander Hernandez by Points": 2.85,
+          "Alexander Hernandez by Submission": 26.0
+        },
+        "winning_round": {
+          "Rafa Garcia to Win in Round 1": 9.5,
+          "Rafa Garcia to Win in Round 2": 10.5,
+          "Rafa Garcia to Win in Round 3": 12.0,
+          "Rafa Garcia to Win by Decision": 3.0,
+          "Draw": 41.0,
+          "Alexander Hernandez to Win in Round 1": 7.5,
+          "Alexander Hernandez to Win in Round 2": 9.5,
+          "Alexander Hernandez to Win in Round 3": 11.0,
+          "Alexander Hernandez to Win by Decision": 2.87,
+          "Round 1": 5.1,
+          "Round 2": 6.75,
+          "Round 3": 9.25,
+          "1st Minute of Round 1": 21.0,
+          "2nd Minute of Round 1": 17.0,
+          "3rd Minute of Round 1": 17.0,
+          "4th Minute of Round 1": 14.0,
+          "5th Minute of Round 1": 17.0,
+          "1st Minute of Round 2": 26.0,
+          "2nd Minute of Round 2": 23.0,
+          "3rd Minute of Round 2": 23.0,
+          "4th Minute of Round 2": 19.0,
+          "5th Minute of Round 2": 23.0,
+          "1st Minute of Round 3": 41.0,
+          "2nd Minute of Round 3": 31.0,
+          "3rd Minute of Round 3": 31.0,
+          "4th Minute of Round 3": 26.0,
+          "5th Minute of Round 3": 31.0,
+          "Rafa Garcia Round 1 or 2": 6.75,
+          "Rafa Garcia Round 3 or by Decision": 2.7,
+          "Alexander Hernandez Round 1 or 2": 5.2,
+          "Alexander Hernandez Round 3 or by Decision": 2.5
+        },
+        "distance": {
+          "Yes": 1.5,
+          "No": 2.47
+        },
+        "total_rounds": {
+          "Over": 1.4,
+          "Under": 2.75
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374931",
+      "fight_name": "Norma Dumont v Joselyne Edwards",
+      "fighter_a_raw": "Norma Dumont",
+      "fighter_b_raw": "Joselyne Edwards",
+      "start_time": 1777169700,
+      "markets": {
+        "moneyline": {
+          "Norma Dumont": 1.41,
+          "Joselyne Edwards": 2.93
+        },
+        "method": {
+          "Norma Dumont by KO/TKO": 14.0,
+          "Norma Dumont by Points": 1.67,
+          "Norma Dumont by Submission": 12.0,
+          "Draw": 51.0,
+          "Joselyne Edwards by KO/TKO": 14.0,
+          "Joselyne Edwards by Points": 4.25,
+          "Joselyne Edwards by Submission": 12.5
+        },
+        "winning_round": {
+          "Norma Dumont to Win in Round 1": 12.0,
+          "Norma Dumont to Win in Round 2": 12.0,
+          "Norma Dumont to Win in Round 3": 12.0,
+          "Norma Dumont to Win by Decision": 1.66,
+          "Draw": 41.0,
+          "Joselyne Edwards to Win in Round 1": 12.0,
+          "Joselyne Edwards to Win in Round 2": 12.0,
+          "Joselyne Edwards to Win in Round 3": 13.0,
+          "Joselyne Edwards to Win by Decision": 4.0,
+          "Round 1": 9.75,
+          "Round 2": 10.0,
+          "Round 3": 11.0,
+          "1st Minute of Round 1": 41.0,
+          "2nd Minute of Round 1": 34.0,
+          "3rd Minute of Round 1": 34.0,
+          "4th Minute of Round 1": 26.0,
+          "5th Minute of Round 1": 34.0,
+          "1st Minute of Round 2": 46.0,
+          "2nd Minute of Round 2": 36.0,
+          "3rd Minute of Round 2": 36.0,
+          "4th Minute of Round 2": 26.0,
+          "5th Minute of Round 2": 36.0,
+          "1st Minute of Round 3": 51.0,
+          "2nd Minute of Round 3": 36.0,
+          "3rd Minute of Round 3": 36.0,
+          "4th Minute of Round 3": 31.0,
+          "5th Minute of Round 3": 36.0,
+          "Norma Dumont Round 1 or 2": 10.0,
+          "Norma Dumont Round 3 or by Decision": 1.57,
+          "Joselyne Edwards Round 1 or 2": 9.75,
+          "Joselyne Edwards Round 3 or by Decision": 3.7
+        },
+        "distance": {
+          "Yes": 1.22,
+          "No": 4.0
+        },
+        "total_rounds": {
+          "Over": 1.16,
+          "Under": 4.5
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10374935",
+      "fight_name": "Aljamain Sterling v Youssef Zalal",
+      "fighter_a_raw": "Aljamain Sterling",
+      "fighter_b_raw": "Youssef Zalal",
+      "start_time": 1777171500,
+      "markets": {
+        "moneyline": {
+          "Aljamain Sterling": 2.1,
+          "Youssef Zalal": 1.74
+        },
+        "method": {
+          "Aljamain Sterling by KO/TKO": 16.0,
+          "Aljamain Sterling by Points": 3.6,
+          "Aljamain Sterling by Submission": 5.6,
+          "Draw": 51.0,
+          "Youssef Zalal by KO/TKO": 5.4,
+          "Youssef Zalal by Points": 2.8,
+          "Youssef Zalal by Submission": 12.5
+        },
+        "winning_round": {
+          "Aljamain Sterling to Win in Round 1": 14.0,
+          "Aljamain Sterling to Win in Round 2": 15.0,
+          "Aljamain Sterling to Win in Round 3": 18.0,
+          "Aljamain Sterling to Win in Round 4": 21.0,
+          "Aljamain Sterling to Win in Round 5": 26.0,
+          "Aljamain Sterling to Win by Decision": 3.6,
+          "Draw": 51.0,
+          "Youssef Zalal to Win in Round 1": 12.5,
+          "Youssef Zalal to Win in Round 2": 14.0,
+          "Youssef Zalal to Win in Round 3": 17.0,
+          "Youssef Zalal to Win in Round 4": 19.0,
+          "Youssef Zalal to Win in Round 5": 23.0,
+          "Youssef Zalal to Win by Decision": 2.8,
+          "Round 1": 7.25,
+          "Round 2": 8.0,
+          "Round 3": 9.5,
+          "Round 4": 11.5,
+          "Round 5": 13.0,
+          "1st Minute of Round 1": 31.0,
+          "2nd Minute of Round 1": 23.0,
+          "3rd Minute of Round 1": 23.0,
+          "4th Minute of Round 1": 20.0,
+          "5th Minute of Round 1": 23.0,
+          "1st Minute of Round 2": 36.0,
+          "2nd Minute of Round 2": 26.0,
+          "3rd Minute of Round 2": 26.0,
+          "4th Minute of Round 2": 23.0,
+          "5th Minute of Round 2": 26.0,
+          "1st Minute of Round 3": 41.0,
+          "2nd Minute of Round 3": 31.0,
+          "3rd Minute of Round 3": 31.0,
+          "4th Minute of Round 3": 26.0,
+          "5th Minute of Round 3": 31.0,
+          "1st Minute of Round 4": 51.0,
+          "2nd Minute of Round 4": 41.0,
+          "3rd Minute of Round 4": 41.0,
+          "4th Minute of Round 4": 31.0,
+          "5th Minute of Round 4": 41.0,
+          "1st Minute of Round 5": 67.0,
+          "2nd Minute of Round 5": 46.0,
+          "3rd Minute of Round 5": 46.0,
+          "4th Minute of Round 5": 36.0,
+          "5th Minute of Round 5": 46.0,
+          "Aljamain Sterling Round 1, 2, or 3": 6.0,
+          "Aljamain Sterling Round 4, 5, or by Decision": 2.95,
+          "Youssef Zalal Round 1, 2, or 3": 5.5,
+          "Youssef Zalal Round 4, 5, or by Decision": 2.35
+        },
+        "distance": {
+          "Yes": 1.6,
+          "No": 2.24
+        },
+        "total_rounds": {
+          "Over": 1.53,
+          "Under": 2.37
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239724",
+      "fight_name": "Jack Della Maddalena v Carlos Prates",
+      "fighter_a_raw": "Jack Della Maddalena",
+      "fighter_b_raw": "Carlos Prates",
+      "start_time": 1777728600,
+      "markets": {
+        "moneyline": {
+          "Jack Della Maddalena": 1.86,
+          "Carlos Prates": 1.94
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10279934",
+      "fight_name": "Jan Blachowicz v Bogdan Guskov",
+      "fighter_a_raw": "Jan Blachowicz",
+      "fighter_b_raw": "Bogdan Guskov",
+      "start_time": 1778374800,
+      "markets": {
+        "moneyline": {
+          "Jan Blachowicz": 2.08,
+          "Bogdan Guskov": 1.75
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10378469",
+      "fight_name": "King Green v Jeremy Stephens",
+      "fighter_a_raw": "King Green",
+      "fighter_b_raw": "Jeremy Stephens",
+      "start_time": 1778374800,
+      "markets": {
+        "moneyline": {
+          "King Green": 1.3,
+          "Jeremy Stephens": 3.4
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10279936",
+      "fight_name": "Sean Brady v Joaquin Buckley",
+      "fighter_a_raw": "Sean Brady",
+      "fighter_b_raw": "Joaquin Buckley",
+      "start_time": 1778376600,
+      "markets": {
+        "moneyline": {
+          "Sean Brady": 1.47,
+          "Joaquin Buckley": 2.62
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10279935",
+      "fight_name": "Alexander Volkov v Waldo Cortes-Acosta",
+      "fighter_a_raw": "Alexander Volkov",
+      "fighter_b_raw": "Waldo Cortes-Acosta",
+      "start_time": 1778378400,
+      "markets": {
+        "moneyline": {
+          "Alexander Volkov": 1.57,
+          "Waldo Cortes-Acosta": 2.35
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10378467",
+      "fight_name": "Joshua Van v Tatsuro Taira",
+      "fighter_a_raw": "Joshua Van",
+      "fighter_b_raw": "Tatsuro Taira",
+      "start_time": 1778380200,
+      "markets": {
+        "moneyline": {
+          "Joshua Van": 2.64,
+          "Tatsuro Taira": 1.47
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10258588",
+      "fight_name": "Khamzat Chimaev v Sean Strickland",
+      "fighter_a_raw": "Khamzat Chimaev",
+      "fighter_b_raw": "Sean Strickland",
+      "start_time": 1778383800,
+      "markets": {
+        "moneyline": {
+          "Khamzat Chimaev": 1.18,
+          "Sean Strickland": 4.7
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10373518",
+      "fight_name": "Derrick Lewis v Josh Hokit",
+      "fighter_a_raw": "Derrick Lewis",
+      "fighter_b_raw": "Josh Hokit",
+      "start_time": 1781398800,
+      "markets": {
+        "moneyline": {
+          "Derrick Lewis": 3.35,
+          "Josh Hokit": 1.3
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239722",
+      "fight_name": "Diego Lopes v Steve Garcia",
+      "fighter_a_raw": "Diego Lopes",
+      "fighter_b_raw": "Steve Garcia",
+      "start_time": 1781475300,
+      "markets": {
+        "moneyline": {
+          "Diego Lopes": 1.5,
+          "Steve Garcia": 2.54
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239723",
+      "fight_name": "Bo Nickal v Kyle Daukaus",
+      "fighter_a_raw": "Bo Nickal",
+      "fighter_b_raw": "Kyle Daukaus",
+      "start_time": 1781477100,
+      "markets": {
+        "moneyline": {
+          "Bo Nickal": 1.3,
+          "Kyle Daukaus": 3.4
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239721",
+      "fight_name": "Mauricio Ruffy v Michael Chandler",
+      "fighter_a_raw": "Mauricio Ruffy",
+      "fighter_b_raw": "Michael Chandler",
+      "start_time": 1781478900,
+      "markets": {
+        "moneyline": {
+          "Mauricio Ruffy": 1.2,
+          "Michael Chandler": 4.4
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239719",
+      "fight_name": "Sean O'Malley v Aiemann Zahabi",
+      "fighter_a_raw": "Sean O'Malley",
+      "fighter_b_raw": "Aiemann Zahabi",
+      "start_time": 1781480700,
+      "markets": {
+        "moneyline": {
+          "Sean O'Malley": 1.23,
+          "Aiemann Zahabi": 4.05
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239720",
+      "fight_name": "Alex Pereira v Ciryl Gane",
+      "fighter_a_raw": "Alex Pereira",
+      "fighter_b_raw": "Ciryl Gane",
+      "start_time": 1781483400,
+      "markets": {
+        "moneyline": {
+          "Alex Pereira": 1.92,
+          "Ciryl Gane": 1.88
+        },
+        "method": {
+          "Alex Pereira by KO/TKO": 2.6,
+          "Alex Pereira by Points": 8.0,
+          "Alex Pereira by Submission": 21.0,
+          "Draw": 51.0,
+          "Ciryl Gane by KO/TKO": 3.75,
+          "Ciryl Gane by Points": 4.5,
+          "Ciryl Gane by Submission": 10.5
+        },
+        "winning_round": {
+          "Alex Pereira to Win in Round 1": 6.25,
+          "Alex Pereira to Win in Round 2": 7.25,
+          "Alex Pereira to Win in Round 3": 10.5,
+          "Alex Pereira to Win in Round 4": 18.0,
+          "Alex Pereira to Win in Round 5": 23.0,
+          "Alex Pereira to Win by Decision": 8.0,
+          "Draw": 51.0,
+          "Ciryl Gane to Win in Round 1": 8.75,
+          "Ciryl Gane to Win in Round 2": 9.75,
+          "Ciryl Gane to Win in Round 3": 12.5,
+          "Ciryl Gane to Win in Round 4": 15.0,
+          "Ciryl Gane to Win in Round 5": 21.0,
+          "Ciryl Gane to Win by Decision": 4.5,
+          "Round 1": 3.9,
+          "Round 2": 4.6,
+          "Round 3": 6.5,
+          "Round 4": 9.0,
+          "Round 5": 12.0,
+          "Alex Pereira Round 1, 2, or 3": 2.85,
+          "Alex Pereira Round 4, 5, or by Decision": 5.1,
+          "Ciryl Gane Round 1, 2, or 3": 3.9,
+          "Ciryl Gane Round 4, 5, or by Decision": 3.25
+        },
+        "distance": {
+          "Yes": 3.05,
+          "No": 1.35
+        },
+        "total_rounds": {
+          "Over": 1.72,
+          "Under": 2.0
+        }
+      }
+    },
+    {
+      "sportsbet_event_id": "10239725",
+      "fight_name": "Ilia Topuria v Justin Gaethje",
+      "fighter_a_raw": "Ilia Topuria",
+      "fighter_b_raw": "Justin Gaethje",
+      "start_time": 1781486100,
+      "markets": {
+        "moneyline": {
+          "Ilia Topuria": 1.13,
+          "Justin Gaethje": 5.75
+        },
+        "method": {
+          "Ilia Topuria by KO/TKO": 1.49,
+          "Ilia Topuria by Points": 13.0,
+          "Ilia Topuria by Submission": 5.6,
+          "Draw": 51.0,
+          "Justin Gaethje by KO/TKO": 9.25,
+          "Justin Gaethje by Points": 14.0,
+          "Justin Gaethje by Submission": 41.0
+        },
+        "winning_round": {
+          "Ilia Topuria to Win in Round 1": 3.15,
+          "Ilia Topuria to Win in Round 2": 4.4,
+          "Ilia Topuria to Win in Round 3": 6.25,
+          "Ilia Topuria to Win in Round 4": 8.75,
+          "Ilia Topuria to Win in Round 5": 11.5,
+          "Ilia Topuria to Win by Decision": 13.0,
+          "Draw": 51.0,
+          "Justin Gaethje to Win in Round 1": 23.0,
+          "Justin Gaethje to Win in Round 2": 26.0,
+          "Justin Gaethje to Win in Round 3": 31.0,
+          "Justin Gaethje to Win in Round 4": 34.0,
+          "Justin Gaethje to Win in Round 5": 46.0,
+          "Justin Gaethje to Win by Decision": 14.0,
+          "Round 1": 2.9,
+          "Round 2": 4.0,
+          "Round 3": 5.6,
+          "Round 4": 7.5,
+          "Round 5": 9.75,
+          "Ilia Topuria Round 1, 2, or 3": 1.5,
+          "Ilia Topuria Round 4, 5, or by Decision": 4.1,
+          "Justin Gaethje Round 1, 2, or 3": 11.0,
+          "Justin Gaethje Round 4, 5, or by Decision": 9.5
+        },
+        "distance": {
+          "Yes": 6.0,
+          "No": 1.1
+        },
+        "total_rounds": {
+          "Over": 1.57,
+          "Under": 2.25
+        }
+      }
+    }
+  ]
+}

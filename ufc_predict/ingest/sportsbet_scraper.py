@@ -15,8 +15,11 @@ and update _API / endpoint paths below.
 
 from __future__ import annotations
 
+import json
 import logging
 import time
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 import requests
@@ -25,8 +28,11 @@ from rapidfuzz import fuzz
 log = logging.getLogger(__name__)
 
 _BASE = "https://www.sportsbet.com.au"
-_API = f"{_BASE}/apigw/sportsbook-sports"
-_SPORT_SLUG = "mixed-martial-arts"
+ODDS_CACHE_PATH = Path("data/sportsbet_odds.json")
+
+# API discovered from JS bundle analysis — path changed ~2024-Q4
+_API = f"{_BASE}/apigw/sportsbook-sports/Sportsbook/Sports"
+_COMPETITION_ID = 3703  # "UFC Matches" competition on SportsBet AU
 
 _HEADERS = {
     "User-Agent": (
@@ -36,9 +42,7 @@ _HEADERS = {
     ),
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-AU,en;q=0.9",
-    "Referer": f"{_BASE}/betting/{_SPORT_SLUG}",
-    "Origin": _BASE,
-    "X-Requested-With": "XMLHttpRequest",
+    "Referer": f"{_BASE}/betting/ufc-mma",
 }
 _DELAY_S = 2.0
 _MATCH_THRESHOLD = 72
@@ -58,82 +62,32 @@ def _get(url: str) -> Any | None:
         return None
 
 
-def _to_list(data: Any, *keys: str) -> list:
-    if isinstance(data, list):
-        return data
-    if isinstance(data, dict):
-        for k in keys:
-            v = data.get(k)
-            if isinstance(v, list):
-                return v
-    return []
-
-
 # ---------------------------------------------------------------------------
-# API fetch layer (tries multiple known endpoint patterns)
+# API fetch layer
 # ---------------------------------------------------------------------------
 
-def _fetch_competitions() -> list[dict]:
+def _fetch_competition_events() -> list[dict]:
+    """Return all fight events in the UFC Matches competition."""
     time.sleep(_DELAY_S)
-    for path in [
-        f"{_API}/Sport/{_SPORT_SLUG}/competitions",
-        f"{_API}/Thoroughbred/sport/{_SPORT_SLUG}/competitions",
-        f"{_API}/sport/{_SPORT_SLUG}/competitions",
-    ]:
-        data = _get(path)
-        if data is not None:
-            result = _to_list(data, "competitions", "data", "result")
-            if result:
-                log.info("Fetched %d competitions via %s", len(result), path)
-                return result
-    log.warning(
-        "Could not fetch SportsBet MMA competitions. "
-        "The API endpoint may have changed — check network requests on sportsbet.com.au/betting/mixed-martial-arts"
-    )
-    return []
+    url = f"{_API}/Competitions/{_COMPETITION_ID}?displayType=default"
+    data = _get(url)
+    if not isinstance(data, dict):
+        log.warning(
+            "Could not fetch SportsBet UFC events. "
+            "If the API has changed, re-inspect network requests on "
+            "sportsbet.com.au/betting/ufc-mma and update _API / _COMPETITION_ID."
+        )
+        return []
+    events = data.get("events", [])
+    log.info("Fetched %d UFC events from SportsBet competition %s", len(events), _COMPETITION_ID)
+    return events
 
 
-def _fetch_events(competition_id: str) -> list[dict]:
+def _fetch_markets(event_id: int) -> list[dict]:
     time.sleep(_DELAY_S)
-    for path in [
-        f"{_API}/Competition/{competition_id}/events",
-        f"{_API}/Thoroughbred/competitions/{competition_id}/events",
-    ]:
-        data = _get(path)
-        if data is not None:
-            result = _to_list(data, "events", "data", "result")
-            if result:
-                return result
-    return []
-
-
-def _fetch_children(event_id: str) -> list[dict]:
-    """Individual fight events nested under a UFC card (parent) event."""
-    time.sleep(_DELAY_S)
-    for path in [
-        f"{_API}/Event/{event_id}/children",
-        f"{_API}/Thoroughbred/events/{event_id}/children",
-    ]:
-        data = _get(path)
-        if data is not None:
-            result = _to_list(data, "events", "children", "data", "result")
-            if result:
-                return result
-    return []
-
-
-def _fetch_markets(event_id: str) -> list[dict]:
-    time.sleep(_DELAY_S)
-    for path in [
-        f"{_API}/Event/{event_id}/markets",
-        f"{_API}/Thoroughbred/events/{event_id}/markets",
-    ]:
-        data = _get(path)
-        if data is not None:
-            result = _to_list(data, "markets", "data", "result")
-            if result:
-                return result
-    return []
+    url = f"{_API}/Events/{event_id}/Markets"
+    data = _get(url)
+    return data if isinstance(data, list) else []
 
 
 # ---------------------------------------------------------------------------
@@ -142,24 +96,27 @@ def _fetch_markets(event_id: str) -> list[dict]:
 
 # Maps substring of market name → canonical type
 _MARKET_MAP: dict[str, str] = {
-    "fight winner":          "moneyline",
-    "fight outcome":         "moneyline",
-    "match winner":          "moneyline",
-    "head to head":          "moneyline",
-    "method of victory":     "method",
-    "method of winning":     "method",
-    "fight method":          "method",
-    "winning method":        "method",
-    "to go the distance":    "distance",
-    "fight to go distance":  "distance",
-    "go the distance":       "distance",
-    "total rounds":          "total_rounds",
-    "over/under":            "total_rounds",
-    "round betting":         "winning_round",
-    "winning round":         "winning_round",
-    "round of victory":      "winning_round",
-    "round winner":          "winning_round",
-    "fight to end":          "winning_round",
+    "match betting":              "moneyline",
+    "fight winner":               "moneyline",
+    "fight outcome":              "moneyline",
+    "match winner":               "moneyline",
+    "head to head":               "moneyline",
+    "method of victory":          "method",
+    "method of winning":          "method",
+    "fight method":               "method",
+    "winning method":             "method",
+    "to go the distance":         "distance",
+    "fight to go distance":       "distance",
+    "go the distance":            "distance",
+    "goes the distance":          "distance",
+    "total rounds":               "total_rounds",
+    "over/under":                 "total_rounds",
+    "round betting":              "winning_round",
+    "winning round":              "winning_round",
+    "what round will fight end":  "winning_round",
+    "round of victory":           "winning_round",
+    "round winner":               "winning_round",
+    "fight to end":               "winning_round",
 }
 
 
@@ -172,10 +129,11 @@ def _market_type(name: str) -> str:
 
 
 def _extract_price(sel: dict) -> float | None:
-    for key in ("displayPrice", "price", "winPrice", "odds", "win"):
+    # New API: sel["price"]["winPrice"]
+    for key in ("price", "displayPrice", "winPrice", "odds", "win"):
         v = sel.get(key)
         if isinstance(v, dict):
-            for inner in ("win", "decimal", "displayPrice"):
+            for inner in ("winPrice", "win", "decimal", "displayPrice"):
                 if isinstance(v.get(inner), (int, float)) and v[inner] > 1.0:
                     return float(v[inner])
         elif isinstance(v, (int, float)) and v > 1.0:
@@ -211,14 +169,6 @@ def _parse_markets(raw_markets: list[dict]) -> dict[str, dict[str, float]]:
     return out
 
 
-def _vs_split(name: str) -> tuple[str, str]:
-    for sep in (" vs ", " v ", " VS ", " V "):
-        if sep in name:
-            a, b = name.split(sep, 1)
-            return a.strip(), b.strip()
-    return name.strip(), ""
-
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
@@ -227,83 +177,40 @@ def fetch_ufc_markets() -> list[dict]:
     """
     Fetch all upcoming UFC fight markets from SportsBet Australia.
 
-    Returns list of fight dicts:
-    [
-        {
-            "sportsbet_event_id": "...",
-            "fight_name": "Jones vs Miocic",
-            "fighter_a_raw": "Jones",
-            "fighter_b_raw": "Miocic",
-            "start_time": "2026-04-25T08:00:00.000Z",
-            "markets": {
-                "moneyline": {"Jones": 1.45, "Miocic": 2.80},
-                "method": {"Jones to win by KO/TKO": 2.50, ...},
-                "distance": {"Yes": 2.10, "No": 1.70},
-                "total_rounds": {"Over 2.5 Rounds": 1.85, "Under 2.5 Rounds": 1.90},
-                "winning_round": {"Round 1": 5.00, "Round 2": 6.50, ...},
-            }
-        }
-    ]
+    Returns list of fight dicts with keys:
+      sportsbet_event_id, fight_name, fighter_a_raw, fighter_b_raw,
+      start_time, markets (moneyline / method / distance / total_rounds / winning_round)
     """
-    competitions = _fetch_competitions()
-    if not competitions:
+    events = _fetch_competition_events()
+    if not events:
         return []
 
     all_fights: list[dict] = []
 
-    for comp in competitions:
-        cid = str(comp.get("id") or comp.get("competitionId") or "")
-        cname = comp.get("name") or ""
-        if not cid:
+    for event in events:
+        eid  = event.get("id")
+        fa   = (event.get("participant1") or "").strip()
+        fb   = (event.get("participant2") or "").strip()
+        if not eid or not fa or not fb:
             continue
 
-        events = _fetch_events(cid)
-        log.info("Competition '%s': %d events", cname, len(events))
+        raw_markets = _fetch_markets(eid)
+        markets = _parse_markets(raw_markets)
 
-        for event in events:
-            eid = str(event.get("id") or event.get("eventId") or "")
-            ename = event.get("name") or event.get("eventName") or ""
-            estart = event.get("startTime") or event.get("start_time") or ""
+        if not markets.get("moneyline"):
+            log.debug("No moneyline for event %s '%s v %s', skipping", eid, fa, fb)
+            continue
 
-            if not eid:
-                continue
-
-            # UFC cards are parent events; individual fights are children
-            children = _fetch_children(eid)
-            fight_events = [c for c in children if _vs_split(c.get("name") or "")[1]]
-
-            if not fight_events:
-                # Some layouts embed fights as the event itself
-                if _vs_split(ename)[1]:
-                    fight_events = [event]
-                else:
-                    continue
-
-            for fe in fight_events:
-                fid = str(fe.get("id") or fe.get("eventId") or "")
-                fname = fe.get("name") or fe.get("eventName") or ename
-                fstart = fe.get("startTime") or fe.get("start_time") or estart
-
-                fa, fb = _vs_split(fname)
-                if not fa or not fb:
-                    continue
-
-                raw_markets = _fetch_markets(fid)
-                markets = _parse_markets(raw_markets)
-
-                if not markets.get("moneyline"):
-                    log.debug("No moneyline found for '%s', skipping", fname)
-                    continue
-
-                all_fights.append({
-                    "sportsbet_event_id": fid,
-                    "fight_name": fname,
-                    "fighter_a_raw": fa,
-                    "fighter_b_raw": fb,
-                    "start_time": fstart,
-                    "markets": markets,
-                })
-                log.info("  ✓ %s  [%s]", fname, ", ".join(sorted(markets)))
+        fname = event.get("name") or f"{fa} v {fb}"
+        all_fights.append({
+            "sportsbet_event_id": str(eid),
+            "fight_name": fname,
+            "fighter_a_raw": fa,
+            "fighter_b_raw": fb,
+            "start_time": event.get("startTime", ""),
+            "markets": markets,
+        })
+        log.info("  ✓ %s  [%s]", fname, ", ".join(sorted(markets)))
 
     log.info("SportsBet scrape complete: %d fights with markets", len(all_fights))
     return all_fights
@@ -389,11 +296,41 @@ def match_odds_to_predictions(
     return predictions
 
 
+def save_markets(fights: list[dict], path: Path = ODDS_CACHE_PATH) -> None:
+    """Persist scraped markets to a JSON cache so CI can read them without geo-access."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "fights": fights,
+    }
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    log.info("SportsBet odds cached to %s (%d fights)", path, len(fights))
+
+
+def load_markets(path: Path = ODDS_CACHE_PATH) -> list[dict] | None:
+    """Load previously cached markets. Returns None if no cache exists."""
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        fights = data.get("fights", [])
+        fetched_at = data.get("fetched_at", "unknown")
+        log.info("Loaded %d fights from SportsBet cache (fetched %s)", len(fights), fetched_at)
+        return fights
+    except (json.JSONDecodeError, KeyError) as exc:
+        log.warning("Could not load SportsBet cache: %s", exc)
+        return None
+
+
 def run() -> list[dict]:
     logging.basicConfig(level=logging.INFO)
-    return fetch_ufc_markets()
+    fights = fetch_ufc_markets()
+    if fights:
+        save_markets(fights)
+    else:
+        log.warning("No markets fetched — cache not updated")
+    return fights
 
 
 if __name__ == "__main__":
-    import json
     print(json.dumps(run(), indent=2))

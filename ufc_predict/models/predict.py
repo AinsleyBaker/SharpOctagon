@@ -177,6 +177,11 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         row["a_l3_win_rate"] = a_feat.get("l3_win_rate")
         row["b_l3_win_rate"] = b_feat.get("l3_win_rate")
 
+        # Absolute finish rates (see aso_features.py — used by prop model)
+        for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min"):
+            row[f"a_{k}"] = a_feat.get(k, np.nan)
+            row[f"b_{k}"] = b_feat.get(k, np.nan)
+
         rows.append(row)
 
     return pd.DataFrame(rows) if rows else pd.DataFrame()
@@ -260,9 +265,10 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     output = output.sort_values(["event_date", "is_title_bout"], ascending=[True, False])
 
     # -- Prop predictions (method + round) ---------------------------------
+    # Pass the full upcoming_df so predict_props can use absolute finish-rate
+    # features (a_ko_rate, b_ko_rate, etc.) that the prop model is trained on.
     prop_artifacts = load_prop_artifacts()
-    X_feat = upcoming_df[[c for c in feature_cols if c in upcoming_df.columns]].copy()
-    props_list = predict_props(X_feat, mean_prob, prop_artifacts or {})
+    props_list = predict_props(upcoming_df, mean_prob, prop_artifacts or {})
 
     # Map by upcoming_bout_id so the sort_values reindex doesn't break alignment
     bout_id_to_props = {
@@ -273,18 +279,27 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     # -- SportsBet odds + EV analysis --------------------------------------
     predictions_list = _df_to_records(output, bout_id_to_props)
     try:
-        from ufc_predict.ingest.sportsbet_scraper import fetch_ufc_markets, match_odds_to_predictions
-        log.info("Fetching SportsBet odds…")
-        sb_fights = fetch_ufc_markets()
+        from ufc_predict.ingest.sportsbet_scraper import (
+            fetch_ufc_markets, load_markets, save_markets, match_odds_to_predictions,
+        )
+        # Prefer cached odds (committed to repo) so CI runners don't need
+        # geo-access to sportsbet.com.au. Fall back to live fetch if no cache.
+        sb_fights = load_markets()
+        if not sb_fights:
+            log.info("No cached SportsBet odds — attempting live fetch…")
+            sb_fights = fetch_ufc_markets()
+            if sb_fights:
+                save_markets(sb_fights)
+
         if sb_fights:
             predictions_list = match_odds_to_predictions(sb_fights, predictions_list)
             log.info("SportsBet odds matched for %d/%d fights",
                      sum(1 for p in predictions_list if p.get("sportsbet_odds")),
                      len(predictions_list))
         else:
-            log.warning("No SportsBet markets returned — odds may be unavailable yet")
+            log.warning("No SportsBet markets available — run sportsbet_scraper locally to cache odds")
     except Exception as exc:
-        log.warning("SportsBet odds fetch failed (continuing without odds): %s", exc)
+        log.warning("SportsBet odds step failed (continuing without odds): %s", exc)
 
     # -- EV analysis -------------------------------------------------------
     predictions_list = analyze_all_fights(predictions_list)

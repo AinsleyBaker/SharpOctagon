@@ -42,6 +42,12 @@ jobs:
         continue-on-error: true
         run: python -m ufc_predict.ingest.odds_scraper
 
+      - name: Fetch SportsBet markets and cache to file
+        # Geo-restricted outside AU — will succeed when run locally, fail silently in CI.
+        # The cached data/sportsbet_odds.json committed from local runs is used as fallback.
+        continue-on-error: true
+        run: python -m ufc_predict.ingest.sportsbet_scraper
+
       - name: Run predictions
         # Allowed to fail on first run before model is trained
         continue-on-error: true
@@ -55,7 +61,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
-          # Only add predictions.json if it exists
-          [ -f data/predictions.json ] && git add data/predictions.json || true
+          [ -f data/predictions.json ]    && git add data/predictions.json    || true
+          [ -f data/sportsbet_odds.json ] && git add data/sportsbet_odds.json || true
           git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
           git push

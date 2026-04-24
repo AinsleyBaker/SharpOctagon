@@ -17,9 +17,10 @@ from jinja2 import Environment, FileSystemLoader
 
 log = logging.getLogger(__name__)
 
-PREDICTIONS_PATH = Path("data/predictions.json")
-TEMPLATES_DIR    = Path(__file__).parent / "templates"
-OUTPUT_DIR       = Path("docs")
+PREDICTIONS_PATH  = Path("data/predictions.json")
+FIGHTER_IMGS_PATH = Path("data/fighter_images.json")
+TEMPLATES_DIR     = Path(__file__).parent / "templates"
+OUTPUT_DIR        = Path("docs")
 
 
 def load_predictions() -> list[dict]:
@@ -27,6 +28,15 @@ def load_predictions() -> list[dict]:
         return []
     with open(PREDICTIONS_PATH) as f:
         return json.load(f)
+
+
+def load_fighter_images() -> dict[str, str]:
+    if not FIGHTER_IMGS_PATH.exists():
+        return {}
+    try:
+        return json.loads(FIGHTER_IMGS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
 
 
 def _group_by_event(predictions: list[dict]) -> list[dict]:
@@ -126,6 +136,19 @@ def _flag_emoji(country: str | None) -> str:
     return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in iso.upper())
 
 
+def _stat_colors(a_val, b_val, higher_is_better: bool = True) -> tuple[str, str]:
+    """Return (class_for_a, class_for_b) — 'stat-better', 'stat-worse', or ''."""
+    try:
+        a, b = float(a_val or 0), float(b_val or 0)
+    except (TypeError, ValueError):
+        return "", ""
+    if abs(a - b) < 0.001:
+        return "", ""
+    if higher_is_better:
+        return ("stat-better", "stat-worse") if a > b else ("stat-worse", "stat-better")
+    return ("stat-better", "stat-worse") if a < b else ("stat-worse", "stat-better")
+
+
 def _fighter_type(ko_rate, sub_rate, td_per_min, slpm, sig_acc) -> str:
     """Classify fighting style from computed stats."""
     ko  = float(ko_rate  or 0)
@@ -223,6 +246,7 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     if not predictions:
         log.warning("No predictions found at %s", PREDICTIONS_PATH)
 
+    fighter_imgs = load_fighter_images()
     events = _group_by_event(predictions)
 
     # Enrich each bout for display
@@ -315,9 +339,34 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             # Initials for avatar fallback
             def _initials(name: str) -> str:
                 parts = (name or "").split()
-                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else name[:2].upper()
+                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (name[:2].upper() or "?")
             bout["a_initials"] = _initials(bout.get("fighter_a_name", ""))
             bout["b_initials"] = _initials(bout.get("fighter_b_name", ""))
+
+            # Fighter images from cache
+            bout["a_img"] = fighter_imgs.get(bout.get("fighter_a_name", ""), "")
+            bout["b_img"] = fighter_imgs.get(bout.get("fighter_b_name", ""), "")
+
+            # Stance from DB (factual UFC data)
+            bout["a_stance"] = (bout.get("fighter_a_stance") or "").replace("Switch", "Switch Stance")
+            bout["b_stance"] = (bout.get("fighter_b_stance") or "").replace("Switch", "Switch Stance")
+
+            # Fighter style badge — only if data quality is good enough
+            n_min = min(bout.get("a_n_fights") or 0, bout.get("b_n_fights") or 0)
+            bout["show_fighter_type"] = n_min >= 5
+            bout["a_fighter_type"] = bout.get("a_fighter_type", "")
+            bout["b_fighter_type"] = bout.get("b_fighter_type", "")
+
+            # Stat color classes for the comparison table (raw values before formatting)
+            _raw = lambda k: bout.get(k)  # raw value from JSON (still numeric here)
+            bout["col_streak"]   = _stat_colors(bout.get("a_win_streak"), bout.get("b_win_streak"))
+            bout["col_l3"]       = _stat_colors(bout.get("a_l3_win_rate"), bout.get("b_l3_win_rate"))
+            bout["col_finish"]   = _stat_colors(bout.get("a_finish_rate"), bout.get("b_finish_rate"))
+            bout["col_ko"]       = _stat_colors(bout.get("a_ko_rate"), bout.get("b_ko_rate"))
+            bout["col_sub"]      = _stat_colors(bout.get("a_sub_rate"), bout.get("b_sub_rate"))
+            bout["col_slpm"]     = _stat_colors(bout.get("a_slpm"), bout.get("b_slpm"))
+            bout["col_sapm"]     = _stat_colors(bout.get("a_sapm"), bout.get("b_sapm"), higher_is_better=False)
+            bout["col_td"]       = _stat_colors(bout.get("a_td_per_min"), bout.get("b_td_per_min"))
 
             # Prop probabilities
             _enrich_props(bout)

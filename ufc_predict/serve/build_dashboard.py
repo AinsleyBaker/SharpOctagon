@@ -61,6 +61,63 @@ def _kelly_display(frac) -> str:
     return f"{float(frac)*100:.1f}% of bankroll"
 
 
+def _enrich_props(bout: dict) -> None:
+    """Add formatted prop probability strings to a bout dict."""
+    props = bout.get("props") or {}
+    if not props:
+        bout["has_props"] = False
+        return
+
+    bout["has_props"] = True
+    fa = bout.get("fighter_a_name", "A")
+    fb = bout.get("fighter_b_name", "B")
+
+    def pct(key: str) -> str:
+        v = props.get(key)
+        return f"{float(v)*100:.1f}%" if v is not None else "—"
+
+    bout["prop_rows"] = [
+        {"label": f"{fa} wins by KO/TKO",  "prob": pct("prob_a_wins_ko_tko")},
+        {"label": f"{fa} wins by Submission", "prob": pct("prob_a_wins_sub")},
+        {"label": f"{fa} wins by Decision",  "prob": pct("prob_a_wins_dec")},
+        {"label": f"{fb} wins by KO/TKO",  "prob": pct("prob_b_wins_ko_tko")},
+        {"label": f"{fb} wins by Submission", "prob": pct("prob_b_wins_sub")},
+        {"label": f"{fb} wins by Decision",  "prob": pct("prob_b_wins_dec")},
+        {"label": "Goes to Decision",       "prob": pct("prob_decision")},
+    ]
+
+    prob_rounds = props.get("prob_rounds") or {}
+    bout["round_rows"] = [
+        {"label": f"Ends in Round {i}", "prob": f"{float(prob_rounds.get(f'R{i}', 0))*100:.1f}%"}
+        for i in range(1, 6)
+        if prob_rounds.get(f"R{i}", 0) > 0
+    ]
+
+
+def _enrich_bet_analysis(bout: dict) -> None:
+    """Format bet_analysis list for display in the template."""
+    bets = bout.get("bet_analysis") or []
+    formatted = []
+    for bet in bets:
+        ev = bet.get("ev_pct", 0)
+        kelly_pct = bet.get("kelly_pct", 0)
+        formatted.append({
+            "bet_type":    bet.get("bet_type", ""),
+            "description": bet.get("description", ""),
+            "our_prob":    f"{float(bet.get('our_prob', 0))*100:.1f}%",
+            "sb_odds":     f"{float(bet.get('sb_odds', 0)):.2f}",
+            "implied_prob": f"{float(bet.get('implied_prob', 0))*100:.1f}%",
+            "edge":        f"{float(bet.get('edge', 0))*100:+.1f}%",
+            "ev_pct":      f"{ev:+.1f}%",
+            "kelly":       f"{kelly_pct:.1f}% bank" if kelly_pct > 0 else "—",
+            "is_value":    bet.get("is_value", False),
+            "ev_raw":      ev,
+        })
+    bout["bet_rows"] = formatted
+    bout["has_bets"] = bool(formatted)
+    bout["value_bet_count"] = sum(1 for b in formatted if b["is_value"])
+
+
 def build(output_dir: Path = OUTPUT_DIR) -> None:
     predictions = load_predictions()
     if not predictions:
@@ -92,12 +149,26 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             else:
                 bout["favourite"] = "b"
 
+            # Prop probabilities
+            _enrich_props(bout)
+            # EV / Kelly bet analysis
+            _enrich_bet_analysis(bout)
+
+            # SportsBet moneyline odds for display
+            sb = bout.get("sportsbet_odds") or {}
+            bout["sb_odds_a"] = f"{sb['moneyline_a']:.2f}" if sb.get("moneyline_a") else None
+            bout["sb_odds_b"] = f"{sb['moneyline_b']:.2f}" if sb.get("moneyline_b") else None
+
+    from ufc_predict.eval.bet_analysis import top_value_bets
+    top_bets = top_value_bets(predictions, n=30)
+
     env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)), autoescape=True)
     template = env.get_template("dashboard.html")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     rendered = template.render(
         events=events,
+        top_bets=top_bets,
         generated_at=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
         n_bouts=len(predictions),
     )

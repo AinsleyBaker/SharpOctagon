@@ -37,6 +37,9 @@ jobs:
       - name: Train model
         run: python -m ufc_predict.models.train_runner
 
+      - name: Train prop models (method + round betting)
+        run: python -m ufc_predict.models.prop_models
+
       - name: Calibrate conformal intervals
         run: python -m ufc_predict.models.calibrate_conformal
 

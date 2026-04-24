@@ -25,7 +25,9 @@ from sqlalchemy.orm import Session
 
 from ufc_predict.db.models import Fighter, UpcomingBout
 from ufc_predict.eval.evaluate import kelly_fraction_fn, american_to_decimal
+from ufc_predict.eval.bet_analysis import analyze_all_fights
 from ufc_predict.features.aso_features import fighter_aso_stats, _fighter_age
+from ufc_predict.models.prop_models import load_prop_artifacts, predict_props
 from ufc_predict.models.train import (
     FEATURE_COLS,
     ensemble_predict,
@@ -250,22 +252,62 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     ]].copy()
 
     output = output.sort_values(["event_date", "is_title_bout"], ascending=[True, False])
-    _save_predictions(output)
 
-    log.info("Generated predictions for %d upcoming bouts", len(output))
+    # -- Prop predictions (method + round) ---------------------------------
+    prop_artifacts = load_prop_artifacts()
+    X_feat = upcoming_df[[c for c in feature_cols if c in upcoming_df.columns]].copy()
+    props_list = predict_props(X_feat, mean_prob, prop_artifacts or {})
+
+    # Map by upcoming_bout_id so the sort_values reindex doesn't break alignment
+    bout_id_to_props = {
+        row["upcoming_bout_id"]: props_list[i]
+        for i, (_, row) in enumerate(upcoming_df.iterrows())
+    }
+
+    # -- SportsBet odds + EV analysis --------------------------------------
+    predictions_list = _df_to_records(output, bout_id_to_props)
+    try:
+        from ufc_predict.ingest.sportsbet_scraper import fetch_ufc_markets, match_odds_to_predictions
+        log.info("Fetching SportsBet odds…")
+        sb_fights = fetch_ufc_markets()
+        if sb_fights:
+            predictions_list = match_odds_to_predictions(sb_fights, predictions_list)
+            log.info("SportsBet odds matched for %d/%d fights",
+                     sum(1 for p in predictions_list if p.get("sportsbet_odds")),
+                     len(predictions_list))
+        else:
+            log.warning("No SportsBet markets returned — odds may be unavailable yet")
+    except Exception as exc:
+        log.warning("SportsBet odds fetch failed (continuing without odds): %s", exc)
+
+    # -- EV analysis -------------------------------------------------------
+    predictions_list = analyze_all_fights(predictions_list)
+
+    _save_predictions_list(predictions_list)
+    log.info("Generated predictions for %d upcoming bouts", len(predictions_list))
     return output
 
 
-def _save_predictions(df: pd.DataFrame) -> None:
-    PREDICTIONS_PATH.parent.mkdir(parents=True, exist_ok=True)
+def _df_to_records(df: pd.DataFrame, bout_id_to_props: dict | None = None) -> list[dict]:
     records = []
     for _, row in df.iterrows():
         r = row.to_dict()
         r["event_date"] = str(r["event_date"])
+        bid = r.get("upcoming_bout_id", "")
+        r["props"] = (bout_id_to_props or {}).get(bid) or {}
         records.append(r)
+    return records
+
+
+def _save_predictions_list(records: list[dict]) -> None:
+    PREDICTIONS_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(PREDICTIONS_PATH, "w") as f:
         json.dump(records, f, indent=2, default=str)
     log.info("Predictions written to %s", PREDICTIONS_PATH)
+
+
+def _save_predictions(df: pd.DataFrame) -> None:
+    _save_predictions_list(_df_to_records(df))
 
 
 if __name__ == "__main__":

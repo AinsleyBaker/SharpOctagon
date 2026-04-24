@@ -5,7 +5,14 @@
       "Bash(py --version)",
       "Bash(py -3 --version)",
       "PowerShell(Get-Command *)",
-      "PowerShell(py *)"
+      "PowerShell(py *)",
+      "Bash(py -m ufc_predict.features.build_matrix)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'fix: restore kelly_fraction_fn alias broken by previous cleanup *)",
+      "Bash(python *)",
+      "Bash(python3 *)"
     ]
   }
 }

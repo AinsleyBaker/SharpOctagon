@@ -8,13 +8,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.5459812764097031,
-    "prob_b_wins": 0.45401872359029694,
-    "uncertainty_std": 0.07785116037072434,
+    "prob_a_wins": 0.5438181567764234,
+    "prob_b_wins": 0.4561818432235766,
+    "uncertainty_std": 0.07218803886813288,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.2726,
+      "prob_a_wins_sub": 0.0713,
+      "prob_a_wins_dec": 0.2745,
+      "prob_b_wins_ko_tko": 0.0,
+      "prob_b_wins_sub": 0.1748,
+      "prob_b_wins_dec": 0.2068,
+      "prob_finish": 0.5187,
+      "prob_decision": 0.4813,
+      "prob_rounds": {
+        "R1": 0.2392,
+        "R2": 0.1584,
+        "R3": 0.6024,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "c470241a6342ee20",
@@ -25,13 +43,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.6215394873250374,
-    "prob_b_wins": 0.3784605126749626,
-    "uncertainty_std": 0.08095675377247528,
+    "prob_a_wins": 0.6152171774639311,
+    "prob_b_wins": 0.3847828225360689,
+    "uncertainty_std": 0.08173331273254857,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.2181,
+      "prob_a_wins_sub": 0.185,
+      "prob_a_wins_dec": 0.1912,
+      "prob_b_wins_ko_tko": 0.1984,
+      "prob_b_wins_sub": 0.1017,
+      "prob_b_wins_dec": 0.1055,
+      "prob_finish": 0.7033,
+      "prob_decision": 0.2967,
+      "prob_rounds": {
+        "R1": 0.3686,
+        "R2": 0.1929,
+        "R3": 0.4385,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "3813797efacf02ab",
@@ -42,13 +78,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.4823803899692926,
-    "prob_b_wins": 0.5176196100307073,
-    "uncertainty_std": 0.07681003331200555,
+    "prob_a_wins": 0.4731559765032146,
+    "prob_b_wins": 0.5268440234967854,
+    "uncertainty_std": 0.07551945005684264,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1283,
+      "prob_a_wins_sub": 0.0802,
+      "prob_a_wins_dec": 0.1756,
+      "prob_b_wins_ko_tko": 0.1823,
+      "prob_b_wins_sub": 0.1544,
+      "prob_b_wins_dec": 0.2791,
+      "prob_finish": 0.5453,
+      "prob_decision": 0.4547,
+      "prob_rounds": {
+        "R1": 0.2921,
+        "R2": 0.1529,
+        "R3": 0.5549,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "c12ee011b5843462",
@@ -59,13 +113,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.3313323645310456,
-    "prob_b_wins": 0.6686676354689545,
-    "uncertainty_std": 0.08119703700805755,
+    "prob_a_wins": 0.34945919691567034,
+    "prob_b_wins": 0.6505408030843296,
+    "uncertainty_std": 0.08483631639075759,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.0611,
+      "prob_a_wins_sub": 0.1481,
+      "prob_a_wins_dec": 0.1729,
+      "prob_b_wins_ko_tko": 0.1707,
+      "prob_b_wins_sub": 0.0575,
+      "prob_b_wins_dec": 0.3897,
+      "prob_finish": 0.4374,
+      "prob_decision": 0.5626,
+      "prob_rounds": {
+        "R1": 0.2411,
+        "R2": 0.1515,
+        "R3": 0.6073,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "1128d8591ea5f20c",
@@ -76,13 +148,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.5038876771327393,
-    "prob_b_wins": 0.4961123228672607,
-    "uncertainty_std": 0.0975778279231997,
+    "prob_a_wins": 0.5078216705733648,
+    "prob_b_wins": 0.4921783294266352,
+    "uncertainty_std": 0.10380843204177986,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.0658,
+      "prob_a_wins_sub": 0.1802,
+      "prob_a_wins_dec": 0.2596,
+      "prob_b_wins_ko_tko": 0.1446,
+      "prob_b_wins_sub": 0.0898,
+      "prob_b_wins_dec": 0.2599,
+      "prob_finish": 0.4805,
+      "prob_decision": 0.5195,
+      "prob_rounds": {
+        "R1": 0.2226,
+        "R2": 0.1648,
+        "R3": 0.6125,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "081a7a66afc92b74",
@@ -93,13 +183,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.5280233906619562,
-    "prob_b_wins": 0.47197660933804375,
-    "uncertainty_std": 0.06697488761913507,
+    "prob_a_wins": 0.5275441557750621,
+    "prob_b_wins": 0.4724558442249379,
+    "uncertainty_std": 0.06801462334993064,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.0615,
+      "prob_a_wins_sub": 0.1682,
+      "prob_a_wins_dec": 0.2151,
+      "prob_b_wins_ko_tko": 0.1804,
+      "prob_b_wins_sub": 0.0711,
+      "prob_b_wins_dec": 0.3037,
+      "prob_finish": 0.4812,
+      "prob_decision": 0.5188,
+      "prob_rounds": {
+        "R1": 0.2408,
+        "R2": 0.1341,
+        "R3": 0.6251,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "79d3475dc3d2f577",
@@ -116,7 +224,25 @@
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1346,
+      "prob_a_wins_sub": 0.0429,
+      "prob_a_wins_dec": 0.1841,
+      "prob_b_wins_ko_tko": 0.0777,
+      "prob_b_wins_sub": 0.1635,
+      "prob_b_wins_dec": 0.3973,
+      "prob_finish": 0.4186,
+      "prob_decision": 0.5814,
+      "prob_rounds": {
+        "R1": 0.225,
+        "R2": 0.1369,
+        "R3": 0.6381,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "cc815e3d3fb682dd",
@@ -127,13 +253,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.5487813802071713,
-    "prob_b_wins": 0.45121861979282873,
-    "uncertainty_std": 0.04873387644150022,
+    "prob_a_wins": 0.5534705168348956,
+    "prob_b_wins": 0.44652948316510443,
+    "uncertainty_std": 0.05045067715997278,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1016,
+      "prob_a_wins_sub": 0.2395,
+      "prob_a_wins_dec": 0.2007,
+      "prob_b_wins_ko_tko": 0.0847,
+      "prob_b_wins_sub": 0.1765,
+      "prob_b_wins_dec": 0.1969,
+      "prob_finish": 0.6024,
+      "prob_decision": 0.3976,
+      "prob_rounds": {
+        "R1": 0.2383,
+        "R2": 0.1615,
+        "R3": 0.6002,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "9c3973fcc816d6d3",
@@ -144,13 +288,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.5979357300382135,
-    "prob_b_wins": 0.40206426996178646,
-    "uncertainty_std": 0.08636959899534556,
+    "prob_a_wins": 0.6293766704565532,
+    "prob_b_wins": 0.3706233295434468,
+    "uncertainty_std": 0.09050934455667878,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1253,
+      "prob_a_wins_sub": 0.0621,
+      "prob_a_wins_dec": 0.3241,
+      "prob_b_wins_ko_tko": 0.1332,
+      "prob_b_wins_sub": 0.0827,
+      "prob_b_wins_dec": 0.2725,
+      "prob_finish": 0.4033,
+      "prob_decision": 0.5967,
+      "prob_rounds": {
+        "R1": 0.2781,
+        "R2": 0.0,
+        "R3": 0.7219,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "06bee18032acab47",
@@ -161,13 +323,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.48349020564524575,
-    "prob_b_wins": 0.5165097943547543,
-    "uncertainty_std": 0.08798939675362762,
+    "prob_a_wins": 0.47586589980763927,
+    "prob_b_wins": 0.5241341001923607,
+    "uncertainty_std": 0.09534928367480837,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1388,
+      "prob_a_wins_sub": 0.1177,
+      "prob_a_wins_dec": 0.2351,
+      "prob_b_wins_ko_tko": 0.2173,
+      "prob_b_wins_sub": 0.0916,
+      "prob_b_wins_dec": 0.1995,
+      "prob_finish": 0.5654,
+      "prob_decision": 0.4346,
+      "prob_rounds": {
+        "R1": 0.3139,
+        "R2": 0.1643,
+        "R3": 0.5219,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "ba9fe6092e48268a",
@@ -178,13 +358,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.4279592944060326,
-    "prob_b_wins": 0.5720407055939674,
-    "uncertainty_std": 0.06354604549581819,
+    "prob_a_wins": 0.44253083697756435,
+    "prob_b_wins": 0.5574691630224357,
+    "uncertainty_std": 0.05723215248952226,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1326,
+      "prob_a_wins_sub": 0.0657,
+      "prob_a_wins_dec": 0.1815,
+      "prob_b_wins_ko_tko": 0.141,
+      "prob_b_wins_sub": 0.0876,
+      "prob_b_wins_dec": 0.3916,
+      "prob_finish": 0.4269,
+      "prob_decision": 0.5731,
+      "prob_rounds": {
+        "R1": 0.2454,
+        "R2": 0.1367,
+        "R3": 0.618,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "343a017a283c9047",
@@ -195,13 +393,31 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.4879134429335202,
-    "prob_b_wins": 0.5120865570664799,
-    "uncertainty_std": 0.06376744873589253,
+    "prob_a_wins": 0.48574654244834814,
+    "prob_b_wins": 0.5142534575516519,
+    "uncertainty_std": 0.06069525848648196,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.1259,
+      "prob_a_wins_sub": 0.1068,
+      "prob_a_wins_dec": 0.2754,
+      "prob_b_wins_ko_tko": 0.1077,
+      "prob_b_wins_sub": 0.0831,
+      "prob_b_wins_dec": 0.3011,
+      "prob_finish": 0.4235,
+      "prob_decision": 0.5765,
+      "prob_rounds": {
+        "R1": 0.225,
+        "R2": 0.1369,
+        "R3": 0.6381,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   },
   {
     "upcoming_bout_id": "e111f5459a863497",
@@ -212,12 +428,30 @@
     "weight_class": "",
     "is_title_bout": 0,
     "is_five_round": 0,
-    "prob_a_wins": 0.49766534431758497,
-    "prob_b_wins": 0.5023346556824151,
-    "uncertainty_std": 0.08952921438685046,
+    "prob_a_wins": 0.49811640185831607,
+    "prob_b_wins": 0.5018835981416839,
+    "uncertainty_std": 0.10317907317328222,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
     "kelly_fraction": NaN,
-    "has_edge": false
+    "has_edge": false,
+    "props": {
+      "prob_a_wins_ko_tko": 0.0833,
+      "prob_a_wins_sub": 0.0845,
+      "prob_a_wins_dec": 0.229,
+      "prob_b_wins_ko_tko": 0.3091,
+      "prob_b_wins_sub": 0.0892,
+      "prob_b_wins_dec": 0.2049,
+      "prob_finish": 0.5661,
+      "prob_decision": 0.4339,
+      "prob_rounds": {
+        "R1": 0.2991,
+        "R2": 0.1317,
+        "R3": 0.5692,
+        "R4": 0.0,
+        "R5": 0.0
+      }
+    },
+    "bet_analysis": []
   }
 ]

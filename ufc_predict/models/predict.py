@@ -163,11 +163,7 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         for k in diff_keys:
             av = a_feat.get(k, np.nan)
             bv = b_feat.get(k, np.nan)
-            row[f"diff_{k}"] = (
-                av - bv if not (np.isnan(av if isinstance(av, float) else float("nan")) or
-                                np.isnan(bv if isinstance(bv, float) else float("nan")))
-                else np.nan
-            )
+            row[f"diff_{k}"] = av - bv if not (pd.isna(av) or pd.isna(bv)) else np.nan
 
         if a_age and b_age:
             row["diff_age"] = a_age - b_age

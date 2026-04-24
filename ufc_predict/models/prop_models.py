@@ -85,16 +85,21 @@ def _load_labeled_matrix(db_url: str | None = None) -> pd.DataFrame:
     factory = get_session_factory(db_url)
     with factory() as session:
         sql = text("""
-            SELECT fight_id, method, round_ended, is_five_round
+            SELECT fight_id, method, round_ended
             FROM fights
             WHERE method IS NOT NULL
         """)
         rows = session.execute(sql).fetchall()
 
-    outcomes = pd.DataFrame(rows, columns=["fight_id", "method", "round_ended", "is_five_round"])
-    outcomes["is_five_round"] = outcomes["is_five_round"].fillna(0).astype(int)
+    outcomes = pd.DataFrame(rows, columns=["fight_id", "method", "round_ended"])
 
     df = fm.merge(outcomes, on="fight_id", how="inner")
+
+    # is_five_round comes from the feature matrix (it is a training feature).
+    # If somehow absent, default to 0 (3-round fight assumption).
+    if "is_five_round" not in df.columns:
+        df["is_five_round"] = 0
+    df["is_five_round"] = df["is_five_round"].fillna(0).astype(int)
 
     df["method_class"] = df.apply(
         lambda r: _method_class(int(r["label"]), r["method"]), axis=1

@@ -572,11 +572,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.5,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.75,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "c470241a6342ee20",
@@ -1118,11 +1114,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.4,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": NaN,
-    "fighter_b_stance": "nan"
+    ]
   },
   {
     "upcoming_bout_id": "3813797efacf02ab",
@@ -1672,11 +1664,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": NaN,
-    "fighter_a_stance": "Southpaw",
-    "b_l5_win_rate": 0.4,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "c12ee011b5843462",
@@ -1780,11 +1768,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.6,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.2,
-    "fighter_b_stance": "Southpaw"
+    ]
   },
   {
     "upcoming_bout_id": "1128d8591ea5f20c",
@@ -2359,11 +2343,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.0,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 1.0,
-    "fighter_b_stance": "Southpaw"
+    ]
   },
   {
     "upcoming_bout_id": "081a7a66afc92b74",
@@ -2938,11 +2918,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.2,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.0,
-    "fighter_b_stance": "Southpaw"
+    ]
   },
   {
     "upcoming_bout_id": "79d3475dc3d2f577",
@@ -3517,11 +3493,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.3333333333333333,
-    "fighter_a_stance": "Southpaw",
-    "b_l5_win_rate": 0.6,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "cc815e3d3fb682dd",
@@ -4096,11 +4068,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.4,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.0,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "9c3973fcc816d6d3",
@@ -4675,11 +4643,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.8,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.8,
-    "fighter_b_stance": "Southpaw"
+    ]
   },
   {
     "upcoming_bout_id": "06bee18032acab47",
@@ -5254,11 +5218,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.6,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": NaN,
-    "fighter_b_stance": "nan"
+    ]
   },
   {
     "upcoming_bout_id": "ba9fe6092e48268a",
@@ -5833,11 +5793,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.8,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 0.6,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "343a017a283c9047",
@@ -6412,11 +6368,7 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.8,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 1.0,
-    "fighter_b_stance": "Orthodox"
+    ]
   },
   {
     "upcoming_bout_id": "e111f5459a863497",
@@ -7034,10 +6986,6 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ],
-    "a_l5_win_rate": 0.6,
-    "fighter_a_stance": "Orthodox",
-    "b_l5_win_rate": 1.0,
-    "fighter_b_stance": "Switch"
+    ]
   }
 ]

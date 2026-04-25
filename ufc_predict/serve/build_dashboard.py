@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -150,12 +150,19 @@ def _stat_colors(a_val, b_val, higher_is_better: bool = True) -> tuple[str, str]
 
 
 def _fighter_type(ko_rate, sub_rate, td_per_min, slpm, sig_acc) -> str:
-    """Classify fighting style from computed stats."""
-    ko  = float(ko_rate  or 0)
-    sub = float(sub_rate or 0)
-    td  = float(td_per_min or 0)
-    sp  = float(slpm or 0)
-    acc = float(sig_acc or 0)
+    """
+    Classify a clear fighting style from computed stats.
+    Returns "" when no specific style stands out — caller hides the badge
+    rather than falsely labelling everyone "Complete".
+    """
+    try:
+        ko  = float(ko_rate  or 0)
+        sub = float(sub_rate or 0)
+        td  = float(td_per_min or 0)
+        sp  = float(slpm or 0)
+        acc = float(sig_acc or 0)
+    except (TypeError, ValueError):
+        return ""
 
     if ko > 0.30:
         return "KO Artist"
@@ -165,11 +172,11 @@ def _fighter_type(ko_rate, sub_rate, td_per_min, slpm, sig_acc) -> str:
         return "Wrestler"
     if td > 1.5:
         return "Grappler"
-    if sp > 5.5 or (acc > 0.48 and sp > 4.0):
+    if sp > 5.5 or (acc > 0.48 and sp > 4.5):
         return "Striker"
     if ko > 0.15 and sp > 4.0:
         return "Power Striker"
-    return "Complete"
+    return ""  # no clear style — hide badge in template
 
 
 def _enrich_props(bout: dict) -> None:
@@ -216,25 +223,29 @@ def _enrich_props(bout: dict) -> None:
 def _enrich_bet_analysis(bout: dict) -> None:
     """Format bet_analysis list for display — top 10 value bets only."""
     bets = bout.get("bet_analysis") or []
-    # Take value bets first, then best EV — cap at 10
     value_bets = [b for b in bets if b.get("is_value")][:10]
 
     formatted = []
     for bet in value_bets:
-        ev       = float(bet.get("ev_pct", 0))
-        kelly_p  = float(bet.get("kelly_pct", 0))
-        odds     = float(bet.get("sb_odds", 1.0))
-        our_p    = float(bet.get("our_prob", 0))
-        # Est. profit: for every $100 wagered, expected net gain
-        est_profit = round((odds - 1) * 100)
+        ev_pct  = float(bet.get("ev_pct", 0))
+        kelly_p = float(bet.get("kelly_pct", 0))
+        odds    = float(bet.get("sb_odds", 1.0))
+        our_p   = float(bet.get("our_prob", 0))
+        # Two distinct numbers:
+        #   win_payout    — net profit IF bet wins ((odds-1) * stake)
+        #   expected_pnl  — long-run average per bet (probability-weighted), == EV
+        win_payout   = round((odds - 1) * 100)
+        expected_pnl = round((our_p * odds - 1) * 100)
         formatted.append({
-            "description": bet.get("description", ""),
-            "our_prob":    f"{our_p * 100:.0f}%",
-            "sb_odds":     f"{odds:.2f}",
-            "est_profit":  f"+${est_profit}",
-            "stake_pct":   f"{kelly_p:.1f}%" if kelly_p > 0 else "<1%",
-            "is_value":    True,
-            "ev_raw":      ev,
+            "description":   bet.get("description", ""),
+            "our_prob":      f"{our_p * 100:.0f}%",
+            "sb_odds":       f"{odds:.2f}",
+            "win_payout":    f"+${win_payout}",
+            "expected_pnl":  f"+${expected_pnl}" if expected_pnl > 0 else f"-${abs(expected_pnl)}",
+            "expected_sign": "pos" if expected_pnl > 0 else "neg",
+            "stake_pct":     f"{kelly_p:.1f}%" if kelly_p > 0 else "<1%",
+            "is_value":      True,
+            "ev_raw":        ev_pct,
         })
     bout["bet_rows"] = formatted
     bout["has_bets"] = bool(formatted)
@@ -343,7 +354,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["a_initials"] = _initials(bout.get("fighter_a_name", ""))
             bout["b_initials"] = _initials(bout.get("fighter_b_name", ""))
 
-            # Fighter images from cache
+            # Fighter images from cache.
+            # Cache may store either a local relative path ("fighter-images/...")
+            # or a remote UFC CDN URL. Local paths are served by GitHub Pages
+            # alongside index.html and always work; remote URLs may be blocked.
             bout["a_img"] = fighter_imgs.get(bout.get("fighter_a_name", ""), "")
             bout["b_img"] = fighter_imgs.get(bout.get("fighter_b_name", ""), "")
 
@@ -381,6 +395,20 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     from ufc_predict.eval.bet_analysis import top_value_bets
     top_bets = top_value_bets(predictions, n=30)
 
+    # Build a compact carousel of upcoming events for the slider
+    event_carousel = []
+    for ev in events:
+        n_value = sum(b.get("value_bet_count", 0) for b in ev["bouts"])
+        n_with_odds = sum(1 for b in ev["bouts"] if b.get("sportsbet_odds"))
+        event_carousel.append({
+            "event_name": ev["event_name"],
+            "event_date": ev["event_date"],
+            "n_bouts":    len(ev["bouts"]),
+            "n_value":    n_value,
+            "has_odds":   n_with_odds > 0,
+            "anchor":     "event-" + (ev["event_date"] or "").replace(":", "").replace(" ", "-")[:12],
+        })
+
     env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)), autoescape=True)
     template = env.get_template("dashboard.html")
 
@@ -388,7 +416,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     rendered = template.render(
         events=events,
         top_bets=top_bets,
-        generated_at=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+        event_carousel=event_carousel,
+        generated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         n_bouts=len(predictions),
     )
 

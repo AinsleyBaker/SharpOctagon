@@ -16,9 +16,9 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 0.6666666666666666,
     "b_l3_win_rate": 0.6666666666666666,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.25,
     "a_sub_rate": 0.0,
-    "a_finish_rate": 0.0,
+    "a_finish_rate": 0.25,
     "a_slpm": 20.966542750929367,
     "a_sapm": 37.416356877323416,
     "a_sig_acc": 0.5603576751117735,
@@ -568,7 +568,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.5,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.75,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "c470241a6342ee20",
@@ -587,9 +591,9 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 0.3333333333333333,
     "b_l3_win_rate": NaN,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.2222222222222222,
     "a_sub_rate": 0.0,
-    "a_finish_rate": 0.05555555555555555,
+    "a_finish_rate": 0.2777777777777778,
     "a_slpm": 11.836278237530752,
     "a_sapm": 24.974278684857968,
     "a_sig_acc": 0.4739387426114992,
@@ -1139,7 +1143,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.4,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": NaN,
+    "fighter_b_stance": "nan"
   },
   {
     "upcoming_bout_id": "3813797efacf02ab",
@@ -1167,9 +1175,9 @@
     "a_td_per_min": NaN,
     "a_sub_per_min": NaN,
     "a_ctrl_ratio": NaN,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.3333333333333333,
     "b_sub_rate": 0.16666666666666666,
-    "b_finish_rate": 0.16666666666666666,
+    "b_finish_rate": 0.5,
     "b_slpm": 5.91070163004961,
     "b_sapm": 22.026931254429485,
     "b_sig_acc": 0.26833976833976836,
@@ -1685,7 +1693,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": NaN,
+    "fighter_a_stance": "Southpaw",
+    "b_l5_win_rate": 0.4,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "c12ee011b5843462",
@@ -1713,9 +1725,9 @@
     "a_td_per_min": 0.3165033911077619,
     "a_sub_per_min": 0.0,
     "a_ctrl_ratio": 0.624717407686511,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.21428571428571427,
     "b_sub_rate": 0.07142857142857142,
-    "b_finish_rate": 0.35714285714285715,
+    "b_finish_rate": 0.5714285714285714,
     "b_slpm": 9.148936170212764,
     "b_sapm": 20.510638297872337,
     "b_sig_acc": 0.4460580912863071,
@@ -1785,7 +1797,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.6,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.2,
+    "fighter_b_stance": "Southpaw"
   },
   {
     "upcoming_bout_id": "1128d8591ea5f20c",
@@ -1804,9 +1820,9 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 0.0,
     "b_l3_win_rate": 1.0,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.07692307692307693,
     "a_sub_rate": 0.3076923076923077,
-    "a_finish_rate": 0.3076923076923077,
+    "a_finish_rate": 0.38461538461538464,
     "a_slpm": 10.62050947093403,
     "a_sapm": 18.69366427171783,
     "a_sig_acc": 0.5681341719077568,
@@ -2356,7 +2372,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.0,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 1.0,
+    "fighter_b_stance": "Southpaw"
   },
   {
     "upcoming_bout_id": "081a7a66afc92b74",
@@ -2375,9 +2395,9 @@
     "b_loss_streak": 2,
     "a_l3_win_rate": 0.0,
     "b_l3_win_rate": 0.0,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.25,
     "a_sub_rate": 0.0,
-    "a_finish_rate": 0.25,
+    "a_finish_rate": 0.5,
     "a_slpm": 5.003158559696779,
     "a_sapm": 11.408717624763108,
     "a_sig_acc": 0.43853820598006643,
@@ -2927,7 +2947,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.2,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.0,
+    "fighter_b_stance": "Southpaw"
   },
   {
     "upcoming_bout_id": "79d3475dc3d2f577",
@@ -2946,18 +2970,18 @@
     "b_loss_streak": 1,
     "a_l3_win_rate": 0.3333333333333333,
     "b_l3_win_rate": 0.3333333333333333,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.6666666666666666,
     "a_sub_rate": 0.0,
-    "a_finish_rate": 0.0,
+    "a_finish_rate": 0.6666666666666666,
     "a_slpm": 11.693735498839906,
     "a_sapm": 26.728538283062644,
     "a_sig_acc": 0.4375,
     "a_td_per_min": 0.0,
     "a_sub_per_min": 0.0,
     "a_ctrl_ratio": 0.7633410672853829,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.1,
     "b_sub_rate": 0.5,
-    "b_finish_rate": 0.6,
+    "b_finish_rate": 0.7,
     "b_slpm": 10.157819225251076,
     "b_sapm": 18.823529411764707,
     "b_sig_acc": 0.5396341463414634,
@@ -3498,7 +3522,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.3333333333333333,
+    "fighter_a_stance": "Southpaw",
+    "b_l5_win_rate": 0.6,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "cc815e3d3fb682dd",
@@ -3517,9 +3545,9 @@
     "b_loss_streak": 2,
     "a_l3_win_rate": 0.6666666666666666,
     "b_l3_win_rate": 0.0,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.4,
     "a_sub_rate": 0.26666666666666666,
-    "a_finish_rate": 0.4,
+    "a_finish_rate": 0.8,
     "a_slpm": 6.203935599284437,
     "a_sapm": 15.949910554561718,
     "a_sig_acc": 0.38896366083445494,
@@ -4069,7 +4097,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.4,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.0,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "9c3973fcc816d6d3",
@@ -4088,18 +4120,18 @@
     "b_loss_streak": 1,
     "a_l3_win_rate": 1.0,
     "b_l3_win_rate": 0.6666666666666666,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.21428571428571427,
     "a_sub_rate": 0.14285714285714285,
-    "a_finish_rate": 0.14285714285714285,
+    "a_finish_rate": 0.35714285714285715,
     "a_slpm": 14.413497589716123,
     "a_sapm": 27.911087305838244,
     "a_sig_acc": 0.5164075993091537,
     "a_td_per_min": 0.43385109801821103,
     "a_sub_per_min": 0.0,
     "a_ctrl_ratio": 0.6585431173004821,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.25,
     "b_sub_rate": 0.08333333333333333,
-    "b_finish_rate": 0.08333333333333333,
+    "b_finish_rate": 0.3333333333333333,
     "b_slpm": 7.902439024390242,
     "b_sapm": 14.675958188153308,
     "b_sig_acc": 0.5384615384615384,
@@ -4640,7 +4672,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.8,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.8,
+    "fighter_b_stance": "Southpaw"
   },
   {
     "upcoming_bout_id": "06bee18032acab47",
@@ -4659,9 +4695,9 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 0.6666666666666666,
     "b_l3_win_rate": NaN,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.2,
     "a_sub_rate": 0.06666666666666667,
-    "a_finish_rate": 0.3333333333333333,
+    "a_finish_rate": 0.5333333333333333,
     "a_slpm": 16.26843213963286,
     "a_sapm": 36.65362624134818,
     "a_sig_acc": 0.4438423645320197,
@@ -5211,7 +5247,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.6,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": NaN,
+    "fighter_b_stance": "nan"
   },
   {
     "upcoming_bout_id": "ba9fe6092e48268a",
@@ -5230,18 +5270,18 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 1.0,
     "b_l3_win_rate": 0.6666666666666666,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.47058823529411764,
     "a_sub_rate": 0.0,
-    "a_finish_rate": 0.058823529411764705,
+    "a_finish_rate": 0.5294117647058824,
     "a_slpm": 11.10443275732532,
     "a_sapm": 27.13749060856499,
     "a_sig_acc": 0.40919158361018826,
     "a_td_per_min": 0.19534184823441023,
     "a_sub_per_min": 0.0,
     "a_ctrl_ratio": 0.3626346105684949,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.2222222222222222,
     "b_sub_rate": 0.1111111111111111,
-    "b_finish_rate": 0.1111111111111111,
+    "b_finish_rate": 0.3333333333333333,
     "b_slpm": 13.569901667379222,
     "b_sapm": 30.06412997007268,
     "b_sig_acc": 0.4513651877133106,
@@ -5782,7 +5822,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.8,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 0.6,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "343a017a283c9047",
@@ -5801,18 +5845,18 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 1.0,
     "b_l3_win_rate": 1.0,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.16666666666666666,
     "a_sub_rate": 0.16666666666666666,
-    "a_finish_rate": 0.16666666666666666,
+    "a_finish_rate": 0.3333333333333333,
     "a_slpm": 12.988505747126437,
     "a_sapm": 24.080459770114945,
     "a_sig_acc": 0.5393794749403341,
     "a_td_per_min": 0.26819923371647514,
     "a_sub_per_min": 0.0,
     "a_ctrl_ratio": 0.5737547892720307,
-    "b_ko_rate": 0.0,
+    "b_ko_rate": 0.09090909090909091,
     "b_sub_rate": 0.0,
-    "b_finish_rate": 0.0,
+    "b_finish_rate": 0.09090909090909091,
     "b_slpm": 11.884148240423544,
     "b_sapm": 23.31983805668016,
     "b_sig_acc": 0.5096153846153846,
@@ -6353,7 +6397,11 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.8,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 1.0,
+    "fighter_b_stance": "Orthodox"
   },
   {
     "upcoming_bout_id": "e111f5459a863497",
@@ -6372,9 +6420,9 @@
     "b_loss_streak": 0,
     "a_l3_win_rate": 0.6666666666666666,
     "b_l3_win_rate": 1.0,
-    "a_ko_rate": 0.0,
+    "a_ko_rate": 0.19047619047619047,
     "a_sub_rate": 0.19047619047619047,
-    "a_finish_rate": 0.19047619047619047,
+    "a_finish_rate": 0.38095238095238093,
     "a_slpm": 14.666408818410364,
     "a_sapm": 27.3370721330497,
     "a_sig_acc": 0.5365025466893039,
@@ -6967,6 +7015,10 @@
         "kelly_pct": 0.0,
         "is_value": false
       }
-    ]
+    ],
+    "a_l5_win_rate": 0.6,
+    "fighter_a_stance": "Orthodox",
+    "b_l5_win_rate": 1.0,
+    "fighter_b_stance": "Switch"
   }
 ]

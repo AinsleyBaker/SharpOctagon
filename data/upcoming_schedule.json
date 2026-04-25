@@ -4,24 +4,6 @@
     "event_date": "2026-04-25",
     "bouts": [
       {
-        "fighter_a": "Julia Polastri",
-        "fighter_b": "Talita Alencar",
-        "weight_class": "",
-        "is_title_bout": false
-      },
-      {
-        "fighter_a": "Max Griffin",
-        "fighter_b": "Victor Valenzuela",
-        "weight_class": "",
-        "is_title_bout": false
-      },
-      {
-        "fighter_a": "Lucas Brennan",
-        "fighter_b": "Francis Marshall",
-        "weight_class": "",
-        "is_title_bout": false
-      },
-      {
         "fighter_a": "Jafel Filho",
         "fighter_b": "Cody Durden",
         "weight_class": "",

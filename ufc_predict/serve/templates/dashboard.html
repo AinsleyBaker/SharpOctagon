@@ -350,6 +350,50 @@
   }
   .no-bets { padding: 0.85rem 1rem; color: var(--muted); font-size: var(--sm); }
 
+  /* ─── Preview event styling ─── */
+  .preview-event .event-header {
+    background: linear-gradient(90deg, rgba(200,160,250,0.08), rgba(13,13,16,0.5));
+    border-color: rgba(200,160,250,0.18);
+  }
+  .preview-tag {
+    font-size: 0.55rem; font-weight: 700; padding: 2px 7px; border-radius: 3px;
+    background: rgba(200,160,250,0.15); color: var(--purple);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    margin-left: 0.5rem; vertical-align: middle;
+  }
+  .preview-notice {
+    background: rgba(200,160,250,0.05);
+    border: 1px dashed rgba(200,160,250,0.2);
+    border-radius: 8px; padding: 0.85rem 1rem;
+    color: #c4b8d9; font-size: var(--sm); font-style: italic;
+    text-align: center;
+  }
+
+  /* ─── Event filter on top bets page ─── */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1rem; padding: 0.5rem 0;
+  }
+  .filter-pill {
+    padding: 0.35rem 0.85rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--card-2);
+    color: var(--muted); font-size: var(--xs); font-weight: 600;
+    cursor: pointer; transition: all 0.12s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: inherit;
+  }
+  .filter-pill:hover { color: var(--light); border-color: var(--matrix); }
+  .filter-pill.active {
+    background: rgba(0,255,136,0.12); color: var(--matrix);
+    border-color: var(--matrix);
+    box-shadow: 0 0 8px rgba(0,255,136,0.18);
+  }
+  .filter-pill .pill-count {
+    background: rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 0 0.4rem; font-size: 0.6rem; color: var(--muted);
+  }
+  .filter-pill.active .pill-count { background: rgba(0,255,136,0.2); color: var(--matrix); }
+
   /* ─── Top bets table ─── */
   #fights-panel { display: block; }
   .section-title {
@@ -469,9 +513,12 @@
 
     {% for event in events %}
     {% set anchor = "event-" + (event.event_date or "")|replace(":", "")|replace(" ", "-") %}
-    <div class="event-card" id="{{ anchor[:18] }}">
+    <div class="event-card {{ 'preview-event' if event.is_preview else '' }}" id="{{ anchor[:18] }}">
       <div class="event-header">
-        <h2>{{ event.event_name }}</h2>
+        <h2>
+          {{ event.event_name }}
+          {% if event.is_preview %}<span class="preview-tag">predictions soon</span>{% endif %}
+        </h2>
         <span class="date">{{ event.event_date }}</span>
       </div>
 
@@ -555,6 +602,12 @@
         <!-- Details -->
         <div class="fight-details" id="details-{{ loop.index }}-{{ loop.index0 }}">
           <div class="details-inner">
+            {% if bout.is_preview %}
+            <div class="preview-notice">
+              ⟁ This fight is on the upcoming schedule but predictions and odds aren't available yet.
+              The matrix will compute them closer to event time.
+            </div>
+            {% else %}
             <div class="details-grid">
 
               <div class="detail-box">
@@ -689,6 +742,7 @@
               <div class="no-bets">SportsBet odds pending — value bets will appear here closer to event.</div>
             </div>
             {% endif %}
+            {% endif %}{# end if not bout.is_preview #}
 
           </div>
         </div>
@@ -705,11 +759,27 @@
   <div id="top-bets" class="hidden">
     {% if top_bets %}
     <div class="section-title">⟁  Top Value Bets — Sorted by Expected Profit</div>
+
+    <!-- Event filter -->
+    <div class="filter-bar">
+      <button type="button" class="filter-pill active" data-event="__all__"
+              onclick="filterBetsByEvent('__all__', this)">
+        All events <span class="pill-count">{{ top_bets|length }}</span>
+      </button>
+      {% for opt in event_filter_options %}
+      <button type="button" class="filter-pill" data-event="{{ opt.label }}"
+              onclick="filterBetsByEvent('{{ opt.label|escape }}', this)">
+        {{ opt.label }} <span class="pill-count">{{ opt.count }}</span>
+      </button>
+      {% endfor %}
+    </div>
+
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <table class="top-table">
         <thead>
           <tr>
             <th>Fight</th>
+            <th>Event</th>
             <th>Bet</th>
             <th>Model %</th>
             <th>SB Odds</th>
@@ -718,11 +788,12 @@
             <th>Suggested Stake</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="top-bets-tbody">
           {% for bet in top_bets %}
           {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
-          <tr>
+          <tr data-event="{{ bet.event|escape }}">
             <td style="color:var(--muted);font-size:var(--xs)">{{ bet.fight }}</td>
+            <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
             <td style="font-weight:600">{{ bet.description }}</td>
             <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
             <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
@@ -771,6 +842,20 @@ function showTab(tab, el) {
   document.getElementById('top-bets').classList.toggle('hidden', tab !== 'bets');
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+}
+function filterBetsByEvent(eventLabel, btn) {
+  // Toggle active pill
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  // Show/hide rows
+  const rows = document.querySelectorAll('#top-bets-tbody tr');
+  rows.forEach(r => {
+    if (eventLabel === '__all__' || r.dataset.event === eventLabel) {
+      r.style.display = '';
+    } else {
+      r.style.display = 'none';
+    }
+  });
 }
 </script>
 </body>

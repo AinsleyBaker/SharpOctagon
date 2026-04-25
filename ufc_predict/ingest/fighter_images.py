@@ -45,29 +45,59 @@ def _name_to_slug(name: str) -> str:
 
 
 def fetch_image_url(name: str) -> str | None:
-    """Return the UFC CDN full-body image URL for a fighter, or None."""
+    """
+    Return the UFC full-body image URL for a fighter, or None.
+    Uses the ufc.com/images/... URL with the Drupal itok security token —
+    bare CDN URLs without itok return 403.
+    """
     slug = _name_to_slug(name)
     url  = f"{_UFC_BASE}/{slug}"
     try:
         r = requests.get(url, headers=_HEADERS, timeout=12)
         if r.status_code != 200:
             return None
-        # Try full-body first, fall back to headshot
-        for pattern in [
-            r"full[_\-]body/s3/(\d{4}-\d{2}/[A-Z0-9_\-]+\.(?:png|jpg|webp))",
-            r"athlete[_\-]bio[_\-]headshot/s3/(\d{4}-\d{2}/[A-Z0-9_\-]+\.(?:png|jpg|webp))",
-            r"/styles/[a-z_]+/s3/(\d{4}-\d{2}/[A-Z0-9_\-]+\.(?:png|jpg|webp))",
-        ]:
-            m = re.search(pattern, r.text, re.IGNORECASE)
+        # Capture the FULL URL including ?itok=... query parameter.
+        # Try styles in order of preference: full body, headshot, hero card.
+        for style in (
+            "athlete_bio_full_body",
+            "athlete_bio_headshot",
+            "event_results_athlete_headshot",
+            "card_advance_small_280x356",
+        ):
+            pattern = (
+                r'(https?://(?:www\.)?ufc\.com/images/styles/'
+                + re.escape(style)
+                + r'/[^"\'\s<>]+?\?itok=[A-Za-z0-9_\-]+)'
+            )
+            m = re.search(pattern, r.text)
             if m:
-                if "full_body" in pattern:
-                    return _CDN_BASE + m.group(1)
-                # Other styles: use the matched style path
-                style_match = re.search(r"(/styles/[a-z_]+/s3/" + re.escape(m.group(1)) + ")", r.text)
-                if style_match:
-                    return "https://dmxg5wxfqgde4.cloudfront.net" + style_match.group(1)
+                return m.group(1)
     except requests.RequestException as exc:
         log.debug("Image fetch failed for '%s': %s", name, exc)
+    return None
+
+
+def fetch_wikipedia_image(name: str) -> str | None:
+    """Fall back to Wikipedia's pageimage API for fighters with public-domain photos."""
+    try:
+        r = requests.get(
+            "https://en.wikipedia.org/w/api.php",
+            params={
+                "action": "query", "titles": name,
+                "prop": "pageimages", "piprop": "thumbnail",
+                "pithumbsize": "400", "format": "json", "redirects": 1,
+            },
+            headers={"User-Agent": "SharpOctagon/1.0 (https://github.com/AinsleyBaker/SharpOctagon)"},
+            timeout=10,
+        )
+        if r.status_code != 200:
+            return None
+        for page in r.json().get("query", {}).get("pages", {}).values():
+            thumb = page.get("thumbnail", {}).get("source")
+            if thumb:
+                return thumb
+    except (requests.RequestException, ValueError) as exc:
+        log.debug("Wikipedia fetch failed for '%s': %s", name, exc)
     return None
 
 
@@ -144,13 +174,16 @@ def refresh_for_upcoming(db_url: str | None = None) -> dict[str, str]:
 
     new_fetches, new_downloads = 0, 0
     for name in names:
-        # Skip if we already have a local image cached and the file still exists
         cached = cache.get(name, "")
-        if cached.startswith("fighter-images/") and (Path("docs") / cached).exists():
-            continue
+        is_stale_cdn = cached.startswith("https://dmxg5wxfqgde4.cloudfront.net")
+        if cached and not is_stale_cdn:
+            if cached.startswith("fighter-images/") and not (Path("docs") / cached).exists():
+                pass  # need to re-download
+            else:
+                continue
 
         log.info("Processing %s…", name)
-        url = fetch_image_url(name)
+        url = _resolve_image_url(name)
         if url:
             local = download_image(name, url)
             if local:
@@ -158,8 +191,8 @@ def refresh_for_upcoming(db_url: str | None = None) -> dict[str, str]:
                 new_downloads += 1
                 log.info("  ✓ downloaded → %s", local)
             else:
-                cache[name] = url  # fall back to remote URL (may not load due to hotlink)
-                log.info("  ⚠ download failed, kept remote URL")
+                cache[name] = url
+                log.info("  ⚠ saved URL only (download failed)")
         else:
             cache[name] = ""
             log.info("  ✗ no image found")
@@ -172,11 +205,13 @@ def refresh_for_upcoming(db_url: str | None = None) -> dict[str, str]:
     return cache
 
 
+def _resolve_image_url(name: str) -> str | None:
+    """Try UFC.com first (with itok), fall back to Wikipedia thumbnail."""
+    return fetch_image_url(name) or fetch_wikipedia_image(name)
+
+
 def refresh_from_predictions(predictions_path: Path = Path("data/predictions.json")) -> dict[str, str]:
-    """
-    Fallback for environments without DB access — read fighter names from
-    predictions.json and download images for each.
-    """
+    """Read fighter names from predictions.json and resolve images for each."""
     if not predictions_path.exists():
         log.warning("No predictions found at %s", predictions_path)
         return load_cache()
@@ -190,27 +225,31 @@ def refresh_from_predictions(predictions_path: Path = Path("data/predictions.jso
                 names.add(n)
 
     cache = load_cache()
-    new_fetches = 0
+    processed = 0
     for name in sorted(names):
         cached = cache.get(name, "")
-        if cached.startswith("fighter-images/") and (Path("docs") / cached).exists():
-            continue
+        # Re-fetch if we previously cached a bare CDN URL without itok (those don't load)
+        is_stale_cdn = cached.startswith("https://dmxg5wxfqgde4.cloudfront.net")
+        if cached and not is_stale_cdn:
+            if cached.startswith("fighter-images/") and not (Path("docs") / cached).exists():
+                pass  # local file missing — re-download
+            else:
+                continue
+
         log.info("Processing %s…", name)
-        url = fetch_image_url(name)
+        url = _resolve_image_url(name)
         if url:
             local = download_image(name, url)
-            if local:
-                cache[name] = local
-                log.info("  ✓ downloaded → %s", local)
-            else:
-                cache[name] = url
+            cache[name] = local if local else url
+            log.info("  ✓ %s", local if local else url[:80])
         else:
             cache[name] = ""
-        new_fetches += 1
+            log.info("  ✗ no image found")
+        processed += 1
         time.sleep(_DELAY_S)
 
     save_cache(cache)
-    log.info("Fighter images: %d total, %d processed", len(cache), new_fetches)
+    log.info("Fighter images: %d total, %d processed", len(cache), processed)
     return cache
 
 

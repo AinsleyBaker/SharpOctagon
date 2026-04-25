@@ -403,7 +403,19 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["sb_odds_b"] = f"{sb['moneyline_b']:.2f}" if sb.get("moneyline_b") else None
 
     from ufc_predict.eval.bet_analysis import top_value_bets
-    top_bets = top_value_bets(predictions, n=30)
+    top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event
+
+    # Group top bets by event so the Top Value Bets page can offer an event filter.
+    # The "all" key holds every bet so the user can also see them combined.
+    bets_by_event: dict[str, list] = {"__all__": list(top_bets)}
+    for bet in top_bets:
+        ev_label = bet.get("event") or "Other"
+        bets_by_event.setdefault(ev_label, []).append(bet)
+    event_filter_options = [
+        {"key": k, "label": k, "count": len(v)}
+        for k, v in bets_by_event.items() if k != "__all__"
+    ]
+    event_filter_options.sort(key=lambda x: x["label"])
 
     # Build a carousel of all known upcoming events.
     # Merges predicted events (have data) with the full ESPN schedule
@@ -473,9 +485,70 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     template = env.get_template("dashboard.html")
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Add schedule-only events as preview entries (basic fighter info, no predictions)
+    # so the user can browse/expand them.
+    pred_keys = {(str(ev["event_date"]), ev["event_name"]) for ev in events}
+    preview_events = []
+    for s in schedule:
+        key = (s["event_date"], s["event_name"])
+        if key in pred_keys or not s.get("bouts"):
+            continue
+        # Build minimal bout dicts that share enough fields with the full template
+        anchor = "event-" + (s["event_date"] or "").replace(":", "").replace(" ", "-")[:12]
+        preview_bouts = []
+        for sb in s["bouts"]:
+            fa = (sb.get("fighter_a") or "").strip()
+            fb = (sb.get("fighter_b") or "").strip()
+            if not fa or not fb:
+                continue
+            def _initials(n: str) -> str:
+                parts = (n or "").split()
+                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
+            preview_bouts.append({
+                "is_preview":     True,
+                "fighter_a_name": fa,
+                "fighter_b_name": fb,
+                "weight_class":   sb.get("weight_class") or "",
+                "is_title_bout":  sb.get("is_title_bout", False),
+                "favourite":      "toss-up",
+                "prob_a_pct":     "—",
+                "prob_b_pct":     "—",
+                "prob_a_wins":    0.5,
+                "a_initials":     _initials(fa),
+                "b_initials":     _initials(fb),
+                "a_img":          fighter_imgs.get(fa, ""),
+                "b_img":          fighter_imgs.get(fb, ""),
+                "a_streak":       "—",
+                "b_streak":       "—",
+                "a_flag":         "",
+                "b_flag":         "",
+                "a_stance":       "",
+                "b_stance":       "",
+                "a_fighter_type": "",
+                "b_fighter_type": "",
+                "show_fighter_type": False,
+                "value_bet_count": 0,
+                "has_bets":       False,
+                "has_props":      False,
+            })
+        if preview_bouts:
+            preview_events.append({
+                "event_name": s["event_name"],
+                "event_date": s["event_date"],
+                "bouts":      preview_bouts,
+                "is_preview": True,
+                "anchor":     anchor[:18],
+            })
+
+    # Combine: predicted events first (sorted by date), then preview events
+    all_events_for_template = sorted(events, key=lambda e: str(e.get("event_date", "")))
+    all_events_for_template.extend(preview_events)
+
     rendered = template.render(
-        events=events,
+        events=all_events_for_template,
         top_bets=top_bets,
+        bets_by_event=bets_by_event,
+        event_filter_options=event_filter_options,
         event_carousel=event_carousel,
         generated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         n_bouts=len(predictions),

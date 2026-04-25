@@ -59,6 +59,12 @@ jobs:
         continue-on-error: true
         run: python -m ufc_predict.ingest.fighter_images
 
+      - name: Fetch fighter metadata (country, fighting style, image)
+        # Scrapes ufc.com athlete bio for every fighter in upcoming bouts
+        # and the broader 90-day schedule.
+        continue-on-error: true
+        run: python -m ufc_predict.ingest.fighter_metadata
+
       - name: Build dashboard
         run: python -m ufc_predict.serve.build_dashboard
 
@@ -76,6 +82,7 @@ jobs:
           [ -f data/sportsbet_odds.json ]     && git add data/sportsbet_odds.json     || true
           [ -f data/model_performance.json ]  && git add data/model_performance.json  || true
           [ -f data/fighter_images.json ]     && git add data/fighter_images.json     || true
+          [ -f data/fighter_metadata.json ]   && git add data/fighter_metadata.json   || true
           [ -f data/upcoming_schedule.json ]  && git add data/upcoming_schedule.json  || true
           # Downloaded fighter images live under docs/fighter-images/ (served by Pages)
           [ -d docs/fighter-images ]          && git add docs/fighter-images/         || true

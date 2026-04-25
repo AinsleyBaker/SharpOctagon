@@ -227,6 +227,21 @@
     font-size: 0.58rem; font-weight: 600; padding: 1px 5px; border-radius: 3px;
     background: rgba(0,255,136,0.15); color: var(--matrix); text-transform: uppercase; letter-spacing: 0.04em;
   }
+  .ufc-style-badge {
+    font-size: 0.58rem; font-weight: 600; padding: 1px 5px; border-radius: 3px;
+    background: rgba(244,162,97,0.12); color: var(--gold);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .streak-label {
+    font-size: 0.58rem; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .streak-w {
+    background: rgba(45,198,83,0.15); color: var(--green);
+  }
+  .streak-l {
+    background: rgba(230,57,70,0.13); color: var(--red);
+  }
 
   /* Probability centre */
   .vs-center {
@@ -394,6 +409,21 @@
   }
   .filter-pill.active .pill-count { background: rgba(0,255,136,0.2); color: var(--matrix); }
 
+  .type-pill {
+    padding: 0.25rem 0.7rem; border-radius: 999px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-size: var(--xs); font-weight: 500;
+    cursor: pointer; transition: all 0.12s;
+    font-family: inherit;
+  }
+  .type-pill:hover { color: var(--light); border-color: var(--purple); }
+  .type-pill.active {
+    background: rgba(200,160,250,0.12); color: var(--purple);
+    border-color: var(--purple);
+  }
+
+  .bet-row:hover td { background: rgba(0,255,136,0.04) !important; }
+
   /* ─── Top bets table ─── */
   #fights-panel { display: block; }
   .section-title {
@@ -547,10 +577,10 @@
                   {{ bout.fighter_a_name }}
                 </div>
                 <div class="fighter-meta">
-                  {% if bout.a_flag %}<span class="flag">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_flag %}<span class="flag" title="{{ bout.a_nationality }}">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.a_ufc_style }}</span>{% endif %}
                   {% if bout.a_stance %}<span class="stance-badge">{{ bout.a_stance }}</span>{% endif %}
-                  {% if bout.show_fighter_type and bout.a_fighter_type %}<span class="style-badge">{{ bout.a_fighter_type }}</span>{% endif %}
-                  {% if bout.a_streak != '—' %}<span style="color:#666">{{ bout.a_streak }}</span>{% endif %}
+                  {% if bout.a_streak %}<span class="streak-label {{ bout.a_streak_class }}">{{ bout.a_streak }}</span>{% endif %}
                 </div>
               </div>
             </div>
@@ -581,10 +611,10 @@
               <div class="fighter-info">
                 <div class="fighter-name">{{ bout.fighter_b_name }}</div>
                 <div class="fighter-meta">
-                  {% if bout.b_flag %}<span class="flag">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_flag %}<span class="flag" title="{{ bout.b_nationality }}">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.b_ufc_style }}</span>{% endif %}
                   {% if bout.b_stance %}<span class="stance-badge">{{ bout.b_stance }}</span>{% endif %}
-                  {% if bout.show_fighter_type and bout.b_fighter_type %}<span class="style-badge">{{ bout.b_fighter_type }}</span>{% endif %}
-                  {% if bout.b_streak != '—' %}<span style="color:#666">{{ bout.b_streak }}</span>{% endif %}
+                  {% if bout.b_streak %}<span class="streak-label {{ bout.b_streak_class }}">{{ bout.b_streak }}</span>{% endif %}
                 </div>
               </div>
             </div>
@@ -774,6 +804,17 @@
       {% endfor %}
     </div>
 
+    <!-- Bet type filter -->
+    <div class="filter-bar" style="margin-top:-0.4rem">
+      <span style="color:var(--muted);font-size:var(--xs);align-self:center;margin-right:0.3rem">market:</span>
+      <button type="button" class="type-pill active" data-type="__all__" onclick="filterBetsByType('__all__', this)">All</button>
+      <button type="button" class="type-pill" data-type="moneyline" onclick="filterBetsByType('moneyline', this)">Moneyline</button>
+      <button type="button" class="type-pill" data-type="method" onclick="filterBetsByType('method', this)">Method</button>
+      <button type="button" class="type-pill" data-type="winning_round" onclick="filterBetsByType('winning_round', this)">Round</button>
+      <button type="button" class="type-pill" data-type="distance" onclick="filterBetsByType('distance', this)">Distance</button>
+      <button type="button" class="type-pill" data-type="total_rounds" onclick="filterBetsByType('total_rounds', this)">Total Rounds</button>
+    </div>
+
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <table class="top-table">
         <thead>
@@ -791,8 +832,10 @@
         <tbody id="top-bets-tbody">
           {% for bet in top_bets %}
           {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
-          <tr data-event="{{ bet.event|escape }}">
-            <td style="color:var(--muted);font-size:var(--xs)">{{ bet.fight }}</td>
+          <tr data-event="{{ bet.event|escape }}" data-type="{{ bet.bet_type }}"
+              class="bet-row" onclick="jumpToFight('{{ bet.fight|escape }}', '{{ bet.event|escape }}')"
+              style="cursor:pointer">
+            <td style="color:var(--muted);font-size:var(--xs)">↗ {{ bet.fight }}</td>
             <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
             <td style="font-weight:600">{{ bet.description }}</td>
             <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
@@ -843,19 +886,59 @@ function showTab(tab, el) {
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
 }
+let _activeEvent = '__all__';
+let _activeType  = '__all__';
+function _applyBetFilters() {
+  document.querySelectorAll('#top-bets-tbody tr').forEach(r => {
+    const eventOK = _activeEvent === '__all__' || r.dataset.event === _activeEvent;
+    const typeOK  = _activeType  === '__all__' || r.dataset.type  === _activeType;
+    r.style.display = (eventOK && typeOK) ? '' : 'none';
+  });
+}
 function filterBetsByEvent(eventLabel, btn) {
-  // Toggle active pill
   document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
-  // Show/hide rows
-  const rows = document.querySelectorAll('#top-bets-tbody tr');
-  rows.forEach(r => {
-    if (eventLabel === '__all__' || r.dataset.event === eventLabel) {
-      r.style.display = '';
-    } else {
-      r.style.display = 'none';
+  _activeEvent = eventLabel;
+  _applyBetFilters();
+}
+function filterBetsByType(typeLabel, btn) {
+  document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  _activeType = typeLabel;
+  _applyBetFilters();
+}
+function jumpToFight(fightLabel, eventLabel) {
+  // Switch to the Fights tab
+  showTab('fights', document.getElementById('tab-fights'));
+  // Find event card whose <h2> contains the event name
+  const cards = document.querySelectorAll('.event-card');
+  for (const c of cards) {
+    const h = c.querySelector('h2');
+    if (h && h.textContent.trim().includes(eventLabel.trim())) {
+      // Scroll to card, then expand the matching fight if found
+      c.scrollIntoView({behavior: 'smooth', block: 'start'});
+      // Try to find the fighter name in the card and expand its fight
+      const blocks = c.querySelectorAll('.fight-block');
+      for (const b of blocks) {
+        const names = b.querySelectorAll('.fighter-name');
+        const nameText = Array.from(names).map(n => n.textContent.trim()).join(' vs ').toLowerCase();
+        if (fightLabel.toLowerCase().split(' vs ').every(p => nameText.includes(p.trim().toLowerCase()))) {
+          const details = b.querySelector('.fight-details');
+          const icon    = b.querySelector('.expand-icon');
+          if (details && !details.classList.contains('open')) {
+            details.classList.add('open');
+            if (icon) icon.style.transform = 'rotate(180deg)';
+          }
+          // Brief highlight pulse
+          b.style.transition = 'background 0.4s';
+          b.style.background = 'rgba(0,255,136,0.08)';
+          setTimeout(() => b.style.background = '', 1200);
+          break;
+        }
+      }
+      return;
     }
-  });
+  }
 }
 </script>
 </body>

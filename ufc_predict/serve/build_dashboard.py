@@ -19,6 +19,7 @@ log = logging.getLogger(__name__)
 
 PREDICTIONS_PATH  = Path("data/predictions.json")
 FIGHTER_IMGS_PATH = Path("data/fighter_images.json")
+FIGHTER_META_PATH = Path("data/fighter_metadata.json")
 SCHEDULE_PATH     = Path("data/upcoming_schedule.json")
 TEMPLATES_DIR     = Path(__file__).parent / "templates"
 OUTPUT_DIR        = Path("docs")
@@ -47,6 +48,16 @@ def load_schedule() -> list[dict]:
         return json.loads(SCHEDULE_PATH.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return []
+
+
+def load_fighter_metadata() -> dict[str, dict]:
+    """Country, official UFC fighting style, image — keyed by fighter name."""
+    if not FIGHTER_META_PATH.exists():
+        return {}
+    try:
+        return json.loads(FIGHTER_META_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
 
 
 def _group_by_event(predictions: list[dict]) -> list[dict]:
@@ -95,14 +106,19 @@ def _data_quality(a_n, b_n) -> str:
     return "sparse"
 
 
-def _streak_display(win_s, loss_s) -> str:
+def _streak_display(win_s, loss_s) -> tuple[str, str]:
+    """Return (label, css_class). Label is plain English ('3-fight win streak')."""
     win_s  = int(win_s  or 0)
     loss_s = int(loss_s or 0)
-    if win_s > 0:
-        return f"{win_s}W"
-    if loss_s > 0:
-        return f"{loss_s}L"
-    return "—"
+    if win_s >= 1:
+        if win_s == 1:
+            return ("1 win", "streak-w")
+        return (f"{win_s}-fight win streak", "streak-w")
+    if loss_s >= 1:
+        if loss_s == 1:
+            return ("1 loss", "streak-l")
+        return (f"{loss_s}-fight skid", "streak-l")
+    return ("", "")
 
 
 def _kelly_display(frac) -> str:
@@ -268,7 +284,13 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         log.warning("No predictions found at %s", PREDICTIONS_PATH)
 
     fighter_imgs = load_fighter_images()
+    fighter_meta = load_fighter_metadata()
     events = _group_by_event(predictions)
+
+    def _meta_lookup(name: str, key: str, default: str = "") -> str:
+        meta = fighter_meta.get(name, {})
+        val = meta.get(key) or default
+        return val
 
     # Enrich each bout for display
     for event in events:
@@ -299,12 +321,16 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["data_quality"] = _data_quality(
                 bout.get("a_n_fights"), bout.get("b_n_fights")
             )
-            bout["a_streak"] = _streak_display(
+            a_label, a_class = _streak_display(
                 bout.get("a_win_streak"), bout.get("a_loss_streak")
             )
-            bout["b_streak"] = _streak_display(
+            b_label, b_class = _streak_display(
                 bout.get("b_win_streak"), bout.get("b_loss_streak")
             )
+            bout["a_streak"]       = a_label   # plain English label
+            bout["b_streak"]       = b_label
+            bout["a_streak_class"] = a_class   # css class for colour
+            bout["b_streak_class"] = b_class
 
             def _nan_pct(v, decimals=0):
                 if v is None or (isinstance(v, float) and v != v):
@@ -333,13 +359,19 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["a_td_per_min"]  = _nan_f(bout.get("a_td_per_min"), ".2f")
             bout["b_td_per_min"]  = _nan_f(bout.get("b_td_per_min"), ".2f")
 
-            # Country flags
-            a_nat = bout.get("fighter_a_nationality") or ""
-            b_nat = bout.get("fighter_b_nationality") or ""
+            # Country flags — prefer fighter_metadata (scraped from UFC.com bio)
+            # over the DB nationality field, which may be sparse.
+            a_name = bout.get("fighter_a_name", "")
+            b_name = bout.get("fighter_b_name", "")
+            a_nat = _meta_lookup(a_name, "country") or bout.get("fighter_a_nationality") or ""
+            b_nat = _meta_lookup(b_name, "country") or bout.get("fighter_b_nationality") or ""
             bout["a_flag"] = _flag_emoji(a_nat)
             bout["b_flag"] = _flag_emoji(b_nat)
             bout["a_nationality"] = a_nat
             bout["b_nationality"] = b_nat
+            # Official UFC fighting style (e.g. "Brazilian Jiu-Jitsu", "Kickboxer")
+            bout["a_ufc_style"] = _meta_lookup(a_name, "style")
+            bout["b_ufc_style"] = _meta_lookup(b_name, "style")
 
             # Fighter type — use raw numeric values before they're formatted below
             bout["a_fighter_type"] = _fighter_type(
@@ -364,12 +396,12 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["a_initials"] = _initials(bout.get("fighter_a_name", ""))
             bout["b_initials"] = _initials(bout.get("fighter_b_name", ""))
 
-            # Fighter images from cache.
-            # Cache may store either a local relative path ("fighter-images/...")
-            # or a remote UFC CDN URL. Local paths are served by GitHub Pages
-            # alongside index.html and always work; remote URLs may be blocked.
-            bout["a_img"] = fighter_imgs.get(bout.get("fighter_a_name", ""), "")
-            bout["b_img"] = fighter_imgs.get(bout.get("fighter_b_name", ""), "")
+            # Fighter images: prefer metadata's image_url (already downloaded
+            # to docs/fighter-images/). Fall back to legacy fighter_images cache.
+            a_img = _meta_lookup(a_name, "image_url") or fighter_imgs.get(a_name, "")
+            b_img = _meta_lookup(b_name, "image_url") or fighter_imgs.get(b_name, "")
+            bout["a_img"] = a_img
+            bout["b_img"] = b_img
 
             # Stance from DB (factual UFC data)
             bout["a_stance"] = (bout.get("fighter_a_stance") or "").replace("Switch", "Switch Stance")
@@ -504,6 +536,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             def _initials(n: str) -> str:
                 parts = (n or "").split()
                 return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
+            a_meta = fighter_meta.get(fa, {})
+            b_meta = fighter_meta.get(fb, {})
             preview_bouts.append({
                 "is_preview":     True,
                 "fighter_a_name": fa,
@@ -516,12 +550,18 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 "prob_a_wins":    0.5,
                 "a_initials":     _initials(fa),
                 "b_initials":     _initials(fb),
-                "a_img":          fighter_imgs.get(fa, ""),
-                "b_img":          fighter_imgs.get(fb, ""),
-                "a_streak":       "—",
-                "b_streak":       "—",
-                "a_flag":         "",
-                "b_flag":         "",
+                "a_img":          a_meta.get("image_url") or fighter_imgs.get(fa, ""),
+                "b_img":          b_meta.get("image_url") or fighter_imgs.get(fb, ""),
+                "a_streak":       "",
+                "b_streak":       "",
+                "a_streak_class": "",
+                "b_streak_class": "",
+                "a_flag":         _flag_emoji(a_meta.get("country", "")),
+                "b_flag":         _flag_emoji(b_meta.get("country", "")),
+                "a_nationality":  a_meta.get("country", ""),
+                "b_nationality":  b_meta.get("country", ""),
+                "a_ufc_style":    a_meta.get("style", ""),
+                "b_ufc_style":    b_meta.get("style", ""),
                 "a_stance":       "",
                 "b_stance":       "",
                 "a_fighter_type": "",

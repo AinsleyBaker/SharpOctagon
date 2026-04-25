@@ -37,10 +37,6 @@ jobs:
       - name: Poll upcoming cards (UFC.com + ESPN)
         run: python -m ufc_predict.ingest.upcoming_poller
 
-      - name: Fetch fighter profile images
-        continue-on-error: true
-        run: python -m ufc_predict.ingest.fighter_images
-
       - name: Fetch closing odds (eval + Kelly sizing)
         # Allowed to fail — site may be unavailable or no upcoming odds yet
         continue-on-error: true
@@ -57,6 +53,12 @@ jobs:
         continue-on-error: true
         run: python -m ufc_predict.models.predict
 
+      - name: Fetch fighter profile images
+        # Runs after predictions so we have the full fighter list to image.
+        # Downloads to docs/fighter-images/ (served by Pages, bypasses CDN hotlink block).
+        continue-on-error: true
+        run: python -m ufc_predict.ingest.fighter_images
+
       - name: Build dashboard
         run: python -m ufc_predict.serve.build_dashboard
 
@@ -70,9 +72,12 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
-          [ -f data/predictions.json ]       && git add data/predictions.json       || true
-          [ -f data/sportsbet_odds.json ]    && git add data/sportsbet_odds.json    || true
-          [ -f data/model_performance.json ] && git add data/model_performance.json || true
-          [ -f data/fighter_images.json ]    && git add data/fighter_images.json    || true
+          [ -f data/predictions.json ]        && git add data/predictions.json        || true
+          [ -f data/sportsbet_odds.json ]     && git add data/sportsbet_odds.json     || true
+          [ -f data/model_performance.json ]  && git add data/model_performance.json  || true
+          [ -f data/fighter_images.json ]     && git add data/fighter_images.json     || true
+          [ -f data/upcoming_schedule.json ]  && git add data/upcoming_schedule.json  || true
+          # Downloaded fighter images live under docs/fighter-images/ (served by Pages)
+          [ -d docs/fighter-images ]          && git add docs/fighter-images/         || true
           git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
           git push

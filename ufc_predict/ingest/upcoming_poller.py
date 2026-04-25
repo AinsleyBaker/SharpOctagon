@@ -12,9 +12,11 @@ Refresh schedule: daily normally, 6-hourly in fight week, T-2h on fight day.
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -35,6 +37,8 @@ _HEADERS = {
 
 ESPN_SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard"
 UFC_EVENTS_URL  = "https://www.ufc.com/events"
+SCHEDULE_PATH   = Path("data/upcoming_schedule.json")
+LOOKAHEAD_DAYS  = 90
 
 
 # ---------------------------------------------------------------------------
@@ -43,12 +47,15 @@ UFC_EVENTS_URL  = "https://www.ufc.com/events"
 
 def fetch_espn_upcoming() -> list[dict]:
     """
-    Fetch upcoming UFC events from ESPN's hidden API.
-    Returns list of raw bout dicts with keys:
-    event_name, event_date, red_name, blue_name, weight_class, is_title
+    Fetch upcoming UFC events from ESPN's hidden API across LOOKAHEAD_DAYS days.
+    Returns list of raw bout dicts.
     """
+    today = date.today()
+    end   = today + timedelta(days=LOOKAHEAD_DAYS)
+    date_range = f"{today.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}"
+    url = f"{ESPN_SCOREBOARD}?dates={date_range}&limit=100"
     try:
-        resp = requests.get(ESPN_SCOREBOARD, headers=_HEADERS, timeout=15)
+        resp = requests.get(url, headers=_HEADERS, timeout=20)
         resp.raise_for_status()
         data = resp.json()
     except Exception as exc:
@@ -174,16 +181,28 @@ def _resolve_fighter(name: str | None, session: Session) -> str | None:
 def upsert_bouts(bouts: list[dict], session: Session) -> int:
     now = datetime.now(timezone.utc)
     upserted = 0
+    seen_ids: set[str] = set()
 
     for bout in bouts:
         if not bout.get("red_name_raw") and not bout.get("blue_name_raw"):
             continue  # event-only stubs from UFC.com
+
+        red_raw = (bout.get("red_name_raw") or "").lower().strip()
+        blue_raw = (bout.get("blue_name_raw") or "").lower().strip()
+        # Skip TBA placeholder fights — they all hash to the same ID
+        if red_raw in ("tba", "tbd", "opponent tba", "") or blue_raw in ("tba", "tbd", "opponent tba", ""):
+            continue
 
         bout_id = _bout_id(
             bout["event_date"],
             bout.get("red_name_raw"),
             bout.get("blue_name_raw"),
         )
+
+        # Within this run, never insert the same bout_id twice
+        if bout_id in seen_ids:
+            continue
+        seen_ids.add(bout_id)
 
         existing = session.get(UpcomingBout, bout_id)
         if existing:
@@ -218,6 +237,36 @@ def upsert_bouts(bouts: list[dict], session: Session) -> int:
     return upserted
 
 
+def export_schedule(bouts: list[dict]) -> None:
+    """
+    Write a flat JSON of upcoming events for the dashboard carousel.
+    This runs even when predictions can't be generated (no model PKL),
+    so the user can browse future cards.
+    """
+    by_event: dict[tuple, dict] = {}
+    for bout in bouts:
+        if not bout.get("event_name") or not bout.get("event_date"):
+            continue
+        key = (str(bout["event_date"]), bout["event_name"])
+        ev = by_event.setdefault(key, {
+            "event_name": bout["event_name"],
+            "event_date": str(bout["event_date"]),
+            "bouts": [],
+        })
+        if bout.get("red_name_raw") or bout.get("blue_name_raw"):
+            ev["bouts"].append({
+                "fighter_a": bout.get("red_name_raw", ""),
+                "fighter_b": bout.get("blue_name_raw", ""),
+                "weight_class": bout.get("weight_class", ""),
+                "is_title_bout": bout.get("is_title_bout", False),
+            })
+
+    schedule = sorted(by_event.values(), key=lambda e: e["event_date"])
+    SCHEDULE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    SCHEDULE_PATH.write_text(json.dumps(schedule, indent=2), encoding="utf-8")
+    log.info("Schedule exported: %d events to %s", len(schedule), SCHEDULE_PATH)
+
+
 def poll(db_url: str | None = None) -> int:
     from ufc_predict.db.session import get_session_factory
     factory = get_session_factory(db_url)
@@ -227,6 +276,9 @@ def poll(db_url: str | None = None) -> int:
     ufc_bouts = fetch_ufc_upcoming()
 
     all_bouts = espn_bouts + ufc_bouts
+
+    # Always export the schedule, even when DB upsert fails
+    export_schedule(all_bouts)
 
     with factory() as session:
         return upsert_bouts(all_bouts, session)

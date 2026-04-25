@@ -1,0 +1,566 @@
+[
+  {
+    "event_name": "UFC Fight Night: Sterling vs. Zalal",
+    "event_date": "2026-04-25",
+    "bouts": [
+      {
+        "fighter_a": "Julia Polastri",
+        "fighter_b": "Talita Alencar",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Max Griffin",
+        "fighter_b": "Victor Valenzuela",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Lucas Brennan",
+        "fighter_b": "Francis Marshall",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Jafel Filho",
+        "fighter_b": "Cody Durden",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Mayra Bueno Silva",
+        "fighter_b": "Michelle Montague",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Sedriques Dumas",
+        "fighter_b": "Jackson McVey",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Eric McConico",
+        "fighter_b": "Rodolfo Vieira",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ryan Spann",
+        "fighter_b": "Marcus Buchecha",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Raoni Barcelos",
+        "fighter_b": "Montel Jackson",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Davey Grant",
+        "fighter_b": "Adrian Luna Martinetti",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Alexander Hernandez",
+        "fighter_b": "Rafa Garcia",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Joselyne Edwards",
+        "fighter_b": "Norma Dumont",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Aljamain Sterling",
+        "fighter_b": "Youssef Zalal",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
+    "event_date": "2026-05-02",
+    "bouts": [
+      {
+        "fighter_a": "Dom Mar Fan",
+        "fighter_b": "Kody Steele",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Themba Gorimbo",
+        "fighter_b": "Jonathan Micallef",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Wes Schultz",
+        "fighter_b": "Ben Johnston",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Vince Morales",
+        "fighter_b": "Colby Thicknesse",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Gerald Meerschaert",
+        "fighter_b": "Jacob Malkoun",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Junior Tafa",
+        "fighter_b": "Kevin Christian",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Robert Bryczek",
+        "fighter_b": "Cam Rowston",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Tai Tuivasa",
+        "fighter_b": "Louie Sutherland",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Shamil Gaziev",
+        "fighter_b": "Brando Peri\u010di\u0107",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Tim Elliott",
+        "fighter_b": "Steve Erceg",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Beneil Dariush",
+        "fighter_b": "Quillan Salkilld",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Carlos Prates",
+        "fighter_b": "Jack Della Maddalena",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC 328: Chimaev vs. Strickland",
+    "event_date": "2026-05-09",
+    "bouts": [
+      {
+        "fighter_a": "Clayton Carpenter",
+        "fighter_b": "Jose Ochoa",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Djorden Santos",
+        "fighter_b": "Baisangur Susurkaev",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Pat Sabatini",
+        "fighter_b": "William Gomis",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Roman Kopylov",
+        "fighter_b": "Marco Tulio",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Grant Dawson",
+        "fighter_b": "Mateusz R\u0119becki",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Yaroslav Amosov",
+        "fighter_b": "Joel \u00c1lvarez",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ozzy Diaz",
+        "fighter_b": "Ateba Gautier",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Jeremy Stephens",
+        "fighter_b": "King Green",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Joaquin Buckley",
+        "fighter_b": "Sean Brady",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Alexander Volkov",
+        "fighter_b": "Waldo Cortes-Acosta",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Tatsuro Taira",
+        "fighter_b": "Joshua Van",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Sean Strickland",
+        "fighter_b": "Khamzat Chimaev",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Allen vs. Costa",
+    "event_date": "2026-05-16",
+    "bouts": [
+      {
+        "fighter_a": "Nicolle Caliari",
+        "fighter_b": "Shauna Bannon",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Daniel Barez",
+        "fighter_b": "Luis Gurule",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Alice Ardelean",
+        "fighter_b": "Polyana Viana",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Cody Brundage",
+        "fighter_b": "Andre Petroski",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ketlen Vieira",
+        "fighter_b": "Jacqueline Cavalcanti",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Trey Ogden",
+        "fighter_b": "Tommy Gantt",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Tuco Tokkos",
+        "fighter_b": "Ivan Erslan",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Nicolas Dalby",
+        "fighter_b": "Jeremiah Wells",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Bernardo Sopaj",
+        "fighter_b": "Timmy Cuamba",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Modestas Bukauskas",
+        "fighter_b": "Rodolfo Bellato",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Malcolm Wellmaker",
+        "fighter_b": "Juan Diaz",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Dooho Choi",
+        "fighter_b": "Daniel Santos",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Arnold Allen",
+        "fighter_b": "Melquizael Costa",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Song vs. Figueiredo",
+    "event_date": "2026-05-30",
+    "bouts": [
+      {
+        "fighter_a": "Loma Lookboonmee",
+        "fighter_b": "Jaqueline Amorim",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Angela Hill",
+        "fighter_b": "Jingnan Xiong",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Jesus Aguilar",
+        "fighter_b": "Rei Tsuruya",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Aoriqileng",
+        "fighter_b": "Cody Haddon",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Luis Felipe Dias",
+        "fighter_b": "Yi Sak Lee",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Jake Matthews",
+        "fighter_b": "Muslim Salikhov",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Alex Perez",
+        "fighter_b": "Sumudaerji",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Kai Asakura",
+        "fighter_b": "Cameron Smotherman",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Sergei Pavlovich",
+        "fighter_b": "Tallison Teixeira",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Alonzo Menifield",
+        "fighter_b": "Zhang Mingyang",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Song Yadong",
+        "fighter_b": "Deiveson Figueiredo",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Muhammad vs. Bonfim",
+    "event_date": "2026-06-06",
+    "bouts": [
+      {
+        "fighter_a": "Priscila Cachoeira",
+        "fighter_b": "Chelsea Chandler",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ariane Carnelossi",
+        "fighter_b": "Ketlen Souza",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Joanderson Brito",
+        "fighter_b": "Jordan Leavitt",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Far\u00e9s Ziam",
+        "fighter_b": "Tom Nolan",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Jakub Wik\u0142acz",
+        "fighter_b": "Marcus McGhee",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Victor Henry",
+        "fighter_b": "Bryce Mitchell",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Brendan Allen",
+        "fighter_b": "Edmen Shahbazyan",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Yuneisy Duben",
+        "fighter_b": "Jeisla Chaves",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Bruno Silva",
+        "fighter_b": "\u00c9dgar Ch\u00e1irez",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Matt Schnell",
+        "fighter_b": "Imanol Rodriguez",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Billy Elekana",
+        "fighter_b": "Iwo Baraniewski",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Belal Muhammad",
+        "fighter_b": "Gabriel Bonfim",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Freedom 250: Topuria vs. Gaethje",
+    "event_date": "2026-06-15",
+    "bouts": [
+      {
+        "fighter_a": "Derrick Lewis",
+        "fighter_b": "Josh Hokit",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Steve Garcia",
+        "fighter_b": "Diego Lopes",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Kyle Daukaus",
+        "fighter_b": "Bo Nickal",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Michael Chandler",
+        "fighter_b": "Mauricio Ruffy",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Aiemann Zahabi",
+        "fighter_b": "Sean O'Malley",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ciryl Gane",
+        "fighter_b": "Alex Pereira",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Justin Gaethje",
+        "fighter_b": "Ilia Topuria",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Baku",
+    "event_date": "2026-06-27",
+    "bouts": [
+      {
+        "fighter_a": "TBA",
+        "fighter_b": "Opponent TBA",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "TBA",
+        "fighter_b": "Opponent TBA",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC 329",
+    "event_date": "2026-07-11",
+    "bouts": [
+      {
+        "fighter_a": "TBA",
+        "fighter_b": "Gable Steveson",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "TBA",
+        "fighter_b": "Opponent TBA",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "TBA",
+        "fighter_b": "Opponent TBA",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  }
+]

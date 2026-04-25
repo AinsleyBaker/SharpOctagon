@@ -90,7 +90,7 @@
   nav a:hover { color: var(--light); }
   nav a.active { color: var(--light); border-bottom-color: var(--matrix); }
 
-  main { max-width: 1140px; margin: 1.5rem auto; padding: 0 1rem; }
+  main { max-width: 1320px; margin: 1.5rem auto; padding: 0 1.25rem; }
 
   /* ─── Disclaimer / Tagline strip ─── */
   .matrix-tagline {
@@ -135,8 +135,18 @@
   .event-pill .ev-name { font-weight: 700; font-size: var(--sm); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .event-pill .ev-date { font-size: var(--xs); color: var(--muted); }
   .event-pill .ev-stats { font-size: var(--xs); color: var(--matrix-dim); margin-top: 4px; }
-  .event-pill.no-odds { opacity: 0.7; }
+  .event-pill.no-odds { opacity: 0.85; }
   .event-pill.no-odds .ev-stats { color: var(--muted); }
+  .event-pill.future {
+    opacity: 0.75;
+    border-style: dashed;
+    background: rgba(200,160,250,0.04);
+  }
+  .event-pill.future:hover {
+    border-color: var(--purple);
+    box-shadow: 0 4px 16px rgba(200,160,250,0.12);
+  }
+  .event-pill.future .ev-stats { color: var(--purple); }
 
   /* ─── Event card ─── */
   .event-card { margin-bottom: 2rem; scroll-margin-top: 60px; }
@@ -399,7 +409,7 @@
       <div class="tagline">Ainsley's Matrix</div>
     </div>
   </div>
-  <div class="meta">Updated 2026-04-25 06:21 UTC<br>13 fights tracked</div>
+  <div class="meta">Updated 2026-04-25 07:29 UTC<br>13 fights tracked</div>
 </header>
 
 <nav>
@@ -420,16 +430,141 @@
   <!-- ═══════════ EVENT CAROUSEL ═══════════ -->
   
   <div class="carousel-wrap">
-    <div class="carousel-label">⟁  Upcoming Events</div>
+    <div class="carousel-label">⟁  Upcoming Events  &nbsp;<span style="color:var(--muted);letter-spacing:0;text-transform:none;font-weight:400;font-style:italic">scroll → for future cards</span></div>
     <div class="carousel">
       
-      <a class="event-pill " href="#event-2026-04-25"
-         onclick="document.getElementById('event-2026-04-25')?.scrollIntoView({behavior:'smooth',block:'start'});">
+      
+        
+      
+      <a class="event-pill "
+         href="#event-2026-04-25" onclick="document.getElementById('event-2026-04-25')?.scrollIntoView({behavior:'smooth',block:'start'});"
+         >
         <div class="ev-name">UFC Fight Night: Sterling vs. Zalal</div>
         <div class="ev-date">2026-04-25</div>
         <div class="ev-stats">
           13 bouts
-          · <strong style="color:var(--matrix)">113 value bets</strong>
+          
+            · <strong style="color:var(--matrix)">113 value bets</strong>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Fight Night: Della Maddalena vs. Prates</div>
+        <div class="ev-date">2026-05-02</div>
+        <div class="ev-stats">
+          12 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC 328: Chimaev vs. Strickland</div>
+        <div class="ev-date">2026-05-09</div>
+        <div class="ev-stats">
+          12 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Fight Night: Allen vs. Costa</div>
+        <div class="ev-date">2026-05-16</div>
+        <div class="ev-stats">
+          13 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Fight Night: Song vs. Figueiredo</div>
+        <div class="ev-date">2026-05-30</div>
+        <div class="ev-stats">
+          11 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Fight Night: Muhammad vs. Bonfim</div>
+        <div class="ev-date">2026-06-06</div>
+        <div class="ev-stats">
+          12 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Freedom 250: Topuria vs. Gaethje</div>
+        <div class="ev-date">2026-06-15</div>
+        <div class="ev-stats">
+          7 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC Fight Night: Baku</div>
+        <div class="ev-date">2026-06-27</div>
+        <div class="ev-stats">
+          2 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
+          
+        </div>
+      </a>
+      
+      
+        
+      
+      <a class="event-pill future"
+         onclick="return false;" style="cursor:default">
+        <div class="ev-name">UFC 329</div>
+        <div class="ev-date">2026-07-11</div>
+        <div class="ev-stats">
+          3 bouts
+          
+            · <span style="color:var(--purple)">predictions soon</span>
           
         </div>
       </a>
@@ -463,7 +598,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >JP</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-10/POLASTRI_JULIA_L_10-11.png" alt="Julia Polastri" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JP</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -496,7 +635,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >TA</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/ALENCAR_TALITA_L_04-25.png" alt="Talita Alencar" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">TA</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Talita Alencar</div>
@@ -794,7 +937,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >MG</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/GRIFFIN_MAX_L_04-25.png" alt="Max Griffin" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MG</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -1120,7 +1267,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >LB</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/BRENNAN_LUCAS_R_04-25.png" alt="Lucas Brennan" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">LB</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -1153,7 +1304,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >FM</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/MARSHALL_FRANCIS_L_04-25.png" alt="Francis Marshall" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">FM</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Francis Marshall</div>
@@ -1451,7 +1606,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >JF</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/FILHO_JAFEL_L_04-25.png" alt="Jafel Filho" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JF</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -1484,7 +1643,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >CD</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-03/DURDEN_CODY_L_03-07.png" alt="Cody Durden" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">CD</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Cody Durden</div>
@@ -1701,7 +1864,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >MS</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/BUENO_SILVA_MAYRA_L_04-25.png" alt="Mayra Bueno Silva" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MS</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -1734,7 +1901,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >MM</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-09/MONTAGUE_MICHELLE_L_09-27.png" alt="Michelle Montague" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MM</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Michelle Montague</div>
@@ -2032,7 +2203,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >SD</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-10/DUMAS_SEDRIQUES_L_04-12.png" alt="Sedriques Dumas" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">SD</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -2065,7 +2240,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >JM</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/MCVEY_JACKSON_L_04-25.png" alt="Jackson McVey" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JM</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Jackson McVey</div>
@@ -2363,7 +2542,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >EM</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-02/MCCONICO_ERIC_R_02-22.png" alt="Eric McConico" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">EM</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -2396,7 +2579,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >RV</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/VIEIRA_RODOLFO_L_04-25.png" alt="Rodolfo Vieira" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">RV</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Rodolfo Vieira</div>
@@ -2654,7 +2841,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >RS</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-07/SPANN_RYAN_L_07-19.png" alt="Ryan Spann" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">RS</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -2687,7 +2878,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >MB</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/BUCHECHA_MARCUS_L_04-25.png" alt="Marcus Buchecha" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MB</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Marcus Buchecha</div>
@@ -2985,7 +3180,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >RB</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-01/BARCELOS_RAONI_L_01-18.png" alt="Raoni Barcelos" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">RB</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -3018,7 +3217,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >MJ</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/JACKSON_MONTEL_L_04-25.png" alt="Montel Jackson" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MJ</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Montel Jackson</div>
@@ -3316,7 +3519,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >DG</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/GRANT_DAVEY_L_04-25.png" alt="Davey Grant" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">DG</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -3629,7 +3836,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >AH</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-09/HERNANDEZ_ALEXANDER_L_09-13.png" alt="Alexander Hernandez" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">AH</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -3662,7 +3873,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >RG</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/GARCIA_RAFA_L_04-25.png" alt="Rafa Garcia" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">RG</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Rafa Garcia</div>
@@ -3951,7 +4166,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >JE</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2025-08/EDWARDS_JOSELYNE_L_08-09.png" alt="Joselyne Edwards" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JE</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -3984,7 +4203,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >ND</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/DUMONT_NORMA_L_04-25.png" alt="Norma Dumont" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">ND</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Norma Dumont</div>
@@ -4282,7 +4505,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >AS</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2026-04/STERLING_ALJAMAIN_L_04-25.png" alt="Aljamain Sterling" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">AS</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -4315,7 +4542,11 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >YZ</div>
+                <img src="https://dmxg5wxfqgde4.cloudfront.net/styles/athlete_bio_full_body/s3/2024-08/ZALAL_YOUSSEF_L_08-10.png" alt="Youssef Zalal" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">YZ</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Youssef Zalal</div>

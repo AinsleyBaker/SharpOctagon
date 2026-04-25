@@ -19,6 +19,7 @@ log = logging.getLogger(__name__)
 
 PREDICTIONS_PATH  = Path("data/predictions.json")
 FIGHTER_IMGS_PATH = Path("data/fighter_images.json")
+SCHEDULE_PATH     = Path("data/upcoming_schedule.json")
 TEMPLATES_DIR     = Path(__file__).parent / "templates"
 OUTPUT_DIR        = Path("docs")
 
@@ -37,6 +38,15 @@ def load_fighter_images() -> dict[str, str]:
         return json.loads(FIGHTER_IMGS_PATH.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return {}
+
+
+def load_schedule() -> list[dict]:
+    if not SCHEDULE_PATH.exists():
+        return []
+    try:
+        return json.loads(SCHEDULE_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
 
 
 def _group_by_event(predictions: list[dict]) -> list[dict]:
@@ -395,18 +405,68 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     from ufc_predict.eval.bet_analysis import top_value_bets
     top_bets = top_value_bets(predictions, n=30)
 
-    # Build a compact carousel of upcoming events for the slider
+    # Build a carousel of all known upcoming events.
+    # Merges predicted events (have data) with the full ESPN schedule
+    # (covers events too far out for predictions, e.g. 2-3 weeks ahead).
+    schedule = load_schedule()
+    pred_events_by_key = {
+        (str(ev["event_date"]), ev["event_name"]): ev for ev in events
+    }
+
+    # Combined list: schedule first (broader coverage), enrich with prediction data
+    seen_keys: set = set()
     event_carousel = []
-    for ev in events:
-        n_value = sum(b.get("value_bet_count", 0) for b in ev["bouts"])
-        n_with_odds = sum(1 for b in ev["bouts"] if b.get("sportsbet_odds"))
-        event_carousel.append({
+    all_events = []
+
+    # Schedule entries (broad)
+    for s in schedule:
+        key = (s["event_date"], s["event_name"])
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        all_events.append({
+            "event_date": s["event_date"],
+            "event_name": s["event_name"],
+            "n_bouts":    len(s.get("bouts", [])),
+            "from_schedule": True,
+        })
+
+    # Prediction events (may include extras the schedule missed)
+    for key, ev in pred_events_by_key.items():
+        if key in seen_keys:
+            continue
+        seen_keys.add(key)
+        all_events.append({
+            "event_date": str(ev["event_date"]),
             "event_name": ev["event_name"],
-            "event_date": ev["event_date"],
             "n_bouts":    len(ev["bouts"]),
+            "from_schedule": False,
+        })
+
+    # Sort by date and enrich with prediction stats where available
+    all_events.sort(key=lambda e: e["event_date"])
+    for ae in all_events:
+        key = (ae["event_date"], ae["event_name"])
+        pred_ev = pred_events_by_key.get(key)
+        if pred_ev:
+            n_value     = sum(b.get("value_bet_count", 0) for b in pred_ev["bouts"])
+            n_with_odds = sum(1 for b in pred_ev["bouts"] if b.get("sportsbet_odds"))
+            n_bouts     = len(pred_ev["bouts"])
+            has_preds   = True
+        else:
+            n_value, n_with_odds = 0, 0
+            n_bouts = ae["n_bouts"]
+            has_preds = False
+
+        anchor = "event-" + (ae["event_date"] or "").replace(":", "").replace(" ", "-")[:12]
+        event_carousel.append({
+            "event_name": ae["event_name"],
+            "event_date": ae["event_date"],
+            "n_bouts":    n_bouts,
             "n_value":    n_value,
             "has_odds":   n_with_odds > 0,
-            "anchor":     "event-" + (ev["event_date"] or "").replace(":", "").replace(" ", "-")[:12],
+            "has_preds":  has_preds,
+            "anchor":     anchor,
         })
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)), autoescape=True)

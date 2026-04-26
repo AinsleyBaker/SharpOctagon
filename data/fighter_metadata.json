@@ -4,6 +4,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Aiemann Zahabi": {
@@ -11,6 +12,7 @@
     "hometown": "Laval, Canada",
     "style": "MMA",
     "age": "68.00",
+    "record": "14-2-0",
     "image_url": "fighter-images/aiemann-zahabi.png"
   },
   "Alex Pereira": {
@@ -18,6 +20,7 @@
     "hometown": "S\u00e3o Bernardo do Campo, Brazil",
     "style": "Kickboxer",
     "age": "76.00",
+    "record": "13-3-0",
     "image_url": "fighter-images/alex-pereira.png"
   },
   "Alex Perez": {
@@ -25,6 +28,7 @@
     "hometown": "Hanford, United States",
     "style": "Freestyle",
     "age": "66.00",
+    "record": "26-10-0",
     "image_url": "fighter-images/alex-perez.png"
   },
   "Alexander Hernandez": {
@@ -32,6 +36,7 @@
     "hometown": "St. Louis, United States",
     "style": "MMA",
     "age": "69.00",
+    "record": "18-8-0",
     "image_url": "fighter-images/alexander-hernandez.png"
   },
   "Alexander Volkov": {
@@ -39,6 +44,7 @@
     "hometown": "Moscow, Russia",
     "style": "Brazilian Jiu-Jitsu",
     "age": "79.00",
+    "record": "39-11-0",
     "image_url": "fighter-images/alexander-volkov.png"
   },
   "Alice Ardelean": {
@@ -46,6 +52,7 @@
     "hometown": "Satu Mare, Romania",
     "style": "Striker",
     "age": "63.00",
+    "record": "11-7-0",
     "image_url": "fighter-images/alice-ardelean.png"
   },
   "Aljamain Sterling": {
@@ -53,6 +60,7 @@
     "hometown": "United States",
     "style": "Kickboxer",
     "age": "67.00",
+    "record": "25-5-0",
     "image_url": "fighter-images/aljamain-sterling.png"
   },
   "Alonzo Menifield": {
@@ -60,6 +68,7 @@
     "hometown": "Los Angeles, United States",
     "style": "Freestyle",
     "age": "72.00",
+    "record": "17-6-1",
     "image_url": "fighter-images/alonzo-menifield.png"
   },
   "Andre Petroski": {
@@ -67,6 +76,7 @@
     "hometown": "United States",
     "style": "Freestyle",
     "age": "72.00",
+    "record": "13-6-0",
     "image_url": "fighter-images/andre-petroski.png"
   },
   "Angela Hill": {
@@ -74,6 +84,7 @@
     "hometown": "Clinton, United States",
     "style": "Muay Thai",
     "age": "63.00",
+    "record": "18-16-0",
     "image_url": "fighter-images/angela-hill.png"
   },
   "Aoriqileng": {
@@ -81,6 +92,7 @@
     "hometown": "Inner Mongolia, China",
     "style": "",
     "age": "67.00",
+    "record": "26-11-0",
     "image_url": "fighter-images/aoriqileng.png"
   },
   "Ariane Carnelossi": {
@@ -88,6 +100,7 @@
     "hometown": "\u00c1lvares Machado, Brazil",
     "style": "Muay Thai",
     "age": "62.00",
+    "record": "15-4-0",
     "image_url": "fighter-images/ariane-carnelossi.png"
   },
   "Arnold Allen": {
@@ -95,6 +108,7 @@
     "hometown": "Ipswich, England",
     "style": "MMA",
     "age": "68.00",
+    "record": "20-4-0",
     "image_url": "fighter-images/arnold-allen.png"
   },
   "Ateba Gautier": {
@@ -102,6 +116,7 @@
     "hometown": "Yaounde, Cameroon",
     "style": "Striker",
     "age": "76.00",
+    "record": "10-1-0",
     "image_url": "fighter-images/ateba-gautier.png"
   },
   "Baisangur Susurkaev": {
@@ -109,6 +124,7 @@
     "hometown": "Chechnya, Russia",
     "style": "Striker",
     "age": "74.00",
+    "record": "11-0-0",
     "image_url": "fighter-images/baisangur-susurkaev.png"
   },
   "Belal Muhammad": {
@@ -116,6 +132,7 @@
     "hometown": "Chicago, United States",
     "style": "",
     "age": "71.00",
+    "record": "24-5-0",
     "image_url": "fighter-images/belal-muhammad.png"
   },
   "Ben Johnston": {
@@ -123,6 +140,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Beneil Dariush": {
@@ -130,6 +148,7 @@
     "hometown": "Iran",
     "style": "MMA",
     "age": "70.00",
+    "record": "23-7-1",
     "image_url": "fighter-images/beneil-dariush.png"
   },
   "Bernardo Sopaj": {
@@ -137,6 +156,7 @@
     "hometown": "Albania",
     "style": "MMA",
     "age": "66.00",
+    "record": "12-3-0",
     "image_url": "fighter-images/bernardo-sopaj.png"
   },
   "Billy Elekana": {
@@ -144,6 +164,7 @@
     "hometown": "Victorville, United States",
     "style": "MMA",
     "age": "75.00",
+    "record": "10-2-0",
     "image_url": "fighter-images/billy-elekana.png"
   },
   "Bo Nickal": {
@@ -151,6 +172,7 @@
     "hometown": "Rifle, United States",
     "style": "Wrestler",
     "age": "73.00",
+    "record": "8-1-0",
     "image_url": "fighter-images/bo-nickal.png"
   },
   "Brando Peri\u010di\u0107": {
@@ -158,6 +180,7 @@
     "hometown": "Semaphore, Australia",
     "style": "Wrestler",
     "age": "77.00",
+    "record": "6-1-0",
     "image_url": "fighter-images/brando-pericic.png"
   },
   "Brendan Allen": {
@@ -165,6 +188,7 @@
     "hometown": "Beaufort, United States",
     "style": "MMA",
     "age": "74.00",
+    "record": "26-7-0",
     "image_url": "fighter-images/brendan-allen.png"
   },
   "Bruno Silva": {
@@ -172,6 +196,7 @@
     "hometown": "Piracicaba, Brazil",
     "style": "Grappler",
     "age": "64.00",
+    "record": "15-8-2",
     "image_url": "fighter-images/bruno-silva.png"
   },
   "Bryce Mitchell": {
@@ -179,6 +204,7 @@
     "hometown": "Texarkana, United States",
     "style": "MMA",
     "age": "70.00",
+    "record": "18-4-0",
     "image_url": "fighter-images/bryce-mitchell.png"
   },
   "Cam Rowston": {
@@ -186,6 +212,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "2-0-0",
     "image_url": ""
   },
   "Cameron Smotherman": {
@@ -193,6 +220,7 @@
     "hometown": "Houston, United States",
     "style": "",
     "age": "69.00",
+    "record": "12-6-0",
     "image_url": "fighter-images/cameron-smotherman.png"
   },
   "Carlos Prates": {
@@ -200,6 +228,7 @@
     "hometown": "State of S\u00e3o Paulo, Brazil",
     "style": "Striker",
     "age": "73.00",
+    "record": "23-7-0",
     "image_url": "fighter-images/carlos-prates.png"
   },
   "Chelsea Chandler": {
@@ -207,6 +236,7 @@
     "hometown": "Stockton, United States",
     "style": "MMA",
     "age": "68.50",
+    "record": "6-4-0",
     "image_url": "fighter-images/chelsea-chandler.png"
   },
   "Ciryl Gane": {
@@ -214,6 +244,7 @@
     "hometown": "La Roche-sur-Yon, Vend\u00e9e, France",
     "style": "Muay Thai",
     "age": "76.00",
+    "record": "13-2-0",
     "image_url": "fighter-images/ciryl-gane.png"
   },
   "Clayton Carpenter": {
@@ -221,6 +252,7 @@
     "hometown": "United States",
     "style": "",
     "age": "66.00",
+    "record": "8-2-0",
     "image_url": "fighter-images/clayton-carpenter.png"
   },
   "Cody Brundage": {
@@ -228,13 +260,15 @@
     "hometown": "Chapin, United States",
     "style": "Wrestler",
     "age": "72.00",
+    "record": "11-9-1",
     "image_url": "fighter-images/cody-brundage.png"
   },
   "Cody Durden": {
     "country": "United States",
-    "hometown": "Covington, United States",
+    "hometown": "United States",
     "style": "Striker",
     "age": "67.00",
+    "record": "18-10-1",
     "image_url": "fighter-images/cody-durden.png"
   },
   "Cody Haddon": {
@@ -242,6 +276,7 @@
     "hometown": "Joondalup, Australia",
     "style": "MMA",
     "age": "67.00",
+    "record": "8-1-0",
     "image_url": "fighter-images/cody-haddon.png"
   },
   "Colby Thicknesse": {
@@ -249,6 +284,7 @@
     "hometown": "Australia",
     "style": "Freestyle",
     "age": "67.00",
+    "record": "8-1-0",
     "image_url": "fighter-images/colby-thicknesse.png"
   },
   "Daniel Barez": {
@@ -256,6 +292,7 @@
     "hometown": "Spain",
     "style": "Freestyle",
     "age": "66.00",
+    "record": "17-7-0",
     "image_url": "fighter-images/daniel-barez.png"
   },
   "Daniel Santos": {
@@ -263,6 +300,7 @@
     "hometown": "Uberaba, Brazil",
     "style": "Muay Thai",
     "age": "67.00",
+    "record": "14-2-0",
     "image_url": "fighter-images/daniel-santos.png"
   },
   "Davey Grant": {
@@ -270,6 +308,7 @@
     "hometown": "Bishop Auckland, England",
     "style": "MMA",
     "age": "68.00",
+    "record": "17-8-0",
     "image_url": "fighter-images/davey-grant.png"
   },
   "Deiveson Figueiredo": {
@@ -277,6 +316,7 @@
     "hometown": "Soure, Brazil",
     "style": "Boxing",
     "age": "65.00",
+    "record": "25-6-1",
     "image_url": "fighter-images/deiveson-figueiredo.png"
   },
   "Derrick Lewis": {
@@ -284,6 +324,7 @@
     "hometown": "New Orleans, United States",
     "style": "Brawler",
     "age": "75.00",
+    "record": "29-13-0",
     "image_url": "fighter-images/derrick-lewis.png"
   },
   "Diego Lopes": {
@@ -291,6 +332,7 @@
     "hometown": "Manaus, Brazil",
     "style": "Jiu-Jitsu",
     "age": "71.00",
+    "record": "27-8-0",
     "image_url": "fighter-images/diego-lopes.png"
   },
   "Djorden Santos": {
@@ -298,6 +340,7 @@
     "hometown": "Belo Horizonte, Brazil",
     "style": "",
     "age": "72.00",
+    "record": "11-2-0",
     "image_url": "fighter-images/djorden-santos.png"
   },
   "Dom Mar Fan": {
@@ -305,6 +348,7 @@
     "hometown": "Brisbane, Australia",
     "style": "MMA",
     "age": "71.00",
+    "record": "9-2-0",
     "image_url": "fighter-images/dom-mar-fan.png"
   },
   "Dooho Choi": {
@@ -312,6 +356,7 @@
     "hometown": "South Korea",
     "style": "Striker",
     "age": "70.00",
+    "record": "16-4-1",
     "image_url": "fighter-images/dooho-choi.png"
   },
   "Edmen Shahbazyan": {
@@ -319,6 +364,7 @@
     "hometown": "Los Angeles, United States",
     "style": "MMA",
     "age": "74.50",
+    "record": "16-5-0",
     "image_url": "fighter-images/edmen-shahbazyan.png"
   },
   "Eric McConico": {
@@ -326,6 +372,7 @@
     "hometown": "Los Angeles, United States",
     "style": "Freestyle",
     "age": "72.00",
+    "record": "11-4-1",
     "image_url": "fighter-images/eric-mcconico.png"
   },
   "Far\u00e9s Ziam": {
@@ -333,13 +380,15 @@
     "hometown": "V\u00e9nissieux, Auvergne-Rh\u00f4ne-Alpes, France",
     "style": "Kickboxer",
     "age": "73.00",
+    "record": "18-4-0",
     "image_url": "fighter-images/fares-ziam.png"
   },
   "Francis Marshall": {
     "country": "United States",
-    "hometown": "Manasquan, United States",
+    "hometown": "Brick Township, United States",
     "style": "Freestyle",
     "age": "69.00",
+    "record": "10-3-0",
     "image_url": "fighter-images/francis-marshall.png"
   },
   "Gable Steveson": {
@@ -347,6 +396,7 @@
     "hometown": "",
     "style": "",
     "age": "Apr. 25, 2026",
+    "record": "0-0-0",
     "image_url": "fighter-images/gable-steveson.jpg"
   },
   "Gabriel Bonfim": {
@@ -354,6 +404,7 @@
     "hometown": "Brasilia, Brazil",
     "style": "Striker",
     "age": "73.00",
+    "record": "19-1-0",
     "image_url": "fighter-images/gabriel-bonfim.png"
   },
   "Gerald Meerschaert": {
@@ -361,6 +412,7 @@
     "hometown": "Racine, United States",
     "style": "Freestyle",
     "age": "73.00",
+    "record": "37-21-0",
     "image_url": "fighter-images/gerald-meerschaert.png"
   },
   "Grant Dawson": {
@@ -368,6 +420,7 @@
     "hometown": "Cambria, United States",
     "style": "",
     "age": "70.00",
+    "record": "23-3-1",
     "image_url": "fighter-images/grant-dawson.png"
   },
   "Ilia Topuria": {
@@ -375,6 +428,7 @@
     "hometown": "Germany",
     "style": "Brazilian Jiu-Jitsu",
     "age": "67.00",
+    "record": "17-0-0",
     "image_url": "fighter-images/ilia-topuria.png"
   },
   "Imanol Rodriguez": {
@@ -382,6 +436,7 @@
     "hometown": "Ensenada, Mexico",
     "style": "Freestyle",
     "age": "64.00",
+    "record": "7-0-0",
     "image_url": "fighter-images/imanol-rodriguez.png"
   },
   "Ivan Erslan": {
@@ -389,6 +444,7 @@
     "hometown": "Zadar, Croatia",
     "style": "Boxing",
     "age": "74.00",
+    "record": "14-6-0",
     "image_url": "fighter-images/ivan-erslan.png"
   },
   "Iwo Baraniewski": {
@@ -396,6 +452,7 @@
     "hometown": "Warsaw, Poland",
     "style": "Judo",
     "age": "72.50",
+    "record": "8-0-0",
     "image_url": "fighter-images/iwo-baraniewski.png"
   },
   "Jack Della Maddalena": {
@@ -403,6 +460,7 @@
     "hometown": "Australia",
     "style": "MMA",
     "age": "71.00",
+    "record": "18-3-0",
     "image_url": "fighter-images/jack-della-maddalena.png"
   },
   "Jackson McVey": {
@@ -410,6 +468,7 @@
     "hometown": "St Paul, United States",
     "style": "Brazilian Jiu-Jitsu",
     "age": "76.00",
+    "record": "7-2-0",
     "image_url": "fighter-images/jackson-mcvey.png"
   },
   "Jacob Malkoun": {
@@ -417,6 +476,7 @@
     "hometown": "Bankstown, Australia",
     "style": "MMA",
     "age": "69.00",
+    "record": "9-3-0",
     "image_url": "fighter-images/jacob-malkoun.png"
   },
   "Jacqueline Cavalcanti": {
@@ -424,6 +484,7 @@
     "hometown": "Brazil",
     "style": "Striker",
     "age": "68.00",
+    "record": "10-1-0",
     "image_url": "fighter-images/jacqueline-cavalcanti.png"
   },
   "Jafel Filho": {
@@ -431,6 +492,7 @@
     "hometown": "Sento S\u00e9, Brazil",
     "style": "Grappler",
     "age": "67.00",
+    "record": "17-5-0",
     "image_url": "fighter-images/jafel-filho.png"
   },
   "Jake Matthews": {
@@ -438,6 +500,7 @@
     "hometown": "Preston, Australia",
     "style": "Freestyle",
     "age": "71.50",
+    "record": "22-8-0",
     "image_url": "fighter-images/jake-matthews.png"
   },
   "Jakub Wik\u0142acz": {
@@ -445,6 +508,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Jaqueline Amorim": {
@@ -452,6 +516,7 @@
     "hometown": "Manaus, Brazil",
     "style": "Brazilian Jiu-Jitsu",
     "age": "63.00",
+    "record": "10-2-0",
     "image_url": "fighter-images/jaqueline-amorim.png"
   },
   "Jeisla Chaves": {
@@ -459,6 +524,7 @@
     "hometown": "Nova Cana\u00e3, Brazil",
     "style": "",
     "age": "66.00",
+    "record": "1-0-0",
     "image_url": "fighter-images/jeisla-chaves.png"
   },
   "Jeremiah Wells": {
@@ -466,6 +532,7 @@
     "hometown": "Philadelphia, United States",
     "style": "Striker",
     "age": "69.00",
+    "record": "13-4-1",
     "image_url": "fighter-images/jeremiah-wells.png"
   },
   "Jeremy Stephens": {
@@ -473,6 +540,7 @@
     "hometown": "Des Moines, United States",
     "style": "Freestyle",
     "age": "68.50",
+    "record": "28-20-0",
     "image_url": "fighter-images/jeremy-stephens.png"
   },
   "Jesus Aguilar": {
@@ -480,6 +548,7 @@
     "hometown": "Ensenada, Mexico",
     "style": "Freestyle",
     "age": "64.00",
+    "record": "12-4-0",
     "image_url": "fighter-images/jesus-aguilar.png"
   },
   "Jingnan Xiong": {
@@ -487,6 +556,7 @@
     "hometown": "China",
     "style": "",
     "age": "",
+    "record": "0-0-0",
     "image_url": "fighter-images/jingnan-xiong.png"
   },
   "Joanderson Brito": {
@@ -494,6 +564,7 @@
     "hometown": "Santa Helena, Brazil",
     "style": "Striker",
     "age": "68.00",
+    "record": "18-5-1",
     "image_url": "fighter-images/joanderson-brito.png"
   },
   "Joaquin Buckley": {
@@ -501,6 +572,7 @@
     "hometown": "United States",
     "style": "Freestyle",
     "age": "70.00",
+    "record": "21-7-0",
     "image_url": "fighter-images/joaquin-buckley.png"
   },
   "Joel \u00c1lvarez": {
@@ -508,6 +580,7 @@
     "hometown": "Gij\u00f3n, Spain",
     "style": "Striker",
     "age": "74.00",
+    "record": "23-3-0",
     "image_url": "fighter-images/joel-alvarez.png"
   },
   "Jonathan Micallef": {
@@ -515,6 +588,7 @@
     "hometown": "Werribee, Australia",
     "style": "MMA",
     "age": "72.00",
+    "record": "9-1-0",
     "image_url": "fighter-images/jonathan-micallef.png"
   },
   "Jordan Leavitt": {
@@ -522,6 +596,7 @@
     "hometown": "Las Vegas, United States",
     "style": "Freestyle",
     "age": "69.00",
+    "record": "13-3-0",
     "image_url": "fighter-images/jordan-leavitt.png"
   },
   "Jose Ochoa": {
@@ -529,6 +604,7 @@
     "hometown": "San Martin, Peru",
     "style": "MMA",
     "age": "67.00",
+    "record": "8-2-0",
     "image_url": "fighter-images/jose-ochoa.png"
   },
   "Joselyne Edwards": {
@@ -536,6 +612,7 @@
     "hometown": "Panama City, Panama",
     "style": "Striker",
     "age": "68.00",
+    "record": "17-6-0",
     "image_url": "fighter-images/joselyne-edwards.png"
   },
   "Josh Hokit": {
@@ -543,6 +620,7 @@
     "hometown": "Bakersfield, United States",
     "style": "Wrestling",
     "age": "73.00",
+    "record": "9-0-0",
     "image_url": "fighter-images/josh-hokit.png"
   },
   "Joshua Van": {
@@ -550,6 +628,7 @@
     "hometown": "Hakha , Myanmar",
     "style": "Freestyle",
     "age": "65.00",
+    "record": "16-2-0",
     "image_url": "fighter-images/joshua-van.png"
   },
   "Juan Diaz": {
@@ -557,6 +636,7 @@
     "hometown": "Callao Region, Peru",
     "style": "",
     "age": "68.50",
+    "record": "1-0-0",
     "image_url": "fighter-images/juan-diaz.png"
   },
   "Julia Polastri": {
@@ -564,6 +644,7 @@
     "hometown": "Duque de Caxias, Brazil",
     "style": "Striker",
     "age": "62.00",
+    "record": "14-6-0",
     "image_url": "fighter-images/julia-polastri.png"
   },
   "Junior Tafa": {
@@ -571,6 +652,7 @@
     "hometown": "Brisbane, Australia",
     "style": "Kickboxer",
     "age": "75.00",
+    "record": "6-5-0",
     "image_url": "fighter-images/junior-tafa.png"
   },
   "Justin Gaethje": {
@@ -578,6 +660,7 @@
     "hometown": "Tucson, United States",
     "style": "MMA",
     "age": "71.00",
+    "record": "27-5-0",
     "image_url": "fighter-images/justin-gaethje.png"
   },
   "Kai Asakura": {
@@ -585,6 +668,7 @@
     "hometown": "Japan",
     "style": "",
     "age": "68.00",
+    "record": "21-6-0",
     "image_url": "fighter-images/kai-asakura.png"
   },
   "Ketlen Souza": {
@@ -592,6 +676,7 @@
     "hometown": "Manaus, Brazil",
     "style": "Boxing",
     "age": "63.00",
+    "record": "16-6-0",
     "image_url": "fighter-images/ketlen-souza.png"
   },
   "Ketlen Vieira": {
@@ -599,6 +684,7 @@
     "hometown": "State of Amazonas, Brazil",
     "style": "Judo",
     "age": "68.00",
+    "record": "15-5-0",
     "image_url": "fighter-images/ketlen-vieira.png"
   },
   "Kevin Christian": {
@@ -606,6 +692,7 @@
     "hometown": "Rio Preto da Eva, Brazil",
     "style": "Striker",
     "age": "79.00",
+    "record": "9-3-0",
     "image_url": "fighter-images/kevin-christian.png"
   },
   "Khamzat Chimaev": {
@@ -613,6 +700,7 @@
     "hometown": "",
     "style": "Wrestler",
     "age": "74.00",
+    "record": "15-0-0",
     "image_url": "fighter-images/khamzat-chimaev.png"
   },
   "King Green": {
@@ -620,6 +708,7 @@
     "hometown": "San Bernardino, United States",
     "style": "MMA",
     "age": "70.00",
+    "record": "34-17-1",
     "image_url": "fighter-images/king-green.png"
   },
   "Kody Steele": {
@@ -627,6 +716,7 @@
     "hometown": "Port Angeles, United States",
     "style": "Jiu-Jitsu",
     "age": "69.00",
+    "record": "7-1-0",
     "image_url": "fighter-images/kody-steele.png"
   },
   "Kyle Daukaus": {
@@ -634,6 +724,7 @@
     "hometown": "Philadelphia, United States",
     "style": "",
     "age": "75.00",
+    "record": "17-4-0",
     "image_url": "fighter-images/kyle-daukaus.png"
   },
   "Loma Lookboonmee": {
@@ -641,6 +732,7 @@
     "hometown": "Thailand",
     "style": "Striker",
     "age": "61.00",
+    "record": "10-4-0",
     "image_url": "fighter-images/loma-lookboonmee.png"
   },
   "Louie Sutherland": {
@@ -648,6 +740,7 @@
     "hometown": "London, England",
     "style": "Brawler",
     "age": "75.00",
+    "record": "10-5-0",
     "image_url": "fighter-images/louie-sutherland.png"
   },
   "Lucas Brennan": {
@@ -655,6 +748,7 @@
     "hometown": "Irvine, United States",
     "style": "Grappler",
     "age": "70.00",
+    "record": "11-3-0",
     "image_url": "fighter-images/lucas-brennan.png"
   },
   "Luis Felipe Dias": {
@@ -662,6 +756,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Luis Gurule": {
@@ -669,6 +764,7 @@
     "hometown": "Denver, United States",
     "style": "",
     "age": "65.00",
+    "record": "10-3-0",
     "image_url": "fighter-images/luis-gurule.png"
   },
   "Malcolm Wellmaker": {
@@ -676,6 +772,7 @@
     "hometown": "Augusta, United States",
     "style": "Striker",
     "age": "70.00",
+    "record": "10-1-0",
     "image_url": "fighter-images/malcolm-wellmaker.png"
   },
   "Marco Tulio": {
@@ -683,13 +780,15 @@
     "hometown": "Uberl\u00e2ndia, Brazil",
     "style": "Striker",
     "age": "72.00",
+    "record": "14-2-0",
     "image_url": "fighter-images/marco-tulio.png"
   },
   "Marcus Buchecha": {
     "country": "Brazil",
-    "hometown": "Brazil",
+    "hometown": "State of S\u00e3o Paulo, Brazil",
     "style": "",
     "age": "74.00",
+    "record": "5-3-1",
     "image_url": "fighter-images/marcus-buchecha.png"
   },
   "Marcus McGhee": {
@@ -697,6 +796,7 @@
     "hometown": "Detroit, United States",
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
+    "record": "10-2-0",
     "image_url": "fighter-images/marcus-mcghee.png"
   },
   "Mateusz R\u0119becki": {
@@ -704,6 +804,7 @@
     "hometown": "Gryfice, Poland",
     "style": "Brazilian Jiu-Jitsu",
     "age": "67.00",
+    "record": "20-4-0",
     "image_url": "fighter-images/mateusz-rebecki.png"
   },
   "Matt Schnell": {
@@ -711,6 +812,7 @@
     "hometown": "United States",
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
+    "record": "17-10-0",
     "image_url": "fighter-images/matt-schnell.png"
   },
   "Mauricio Ruffy": {
@@ -718,6 +820,7 @@
     "hometown": "State of S\u00e3o Paulo, Brazil",
     "style": "Striker",
     "age": "71.00",
+    "record": "13-2-0",
     "image_url": "fighter-images/mauricio-ruffy.png"
   },
   "Max Griffin": {
@@ -725,6 +828,7 @@
     "hometown": "Santa Barbara, United States",
     "style": "Kickboxer",
     "age": "71.00",
+    "record": "20-13-0",
     "image_url": "fighter-images/max-griffin.png"
   },
   "Mayra Bueno Silva": {
@@ -732,6 +836,7 @@
     "hometown": "Uberl\u00e2ndia, Brazil",
     "style": "Striker",
     "age": "66.00",
+    "record": "10-7-1",
     "image_url": "fighter-images/mayra-bueno-silva.png"
   },
   "Melquizael Costa": {
@@ -739,6 +844,7 @@
     "hometown": "Porto de Moz, Brazil",
     "style": "MMA",
     "age": "70.00",
+    "record": "26-7-0",
     "image_url": "fighter-images/melquizael-costa.png"
   },
   "Michael Chandler": {
@@ -746,6 +852,7 @@
     "hometown": "High Ridge, United States",
     "style": "Wrestler",
     "age": "68.00",
+    "record": "23-10-0",
     "image_url": "fighter-images/michael-chandler.png"
   },
   "Michelle Montague": {
@@ -753,6 +860,7 @@
     "hometown": "Matamata, New Zealand",
     "style": "Wrestling",
     "age": "69.00",
+    "record": "8-0-0",
     "image_url": "fighter-images/michelle-montague.png"
   },
   "Modestas Bukauskas": {
@@ -760,6 +868,7 @@
     "hometown": "Klaipeda, Lithuania",
     "style": "Kickboxer",
     "age": "75.00",
+    "record": "19-7-0",
     "image_url": "fighter-images/modestas-bukauskas.png"
   },
   "Montel Jackson": {
@@ -767,6 +876,7 @@
     "hometown": "Milwaukee, United States",
     "style": "MMA",
     "age": "70.00",
+    "record": "15-3-0",
     "image_url": "fighter-images/montel-jackson.png"
   },
   "Muslim Salikhov": {
@@ -774,6 +884,7 @@
     "hometown": "Russia",
     "style": "",
     "age": "71.00",
+    "record": "22-6-0",
     "image_url": "fighter-images/muslim-salikhov.png"
   },
   "Nicolas Dalby": {
@@ -781,6 +892,7 @@
     "hometown": "Fr. Vaerk Hundested, Denmark",
     "style": "MMA",
     "age": "70.00",
+    "record": "24-6-1",
     "image_url": "fighter-images/nicolas-dalby.png"
   },
   "Nicolle Caliari": {
@@ -788,6 +900,7 @@
     "hometown": "Curitiba, Brazil",
     "style": "MMA",
     "age": "63.00",
+    "record": "8-4-0",
     "image_url": "fighter-images/nicolle-caliari.png"
   },
   "Norma Dumont": {
@@ -795,6 +908,7 @@
     "hometown": "Belo Horizonte, Brazil",
     "style": "",
     "age": "67.00",
+    "record": "13-2-0",
     "image_url": "fighter-images/norma-dumont.png"
   },
   "Opponent TBA": {
@@ -802,6 +916,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Ozzy Diaz": {
@@ -809,6 +924,7 @@
     "hometown": "Los Angeles, United States",
     "style": "MMA",
     "age": "76.00",
+    "record": "10-3-0",
     "image_url": "fighter-images/ozzy-diaz.png"
   },
   "Pat Sabatini": {
@@ -816,6 +932,7 @@
     "hometown": "Bristol, United States",
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
+    "record": "21-5-0",
     "image_url": "fighter-images/pat-sabatini.png"
   },
   "Polyana Viana": {
@@ -823,6 +940,7 @@
     "hometown": "State of Par\u00e1, Brazil",
     "style": "Jiu-Jitsu",
     "age": "65.00",
+    "record": "13-8-0",
     "image_url": "fighter-images/polyana-viana.png"
   },
   "Priscila Cachoeira": {
@@ -830,6 +948,7 @@
     "hometown": "Brazil",
     "style": "Brawler",
     "age": "67.00",
+    "record": "13-8-0",
     "image_url": "fighter-images/priscila-cachoeira.png"
   },
   "Quillan Salkilld": {
@@ -837,6 +956,7 @@
     "hometown": "Pinjarra, Australia",
     "style": "MMA",
     "age": "72.00",
+    "record": "11-1-0",
     "image_url": "fighter-images/quillan-salkilld.png"
   },
   "Rafa Garcia": {
@@ -844,6 +964,7 @@
     "hometown": "Brawley, United States",
     "style": "Boxer",
     "age": "67.00",
+    "record": "18-4-0",
     "image_url": "fighter-images/rafa-garcia.png"
   },
   "Raoni Barcelos": {
@@ -851,6 +972,7 @@
     "hometown": "Brazil",
     "style": "Jiu-Jitsu",
     "age": "67.50",
+    "record": "21-5-0",
     "image_url": "fighter-images/raoni-barcelos.png"
   },
   "Rei Tsuruya": {
@@ -858,6 +980,7 @@
     "hometown": "Japan",
     "style": "MMA",
     "age": "66.00",
+    "record": "10-1-0",
     "image_url": "fighter-images/rei-tsuruya.png"
   },
   "Robert Bryczek": {
@@ -865,6 +988,7 @@
     "hometown": "Poland",
     "style": "Boxing",
     "age": "72.00",
+    "record": "18-6-0",
     "image_url": "fighter-images/robert-bryczek.png"
   },
   "Rodolfo Bellato": {
@@ -872,6 +996,7 @@
     "hometown": "Brazil",
     "style": "MMA",
     "age": "75.00",
+    "record": "13-3-1",
     "image_url": "fighter-images/rodolfo-bellato.png"
   },
   "Rodolfo Vieira": {
@@ -879,6 +1004,7 @@
     "hometown": "Brazil",
     "style": "Brazilian Jiu-Jitsu",
     "age": "72.00",
+    "record": "11-5-0",
     "image_url": "fighter-images/rodolfo-vieira.png"
   },
   "Roman Kopylov": {
@@ -886,6 +1012,7 @@
     "hometown": "Kemerovo Oblast, Russia",
     "style": "",
     "age": "72.00",
+    "record": "14-5-0",
     "image_url": "fighter-images/roman-kopylov.png"
   },
   "Ryan Spann": {
@@ -893,6 +1020,7 @@
     "hometown": "Memphis, United States",
     "style": "MMA",
     "age": "77.00",
+    "record": "24-11-0",
     "image_url": "fighter-images/ryan-spann.png"
   },
   "Sean Brady": {
@@ -900,6 +1028,7 @@
     "hometown": "Philadelphia, United States",
     "style": "Jiu-Jitsu",
     "age": "70.00",
+    "record": "18-2-0",
     "image_url": "fighter-images/sean-brady.png"
   },
   "Sean O'Malley": {
@@ -907,6 +1036,7 @@
     "hometown": "Helena, United States",
     "style": "",
     "age": "71.00",
+    "record": "19-3-0",
     "image_url": "fighter-images/sean-omalley.png"
   },
   "Sean Strickland": {
@@ -914,13 +1044,15 @@
     "hometown": "United States",
     "style": "MMA",
     "age": "73.00",
+    "record": "30-7-0",
     "image_url": "fighter-images/sean-strickland.png"
   },
   "Sedriques Dumas": {
     "country": "United States",
-    "hometown": "Pensacola, United States",
+    "hometown": "United States",
     "style": "Kickboxer",
     "age": "74.00",
+    "record": "10-5-0",
     "image_url": "fighter-images/sedriques-dumas.png"
   },
   "Sergei Pavlovich": {
@@ -928,6 +1060,7 @@
     "hometown": "Russia",
     "style": "MMA",
     "age": "75.00",
+    "record": "20-3-0",
     "image_url": "fighter-images/sergei-pavlovich.png"
   },
   "Shamil Gaziev": {
@@ -935,6 +1068,7 @@
     "hometown": "Khunzakh, Dagestan, Russia",
     "style": "MMA",
     "age": "76.00",
+    "record": "14-2-0",
     "image_url": "fighter-images/shamil-gaziev.png"
   },
   "Shauna Bannon": {
@@ -942,6 +1076,7 @@
     "hometown": "Dublin, Ireland",
     "style": "MMA",
     "age": "65.00",
+    "record": "7-2-0",
     "image_url": "fighter-images/shauna-bannon.png"
   },
   "Song Yadong": {
@@ -949,6 +1084,7 @@
     "hometown": "Heilongjiang, China",
     "style": "Boxer",
     "age": "68.00",
+    "record": "22-9-1",
     "image_url": "fighter-images/song-yadong.png"
   },
   "Steve Erceg": {
@@ -956,6 +1092,7 @@
     "hometown": "Perth, Australia",
     "style": "MMA",
     "age": "68.00",
+    "record": "13-4-0",
     "image_url": "fighter-images/steve-erceg.png"
   },
   "Steve Garcia": {
@@ -963,6 +1100,7 @@
     "hometown": "Albuquerque, United States",
     "style": "Freestyle",
     "age": "72.00",
+    "record": "19-5-0",
     "image_url": "fighter-images/steve-garcia.png"
   },
   "Sumudaerji": {
@@ -970,6 +1108,7 @@
     "hometown": "Sichuan, China",
     "style": "Striker",
     "age": "68.00",
+    "record": "19-7-0",
     "image_url": "fighter-images/sumudaerji.png"
   },
   "TBA": {
@@ -977,6 +1116,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Tai Tuivasa": {
@@ -984,6 +1124,7 @@
     "hometown": "Kingswood, Australia",
     "style": "",
     "age": "74.00",
+    "record": "15-9-0",
     "image_url": "fighter-images/tai-tuivasa.png"
   },
   "Talita Alencar": {
@@ -991,6 +1132,7 @@
     "hometown": "Carutapera, Brazil",
     "style": "Grappler",
     "age": "61.00",
+    "record": "8-1-1",
     "image_url": "fighter-images/talita-alencar.png"
   },
   "Tallison Teixeira": {
@@ -998,6 +1140,7 @@
     "hometown": "Vit\u00f3ria da Conquista, Brazil",
     "style": "Striker",
     "age": "79.00",
+    "record": "9-1-0",
     "image_url": "fighter-images/tallison-teixeira.png"
   },
   "Tatsuro Taira": {
@@ -1005,6 +1148,7 @@
     "hometown": "Japan",
     "style": "",
     "age": "67.00",
+    "record": "18-1-0",
     "image_url": "fighter-images/tatsuro-taira.png"
   },
   "Themba Gorimbo": {
@@ -1012,6 +1156,7 @@
     "hometown": "Zimbabwe",
     "style": "MMA",
     "age": "73.00",
+    "record": "14-6-0",
     "image_url": "fighter-images/themba-gorimbo.png"
   },
   "Tim Elliott": {
@@ -1019,6 +1164,7 @@
     "hometown": "United States",
     "style": "Freestyle",
     "age": "67.00",
+    "record": "22-13-1",
     "image_url": "fighter-images/tim-elliott.png"
   },
   "Timmy Cuamba": {
@@ -1026,6 +1172,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "2-2-0",
     "image_url": ""
   },
   "Tom Nolan": {
@@ -1033,6 +1180,7 @@
     "hometown": "Australia",
     "style": "",
     "age": "75.00",
+    "record": "10-1-0",
     "image_url": "fighter-images/tom-nolan.png"
   },
   "Tommy Gantt": {
@@ -1040,6 +1188,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Trey Ogden": {
@@ -1047,6 +1196,7 @@
     "hometown": "Independence, United States",
     "style": "Jiu-Jitsu",
     "age": "71.00",
+    "record": "18-7-0",
     "image_url": "fighter-images/trey-ogden.png"
   },
   "Tuco Tokkos": {
@@ -1054,6 +1204,7 @@
     "hometown": "London, England",
     "style": "Brazilian Jiu-Jitsu",
     "age": "76.00",
+    "record": "11-5-0",
     "image_url": "fighter-images/tuco-tokkos.png"
   },
   "Victor Henry": {
@@ -1061,6 +1212,7 @@
     "hometown": "United States",
     "style": "",
     "age": "67.00",
+    "record": "25-7-0",
     "image_url": "fighter-images/victor-henry.png"
   },
   "Victor Valenzuela": {
@@ -1068,6 +1220,7 @@
     "hometown": "Rancho Cucamonga, United States",
     "style": "",
     "age": "",
+    "record": "0-0-0",
     "image_url": ""
   },
   "Vince Morales": {
@@ -1075,6 +1228,7 @@
     "hometown": "Caldwell, United States",
     "style": "Wrestling",
     "age": "67.00",
+    "record": "16-10-0",
     "image_url": "fighter-images/vince-morales.png"
   },
   "Waldo Cortes-Acosta": {
@@ -1082,6 +1236,7 @@
     "hometown": "",
     "style": "",
     "age": "",
+    "record": "",
     "image_url": ""
   },
   "Wes Schultz": {
@@ -1089,6 +1244,7 @@
     "hometown": "Madison, United States",
     "style": "MMA",
     "age": "74.00",
+    "record": "8-3-0",
     "image_url": "fighter-images/wes-schultz.png"
   },
   "William Gomis": {
@@ -1096,6 +1252,7 @@
     "hometown": "Montivilliers, France",
     "style": "",
     "age": "72.00",
+    "record": "15-3-0",
     "image_url": "fighter-images/william-gomis.png"
   },
   "Yaroslav Amosov": {
@@ -1103,6 +1260,7 @@
     "hometown": "Ukraine",
     "style": "",
     "age": "72.00",
+    "record": "29-1-0",
     "image_url": "fighter-images/yaroslav-amosov.png"
   },
   "Yi Sak Lee": {
@@ -1110,6 +1268,7 @@
     "hometown": "South Korea",
     "style": "",
     "age": "May. 30, 2026",
+    "record": "0-0-0",
     "image_url": "fighter-images/yi-sak-lee.png"
   },
   "Youssef Zalal": {
@@ -1117,6 +1276,7 @@
     "hometown": "Casablanca, Morocco",
     "style": "Freestyle",
     "age": "70.00",
+    "record": "18-5-1",
     "image_url": "fighter-images/youssef-zalal.png"
   },
   "Yuneisy Duben": {
@@ -1124,6 +1284,7 @@
     "hometown": "Valencia, Venezuela",
     "style": "",
     "age": "64.00",
+    "record": "6-1-0",
     "image_url": "fighter-images/yuneisy-duben.png"
   },
   "Zhang Mingyang": {
@@ -1131,6 +1292,7 @@
     "hometown": "Fuyang, China",
     "style": "MMA",
     "age": "74.00",
+    "record": "19-7-0",
     "image_url": "fighter-images/zhang-mingyang.png"
   },
   "\u00c9dgar Ch\u00e1irez": {
@@ -1138,6 +1300,7 @@
     "hometown": "Baja California, Mexico",
     "style": "Freestyle",
     "age": "67.00",
+    "record": "13-6-0",
     "image_url": "fighter-images/edgar-chairez.png"
   }
 }

@@ -47,33 +47,65 @@
 
   /* ─── Header ─── */
   header {
-    background: linear-gradient(135deg, #0a0a0c 0%, #1a0a14 50%, #061010 100%);
+    background: linear-gradient(135deg, #0a0a0c 0%, #1a0a14 45%, #100619 70%, #061416 100%);
     border-bottom: 1px solid #1a2820;
-    padding: 1rem 2rem;
-    display: flex; align-items: center; gap: 1rem;
+    padding: 1.4rem 2rem;
+    display: flex; align-items: center; gap: 1.25rem;
     position: relative; overflow: hidden;
   }
-  header::after {
-    content: ""; position: absolute; right: -50px; top: -50px;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(0,255,136,0.08), transparent 70%);
+  header::before {
+    content: ""; position: absolute; left: -100px; top: -100px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(230,57,70,0.10), transparent 65%);
     pointer-events: none;
   }
-  .logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; color: inherit; }
-  .logo-icon { width: 48px; height: 48px; flex-shrink: 0; }
+  header::after {
+    content: ""; position: absolute; right: -80px; bottom: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(0,255,136,0.10), transparent 65%);
+    pointer-events: none;
+  }
+  .logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; position: relative; z-index: 2; }
+  .logo-icon { width: 64px; height: 64px; flex-shrink: 0; }
   .logo-icon svg { width: 100%; height: 100%; }
   .logo-text h1 {
-    font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #e63946 0%, #ff6b7a 30%, #c8a0fa 70%, #00ff88 100%);
+    font-size: 1.85rem; font-weight: 900; letter-spacing: -0.02em;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #e63946 0%, #ff6b7a 25%, #c8a0fa 65%, #00ff88 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .logo-text .tagline {
-    font-size: var(--xs); color: var(--matrix); letter-spacing: 0.18em;
-    text-transform: uppercase; font-weight: 600;
-    text-shadow: 0 0 8px rgba(0,255,136,0.4);
+    font-size: 0.75rem; color: var(--matrix); letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 700;
+    text-shadow: 0 0 12px rgba(0,255,136,0.55);
+    margin-top: 0.15rem;
   }
-  header .meta { margin-left: auto; font-size: var(--xs); color: var(--muted); text-align: right; line-height: 1.6; }
+  header .meta {
+    margin-left: auto; font-size: var(--xs); color: var(--muted);
+    text-align: right; line-height: 1.6; position: relative; z-index: 2;
+  }
+  .header-stats {
+    display: flex; gap: 1.5rem; margin-left: auto; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .header-stat { text-align: center; padding: 0 0.5rem; }
+  .header-stat .num {
+    font-size: 1.6rem; font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, var(--matrix), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-stat .lbl {
+    font-size: 0.6rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+  @media (max-width: 700px) {
+    .header-stats { display: none; }
+    .logo-text h1 { font-size: 1.4rem; }
+    .logo-icon { width: 48px; height: 48px; }
+  }
 
   /* ─── Nav ─── */
   nav {
@@ -176,7 +208,7 @@
   .fighter-card { display: flex; align-items: center; gap: 0.65rem; flex: 1; min-width: 0; }
   .fighter-card.right { flex-direction: row-reverse; text-align: right; }
 
-  /* Avatar */
+  /* Avatar — animates bigger when the fight is expanded */
   .avatar {
     width: 56px; height: 56px;
     border-radius: 50%; flex-shrink: 0;
@@ -184,6 +216,14 @@
     background: linear-gradient(135deg, #1e1e28 0%, #15151c 100%);
     border: 2px solid var(--border);
     display: flex; align-items: center; justify-content: center;
+    transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+  }
+  .fight-block.expanded .avatar { width: 96px; height: 96px; }
+  .fight-block.expanded .avatar.av-a {
+    box-shadow: 0 0 24px rgba(230,57,70,0.55), 0 0 4px rgba(230,57,70,0.3);
+  }
+  .fight-block.expanded .avatar.av-b {
+    box-shadow: 0 0 24px rgba(74,144,217,0.55), 0 0 4px rgba(74,144,217,0.3);
   }
   .avatar img {
     width: 100%; height: 100%; object-fit: cover; object-position: top center;
@@ -195,6 +235,7 @@
     display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #1e1e28, #161620);
   }
+  .fight-block.expanded .avatar .initials { font-size: 1.4rem; }
   .fav-a .avatar.av-a {
     border-color: var(--red);
     box-shadow: 0 0 12px rgba(230,57,70,0.45);
@@ -202,6 +243,12 @@
   .fav-b .avatar.av-b {
     border-color: var(--blue);
     box-shadow: 0 0 12px rgba(74,144,217,0.45);
+  }
+  .record-badge {
+    font-size: 0.62rem; font-weight: 700;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.06); color: var(--light);
+    letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
   }
 
   .fighter-info { min-width: 0; }
@@ -454,28 +501,34 @@
 <header>
   <div class="logo">
     <div class="logo-icon">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="octGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <linearGradient id="octGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stop-color="#e63946"/>
             <stop offset="50%" stop-color="#c8a0fa"/>
             <stop offset="100%" stop-color="#00ff88"/>
           </linearGradient>
           <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#00ff88" stop-opacity="0.9"/>
+            <stop offset="0%" stop-color="#00ff88" stop-opacity="0.95"/>
+            <stop offset="60%" stop-color="#00ff88" stop-opacity="0.4"/>
             <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
           </radialGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="1.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glow"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
         <!-- Outer octagon -->
-        <polygon points="17,3 31,3 45,17 45,31 31,45 17,45 3,31 3,17"
-                 stroke="url(#octGrad)" stroke-width="2" fill="none" filter="url(#glow)"/>
+        <polygon points="22,4 42,4 60,22 60,42 42,60 22,60 4,42 4,22"
+                 stroke="url(#octGrad)" stroke-width="2.5" fill="none" filter="url(#glow)"/>
         <!-- Inner octagon -->
-        <polygon points="19,8 29,8 40,19 40,29 29,40 19,40 8,29 8,19"
-                 stroke="url(#octGrad)" stroke-width="0.7" fill="rgba(230,57,70,0.05)"/>
-        <!-- Glowing orb in centre -->
-        <circle cx="24" cy="24" r="6" fill="url(#orbGrad)"/>
-        <circle cx="24" cy="24" r="2.5" fill="#00ff88" filter="url(#glow)"/>
+        <polygon points="25,11 39,11 53,25 53,39 39,53 25,53 11,39 11,25"
+                 stroke="url(#octGrad)" stroke-width="1" fill="rgba(230,57,70,0.04)"/>
+        <!-- Energy lines -->
+        <line x1="32" y1="11" x2="32" y2="20" stroke="url(#octGrad)" stroke-width="0.6" opacity="0.6"/>
+        <line x1="32" y1="44" x2="32" y2="53" stroke="url(#octGrad)" stroke-width="0.6" opacity="0.6"/>
+        <line x1="11" y1="32" x2="20" y2="32" stroke="url(#octGrad)" stroke-width="0.6" opacity="0.6"/>
+        <line x1="44" y1="32" x2="53" y2="32" stroke="url(#octGrad)" stroke-width="0.6" opacity="0.6"/>
+        <!-- Glowing orb -->
+        <circle cx="32" cy="32" r="9" fill="url(#orbGrad)"/>
+        <circle cx="32" cy="32" r="3.5" fill="#00ff88" filter="url(#glow)"/>
       </svg>
     </div>
     <div class="logo-text">
@@ -483,7 +536,25 @@
       <div class="tagline">Ainsley's Matrix</div>
     </div>
   </div>
-  <div class="meta">Updated {{ generated_at }}<br>{{ n_bouts }} fights tracked</div>
+
+  <div class="header-stats">
+    <div class="header-stat">
+      <div class="num">{{ n_bouts }}</div>
+      <div class="lbl">Bouts Tracked</div>
+    </div>
+    <div class="header-stat">
+      <div class="num">{{ event_carousel|length }}</div>
+      <div class="lbl">Events</div>
+    </div>
+    {% if top_bets %}
+    <div class="header-stat">
+      <div class="num">{{ top_bets|length }}</div>
+      <div class="lbl">Value Bets</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="meta" style="margin-left:1.5rem">Updated<br>{{ generated_at }}</div>
 </header>
 
 <nav>
@@ -491,6 +562,11 @@
   <a href="#" id="tab-bets"   onclick="showTab('bets',this);return false;">
     Top Value Bets{% if top_bets %} ({{ top_bets|length }}){% endif %}
   </a>
+  {% if past_events %}
+  <a href="#" id="tab-past" onclick="showTab('past',this);return false;">
+    Past Events ({{ past_events|length }})
+  </a>
+  {% endif %}
 </nav>
 
 <main>
@@ -578,6 +654,7 @@
                 </div>
                 <div class="fighter-meta">
                   {% if bout.a_flag %}<span class="flag" title="{{ bout.a_nationality }}">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_record %}<span class="record-badge" title="Career W-L-D">{{ bout.a_record }}</span>{% endif %}
                   {% if bout.a_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.a_ufc_style }}</span>{% endif %}
                   {% if bout.a_stance %}<span class="stance-badge">{{ bout.a_stance }}</span>{% endif %}
                   {% if bout.a_streak %}<span class="streak-label {{ bout.a_streak_class }}">{{ bout.a_streak }}</span>{% endif %}
@@ -612,6 +689,7 @@
                 <div class="fighter-name">{{ bout.fighter_b_name }}</div>
                 <div class="fighter-meta">
                   {% if bout.b_flag %}<span class="flag" title="{{ bout.b_nationality }}">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_record %}<span class="record-badge" title="Career W-L-D">{{ bout.b_record }}</span>{% endif %}
                   {% if bout.b_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.b_ufc_style }}</span>{% endif %}
                   {% if bout.b_stance %}<span class="stance-badge">{{ bout.b_stance }}</span>{% endif %}
                   {% if bout.b_streak %}<span class="streak-label {{ bout.b_streak_class }}">{{ bout.b_streak }}</span>{% endif %}
@@ -648,9 +726,9 @@
                   <thead><tr><th></th><th>{{ na }}</th><th>{{ nb }}</th></tr></thead>
                   <tbody>
                     <tr>
-                      <td>Streak</td>
-                      <td class="{{ bout.col_streak[0] }}">{{ bout.a_streak }}</td>
-                      <td class="{{ bout.col_streak[1] }}">{{ bout.b_streak }}</td>
+                      <td>Career record</td>
+                      <td>{{ bout.a_record or '—' }}</td>
+                      <td>{{ bout.b_record or '—' }}</td>
                     </tr>
                     <tr>
                       <td>Last 3 win %</td>
@@ -676,16 +754,6 @@
                       <td>Sig strikes / min ↑</td>
                       <td class="{{ bout.col_slpm[0] }}">{{ bout.a_slpm }}</td>
                       <td class="{{ bout.col_slpm[1] }}">{{ bout.b_slpm }}</td>
-                    </tr>
-                    <tr>
-                      <td>Strikes absorbed ↓</td>
-                      <td class="{{ bout.col_sapm[0] }}">{{ bout.a_sapm }}</td>
-                      <td class="{{ bout.col_sapm[1] }}">{{ bout.b_sapm }}</td>
-                    </tr>
-                    <tr>
-                      <td>Takedowns / min ↑</td>
-                      <td class="{{ bout.col_td[0] }}">{{ bout.a_td_per_min }}</td>
-                      <td class="{{ bout.col_td[1] }}">{{ bout.b_td_per_min }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -804,6 +872,17 @@
       {% endfor %}
     </div>
 
+    <!-- Jump-to-event banner (only visible when an event is selected) -->
+    <div id="jump-to-event-banner" class="hidden"
+         style="background:rgba(200,160,250,0.08);border:1px solid rgba(200,160,250,0.25);border-radius:8px;padding:0.6rem 1rem;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div style="font-size:var(--sm);color:var(--purple)">
+        Filtered to <strong id="jump-event-name"></strong>
+      </div>
+      <button type="button" onclick="jumpFromBetsToEvent()" style="background:var(--purple);color:#000;border:none;padding:0.4rem 0.9rem;border-radius:6px;font-weight:700;font-size:var(--xs);cursor:pointer">
+        ↗ View event card on Fights tab
+      </button>
+    </div>
+
     <!-- Bet type filter -->
     <div class="filter-bar" style="margin-top:-0.4rem">
       <span style="color:var(--muted);font-size:var(--xs);align-self:center;margin-right:0.3rem">market:</span>
@@ -864,6 +943,101 @@
     {% endif %}
   </div>
 
+
+  <!-- ═══════════ PAST EVENTS ═══════════ -->
+  {% if past_events %}
+  <div id="past-events-panel" class="hidden">
+    <div class="section-title">⟁  Past Events — Predictions vs. Actual Results</div>
+
+    {% set total_correct = past_events|sum(attribute='n_correct') %}
+    {% set total_resolved = past_events|sum(attribute='n_resolved') %}
+    {% if total_resolved > 0 %}
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>
+        <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Overall Track Record</div>
+        <div style="font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--matrix),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-top:4px">
+          {{ total_correct }} / {{ total_resolved }} correct
+          <span style="font-size:1rem;color:var(--muted);font-weight:600">·</span>
+          <span style="color:var(--matrix)">{{ ((total_correct / total_resolved) * 100)|round(1) }}%</span>
+        </div>
+      </div>
+      <div style="font-size:var(--xs);color:var(--muted);max-width:300px;text-align:right">
+        Accuracy across all completed events with results in the database.
+        Updates automatically after each greco_loader ingest.
+      </div>
+    </div>
+    {% endif %}
+
+    {% for event in past_events %}
+    <div class="event-card past-event">
+      <div class="event-header" style="background:linear-gradient(90deg,rgba(0,255,136,0.05),rgba(13,13,16,0.5));border-color:rgba(0,255,136,0.18)">
+        <h2>
+          {{ event.event_name }}
+          {% if event.accuracy_pct is not none %}
+          <span class="record-badge" style="margin-left:0.5rem;background:rgba(0,255,136,0.12);color:var(--matrix)">
+            {{ event.n_correct }}/{{ event.n_resolved }} = {{ event.accuracy_pct }}%
+          </span>
+          {% endif %}
+        </h2>
+        <span class="date">{{ event.event_date }}</span>
+      </div>
+      {% for bout in event.bouts %}
+      <div class="fight-block">
+        <div class="fight-main">
+          <div class="match-row">
+            <div class="fighter-card">
+              <div class="avatar av-a">
+                {% if bout.a_img %}<img src="{{ bout.a_img }}" alt="{{ bout.fighter_a_name }}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">{% endif %}
+                <div class="initials" {% if bout.a_img %}style="display:none"{% endif %}>{{ bout.a_initials }}</div>
+              </div>
+              <div class="fighter-info">
+                <div class="fighter-name">{{ bout.fighter_a_name }}</div>
+                <div class="fighter-meta">
+                  {% if bout.a_flag %}<span class="flag">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_record %}<span class="record-badge">{{ bout.a_record }}</span>{% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="vs-center">
+              {% if bout.actual_winner_side %}
+              <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Winner</div>
+              <div style="font-weight:800;font-size:0.95rem;color:{{ 'var(--red)' if bout.actual_winner_side == 'a' else 'var(--blue)' }}">
+                {{ bout.actual_winner_name }}
+              </div>
+              <div style="font-size:var(--xs);color:var(--muted)">
+                {{ bout.actual_method }}{% if bout.actual_round %} · R{{ bout.actual_round }}{% endif %}
+              </div>
+              {% if bout.pred_correct is not none %}
+              <span class="record-badge" style="background:{{ 'rgba(45,198,83,0.18)' if bout.pred_correct else 'rgba(230,57,70,0.15)' }};color:{{ 'var(--green)' if bout.pred_correct else 'var(--red)' }};margin-top:4px">
+                {{ '✓ predicted' if bout.pred_correct else '✗ wrong' }}
+              </span>
+              {% endif %}
+              {% else %}
+              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
+              {% endif %}
+            </div>
+            <div class="fighter-card right">
+              <div class="avatar av-b">
+                {% if bout.b_img %}<img src="{{ bout.b_img }}" alt="{{ bout.fighter_b_name }}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">{% endif %}
+                <div class="initials" {% if bout.b_img %}style="display:none"{% endif %}>{{ bout.b_initials }}</div>
+              </div>
+              <div class="fighter-info">
+                <div class="fighter-name">{{ bout.fighter_b_name }}</div>
+                <div class="fighter-meta">
+                  {% if bout.b_flag %}<span class="flag">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_record %}<span class="record-badge">{{ bout.b_record }}</span>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
 </main>
 
 <footer>
@@ -879,12 +1053,18 @@ function toggleDetails(id) {
   if (!d) return;
   const open = d.classList.toggle('open');
   if (i) i.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+  // Add 'expanded' class to the parent fight-block so avatars resize
+  const block = d.closest('.fight-block');
+  if (block) block.classList.toggle('expanded', open);
 }
 function showTab(tab, el) {
   document.getElementById('fights-panel').classList.toggle('hidden', tab !== 'fights');
   document.getElementById('top-bets').classList.toggle('hidden', tab !== 'bets');
+  const past = document.getElementById('past-events-panel');
+  if (past) past.classList.toggle('hidden', tab !== 'past');
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 let _activeEvent = '__all__';
 let _activeType  = '__all__';
@@ -900,6 +1080,37 @@ function filterBetsByEvent(eventLabel, btn) {
   btn.classList.add('active');
   _activeEvent = eventLabel;
   _applyBetFilters();
+  // Show the jump-to-event banner only when a specific event is selected
+  const banner = document.getElementById('jump-to-event-banner');
+  if (banner) {
+    if (eventLabel !== '__all__') {
+      document.getElementById('jump-event-name').textContent = eventLabel;
+      banner.classList.remove('hidden');
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+}
+function jumpFromBetsToEvent() {
+  if (_activeEvent === '__all__') return;
+  // Switch to Fights tab and find the event card
+  showTab('fights', document.getElementById('tab-fights'));
+  const cards = document.querySelectorAll('.event-card');
+  for (const c of cards) {
+    const h = c.querySelector('h2');
+    if (h && h.textContent.trim().includes(_activeEvent.trim())) {
+      c.scrollIntoView({behavior: 'smooth', block: 'start'});
+      // Brief highlight pulse on the event header
+      const header = c.querySelector('.event-header');
+      if (header) {
+        const orig = header.style.boxShadow;
+        header.style.transition = 'box-shadow 0.4s';
+        header.style.boxShadow = '0 0 24px rgba(200,160,250,0.4)';
+        setTimeout(() => header.style.boxShadow = orig, 1500);
+      }
+      break;
+    }
+  }
 }
 function filterBetsByType(typeLabel, btn) {
   document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));

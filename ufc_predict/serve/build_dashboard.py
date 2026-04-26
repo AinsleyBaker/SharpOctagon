@@ -107,17 +107,13 @@ def _data_quality(a_n, b_n) -> str:
 
 
 def _streak_display(win_s, loss_s) -> tuple[str, str]:
-    """Return (label, css_class). Label is plain English ('3-fight win streak')."""
+    """Return (label, css_class). Plain English: '3-fight win streak'."""
     win_s  = int(win_s  or 0)
     loss_s = int(loss_s or 0)
     if win_s >= 1:
-        if win_s == 1:
-            return ("1 win", "streak-w")
-        return (f"{win_s}-fight win streak", "streak-w")
+        return (f"{win_s}-fight win streak" if win_s > 1 else "1 win", "streak-w")
     if loss_s >= 1:
-        if loss_s == 1:
-            return ("1 loss", "streak-l")
-        return (f"{loss_s}-fight skid", "streak-l")
+        return (f"{loss_s}-fight loss streak" if loss_s > 1 else "1 loss", "streak-l")
     return ("", "")
 
 
@@ -246,6 +242,96 @@ def _enrich_props(bout: dict) -> None:
         )
 
 
+def _enrich_past_events(past_events: list[dict]) -> list[dict]:
+    """
+    For each past event, try to look up actual fight outcomes in the DB
+    and tag each bout's prediction as ✓ (correct) / ✗ (wrong) / ? (unknown).
+    Also computes per-event accuracy + total correct.
+    """
+    if not past_events:
+        return []
+
+    try:
+        from ufc_predict.db.session import get_session_factory
+        from sqlalchemy import text
+        factory = get_session_factory()
+    except Exception:
+        # No DB available — just mark events as past with no outcomes.
+        for ev in past_events:
+            ev["is_past"]    = True
+            ev["n_correct"]  = 0
+            ev["n_resolved"] = 0
+        return past_events
+
+    with factory() as session:
+        # Map (last_name_a.lower(), last_name_b.lower(), event_date) → result row
+        sql = text("""
+            SELECT f.date, fa.full_name AS name_a, fb.full_name AS name_b,
+                   f.method, f.round_ended, f.winner_fighter_id,
+                   f.red_fighter_id, f.blue_fighter_id
+            FROM fights f
+            JOIN fighters fa ON fa.canonical_fighter_id = f.red_fighter_id
+            JOIN fighters fb ON fb.canonical_fighter_id = f.blue_fighter_id
+            WHERE f.date >= :since
+        """)
+        from datetime import timedelta
+        since = (date.today() - timedelta(days=365)).isoformat()
+        rows = session.execute(sql, {"since": since}).fetchall()
+
+        from rapidfuzz import fuzz
+        def _score(a: str, b: str) -> int:
+            return max(
+                fuzz.token_set_ratio(a, b),
+                fuzz.partial_ratio((a or "").split()[-1] if a else "", b or ""),
+            )
+
+        for ev in past_events:
+            ev["is_past"]    = True
+            ev_date          = str(ev.get("event_date", ""))
+            n_correct, n_resolved = 0, 0
+            for bout in ev.get("bouts", []):
+                pa = bout.get("fighter_a_name", "")
+                pb = bout.get("fighter_b_name", "")
+                # Find best matching fight row near this date
+                best_score, best_row = 0, None
+                for row in rows:
+                    if abs((date.fromisoformat(str(row.date)) - date.fromisoformat(ev_date)).days) > 3:
+                        continue
+                    s = min(_score(pa, row.name_a), _score(pb, row.name_b))
+                    if s > best_score:
+                        best_score, best_row = s, row
+                if best_row is None or best_score < 70:
+                    bout["actual_winner"] = "?"
+                    bout["actual_method"] = ""
+                    bout["pred_correct"]  = None
+                    continue
+                # Determine winner side relative to our fighter A
+                a_score_red  = _score(pa, best_row.name_a)
+                a_score_blue = _score(pa, best_row.name_b)
+                a_is_red = a_score_red >= a_score_blue
+                winner_is_red = best_row.winner_fighter_id == best_row.red_fighter_id
+                a_won = (winner_is_red == a_is_red)
+                bout["actual_winner_name"] = pa if a_won else pb
+                bout["actual_winner_side"] = "a" if a_won else "b"
+                bout["actual_method"]      = best_row.method or ""
+                bout["actual_round"]       = best_row.round_ended
+                # Was our prediction correct?
+                pa_prob = float(bout.get("prob_a_wins") or 0.5)
+                predicted_a = pa_prob >= 0.5
+                bout["pred_correct"] = (predicted_a == a_won)
+                n_resolved += 1
+                if bout["pred_correct"]:
+                    n_correct += 1
+
+            ev["n_correct"]  = n_correct
+            ev["n_resolved"] = n_resolved
+            ev["accuracy_pct"] = (
+                round(100 * n_correct / n_resolved) if n_resolved > 0 else None
+            )
+
+    return past_events
+
+
 def _enrich_bet_analysis(bout: dict) -> None:
     """Format bet_analysis list for display — top 10 value bets only."""
     bets = bout.get("bet_analysis") or []
@@ -291,6 +377,9 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         meta = fighter_meta.get(name, {})
         val = meta.get(key) or default
         return val
+
+    # Today (for past/upcoming event split + past-event result fetch)
+    today_str = date.today().isoformat()
 
     # Enrich each bout for display
     for event in events:
@@ -372,6 +461,9 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             # Official UFC fighting style (e.g. "Brazilian Jiu-Jitsu", "Kickboxer")
             bout["a_ufc_style"] = _meta_lookup(a_name, "style")
             bout["b_ufc_style"] = _meta_lookup(b_name, "style")
+            # Career record (W-L-D)
+            bout["a_record"] = _meta_lookup(a_name, "record")
+            bout["b_record"] = _meta_lookup(b_name, "record")
 
             # Fighter type — use raw numeric values before they're formatted below
             bout["a_fighter_type"] = _fighter_type(
@@ -562,6 +654,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 "b_nationality":  b_meta.get("country", ""),
                 "a_ufc_style":    a_meta.get("style", ""),
                 "b_ufc_style":    b_meta.get("style", ""),
+                "a_record":       a_meta.get("record", ""),
+                "b_record":       b_meta.get("record", ""),
                 "a_stance":       "",
                 "b_stance":       "",
                 "a_fighter_type": "",
@@ -584,8 +678,18 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     all_events_for_template = sorted(events, key=lambda e: str(e.get("event_date", "")))
     all_events_for_template.extend(preview_events)
 
+    # Split into upcoming (event_date >= today) and past (< today).
+    # Past events get the same fight blocks but with an "outcome" overlay
+    # if results are now in the DB (next greco_loader run after the event).
+    upcoming_events = [e for e in all_events_for_template if str(e.get("event_date", "")) >= today_str]
+    past_events     = [e for e in all_events_for_template if str(e.get("event_date", "")) <  today_str]
+
+    # Try to enrich past events with actual outcomes from the fights table
+    past_events = _enrich_past_events(past_events)
+
     rendered = template.render(
-        events=all_events_for_template,
+        events=upcoming_events,
+        past_events=past_events,
         top_bets=top_bets,
         bets_by_event=bets_by_event,
         event_filter_options=event_filter_options,

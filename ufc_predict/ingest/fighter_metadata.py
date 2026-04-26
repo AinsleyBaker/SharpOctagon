@@ -73,8 +73,26 @@ def _extract_country(hometown: str) -> str | None:
     return last
 
 
+def _parse_record_from_html(html: str) -> str:
+    """
+    UFC athlete pages display the fighter record as '25-5-0' inside a
+    <p class="hero-profile__division-body"> tag. Match it directly.
+    """
+    m = re.search(
+        r'hero-profile__division-body[^>]*>\s*(\d{1,2}-\d{1,2}-\d{1,2})',
+        html,
+    )
+    if m:
+        return m.group(1)
+    # Fallback: any standalone X-Y-Z pattern in a tag
+    m = re.search(r'>\s*(\d{1,2}-\d{1,2}-\d{1,2})\s*(?:\([^)]*\))?\s*<', html)
+    if m:
+        return m.group(1)
+    return ""
+
+
 def fetch_metadata(name: str) -> dict | None:
-    """Return {country, fighting_style, image_url, hometown} or None."""
+    """Return {country, style, image_url, hometown, age, record} or None."""
     slug = _name_to_slug(name)
     url  = f"{_UFC_BASE}/{slug}"
     try:
@@ -82,6 +100,7 @@ def fetch_metadata(name: str) -> dict | None:
         if r.status_code != 200:
             return None
         bio = _parse_bio_fields(r.text)
+        record = _parse_record_from_html(r.text)
     except requests.RequestException:
         return None
 
@@ -90,13 +109,13 @@ def fetch_metadata(name: str) -> dict | None:
     style    = bio.get("Fighting style", "")
     age      = bio.get("Age", "")
 
-    # Reuse fighter_images.fetch_image_url logic for the URL with itok
     img_url = fetch_image_url(name)
     return {
         "country":   country,
         "hometown":  hometown,
         "style":     style,
         "age":       age,
+        "record":    record,
         "image_url": img_url,
     }
 
@@ -134,51 +153,93 @@ def collect_all_fighter_names() -> set[str]:
     return names
 
 
+def _fallback_record_from_db(name: str, session) -> tuple[str, dict]:
+    """
+    If UFC.com didn't expose a record, compute it from our local fight DB.
+    Returns (record_str, stats_dict).
+    """
+    from ufc_predict.db.models import Fighter
+    from ufc_predict.features.aso_features import fighter_aso_stats
+    from datetime import date as _date
+
+    fighter = session.query(Fighter).filter(Fighter.full_name == name).first()
+    if not fighter:
+        return "", {}
+
+    stats = fighter_aso_stats(fighter.canonical_fighter_id, _date.today(), session)
+    wins   = int(stats.get("wins", 0) or 0)
+    losses = int(stats.get("losses", 0) or 0)
+    record = f"{wins}-{losses}-0" if (wins + losses) > 0 else ""
+    return record, {
+        "wins":   wins,
+        "losses": losses,
+        "stance": fighter.stance or "",
+        "nationality_db": fighter.nationality or "",
+    }
+
+
 def refresh(force: bool = False) -> dict[str, dict]:
     """
     Fetch metadata + images for every upcoming-bout fighter.
     Skips fighters already in the cache unless force=True.
-    Also downloads images to docs/fighter-images/.
     """
+    from ufc_predict.db.session import get_session_factory
+
     names = collect_all_fighter_names()
     cache = load_metadata()
     log.info("Refreshing metadata for %d fighters (cached: %d)", len(names), len(cache))
 
+    factory = None
+    try:
+        factory = get_session_factory()
+    except Exception as exc:
+        log.warning("DB unavailable for fallback record lookup: %s", exc)
+
     new_count = 0
-    for name in sorted(names):
-        if not force and name in cache and cache[name].get("country"):
-            # Verify image still exists locally — if not, re-fetch
-            img = cache[name].get("image_url", "")
-            if not img.startswith("fighter-images/") or (Path("docs") / img).exists():
-                continue
+    session = factory() if factory else None
+    try:
+        for name in sorted(names):
+            if not force and name in cache and cache[name].get("country") and cache[name].get("record"):
+                img = cache[name].get("image_url", "")
+                if not img.startswith("fighter-images/") or (Path("docs") / img).exists():
+                    continue
 
-        log.info("Fetching %s…", name)
-        meta = fetch_metadata(name) or {}
+            log.info("Fetching %s…", name)
+            meta = fetch_metadata(name) or {}
 
-        # Image: download to docs/fighter-images/, fall back to Wikipedia
-        img_url = meta.get("image_url")
-        if not img_url:
-            img_url = fetch_wikipedia_image(name)
-        local_img = ""
-        if img_url:
-            local = download_image(name, img_url)
-            local_img = local if local else img_url
+            img_url = meta.get("image_url")
+            if not img_url:
+                img_url = fetch_wikipedia_image(name)
+            local_img = ""
+            if img_url:
+                local = download_image(name, img_url)
+                local_img = local if local else img_url
 
-        cache[name] = {
-            "country":   meta.get("country") or "",
-            "hometown":  meta.get("hometown") or "",
-            "style":     meta.get("style") or "",
-            "age":       meta.get("age") or "",
-            "image_url": local_img,
-        }
-        new_count += 1
-        log.info(
-            "  ✓ %s | %s | %s",
-            cache[name]["country"] or "?",
-            cache[name]["style"] or "?",
-            "image" if local_img else "no image",
-        )
-        time.sleep(_DELAY_S)
+            record = meta.get("record", "")
+            db_extra: dict = {}
+            if not record and session:
+                record, db_extra = _fallback_record_from_db(name, session)
+
+            cache[name] = {
+                "country":   meta.get("country") or db_extra.get("nationality_db", ""),
+                "hometown":  meta.get("hometown") or "",
+                "style":     meta.get("style") or "",
+                "age":       meta.get("age") or "",
+                "record":    record,
+                "image_url": local_img,
+            }
+            new_count += 1
+            log.info(
+                "  ✓ %s | %s | %s | %s",
+                cache[name]["country"] or "?",
+                cache[name]["style"]   or "?",
+                cache[name]["record"]  or "?",
+                "image" if local_img else "no image",
+            )
+            time.sleep(_DELAY_S)
+    finally:
+        if session:
+            session.close()
 
     save_metadata(cache)
     log.info("Metadata: %d total, %d processed", len(cache), new_count)

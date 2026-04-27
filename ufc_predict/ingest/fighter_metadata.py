@@ -178,6 +178,45 @@ def _fallback_record_from_db(name: str, session) -> tuple[str, dict]:
     }
 
 
+def _full_stats_from_db(name: str, session) -> dict:
+    """
+    Pull every field used by the dashboard stats panel for this fighter.
+    Lets preview events (no predictions yet) still show meaningful data.
+    """
+    from ufc_predict.db.models import Fighter
+    from ufc_predict.features.aso_features import fighter_aso_stats
+    from datetime import date as _date
+    import math
+
+    fighter = session.query(Fighter).filter(Fighter.full_name == name).first()
+    if not fighter:
+        return {}
+    s = fighter_aso_stats(fighter.canonical_fighter_id, _date.today(), session)
+
+    def _f(v):
+        # JSON-safe: NaN → None
+        if v is None: return None
+        try:
+            f = float(v)
+            return None if math.isnan(f) else f
+        except (TypeError, ValueError):
+            return None
+
+    return {
+        "n_fights":     int(s.get("n_fights", 0) or 0),
+        "win_streak":   int(s.get("win_streak", 0) or 0),
+        "loss_streak":  int(s.get("loss_streak", 0) or 0),
+        "l3_win_rate":  _f(s.get("l3_win_rate")),
+        "finish_rate":  _f(s.get("finish_rate")),
+        "ko_rate":      _f(s.get("ko_rate")),
+        "sub_rate":     _f(s.get("sub_rate")),
+        "slpm":         _f(s.get("slpm")),
+        "sapm":         _f(s.get("sapm")),
+        "td_per_min":   _f(s.get("td_per_min")),
+        "stance":       fighter.stance or "",
+    }
+
+
 def refresh(force: bool = False) -> dict[str, dict]:
     """
     Fetch metadata + images for every upcoming-bout fighter.
@@ -220,6 +259,10 @@ def refresh(force: bool = False) -> dict[str, dict]:
             if not record and session:
                 record, db_extra = _fallback_record_from_db(name, session)
 
+            # Always pull full DB stats too (used by preview events that have
+            # no predictions yet — gives them a meaningful expandable panel).
+            db_stats = _full_stats_from_db(name, session) if session else {}
+
             cache[name] = {
                 "country":   meta.get("country") or db_extra.get("nationality_db", ""),
                 "hometown":  meta.get("hometown") or "",
@@ -227,6 +270,7 @@ def refresh(force: bool = False) -> dict[str, dict]:
                 "age":       meta.get("age") or "",
                 "record":    record,
                 "image_url": local_img,
+                "stats":     db_stats,
             }
             new_count += 1
             log.info(

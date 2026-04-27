@@ -711,10 +711,70 @@
         <div class="fight-details" id="details-{{ loop.index }}-{{ loop.index0 }}">
           <div class="details-inner">
             {% if bout.is_preview %}
+            {% if bout.has_stats %}
+            <div class="preview-notice" style="margin-bottom:0.75rem">
+              ⟁ Win prediction & SportsBet odds will populate closer to event night.
+              Career stats below.
+            </div>
+            <div class="details-grid">
+              <div class="detail-box">
+                <h4>Fighter Statistics</h4>
+                {% set na = bout.fighter_a_name.split()[-1] %}
+                {% set nb = bout.fighter_b_name.split()[-1] %}
+                <table class="stat-table">
+                  <thead><tr><th></th><th>{{ na }}</th><th>{{ nb }}</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td>Career record</td>
+                      <td>{{ bout.a_record or '—' }}</td>
+                      <td>{{ bout.b_record or '—' }}</td>
+                    </tr>
+                    <tr>
+                      <td>Last 3 win %</td>
+                      <td class="{{ bout.col_l3[0] }}">{{ bout.a_l3 }}</td>
+                      <td class="{{ bout.col_l3[1] }}">{{ bout.b_l3 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Finish rate</td>
+                      <td class="{{ bout.col_finish[0] }}">{{ bout.a_finish_rate }}</td>
+                      <td class="{{ bout.col_finish[1] }}">{{ bout.b_finish_rate }}</td>
+                    </tr>
+                    <tr>
+                      <td>KO/TKO rate</td>
+                      <td class="{{ bout.col_ko[0] }}">{{ bout.a_ko_rate }}</td>
+                      <td class="{{ bout.col_ko[1] }}">{{ bout.b_ko_rate }}</td>
+                    </tr>
+                    <tr>
+                      <td>Sub rate</td>
+                      <td class="{{ bout.col_sub[0] }}">{{ bout.a_sub_rate }}</td>
+                      <td class="{{ bout.col_sub[1] }}">{{ bout.b_sub_rate }}</td>
+                    </tr>
+                    <tr>
+                      <td>Sig strikes / min ↑</td>
+                      <td class="{{ bout.col_slpm[0] }}">{{ bout.a_slpm }}</td>
+                      <td class="{{ bout.col_slpm[1] }}">{{ bout.b_slpm }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-box">
+                <h4>Predicted Outcomes</h4>
+                <p style="color:var(--muted);font-size:var(--sm);margin:0.4rem 0">
+                  Win probability and method/round breakdowns appear here once
+                  the matrix processes this card.
+                </p>
+                <p style="color:var(--purple);font-size:var(--xs);margin-top:0.6rem">
+                  Tip: stats above are computed from each fighter's full UFC history.
+                  Compare KO/TKO rate vs sub rate to gauge likely method even before predictions land.
+                </p>
+              </div>
+            </div>
+            {% else %}
             <div class="preview-notice">
-              ⟁ This fight is on the upcoming schedule but predictions and odds aren't available yet.
+              ⟁ This fight is on the upcoming schedule but stats and predictions aren't available yet.
               The matrix will compute them closer to event time.
             </div>
+            {% endif %}
             {% else %}
             <div class="details-grid">
 

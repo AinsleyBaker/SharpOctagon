@@ -630,6 +630,19 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
             a_meta = fighter_meta.get(fa, {})
             b_meta = fighter_meta.get(fb, {})
+            a_stats = a_meta.get("stats", {}) or {}
+            b_stats = b_meta.get("stats", {}) or {}
+
+            # Streak labels from the cached stats
+            a_lbl, a_cls = _streak_display(a_stats.get("win_streak"), a_stats.get("loss_streak"))
+            b_lbl, b_cls = _streak_display(b_stats.get("win_streak"), b_stats.get("loss_streak"))
+
+            def _pct(v):
+                return f"{float(v)*100:.0f}%" if v is not None else "—"
+            def _f(v, fmt=".1f"):
+                return format(float(v), fmt) if v is not None else "—"
+
+            # Stat colour classes for the comparison table
             preview_bouts.append({
                 "is_preview":     True,
                 "fighter_a_name": fa,
@@ -644,10 +657,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 "b_initials":     _initials(fb),
                 "a_img":          a_meta.get("image_url") or fighter_imgs.get(fa, ""),
                 "b_img":          b_meta.get("image_url") or fighter_imgs.get(fb, ""),
-                "a_streak":       "",
-                "b_streak":       "",
-                "a_streak_class": "",
-                "b_streak_class": "",
+                "a_streak":       a_lbl,
+                "b_streak":       b_lbl,
+                "a_streak_class": a_cls,
+                "b_streak_class": b_cls,
                 "a_flag":         _flag_emoji(a_meta.get("country", "")),
                 "b_flag":         _flag_emoji(b_meta.get("country", "")),
                 "a_nationality":  a_meta.get("country", ""),
@@ -656,14 +669,34 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 "b_ufc_style":    b_meta.get("style", ""),
                 "a_record":       a_meta.get("record", ""),
                 "b_record":       b_meta.get("record", ""),
-                "a_stance":       "",
-                "b_stance":       "",
+                "a_stance":       a_stats.get("stance", ""),
+                "b_stance":       b_stats.get("stance", ""),
+                "a_n_fights":     a_stats.get("n_fights", 0),
+                "b_n_fights":     b_stats.get("n_fights", 0),
+                # Display-formatted stats
+                "a_l3":           _pct(a_stats.get("l3_win_rate")),
+                "b_l3":           _pct(b_stats.get("l3_win_rate")),
+                "a_finish_rate":  _pct(a_stats.get("finish_rate")),
+                "b_finish_rate":  _pct(b_stats.get("finish_rate")),
+                "a_ko_rate":      _pct(a_stats.get("ko_rate")),
+                "b_ko_rate":      _pct(b_stats.get("ko_rate")),
+                "a_sub_rate":     _pct(a_stats.get("sub_rate")),
+                "b_sub_rate":     _pct(b_stats.get("sub_rate")),
+                "a_slpm":         _f(a_stats.get("slpm")),
+                "b_slpm":         _f(b_stats.get("slpm")),
+                # Stat colour classes (use raw values for comparison)
+                "col_l3":         _stat_colors(a_stats.get("l3_win_rate"), b_stats.get("l3_win_rate")),
+                "col_finish":     _stat_colors(a_stats.get("finish_rate"), b_stats.get("finish_rate")),
+                "col_ko":         _stat_colors(a_stats.get("ko_rate"), b_stats.get("ko_rate")),
+                "col_sub":        _stat_colors(a_stats.get("sub_rate"), b_stats.get("sub_rate")),
+                "col_slpm":       _stat_colors(a_stats.get("slpm"), b_stats.get("slpm")),
                 "a_fighter_type": "",
                 "b_fighter_type": "",
                 "show_fighter_type": False,
                 "value_bet_count": 0,
                 "has_bets":       False,
                 "has_props":      False,
+                "has_stats":      bool(a_stats or b_stats),
             })
         if preview_bouts:
             preview_events.append({

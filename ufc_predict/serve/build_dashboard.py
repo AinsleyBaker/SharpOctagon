@@ -18,6 +18,7 @@ from jinja2 import Environment, FileSystemLoader
 log = logging.getLogger(__name__)
 
 PREDICTIONS_PATH  = Path("data/predictions.json")
+PAST_EVENTS_PATH  = Path("data/past_events.json")
 FIGHTER_IMGS_PATH = Path("data/fighter_images.json")
 FIGHTER_META_PATH = Path("data/fighter_metadata.json")
 SCHEDULE_PATH     = Path("data/upcoming_schedule.json")
@@ -240,6 +241,59 @@ def _enrich_props(bout: dict) -> None:
         bout["round_rows"].append(
             {"label": "Goes to Decision", "prob": f"{float(prob_dec)*100:.1f}%"}
         )
+
+
+def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[dict]:
+    """
+    Read data/past_events.json (accumulated by track_predictions.snapshot)
+    and group its bouts back into the same event-card structure the
+    template expects. Enriches with metadata so flags, images, records
+    are present.
+    """
+    if not PAST_EVENTS_PATH.exists():
+        return []
+    try:
+        flat = json.loads(PAST_EVENTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(flat, list) or not flat:
+        return []
+
+    by_event: dict[tuple, dict] = {}
+    for p in flat:
+        key = (str(p.get("event_date", "")), p.get("event_name", "Unknown Event"))
+        ev  = by_event.setdefault(key, {
+            "event_name": p.get("event_name", "Unknown Event"),
+            "event_date": str(p.get("event_date", "")),
+            "bouts":      [],
+            "is_past":    True,
+        })
+
+        a_name = p.get("fighter_a_name", "")
+        b_name = p.get("fighter_b_name", "")
+        a_meta = fighter_meta.get(a_name, {})
+        b_meta = fighter_meta.get(b_name, {})
+
+        def _initials(n: str) -> str:
+            parts = (n or "").split()
+            return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
+
+        bout = {
+            **p,  # keep all original prediction data (probs, props, etc.)
+            "a_initials":   _initials(a_name),
+            "b_initials":   _initials(b_name),
+            "a_img":        a_meta.get("image_url") or fighter_imgs.get(a_name, ""),
+            "b_img":        b_meta.get("image_url") or fighter_imgs.get(b_name, ""),
+            "a_flag":       _flag_emoji(a_meta.get("country", "")),
+            "b_flag":       _flag_emoji(b_meta.get("country", "")),
+            "a_nationality": a_meta.get("country", ""),
+            "b_nationality": b_meta.get("country", ""),
+            "a_record":     a_meta.get("record", ""),
+            "b_record":     b_meta.get("record", ""),
+        }
+        ev["bouts"].append(bout)
+
+    return list(by_event.values())
 
 
 def _enrich_past_events(past_events: list[dict]) -> list[dict]:
@@ -712,12 +766,24 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     all_events_for_template.extend(preview_events)
 
     # Split into upcoming (event_date >= today) and past (< today).
-    # Past events get the same fight blocks but with an "outcome" overlay
-    # if results are now in the DB (next greco_loader run after the event).
     upcoming_events = [e for e in all_events_for_template if str(e.get("event_date", "")) >= today_str]
-    past_events     = [e for e in all_events_for_template if str(e.get("event_date", "")) <  today_str]
+    past_events_today = [e for e in all_events_for_template if str(e.get("event_date", "")) <  today_str]
 
-    # Try to enrich past events with actual outcomes from the fights table
+    # Pull historical past events from data/past_events.json (persisted across
+    # workflow runs). Predictions.json only contains upcoming events, so once
+    # an event passes the entry is dropped — past_events.json keeps them.
+    persisted_past = _load_persisted_past_events(fighter_meta, fighter_imgs)
+    # Merge: persisted past events + today's past events (dedup by event key)
+    seen_past_keys = {(str(e["event_date"]), e["event_name"]) for e in past_events_today}
+    for ev in persisted_past:
+        k = (str(ev["event_date"]), ev["event_name"])
+        if k not in seen_past_keys:
+            past_events_today.append(ev)
+            seen_past_keys.add(k)
+
+    # Sort past events by date descending (most recent first)
+    past_events = sorted(past_events_today, key=lambda e: str(e.get("event_date", "")), reverse=True)
+    # Try to enrich each past event's bouts with actual outcomes from the fights table
     past_events = _enrich_past_events(past_events)
 
     rendered = template.render(

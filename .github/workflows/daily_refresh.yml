@@ -79,6 +79,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
           [ -f data/predictions.json ]        && git add data/predictions.json        || true
+          [ -f data/past_events.json ]        && git add data/past_events.json        || true
           [ -f data/sportsbet_odds.json ]     && git add data/sportsbet_odds.json     || true
           [ -f data/model_performance.json ]  && git add data/model_performance.json  || true
           [ -f data/fighter_images.json ]     && git add data/fighter_images.json     || true

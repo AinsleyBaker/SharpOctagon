@@ -27,6 +27,7 @@ log = logging.getLogger(__name__)
 HISTORY_DIR     = Path("data/prediction_history")
 PERFORMANCE_PATH = Path("data/model_performance.json")
 PREDICTIONS_PATH = Path("data/predictions.json")
+PAST_EVENTS_PATH = Path("data/past_events.json")
 
 
 # ---------------------------------------------------------------------------
@@ -35,8 +36,9 @@ PREDICTIONS_PATH = Path("data/predictions.json")
 
 def snapshot_predictions(predictions: list[dict] | None = None) -> Path:
     """
-    Save the current predictions.json with a datestamp so we can compare
-    them against actual results after the event.
+    Save the current predictions with a datestamp (for evaluation later)
+    AND merge any past-dated bouts into data/past_events.json so the
+    dashboard can show them after they fall out of upcoming.
     """
     if predictions is None:
         if not PREDICTIONS_PATH.exists():
@@ -50,7 +52,47 @@ def snapshot_predictions(predictions: list[dict] | None = None) -> Path:
     with open(path, "w") as f:
         json.dump(predictions, f, indent=2, default=str)
     log.info("Prediction snapshot saved: %s (%d bouts)", path, len(predictions))
+
+    # Also persist any past-dated bouts to past_events.json (committed to repo).
+    _accumulate_past_events(predictions)
     return path
+
+
+def _accumulate_past_events(predictions: list[dict]) -> None:
+    """
+    Merge any past-dated predictions into data/past_events.json keyed by
+    upcoming_bout_id. Existing entries are kept so we never lose a
+    prediction once an event passes.
+    """
+    today_str = date.today().isoformat()
+
+    # Load existing past events (keyed by bout_id for dedup)
+    existing: dict[str, dict] = {}
+    if PAST_EVENTS_PATH.exists():
+        try:
+            arr = json.loads(PAST_EVENTS_PATH.read_text(encoding="utf-8"))
+            existing = {p.get("upcoming_bout_id", ""): p for p in arr if p.get("upcoming_bout_id")}
+        except (json.JSONDecodeError, KeyError):
+            existing = {}
+
+    # ALSO scan the current predictions for any whose date is today or past.
+    # This catches the day-of and day-after windows when an event has finished
+    # but workflow hasn't yet refreshed the upcoming_bouts table.
+    for p in predictions:
+        ev_date = str(p.get("event_date", ""))
+        bid = p.get("upcoming_bout_id", "")
+        # We accumulate any prediction where event date is past OR today.
+        # Newer entries overwrite older ones for the same bout.
+        if ev_date and bid and ev_date <= today_str:
+            existing[bid] = p
+
+    # Save back as a sorted list, newest events first
+    out = sorted(existing.values(),
+                 key=lambda p: str(p.get("event_date", "")),
+                 reverse=True)
+    PAST_EVENTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PAST_EVENTS_PATH.write_text(json.dumps(out, indent=2, default=str), encoding="utf-8")
+    log.info("Past events accumulated: %d total in %s", len(out), PAST_EVENTS_PATH)
 
 
 # ---------------------------------------------------------------------------

@@ -124,6 +124,61 @@
 
   main { max-width: 1320px; margin: 1.5rem auto; padding: 0 1.25rem; }
 
+  /* ─── Search bar ─── */
+  .search-bar {
+    position: relative; margin-bottom: 1rem;
+  }
+  .search-bar input {
+    width: 100%; padding: 0.65rem 1rem 0.65rem 2.4rem;
+    background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--light); font-family: inherit;
+    font-size: var(--sm); transition: all 0.15s;
+  }
+  .search-bar input:focus {
+    outline: none; border-color: var(--matrix);
+    box-shadow: 0 0 0 3px rgba(0,255,136,0.08);
+  }
+  .search-bar::before {
+    content: "⌕"; position: absolute; left: 0.85rem; top: 50%;
+    transform: translateY(-50%); color: var(--muted); font-size: 1rem;
+  }
+  .search-result-count {
+    font-size: var(--xs); color: var(--muted); margin-top: 0.25rem;
+    padding-left: 0.25rem;
+  }
+
+  /* ─── Next event highlight ─── */
+  .next-badge {
+    display: inline-block;
+    font-size: 0.55rem; font-weight: 800;
+    padding: 2px 7px; border-radius: 3px;
+    background: linear-gradient(135deg, var(--matrix), var(--matrix-dim));
+    color: #000; text-transform: uppercase; letter-spacing: 0.1em;
+    margin-left: 0.5rem; vertical-align: middle;
+    box-shadow: 0 0 12px rgba(0,255,136,0.5);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(0,255,136,0.5); }
+    50%      { box-shadow: 0 0 24px rgba(0,255,136,0.85); }
+  }
+
+  /* Tooltips */
+  [data-tt] { position: relative; cursor: help; border-bottom: 1px dotted var(--muted); }
+  [data-tt]::after {
+    content: attr(data-tt);
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-4px);
+    background: #0a0a0c; color: var(--light);
+    padding: 6px 10px; border-radius: 6px;
+    font-size: var(--xs); white-space: nowrap; max-width: 280px; white-space: normal;
+    width: max-content; max-width: 240px;
+    text-align: left; line-height: 1.45;
+    border: 1px solid var(--border);
+    opacity: 0; pointer-events: none; transition: opacity 0.15s;
+    z-index: 100;
+  }
+  [data-tt]:hover::after { opacity: 1; }
+
   /* ─── Disclaimer / Tagline strip ─── */
   .matrix-tagline {
     background: linear-gradient(90deg, rgba(0,255,136,0.06), rgba(200,160,250,0.04), rgba(230,57,70,0.05));
@@ -611,6 +666,14 @@
 
   <!-- ═══════════ FIGHTS PANEL ═══════════ -->
   <div id="fights-panel">
+    {% if events %}
+    <div class="search-bar">
+      <input type="text" id="fight-search" placeholder="Search fighters..."
+             oninput="filterFights(this.value)" autocomplete="off">
+      <div class="search-result-count" id="search-result-count"></div>
+    </div>
+    {% endif %}
+
     {% if not events %}
       <p style="color:var(--muted);text-align:center;padding:3rem 1rem">
         The matrix is quiet — no upcoming predictions yet.
@@ -618,11 +681,13 @@
     {% endif %}
 
     {% for event in events %}
+    {% set is_next = (loop.first and not event.is_preview) %}
     {% set anchor = "event-" + (event.event_date or "")|replace(":", "")|replace(" ", "-") %}
     <div class="event-card {{ 'preview-event' if event.is_preview else '' }}" id="{{ anchor[:18] }}">
       <div class="event-header">
         <h2>
           {{ event.event_name }}
+          {% if is_next %}<span class="next-badge">⚡ Next Event</span>{% endif %}
           {% if event.is_preview %}<span class="preview-tag">predictions soon</span>{% endif %}
         </h2>
         <span class="date">{{ event.event_date }}</span>
@@ -866,11 +931,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1151,6 +1216,55 @@ function filterBetsByEvent(eventLabel, btn) {
     }
   }
 }
+function filterFights(query) {
+  const q = (query || '').trim().toLowerCase();
+  const blocks = document.querySelectorAll('#fights-panel .fight-block');
+  const cards  = document.querySelectorAll('#fights-panel .event-card');
+  let visibleBouts = 0;
+
+  blocks.forEach(b => {
+    const names = b.querySelectorAll('.fighter-name');
+    const text = Array.from(names).map(n => n.textContent.trim().toLowerCase()).join(' | ');
+    const show = !q || text.includes(q);
+    b.style.display = show ? '' : 'none';
+    if (show) visibleBouts++;
+  });
+
+  // Hide event cards whose all bouts are hidden
+  cards.forEach(c => {
+    const visible = Array.from(c.querySelectorAll('.fight-block'))
+      .filter(b => b.style.display !== 'none');
+    c.style.display = visible.length === 0 && q ? 'none' : '';
+  });
+
+  const counter = document.getElementById('search-result-count');
+  if (counter) {
+    if (q) {
+      counter.textContent = visibleBouts === 0
+        ? `No fighters matching "${query}"`
+        : `${visibleBouts} bout${visibleBouts === 1 ? '' : 's'} matching "${query}"`;
+    } else {
+      counter.textContent = '';
+    }
+  }
+}
+
+// Keyboard shortcut: "/" to focus search
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    const s = document.getElementById('fight-search');
+    if (s) {
+      showTab('fights', document.getElementById('tab-fights'));
+      s.focus();
+    }
+  }
+  if (e.key === 'Escape') {
+    const s = document.getElementById('fight-search');
+    if (s && s.value) { s.value = ''; filterFights(''); }
+  }
+});
+
 function jumpFromBetsToEvent() {
   if (_activeEvent === '__all__') return;
   // Switch to Fights tab and find the event card

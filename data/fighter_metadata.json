@@ -13,7 +13,20 @@
     "style": "MMA",
     "age": "68.00",
     "record": "14-2-0",
-    "image_url": "fighter-images/aiemann-zahabi.png"
+    "image_url": "fighter-images/aiemann-zahabi.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 6,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.2222222222222222,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.0,
+      "slpm": 13.607990012484395,
+      "sapm": 28.61423220973783,
+      "td_per_min": 0.024968789013732836,
+      "stance": "Orthodox"
+    }
   },
   "Alex Pereira": {
     "country": "Brazil",
@@ -21,7 +34,20 @@
     "style": "Kickboxer",
     "age": "76.00",
     "record": "13-3-0",
-    "image_url": "fighter-images/alex-pereira.png"
+    "image_url": "fighter-images/alex-pereira.png",
+    "stats": {
+      "n_fights": 12,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.75,
+      "ko_rate": 0.75,
+      "sub_rate": 0.0,
+      "slpm": 17.93193717277487,
+      "sapm": 28.87434554973822,
+      "td_per_min": 0.026178010471204185,
+      "stance": "Orthodox"
+    }
   },
   "Alex Perez": {
     "country": "United States",
@@ -29,7 +55,20 @@
     "style": "Freestyle",
     "age": "66.00",
     "record": "26-10-0",
-    "image_url": "fighter-images/alex-perez.png"
+    "image_url": "fighter-images/alex-perez.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.7857142857142857,
+      "ko_rate": 0.42857142857142855,
+      "sub_rate": 0.14285714285714285,
+      "slpm": 9.88288628636192,
+      "sapm": 21.125802795617684,
+      "td_per_min": 0.3400075557234606,
+      "stance": "Orthodox"
+    }
   },
   "Alexander Hernandez": {
     "country": "United States",
@@ -45,7 +84,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "79.00",
     "record": "39-11-0",
-    "image_url": "fighter-images/alexander-volkov.png"
+    "image_url": "fighter-images/alexander-volkov.png",
+    "stats": {
+      "n_fights": 18,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5,
+      "ko_rate": 0.3888888888888889,
+      "sub_rate": 0.05555555555555555,
+      "slpm": 16.33552014995314,
+      "sapm": 28.467666354264296,
+      "td_per_min": 0.14058106841611998,
+      "stance": "Orthodox"
+    }
   },
   "Alice Ardelean": {
     "country": "Romania",
@@ -53,7 +105,20 @@
     "style": "Striker",
     "age": "63.00",
     "record": "11-7-0",
-    "image_url": "fighter-images/alice-ardelean.png"
+    "image_url": "fighter-images/alice-ardelean.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 22.05,
+      "sapm": 48.05,
+      "td_per_min": 0.2,
+      "stance": "Orthodox"
+    }
   },
   "Aljamain Sterling": {
     "country": "United States",
@@ -69,7 +134,20 @@
     "style": "Freestyle",
     "age": "72.00",
     "record": "17-6-1",
-    "image_url": "fighter-images/alonzo-menifield.png"
+    "image_url": "fighter-images/alonzo-menifield.png",
+    "stats": {
+      "n_fights": 17,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5882352941176471,
+      "ko_rate": 0.47058823529411764,
+      "sub_rate": 0.11764705882352941,
+      "slpm": 8.956450287592439,
+      "sapm": 16.762530813475756,
+      "td_per_min": 0.08216926869350862,
+      "stance": "Orthodox"
+    }
   },
   "Andre Petroski": {
     "country": "United States",
@@ -77,7 +155,20 @@
     "style": "Freestyle",
     "age": "72.00",
     "record": "13-6-0",
-    "image_url": "fighter-images/andre-petroski.png"
+    "image_url": "fighter-images/andre-petroski.png",
+    "stats": {
+      "n_fights": 12,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.16666666666666666,
+      "slpm": 8.290076335877863,
+      "sapm": 16.83206106870229,
+      "td_per_min": 0.6183206106870229,
+      "stance": "Switch"
+    }
   },
   "Angela Hill": {
     "country": "United States",
@@ -85,7 +176,20 @@
     "style": "Muay Thai",
     "age": "63.00",
     "record": "18-16-0",
-    "image_url": "fighter-images/angela-hill.png"
+    "image_url": "fighter-images/angela-hill.png",
+    "stats": {
+      "n_fights": 29,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.1724137931034483,
+      "ko_rate": 0.06896551724137931,
+      "sub_rate": 0.034482758620689655,
+      "slpm": 16.275862068965516,
+      "sapm": 32.421052631578945,
+      "td_per_min": 0.15245009074410162,
+      "stance": "Orthodox"
+    }
   },
   "Aoriqileng": {
     "country": "China",
@@ -93,7 +197,8 @@
     "style": "",
     "age": "67.00",
     "record": "26-11-0",
-    "image_url": "fighter-images/aoriqileng.png"
+    "image_url": "fighter-images/aoriqileng.png",
+    "stats": {}
   },
   "Ariane Carnelossi": {
     "country": "Brazil",
@@ -101,7 +206,20 @@
     "style": "Muay Thai",
     "age": "62.00",
     "record": "15-4-0",
-    "image_url": "fighter-images/ariane-carnelossi.png"
+    "image_url": "fighter-images/ariane-carnelossi.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.8,
+      "ko_rate": 0.4,
+      "sub_rate": 0.2,
+      "slpm": 10.407523510971787,
+      "sapm": 26.4576802507837,
+      "td_per_min": 0.31347962382445144,
+      "stance": "Orthodox"
+    }
   },
   "Arnold Allen": {
     "country": "England",
@@ -109,7 +227,20 @@
     "style": "MMA",
     "age": "68.00",
     "record": "20-4-0",
-    "image_url": "fighter-images/arnold-allen.png"
+    "image_url": "fighter-images/arnold-allen.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.2857142857142857,
+      "ko_rate": 0.14285714285714285,
+      "sub_rate": 0.14285714285714285,
+      "slpm": 11.616835994194485,
+      "sapm": 27.640058055152394,
+      "td_per_min": 0.19158200290275762,
+      "stance": "Southpaw"
+    }
   },
   "Ateba Gautier": {
     "country": "Cameroon",
@@ -117,7 +248,20 @@
     "style": "Striker",
     "age": "76.00",
     "record": "10-1-0",
-    "image_url": "fighter-images/ateba-gautier.png"
+    "image_url": "fighter-images/ateba-gautier.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.75,
+      "ko_rate": 0.75,
+      "sub_rate": 0.0,
+      "slpm": 7.642752562225476,
+      "sapm": 18.535871156661788,
+      "td_per_min": 0.08784773060029283,
+      "stance": "Switch"
+    }
   },
   "Baisangur Susurkaev": {
     "country": "Russia",
@@ -125,7 +269,20 @@
     "style": "Striker",
     "age": "74.00",
     "record": "11-0-0",
-    "image_url": "fighter-images/baisangur-susurkaev.png"
+    "image_url": "fighter-images/baisangur-susurkaev.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.5,
+      "sub_rate": 0.5,
+      "slpm": 24.383561643835616,
+      "sapm": 41.09589041095891,
+      "td_per_min": 1.095890410958904,
+      "stance": "Orthodox"
+    }
   },
   "Belal Muhammad": {
     "country": "United States",
@@ -133,7 +290,20 @@
     "style": "",
     "age": "71.00",
     "record": "24-5-0",
-    "image_url": "fighter-images/belal-muhammad.png"
+    "image_url": "fighter-images/belal-muhammad.png",
+    "stats": {
+      "n_fights": 21,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.19047619047619047,
+      "ko_rate": 0.14285714285714285,
+      "sub_rate": 0.047619047619047616,
+      "slpm": 15.393177737881508,
+      "sapm": 35.51526032315979,
+      "td_per_min": 0.49551166965888693,
+      "stance": "Orthodox"
+    }
   },
   "Ben Johnston": {
     "country": "",
@@ -141,7 +311,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Beneil Dariush": {
     "country": "Iran",
@@ -149,7 +320,20 @@
     "style": "MMA",
     "age": "70.00",
     "record": "23-7-1",
-    "image_url": "fighter-images/beneil-dariush.png"
+    "image_url": "fighter-images/beneil-dariush.png",
+    "stats": {
+      "n_fights": 25,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6,
+      "ko_rate": 0.36,
+      "sub_rate": 0.2,
+      "slpm": 9.223103893707327,
+      "sapm": 18.734083779295073,
+      "td_per_min": 0.34323675954973243,
+      "stance": "Southpaw"
+    }
   },
   "Bernardo Sopaj": {
     "country": "Albania",
@@ -157,7 +341,8 @@
     "style": "MMA",
     "age": "66.00",
     "record": "12-3-0",
-    "image_url": "fighter-images/bernardo-sopaj.png"
+    "image_url": "fighter-images/bernardo-sopaj.png",
+    "stats": {}
   },
   "Billy Elekana": {
     "country": "United States",
@@ -165,7 +350,20 @@
     "style": "MMA",
     "age": "75.00",
     "record": "10-2-0",
-    "image_url": "fighter-images/billy-elekana.png"
+    "image_url": "fighter-images/billy-elekana.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.75,
+      "ko_rate": 0.0,
+      "sub_rate": 0.5,
+      "slpm": 6.233766233766233,
+      "sapm": 11.038961038961038,
+      "td_per_min": 0.12987012987012986,
+      "stance": "Southpaw"
+    }
   },
   "Bo Nickal": {
     "country": "United States",
@@ -173,7 +371,20 @@
     "style": "Wrestler",
     "age": "73.00",
     "record": "8-1-0",
-    "image_url": "fighter-images/bo-nickal.png"
+    "image_url": "fighter-images/bo-nickal.png",
+    "stats": {
+      "n_fights": 6,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.8333333333333334,
+      "ko_rate": 0.5,
+      "sub_rate": 0.3333333333333333,
+      "slpm": 9.422492401215806,
+      "sapm": 15.440729483282675,
+      "td_per_min": 0.425531914893617,
+      "stance": "Southpaw"
+    }
   },
   "Brando Peri\u010di\u0107": {
     "country": "Australia",
@@ -181,7 +392,8 @@
     "style": "Wrestler",
     "age": "77.00",
     "record": "6-1-0",
-    "image_url": "fighter-images/brando-pericic.png"
+    "image_url": "fighter-images/brando-pericic.png",
+    "stats": {}
   },
   "Brendan Allen": {
     "country": "United States",
@@ -189,7 +401,20 @@
     "style": "MMA",
     "age": "74.00",
     "record": "26-7-0",
-    "image_url": "fighter-images/brendan-allen.png"
+    "image_url": "fighter-images/brendan-allen.png",
+    "stats": {
+      "n_fights": 18,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6111111111111112,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.3888888888888889,
+      "slpm": 10.207810002283626,
+      "sapm": 19.196163507650148,
+      "td_per_min": 0.2877369262388673,
+      "stance": "Orthodox"
+    }
   },
   "Bruno Silva": {
     "country": "Brazil",
@@ -197,7 +422,20 @@
     "style": "Grappler",
     "age": "64.00",
     "record": "15-8-2",
-    "image_url": "fighter-images/bruno-silva.png"
+    "image_url": "fighter-images/bruno-silva.png",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
   },
   "Bryce Mitchell": {
     "country": "United States",
@@ -205,7 +443,20 @@
     "style": "MMA",
     "age": "70.00",
     "record": "18-4-0",
-    "image_url": "fighter-images/bryce-mitchell.png"
+    "image_url": "fighter-images/bryce-mitchell.png",
+    "stats": {
+      "n_fights": 12,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.4166666666666667,
+      "ko_rate": 0.16666666666666666,
+      "sub_rate": 0.08333333333333333,
+      "slpm": 6.432947583390061,
+      "sapm": 10.82368958475153,
+      "td_per_min": 0.6126616746085772,
+      "stance": "Southpaw"
+    }
   },
   "Cam Rowston": {
     "country": "",
@@ -213,7 +464,20 @@
     "style": "",
     "age": "",
     "record": "2-0-0",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 10.122249388753056,
+      "sapm": 22.73838630806846,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Cameron Smotherman": {
     "country": "United States",
@@ -221,7 +485,20 @@
     "style": "",
     "age": "69.00",
     "record": "12-6-0",
-    "image_url": "fighter-images/cameron-smotherman.png"
+    "image_url": "fighter-images/cameron-smotherman.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 12.2,
+      "sapm": 32.8,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Carlos Prates": {
     "country": "Brazil",
@@ -229,7 +506,20 @@
     "style": "Striker",
     "age": "73.00",
     "record": "23-7-0",
-    "image_url": "fighter-images/carlos-prates.png"
+    "image_url": "fighter-images/carlos-prates.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.8571428571428571,
+      "ko_rate": 0.8571428571428571,
+      "sub_rate": 0.0,
+      "slpm": 8.061749571183533,
+      "sapm": 14.888507718696399,
+      "td_per_min": 0.03430531732418525,
+      "stance": "Switch"
+    }
   },
   "Chelsea Chandler": {
     "country": "United States",
@@ -237,7 +527,20 @@
     "style": "MMA",
     "age": "68.50",
     "record": "6-4-0",
-    "image_url": "fighter-images/chelsea-chandler.png"
+    "image_url": "fighter-images/chelsea-chandler.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.4,
+      "ko_rate": 0.4,
+      "sub_rate": 0.0,
+      "slpm": 8.453292496171516,
+      "sapm": 18.744257274119448,
+      "td_per_min": 0.13782542113323124,
+      "stance": "Southpaw"
+    }
   },
   "Ciryl Gane": {
     "country": "France",
@@ -245,7 +548,20 @@
     "style": "Muay Thai",
     "age": "76.00",
     "record": "13-2-0",
-    "image_url": "fighter-images/ciryl-gane.png"
+    "image_url": "fighter-images/ciryl-gane.png",
+    "stats": {
+      "n_fights": 13,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5384615384615384,
+      "ko_rate": 0.3076923076923077,
+      "sub_rate": 0.15384615384615385,
+      "slpm": 16.743766896966054,
+      "sapm": 27.161309702613394,
+      "td_per_min": 0.1441874436767798,
+      "stance": "Orthodox"
+    }
   },
   "Clayton Carpenter": {
     "country": "United States",
@@ -253,7 +569,20 @@
     "style": "",
     "age": "66.00",
     "record": "8-2-0",
-    "image_url": "fighter-images/clayton-carpenter.png"
+    "image_url": "fighter-images/clayton-carpenter.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.75,
+      "ko_rate": 0.0,
+      "sub_rate": 0.5,
+      "slpm": 5.6890848952590956,
+      "sapm": 10.253583241455347,
+      "td_per_min": 0.19845644983461963,
+      "stance": "Orthodox"
+    }
   },
   "Cody Brundage": {
     "country": "United States",
@@ -261,7 +590,20 @@
     "style": "Wrestler",
     "age": "72.00",
     "record": "11-9-1",
-    "image_url": "fighter-images/cody-brundage.png"
+    "image_url": "fighter-images/cody-brundage.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 0,
+      "loss_streak": 4,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.5714285714285714,
+      "ko_rate": 0.35714285714285715,
+      "sub_rate": 0.07142857142857142,
+      "slpm": 5.209205020920502,
+      "sapm": 11.004184100418408,
+      "td_per_min": 0.2719665271966527,
+      "stance": "Orthodox"
+    }
   },
   "Cody Durden": {
     "country": "United States",
@@ -277,7 +619,20 @@
     "style": "MMA",
     "age": "67.00",
     "record": "8-1-0",
-    "image_url": "fighter-images/cody-haddon.png"
+    "image_url": "fighter-images/cody-haddon.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 28.0,
+      "sapm": 56.0,
+      "td_per_min": 0.4,
+      "stance": "Orthodox"
+    }
   },
   "Colby Thicknesse": {
     "country": "Australia",
@@ -285,7 +640,20 @@
     "style": "Freestyle",
     "age": "67.00",
     "record": "8-1-0",
-    "image_url": "fighter-images/colby-thicknesse.png"
+    "image_url": "fighter-images/colby-thicknesse.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 10.0,
+      "sapm": 23.8,
+      "td_per_min": 0.2,
+      "stance": "Orthodox"
+    }
   },
   "Daniel Barez": {
     "country": "Spain",
@@ -293,7 +661,20 @@
     "style": "Freestyle",
     "age": "66.00",
     "record": "17-7-0",
-    "image_url": "fighter-images/daniel-barez.png"
+    "image_url": "fighter-images/daniel-barez.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 10.24602026049204,
+      "sapm": 20.752532561505063,
+      "td_per_min": 0.08683068017366136,
+      "stance": "Orthodox"
+    }
   },
   "Daniel Santos": {
     "country": "Brazil",
@@ -301,7 +682,20 @@
     "style": "Muay Thai",
     "age": "67.00",
     "record": "14-2-0",
-    "image_url": "fighter-images/daniel-santos.png"
+    "image_url": "fighter-images/daniel-santos.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.4,
+      "ko_rate": 0.4,
+      "sub_rate": 0.0,
+      "slpm": 14.273789649415692,
+      "sapm": 35.058430717863104,
+      "td_per_min": 0.6010016694490817,
+      "stance": "Orthodox"
+    }
   },
   "Davey Grant": {
     "country": "England",
@@ -317,7 +711,20 @@
     "style": "Boxing",
     "age": "65.00",
     "record": "25-6-1",
-    "image_url": "fighter-images/deiveson-figueiredo.png"
+    "image_url": "fighter-images/deiveson-figueiredo.png",
+    "stats": {
+      "n_fights": 21,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5238095238095238,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.19047619047619047,
+      "slpm": 7.870490286771508,
+      "sapm": 14.597594819611471,
+      "td_per_min": 0.32192414431082333,
+      "stance": "Orthodox"
+    }
   },
   "Derrick Lewis": {
     "country": "United States",
@@ -325,7 +732,20 @@
     "style": "Brawler",
     "age": "75.00",
     "record": "29-13-0",
-    "image_url": "fighter-images/derrick-lewis.png"
+    "image_url": "fighter-images/derrick-lewis.png",
+    "stats": {
+      "n_fights": 31,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.8387096774193549,
+      "ko_rate": 0.7741935483870968,
+      "sub_rate": 0.0,
+      "slpm": 7.572924457741213,
+      "sapm": 15.190725504861634,
+      "td_per_min": 0.11219147344801798,
+      "stance": "Orthodox"
+    }
   },
   "Diego Lopes": {
     "country": "Brazil",
@@ -333,7 +753,20 @@
     "style": "Jiu-Jitsu",
     "age": "71.00",
     "record": "27-8-0",
-    "image_url": "fighter-images/diego-lopes.png"
+    "image_url": "fighter-images/diego-lopes.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.4444444444444444,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.1111111111111111,
+      "slpm": 12.726392251815978,
+      "sapm": 26.615012106537527,
+      "td_per_min": 0.20338983050847456,
+      "stance": "Orthodox"
+    }
   },
   "Djorden Santos": {
     "country": "Brazil",
@@ -341,7 +774,20 @@
     "style": "",
     "age": "72.00",
     "record": "11-2-0",
-    "image_url": "fighter-images/djorden-santos.png"
+    "image_url": "fighter-images/djorden-santos.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 23.0,
+      "sapm": 56.1,
+      "td_per_min": 0.1,
+      "stance": "Orthodox"
+    }
   },
   "Dom Mar Fan": {
     "country": "Australia",
@@ -349,7 +795,20 @@
     "style": "MMA",
     "age": "71.00",
     "record": "9-2-0",
-    "image_url": "fighter-images/dom-mar-fan.png"
+    "image_url": "fighter-images/dom-mar-fan.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 19.8,
+      "sapm": 34.6,
+      "td_per_min": 0.2,
+      "stance": "Orthodox"
+    }
   },
   "Dooho Choi": {
     "country": "South Korea",
@@ -357,7 +816,20 @@
     "style": "Striker",
     "age": "70.00",
     "record": "16-4-1",
-    "image_url": "fighter-images/dooho-choi.png"
+    "image_url": "fighter-images/dooho-choi.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.7777777777777778,
+      "ko_rate": 0.7777777777777778,
+      "sub_rate": 0.0,
+      "slpm": 11.916859122401847,
+      "sapm": 21.131639722863742,
+      "td_per_min": 0.24249422632794457,
+      "stance": "Orthodox"
+    }
   },
   "Edmen Shahbazyan": {
     "country": "United States",
@@ -365,7 +837,20 @@
     "style": "MMA",
     "age": "74.50",
     "record": "16-5-0",
-    "image_url": "fighter-images/edmen-shahbazyan.png"
+    "image_url": "fighter-images/edmen-shahbazyan.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.7857142857142857,
+      "ko_rate": 0.6428571428571429,
+      "sub_rate": 0.07142857142857142,
+      "slpm": 8.828039430449067,
+      "sapm": 18.26944140197152,
+      "td_per_min": 0.26286966046002186,
+      "stance": "Orthodox"
+    }
   },
   "Eric McConico": {
     "country": "United States",
@@ -381,7 +866,8 @@
     "style": "Kickboxer",
     "age": "73.00",
     "record": "18-4-0",
-    "image_url": "fighter-images/fares-ziam.png"
+    "image_url": "fighter-images/fares-ziam.png",
+    "stats": {}
   },
   "Francis Marshall": {
     "country": "United States",
@@ -397,7 +883,20 @@
     "style": "",
     "age": "Apr. 27, 2026",
     "record": "0-0-0",
-    "image_url": "fighter-images/gable-steveson.jpg"
+    "image_url": "fighter-images/gable-steveson.jpg",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Gabriel Bonfim": {
     "country": "Brazil",
@@ -405,7 +904,20 @@
     "style": "Striker",
     "age": "73.00",
     "record": "19-1-0",
-    "image_url": "fighter-images/gabriel-bonfim.png"
+    "image_url": "fighter-images/gabriel-bonfim.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.7142857142857143,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.42857142857142855,
+      "slpm": 11.284996410624553,
+      "sapm": 23.99138549892319,
+      "td_per_min": 0.6030150753768845,
+      "stance": "Orthodox"
+    }
   },
   "Gerald Meerschaert": {
     "country": "United States",
@@ -413,7 +925,20 @@
     "style": "Freestyle",
     "age": "73.00",
     "record": "37-21-0",
-    "image_url": "fighter-images/gerald-meerschaert.png"
+    "image_url": "fighter-images/gerald-meerschaert.png",
+    "stats": {
+      "n_fights": 25,
+      "win_streak": 0,
+      "loss_streak": 4,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.8,
+      "ko_rate": 0.24,
+      "sub_rate": 0.44,
+      "slpm": 8.145390847383403,
+      "sapm": 18.01182395445588,
+      "td_per_min": 0.32844317932997596,
+      "stance": "Southpaw"
+    }
   },
   "Grant Dawson": {
     "country": "United States",
@@ -421,7 +946,20 @@
     "style": "",
     "age": "70.00",
     "record": "23-3-1",
-    "image_url": "fighter-images/grant-dawson.png"
+    "image_url": "fighter-images/grant-dawson.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5714285714285714,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.2857142857142857,
+      "slpm": 9.860000000000001,
+      "sapm": 18.76,
+      "td_per_min": 0.8000000000000002,
+      "stance": "Switch"
+    }
   },
   "Ilia Topuria": {
     "country": "Germany",
@@ -429,7 +967,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "67.00",
     "record": "17-0-0",
-    "image_url": "fighter-images/ilia-topuria.png"
+    "image_url": "fighter-images/ilia-topuria.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 9,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.7777777777777778,
+      "ko_rate": 0.6666666666666666,
+      "sub_rate": 0.1111111111111111,
+      "slpm": 13.846153846153848,
+      "sapm": 28.717948717948723,
+      "td_per_min": 0.3760683760683761,
+      "stance": "Orthodox"
+    }
   },
   "Imanol Rodriguez": {
     "country": "Mexico",
@@ -437,7 +988,20 @@
     "style": "Freestyle",
     "age": "64.00",
     "record": "7-0-0",
-    "image_url": "fighter-images/imanol-rodriguez.png"
+    "image_url": "fighter-images/imanol-rodriguez.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 10.574712643678161,
+      "sapm": 19.31034482758621,
+      "td_per_min": 0.2298850574712644,
+      "stance": "Orthodox"
+    }
   },
   "Ivan Erslan": {
     "country": "Croatia",
@@ -445,7 +1009,20 @@
     "style": "Boxing",
     "age": "74.00",
     "record": "14-6-0",
-    "image_url": "fighter-images/ivan-erslan.png"
+    "image_url": "fighter-images/ivan-erslan.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 6.382978723404255,
+      "sapm": 13.742177722152691,
+      "td_per_min": 0.07509386733416772,
+      "stance": "Orthodox"
+    }
   },
   "Iwo Baraniewski": {
     "country": "Poland",
@@ -453,7 +1030,20 @@
     "style": "Judo",
     "age": "72.50",
     "record": "8-0-0",
-    "image_url": "fighter-images/iwo-baraniewski.png"
+    "image_url": "fighter-images/iwo-baraniewski.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 16.134453781512605,
+      "sapm": 22.6890756302521,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Jack Della Maddalena": {
     "country": "Australia",
@@ -461,7 +1051,20 @@
     "style": "MMA",
     "age": "71.00",
     "record": "18-3-0",
-    "image_url": "fighter-images/jack-della-maddalena.png"
+    "image_url": "fighter-images/jack-della-maddalena.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5555555555555556,
+      "ko_rate": 0.4444444444444444,
+      "sub_rate": 0.1111111111111111,
+      "slpm": 16.040172166427546,
+      "sapm": 30.444763271162124,
+      "td_per_min": 0.028694404591104734,
+      "stance": "Switch"
+    }
   },
   "Jackson McVey": {
     "country": "United States",
@@ -477,7 +1080,20 @@
     "style": "MMA",
     "age": "69.00",
     "record": "9-3-0",
-    "image_url": "fighter-images/jacob-malkoun.png"
+    "image_url": "fighter-images/jacob-malkoun.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.2857142857142857,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.0,
+      "slpm": 13.766730401529637,
+      "sapm": 23.90057361376673,
+      "td_per_min": 1.2237093690248566,
+      "stance": "Orthodox"
+    }
   },
   "Jacqueline Cavalcanti": {
     "country": "Brazil",
@@ -485,7 +1101,20 @@
     "style": "Striker",
     "age": "68.00",
     "record": "10-1-0",
-    "image_url": "fighter-images/jacqueline-cavalcanti.png"
+    "image_url": "fighter-images/jacqueline-cavalcanti.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 5,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 16.96,
+      "sapm": 36.36,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Jafel Filho": {
     "country": "Brazil",
@@ -501,7 +1130,20 @@
     "style": "Freestyle",
     "age": "71.50",
     "record": "22-8-0",
-    "image_url": "fighter-images/jake-matthews.png"
+    "image_url": "fighter-images/jake-matthews.png",
+    "stats": {
+      "n_fights": 23,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5652173913043478,
+      "ko_rate": 0.13043478260869565,
+      "sub_rate": 0.2608695652173913,
+      "slpm": 9.593824664583716,
+      "sapm": 21.86730380444771,
+      "td_per_min": 0.27568461679838263,
+      "stance": "Orthodox"
+    }
   },
   "Jakub Wik\u0142acz": {
     "country": "",
@@ -509,7 +1151,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Jaqueline Amorim": {
     "country": "Brazil",
@@ -517,7 +1160,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "63.00",
     "record": "10-2-0",
-    "image_url": "fighter-images/jaqueline-amorim.png"
+    "image_url": "fighter-images/jaqueline-amorim.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.8,
+      "ko_rate": 0.2,
+      "sub_rate": 0.6,
+      "slpm": 6.987179487179487,
+      "sapm": 13.076923076923077,
+      "td_per_min": 0.38461538461538464,
+      "stance": "Orthodox"
+    }
   },
   "Jeisla Chaves": {
     "country": "Brazil",
@@ -525,7 +1181,20 @@
     "style": "",
     "age": "66.00",
     "record": "1-0-0",
-    "image_url": "fighter-images/jeisla-chaves.png"
+    "image_url": "fighter-images/jeisla-chaves.png",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
   },
   "Jeremiah Wells": {
     "country": "United States",
@@ -533,7 +1202,20 @@
     "style": "Striker",
     "age": "69.00",
     "record": "13-4-1",
-    "image_url": "fighter-images/jeremiah-wells.png"
+    "image_url": "fighter-images/jeremiah-wells.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5714285714285714,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.14285714285714285,
+      "slpm": 6.841359773371106,
+      "sapm": 14.872521246458925,
+      "td_per_min": 0.594900849858357,
+      "stance": "Switch"
+    }
   },
   "Jeremy Stephens": {
     "country": "United States",
@@ -541,7 +1223,20 @@
     "style": "Freestyle",
     "age": "68.50",
     "record": "28-20-0",
-    "image_url": "fighter-images/jeremy-stephens.png"
+    "image_url": "fighter-images/jeremy-stephens.png",
+    "stats": {
+      "n_fights": 35,
+      "win_streak": 0,
+      "loss_streak": 7,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.4,
+      "ko_rate": 0.3142857142857143,
+      "sub_rate": 0.0,
+      "slpm": 9.46704587609744,
+      "sapm": 23.185359218498824,
+      "td_per_min": 0.22257944849758873,
+      "stance": "Orthodox"
+    }
   },
   "Jesus Aguilar": {
     "country": "Mexico",
@@ -549,7 +1244,20 @@
     "style": "Freestyle",
     "age": "64.00",
     "record": "12-4-0",
-    "image_url": "fighter-images/jesus-aguilar.png"
+    "image_url": "fighter-images/jesus-aguilar.png",
+    "stats": {
+      "n_fights": 6,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5,
+      "ko_rate": 0.16666666666666666,
+      "sub_rate": 0.16666666666666666,
+      "slpm": 6.493699036323202,
+      "sapm": 16.367679762787247,
+      "td_per_min": 0.17790956263899182,
+      "stance": "Orthodox"
+    }
   },
   "Jingnan Xiong": {
     "country": "China",
@@ -557,7 +1265,8 @@
     "style": "",
     "age": "",
     "record": "0-0-0",
-    "image_url": "fighter-images/jingnan-xiong.png"
+    "image_url": "fighter-images/jingnan-xiong.png",
+    "stats": {}
   },
   "Joanderson Brito": {
     "country": "Brazil",
@@ -565,7 +1274,20 @@
     "style": "Striker",
     "age": "68.00",
     "record": "18-5-1",
-    "image_url": "fighter-images/joanderson-brito.png"
+    "image_url": "fighter-images/joanderson-brito.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5555555555555556,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.2222222222222222,
+      "slpm": 5.528700906344411,
+      "sapm": 11.20845921450151,
+      "td_per_min": 0.5438066465256798,
+      "stance": "Orthodox"
+    }
   },
   "Joaquin Buckley": {
     "country": "United States",
@@ -573,7 +1295,20 @@
     "style": "Freestyle",
     "age": "70.00",
     "record": "21-7-0",
-    "image_url": "fighter-images/joaquin-buckley.png"
+    "image_url": "fighter-images/joaquin-buckley.png",
+    "stats": {
+      "n_fights": 16,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6875,
+      "ko_rate": 0.6875,
+      "sub_rate": 0.0,
+      "slpm": 13.04268846503179,
+      "sapm": 35.549500454132605,
+      "td_per_min": 0.3451407811080836,
+      "stance": "Southpaw"
+    }
   },
   "Joel \u00c1lvarez": {
     "country": "Spain",
@@ -581,7 +1316,8 @@
     "style": "Striker",
     "age": "74.00",
     "record": "23-3-0",
-    "image_url": "fighter-images/joel-alvarez.png"
+    "image_url": "fighter-images/joel-alvarez.png",
+    "stats": {}
   },
   "Jonathan Micallef": {
     "country": "Australia",
@@ -589,7 +1325,20 @@
     "style": "MMA",
     "age": "72.00",
     "record": "9-1-0",
-    "image_url": "fighter-images/jonathan-micallef.png"
+    "image_url": "fighter-images/jonathan-micallef.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.5,
+      "ko_rate": 0.0,
+      "sub_rate": 0.5,
+      "slpm": 12.211350293542075,
+      "sapm": 29.47162426614482,
+      "td_per_min": 0.11741682974559688,
+      "stance": "Southpaw"
+    }
   },
   "Jordan Leavitt": {
     "country": "United States",
@@ -597,7 +1346,20 @@
     "style": "Freestyle",
     "age": "69.00",
     "record": "13-3-0",
-    "image_url": "fighter-images/jordan-leavitt.png"
+    "image_url": "fighter-images/jordan-leavitt.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.2222222222222222,
+      "slpm": 5.617021276595745,
+      "sapm": 9.738601823708207,
+      "td_per_min": 0.5106382978723404,
+      "stance": "Southpaw"
+    }
   },
   "Jose Ochoa": {
     "country": "Peru",
@@ -605,7 +1367,20 @@
     "style": "MMA",
     "age": "67.00",
     "record": "8-2-0",
-    "image_url": "fighter-images/jose-ochoa.png"
+    "image_url": "fighter-images/jose-ochoa.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.0,
+      "slpm": 10.095238095238095,
+      "sapm": 26.857142857142858,
+      "td_per_min": 0.09523809523809523,
+      "stance": "Southpaw"
+    }
   },
   "Joselyne Edwards": {
     "country": "Panama",
@@ -621,7 +1396,20 @@
     "style": "Wrestling",
     "age": "73.00",
     "record": "9-0-0",
-    "image_url": "fighter-images/josh-hokit.png"
+    "image_url": "fighter-images/josh-hokit.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.6666666666666666,
+      "sub_rate": 0.0,
+      "slpm": 20.427480916030532,
+      "sapm": 33.61832061068702,
+      "td_per_min": 0.09160305343511449,
+      "stance": "Orthodox"
+    }
   },
   "Joshua Van": {
     "country": "Myanmar",
@@ -629,7 +1417,20 @@
     "style": "Freestyle",
     "age": "65.00",
     "record": "16-2-0",
-    "image_url": "fighter-images/joshua-van.png"
+    "image_url": "fighter-images/joshua-van.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 6,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.4,
+      "ko_rate": 0.4,
+      "sub_rate": 0.0,
+      "slpm": 27.799325463743678,
+      "sapm": 48.9460370994941,
+      "td_per_min": 0.17706576728499157,
+      "stance": "Orthodox"
+    }
   },
   "Juan Diaz": {
     "country": "Peru",
@@ -637,7 +1438,20 @@
     "style": "",
     "age": "68.50",
     "record": "1-0-0",
-    "image_url": "fighter-images/juan-diaz.png"
+    "image_url": "fighter-images/juan-diaz.png",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Julia Polastri": {
     "country": "Brazil",
@@ -653,7 +1467,20 @@
     "style": "Kickboxer",
     "age": "75.00",
     "record": "6-5-0",
-    "image_url": "fighter-images/junior-tafa.png"
+    "image_url": "fighter-images/junior-tafa.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.8571428571428571,
+      "ko_rate": 0.42857142857142855,
+      "sub_rate": 0.0,
+      "slpm": 7.94378698224852,
+      "sapm": 15.310650887573964,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Justin Gaethje": {
     "country": "United States",
@@ -661,7 +1488,20 @@
     "style": "MMA",
     "age": "71.00",
     "record": "27-5-0",
-    "image_url": "fighter-images/justin-gaethje.png"
+    "image_url": "fighter-images/justin-gaethje.png",
+    "stats": {
+      "n_fights": 15,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.7333333333333333,
+      "ko_rate": 0.6,
+      "sub_rate": 0.0,
+      "slpm": 22.627037392138064,
+      "sapm": 38.65771812080537,
+      "td_per_min": 0.07670182166826463,
+      "stance": "Orthodox"
+    }
   },
   "Kai Asakura": {
     "country": "Japan",
@@ -669,7 +1509,20 @@
     "style": "",
     "age": "68.00",
     "record": "21-6-0",
-    "image_url": "fighter-images/kai-asakura.png"
+    "image_url": "fighter-images/kai-asakura.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 5.643564356435642,
+      "sapm": 17.227722772277225,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Ketlen Souza": {
     "country": "Brazil",
@@ -677,7 +1530,20 @@
     "style": "Boxing",
     "age": "63.00",
     "record": "16-6-0",
-    "image_url": "fighter-images/ketlen-souza.png"
+    "image_url": "fighter-images/ketlen-souza.png",
+    "stats": {
+      "n_fights": 6,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.0,
+      "sub_rate": 0.16666666666666666,
+      "slpm": 10.490921318090114,
+      "sapm": 18.601210490921318,
+      "td_per_min": 0.08069939475453934,
+      "stance": "Orthodox"
+    }
   },
   "Ketlen Vieira": {
     "country": "Brazil",
@@ -685,7 +1551,20 @@
     "style": "Judo",
     "age": "68.00",
     "record": "15-5-0",
-    "image_url": "fighter-images/ketlen-vieira.png"
+    "image_url": "fighter-images/ketlen-vieira.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.14285714285714285,
+      "ko_rate": 0.07142857142857142,
+      "sub_rate": 0.07142857142857142,
+      "slpm": 8.550759585242343,
+      "sapm": 21.036894140342415,
+      "td_per_min": 0.27489751627682657,
+      "stance": "Orthodox"
+    }
   },
   "Kevin Christian": {
     "country": "Brazil",
@@ -693,7 +1572,20 @@
     "style": "Striker",
     "age": "79.00",
     "record": "9-3-0",
-    "image_url": "fighter-images/kevin-christian.png"
+    "image_url": "fighter-images/kevin-christian.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 3.943661971830986,
+      "sapm": 4.788732394366197,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Khamzat Chimaev": {
     "country": "",
@@ -701,7 +1593,20 @@
     "style": "Wrestler",
     "age": "74.00",
     "record": "15-0-0",
-    "image_url": "fighter-images/khamzat-chimaev.png"
+    "image_url": "fighter-images/khamzat-chimaev.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 9,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.4444444444444444,
+      "slpm": 10.311418685121108,
+      "sapm": 16.955017301038062,
+      "td_per_min": 0.8996539792387543,
+      "stance": "Orthodox"
+    }
   },
   "King Green": {
     "country": "United States",
@@ -709,7 +1614,20 @@
     "style": "MMA",
     "age": "70.00",
     "record": "34-17-1",
-    "image_url": "fighter-images/king-green.png"
+    "image_url": "fighter-images/king-green.png",
+    "stats": {
+      "n_fights": 29,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.41379310344827586,
+      "ko_rate": 0.3103448275862069,
+      "sub_rate": 0.06896551724137931,
+      "slpm": 16.46420824295011,
+      "sapm": 30.92733188720174,
+      "td_per_min": 0.21149674620390457,
+      "stance": "Orthodox"
+    }
   },
   "Kody Steele": {
     "country": "United States",
@@ -717,7 +1635,20 @@
     "style": "Jiu-Jitsu",
     "age": "69.00",
     "record": "7-1-0",
-    "image_url": "fighter-images/kody-steele.png"
+    "image_url": "fighter-images/kody-steele.png",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
   },
   "Kyle Daukaus": {
     "country": "United States",
@@ -725,7 +1656,20 @@
     "style": "",
     "age": "75.00",
     "record": "17-4-0",
-    "image_url": "fighter-images/kyle-daukaus.png"
+    "image_url": "fighter-images/kyle-daukaus.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5555555555555556,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.2222222222222222,
+      "slpm": 6.674272675413576,
+      "sapm": 13.382772390188247,
+      "td_per_min": 0.30804335424985735,
+      "stance": "Southpaw"
+    }
   },
   "Loma Lookboonmee": {
     "country": "Thailand",
@@ -733,7 +1677,20 @@
     "style": "Striker",
     "age": "61.00",
     "record": "10-4-0",
-    "image_url": "fighter-images/loma-lookboonmee.png"
+    "image_url": "fighter-images/loma-lookboonmee.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.1,
+      "ko_rate": 0.0,
+      "sub_rate": 0.1,
+      "slpm": 11.28279883381924,
+      "sapm": 20.20408163265306,
+      "td_per_min": 0.3717201166180758,
+      "stance": "Orthodox"
+    }
   },
   "Louie Sutherland": {
     "country": "England",
@@ -741,7 +1698,20 @@
     "style": "Brawler",
     "age": "75.00",
     "record": "10-5-0",
-    "image_url": "fighter-images/louie-sutherland.png"
+    "image_url": "fighter-images/louie-sutherland.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 3.75,
+      "sapm": 7.1875,
+      "td_per_min": 0.3125,
+      "stance": "Orthodox"
+    }
   },
   "Lucas Brennan": {
     "country": "United States",
@@ -757,7 +1727,20 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Luis Gurule": {
     "country": "United States",
@@ -765,7 +1748,20 @@
     "style": "",
     "age": "65.00",
     "record": "10-3-0",
-    "image_url": "fighter-images/luis-gurule.png"
+    "image_url": "fighter-images/luis-gurule.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.0,
+      "slpm": 10.672268907563025,
+      "sapm": 31.092436974789916,
+      "td_per_min": 0.1680672268907563,
+      "stance": "Orthodox"
+    }
   },
   "Malcolm Wellmaker": {
     "country": "United States",
@@ -773,7 +1769,20 @@
     "style": "Striker",
     "age": "70.00",
     "record": "10-1-0",
-    "image_url": "fighter-images/malcolm-wellmaker.png"
+    "image_url": "fighter-images/malcolm-wellmaker.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.6666666666666666,
+      "sub_rate": 0.0,
+      "slpm": 11.25,
+      "sapm": 20.520833333333336,
+      "td_per_min": 0.0,
+      "stance": "Switch"
+    }
   },
   "Marco Tulio": {
     "country": "Brazil",
@@ -781,7 +1790,20 @@
     "style": "Striker",
     "age": "72.00",
     "record": "14-2-0",
-    "image_url": "fighter-images/marco-tulio.png"
+    "image_url": "fighter-images/marco-tulio.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 18.93103448275862,
+      "sapm": 29.58620689655172,
+      "td_per_min": 0.2068965517241379,
+      "stance": "Orthodox"
+    }
   },
   "Marcus Buchecha": {
     "country": "Brazil",
@@ -797,7 +1819,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
     "record": "10-2-0",
-    "image_url": "fighter-images/marcus-mcghee.png"
+    "image_url": "fighter-images/marcus-mcghee.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6,
+      "ko_rate": 0.4,
+      "sub_rate": 0.2,
+      "slpm": 14.733893557422968,
+      "sapm": 32.60504201680672,
+      "td_per_min": 0.05602240896358543,
+      "stance": "Orthodox"
+    }
   },
   "Mateusz R\u0119becki": {
     "country": "Poland",
@@ -805,7 +1840,8 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "67.00",
     "record": "20-4-0",
-    "image_url": "fighter-images/mateusz-rebecki.png"
+    "image_url": "fighter-images/mateusz-rebecki.png",
+    "stats": {}
   },
   "Matt Schnell": {
     "country": "United States",
@@ -813,7 +1849,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
     "record": "17-10-0",
-    "image_url": "fighter-images/matt-schnell.png"
+    "image_url": "fighter-images/matt-schnell.png",
+    "stats": {
+      "n_fights": 15,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.13333333333333333,
+      "slpm": 9.176941019660113,
+      "sapm": 23.472175941352884,
+      "td_per_min": 0.05998000666444519,
+      "stance": "Orthodox"
+    }
   },
   "Mauricio Ruffy": {
     "country": "Brazil",
@@ -821,7 +1870,20 @@
     "style": "Striker",
     "age": "71.00",
     "record": "13-2-0",
-    "image_url": "fighter-images/mauricio-ruffy.png"
+    "image_url": "fighter-images/mauricio-ruffy.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.8,
+      "ko_rate": 0.6,
+      "sub_rate": 0.0,
+      "slpm": 8.103896103896103,
+      "sapm": 13.87012987012987,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Max Griffin": {
     "country": "United States",
@@ -845,7 +1907,20 @@
     "style": "MMA",
     "age": "70.00",
     "record": "26-7-0",
-    "image_url": "fighter-images/melquizael-costa.png"
+    "image_url": "fighter-images/melquizael-costa.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 6,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.2222222222222222,
+      "slpm": 11.10429447852761,
+      "sapm": 22.361963190184053,
+      "td_per_min": 0.33742331288343563,
+      "stance": "Southpaw"
+    }
   },
   "Michael Chandler": {
     "country": "United States",
@@ -853,7 +1928,20 @@
     "style": "Wrestler",
     "age": "68.00",
     "record": "23-10-0",
-    "image_url": "fighter-images/michael-chandler.png"
+    "image_url": "fighter-images/michael-chandler.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.7142857142857143,
+      "ko_rate": 0.5714285714285714,
+      "sub_rate": 0.0,
+      "slpm": 16.92032229185318,
+      "sapm": 33.19606087735004,
+      "td_per_min": 0.4834377797672336,
+      "stance": "Orthodox"
+    }
   },
   "Michelle Montague": {
     "country": "New Zealand",
@@ -869,7 +1957,20 @@
     "style": "Kickboxer",
     "age": "75.00",
     "record": "19-7-0",
-    "image_url": "fighter-images/modestas-bukauskas.png"
+    "image_url": "fighter-images/modestas-bukauskas.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6363636363636364,
+      "ko_rate": 0.5454545454545454,
+      "sub_rate": 0.09090909090909091,
+      "slpm": 8.21197102554327,
+      "sapm": 19.077392298894395,
+      "td_per_min": 0.045749142203583684,
+      "stance": "Switch"
+    }
   },
   "Montel Jackson": {
     "country": "United States",
@@ -885,7 +1986,20 @@
     "style": "",
     "age": "71.00",
     "record": "22-6-0",
-    "image_url": "fighter-images/muslim-salikhov.png"
+    "image_url": "fighter-images/muslim-salikhov.png",
+    "stats": {
+      "n_fights": 14,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6428571428571429,
+      "ko_rate": 0.5714285714285714,
+      "sub_rate": 0.0,
+      "slpm": 8.285899094437257,
+      "sapm": 16.6882276843467,
+      "td_per_min": 0.17464424320827943,
+      "stance": "Orthodox"
+    }
   },
   "Nicolas Dalby": {
     "country": "Denmark",
@@ -893,7 +2007,20 @@
     "style": "MMA",
     "age": "70.00",
     "record": "24-6-1",
-    "image_url": "fighter-images/nicolas-dalby.png"
+    "image_url": "fighter-images/nicolas-dalby.png",
+    "stats": {
+      "n_fights": 15,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.13333333333333333,
+      "ko_rate": 0.13333333333333333,
+      "sub_rate": 0.0,
+      "slpm": 11.18840579710145,
+      "sapm": 25.71014492753623,
+      "td_per_min": 0.17391304347826086,
+      "stance": "Orthodox"
+    }
   },
   "Nicolle Caliari": {
     "country": "Brazil",
@@ -901,7 +2028,20 @@
     "style": "MMA",
     "age": "63.00",
     "record": "8-4-0",
-    "image_url": "fighter-images/nicolle-caliari.png"
+    "image_url": "fighter-images/nicolle-caliari.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 15.23076923076923,
+      "sapm": 41.07692307692308,
+      "td_per_min": 0.6153846153846154,
+      "stance": "Orthodox"
+    }
   },
   "Norma Dumont": {
     "country": "Brazil",
@@ -917,7 +2057,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Ozzy Diaz": {
     "country": "United States",
@@ -925,7 +2066,20 @@
     "style": "MMA",
     "age": "76.00",
     "record": "10-3-0",
-    "image_url": "fighter-images/ozzy-diaz.png"
+    "image_url": "fighter-images/ozzy-diaz.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 19.415730337078653,
+      "sapm": 36.80898876404495,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Pat Sabatini": {
     "country": "United States",
@@ -933,7 +2087,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "68.00",
     "record": "21-5-0",
-    "image_url": "fighter-images/pat-sabatini.png"
+    "image_url": "fighter-images/pat-sabatini.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.5,
+      "ko_rate": 0.2,
+      "sub_rate": 0.3,
+      "slpm": 4.31796801505174,
+      "sapm": 7.2248353715898395,
+      "td_per_min": 0.7619943555973658,
+      "stance": "Orthodox"
+    }
   },
   "Polyana Viana": {
     "country": "Brazil",
@@ -941,7 +2108,20 @@
     "style": "Jiu-Jitsu",
     "age": "65.00",
     "record": "13-8-0",
-    "image_url": "fighter-images/polyana-viana.png"
+    "image_url": "fighter-images/polyana-viana.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.7272727272727273,
+      "ko_rate": 0.18181818181818182,
+      "sub_rate": 0.2727272727272727,
+      "slpm": 6.288461538461537,
+      "sapm": 15.634615384615383,
+      "td_per_min": 0.11538461538461536,
+      "stance": "Orthodox"
+    }
   },
   "Priscila Cachoeira": {
     "country": "Brazil",
@@ -949,7 +2129,20 @@
     "style": "Brawler",
     "age": "67.00",
     "record": "13-8-0",
-    "image_url": "fighter-images/priscila-cachoeira.png"
+    "image_url": "fighter-images/priscila-cachoeira.png",
+    "stats": {
+      "n_fights": 13,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6923076923076923,
+      "ko_rate": 0.38461538461538464,
+      "sub_rate": 0.0,
+      "slpm": 10.922431865828093,
+      "sapm": 24.67505241090147,
+      "td_per_min": 0.041928721174004195,
+      "stance": "Orthodox"
+    }
   },
   "Quillan Salkilld": {
     "country": "Australia",
@@ -957,7 +2150,20 @@
     "style": "MMA",
     "age": "72.00",
     "record": "11-1-0",
-    "image_url": "fighter-images/quillan-salkilld.png"
+    "image_url": "fighter-images/quillan-salkilld.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.75,
+      "ko_rate": 0.5,
+      "sub_rate": 0.25,
+      "slpm": 9.425981873111782,
+      "sapm": 15.861027190332326,
+      "td_per_min": 0.9063444108761329,
+      "stance": "Orthodox"
+    }
   },
   "Rafa Garcia": {
     "country": "United States",
@@ -981,7 +2187,20 @@
     "style": "MMA",
     "age": "66.00",
     "record": "10-1-0",
-    "image_url": "fighter-images/rei-tsuruya.png"
+    "image_url": "fighter-images/rei-tsuruya.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 4.9,
+      "sapm": 11.6,
+      "td_per_min": 0.7,
+      "stance": "Orthodox"
+    }
   },
   "Robert Bryczek": {
     "country": "Poland",
@@ -989,7 +2208,20 @@
     "style": "Boxing",
     "age": "72.00",
     "record": "18-6-0",
-    "image_url": "fighter-images/robert-bryczek.png"
+    "image_url": "fighter-images/robert-bryczek.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 14.88833746898263,
+      "sapm": 40.34739454094293,
+      "td_per_min": 0.1488833746898263,
+      "stance": "Orthodox"
+    }
   },
   "Rodolfo Bellato": {
     "country": "Brazil",
@@ -997,7 +2229,20 @@
     "style": "MMA",
     "age": "75.00",
     "record": "13-3-1",
-    "image_url": "fighter-images/rodolfo-bellato.png"
+    "image_url": "fighter-images/rodolfo-bellato.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.4,
+      "ko_rate": 0.4,
+      "sub_rate": 0.0,
+      "slpm": 11.471927162367225,
+      "sapm": 19.438543247344462,
+      "td_per_min": 0.22761760242792112,
+      "stance": "Orthodox"
+    }
   },
   "Rodolfo Vieira": {
     "country": "Brazil",
@@ -1013,7 +2258,20 @@
     "style": "",
     "age": "72.00",
     "record": "14-5-0",
-    "image_url": "fighter-images/roman-kopylov.png"
+    "image_url": "fighter-images/roman-kopylov.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6363636363636364,
+      "ko_rate": 0.45454545454545453,
+      "sub_rate": 0.0,
+      "slpm": 14.406645569620252,
+      "sapm": 28.67088607594937,
+      "td_per_min": 0.23734177215189875,
+      "stance": "Southpaw"
+    }
   },
   "Ryan Spann": {
     "country": "United States",
@@ -1029,7 +2287,20 @@
     "style": "Jiu-Jitsu",
     "age": "70.00",
     "record": "18-2-0",
-    "image_url": "fighter-images/sean-brady.png"
+    "image_url": "fighter-images/sean-brady.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6,
+      "ko_rate": 0.2,
+      "sub_rate": 0.4,
+      "slpm": 14.165535956580731,
+      "sapm": 25.64450474898236,
+      "td_per_min": 0.841248303934871,
+      "stance": "Orthodox"
+    }
   },
   "Sean O'Malley": {
     "country": "United States",
@@ -1037,7 +2308,20 @@
     "style": "",
     "age": "71.00",
     "record": "19-3-0",
-    "image_url": "fighter-images/sean-omalley.png"
+    "image_url": "fighter-images/sean-omalley.png",
+    "stats": {
+      "n_fights": 15,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5333333333333333,
+      "ko_rate": 0.4666666666666667,
+      "sub_rate": 0.0,
+      "slpm": 18.041379310344826,
+      "sapm": 29.693793103448275,
+      "td_per_min": 0.0496551724137931,
+      "stance": "Switch"
+    }
   },
   "Sean Strickland": {
     "country": "United States",
@@ -1045,7 +2329,20 @@
     "style": "MMA",
     "age": "73.00",
     "record": "30-7-0",
-    "image_url": "fighter-images/sean-strickland.png"
+    "image_url": "fighter-images/sean-strickland.png",
+    "stats": {
+      "n_fights": 24,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.2916666666666667,
+      "sub_rate": 0.041666666666666664,
+      "slpm": 21.63150492264416,
+      "sapm": 50.6797937177684,
+      "td_per_min": 0.16877637130801687,
+      "stance": "Orthodox"
+    }
   },
   "Sedriques Dumas": {
     "country": "United States",
@@ -1061,7 +2358,20 @@
     "style": "MMA",
     "age": "75.00",
     "record": "20-3-0",
-    "image_url": "fighter-images/sergei-pavlovich.png"
+    "image_url": "fighter-images/sergei-pavlovich.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.7272727272727273,
+      "ko_rate": 0.7272727272727273,
+      "sub_rate": 0.0,
+      "slpm": 8.4799186578546,
+      "sapm": 19.18657854600915,
+      "td_per_min": 0.06100660904931368,
+      "stance": "Southpaw"
+    }
   },
   "Shamil Gaziev": {
     "country": "Russia",
@@ -1069,7 +2379,20 @@
     "style": "MMA",
     "age": "76.00",
     "record": "14-2-0",
-    "image_url": "fighter-images/shamil-gaziev.png"
+    "image_url": "fighter-images/shamil-gaziev.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.8,
+      "ko_rate": 0.8,
+      "sub_rate": 0.0,
+      "slpm": 7.870967741935484,
+      "sapm": 16.70967741935484,
+      "td_per_min": 0.1935483870967742,
+      "stance": "Orthodox"
+    }
   },
   "Shauna Bannon": {
     "country": "Ireland",
@@ -1077,7 +2400,20 @@
     "style": "MMA",
     "age": "65.00",
     "record": "7-2-0",
-    "image_url": "fighter-images/shauna-bannon.png"
+    "image_url": "fighter-images/shauna-bannon.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5,
+      "ko_rate": 0.0,
+      "sub_rate": 0.25,
+      "slpm": 12.782608695652174,
+      "sapm": 29.673913043478258,
+      "td_per_min": 0.0,
+      "stance": "Switch"
+    }
   },
   "Song Yadong": {
     "country": "China",
@@ -1085,7 +2421,20 @@
     "style": "Boxer",
     "age": "68.00",
     "record": "22-9-1",
-    "image_url": "fighter-images/song-yadong.png"
+    "image_url": "fighter-images/song-yadong.png",
+    "stats": {
+      "n_fights": 16,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.4375,
+      "ko_rate": 0.375,
+      "sub_rate": 0.0625,
+      "slpm": 14.11586901763224,
+      "sapm": 32.3727959697733,
+      "td_per_min": 0.16624685138539042,
+      "stance": "Orthodox"
+    }
   },
   "Steve Erceg": {
     "country": "Australia",
@@ -1093,7 +2442,20 @@
     "style": "MMA",
     "age": "68.00",
     "record": "13-4-0",
-    "image_url": "fighter-images/steve-erceg.png"
+    "image_url": "fighter-images/steve-erceg.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.2857142857142857,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.0,
+      "slpm": 14.137542277339346,
+      "sapm": 30.777903043968433,
+      "td_per_min": 0.2705749718151071,
+      "stance": "Orthodox"
+    }
   },
   "Steve Garcia": {
     "country": "United States",
@@ -1101,7 +2463,20 @@
     "style": "Freestyle",
     "age": "72.00",
     "record": "19-5-0",
-    "image_url": "fighter-images/steve-garcia.png"
+    "image_url": "fighter-images/steve-garcia.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 8,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.7777777777777778,
+      "ko_rate": 0.7777777777777778,
+      "sub_rate": 0.0,
+      "slpm": 11.801242236024844,
+      "sapm": 24.720496894409937,
+      "td_per_min": 0.16563146997929606,
+      "stance": "Southpaw"
+    }
   },
   "Sumudaerji": {
     "country": "China",
@@ -1109,7 +2484,8 @@
     "style": "Striker",
     "age": "68.00",
     "record": "19-7-0",
-    "image_url": "fighter-images/sumudaerji.png"
+    "image_url": "fighter-images/sumudaerji.png",
+    "stats": {}
   },
   "TBA": {
     "country": "",
@@ -1117,7 +2493,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Tai Tuivasa": {
     "country": "Australia",
@@ -1125,7 +2502,20 @@
     "style": "",
     "age": "74.00",
     "record": "15-9-0",
-    "image_url": "fighter-images/tai-tuivasa.png"
+    "image_url": "fighter-images/tai-tuivasa.png",
+    "stats": {
+      "n_fights": 17,
+      "win_streak": 0,
+      "loss_streak": 6,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.7647058823529411,
+      "ko_rate": 0.5882352941176471,
+      "sub_rate": 0.0,
+      "slpm": 8.576555023923445,
+      "sapm": 17.727272727272727,
+      "td_per_min": 0.0,
+      "stance": "Southpaw"
+    }
   },
   "Talita Alencar": {
     "country": "Brazil",
@@ -1141,7 +2531,20 @@
     "style": "Striker",
     "age": "79.00",
     "record": "9-1-0",
-    "image_url": "fighter-images/tallison-teixeira.png"
+    "image_url": "fighter-images/tallison-teixeira.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.6666666666666666,
+      "sub_rate": 0.0,
+      "slpm": 10.054054054054054,
+      "sapm": 14.27027027027027,
+      "td_per_min": 0.48648648648648646,
+      "stance": "Orthodox"
+    }
   },
   "Tatsuro Taira": {
     "country": "Japan",
@@ -1149,7 +2552,20 @@
     "style": "",
     "age": "67.00",
     "record": "18-1-0",
-    "image_url": "fighter-images/tatsuro-taira.png"
+    "image_url": "fighter-images/tatsuro-taira.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.3333333333333333,
+      "slpm": 9.082125603864736,
+      "sapm": 15.104669887278584,
+      "td_per_min": 0.6441223832528181,
+      "stance": "Orthodox"
+    }
   },
   "Themba Gorimbo": {
     "country": "Zimbabwe",
@@ -1157,7 +2573,20 @@
     "style": "MMA",
     "age": "73.00",
     "record": "14-6-0",
-    "image_url": "fighter-images/themba-gorimbo.png"
+    "image_url": "fighter-images/themba-gorimbo.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.42857142857142855,
+      "ko_rate": 0.14285714285714285,
+      "sub_rate": 0.0,
+      "slpm": 8.037653874004345,
+      "sapm": 13.25126719768284,
+      "td_per_min": 0.999275887038378,
+      "stance": "Orthodox"
+    }
   },
   "Tim Elliott": {
     "country": "United States",
@@ -1165,7 +2594,20 @@
     "style": "Freestyle",
     "age": "67.00",
     "record": "22-13-1",
-    "image_url": "fighter-images/tim-elliott.png"
+    "image_url": "fighter-images/tim-elliott.png",
+    "stats": {
+      "n_fights": 20,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.35,
+      "ko_rate": 0.0,
+      "sub_rate": 0.1,
+      "slpm": 9.887291099883404,
+      "sapm": 22.153128643606685,
+      "td_per_min": 0.7228915662650602,
+      "stance": "Southpaw"
+    }
   },
   "Timmy Cuamba": {
     "country": "",
@@ -1173,7 +2615,20 @@
     "style": "",
     "age": "",
     "record": "2-2-0",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.25,
+      "ko_rate": 0.25,
+      "sub_rate": 0.0,
+      "slpm": 7.823788546255508,
+      "sapm": 16.176211453744497,
+      "td_per_min": 0.31718061674008813,
+      "stance": "Orthodox"
+    }
   },
   "Tom Nolan": {
     "country": "Australia",
@@ -1181,7 +2636,20 @@
     "style": "",
     "age": "75.00",
     "record": "10-1-0",
-    "image_url": "fighter-images/tom-nolan.png"
+    "image_url": "fighter-images/tom-nolan.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.6,
+      "ko_rate": 0.4,
+      "sub_rate": 0.2,
+      "slpm": 11.77914110429448,
+      "sapm": 26.082383873794917,
+      "td_per_min": 0.105170902716915,
+      "stance": "Southpaw"
+    }
   },
   "Tommy Gantt": {
     "country": "",
@@ -1189,7 +2657,20 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
   },
   "Trey Ogden": {
     "country": "United States",
@@ -1197,7 +2678,20 @@
     "style": "Jiu-Jitsu",
     "age": "71.00",
     "record": "18-7-0",
-    "image_url": "fighter-images/trey-ogden.png"
+    "image_url": "fighter-images/trey-ogden.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 9.944751381215468,
+      "sapm": 19.82923154193872,
+      "td_per_min": 0.39176293319939726,
+      "stance": "Orthodox"
+    }
   },
   "Tuco Tokkos": {
     "country": "England",
@@ -1205,7 +2699,20 @@
     "style": "Brazilian Jiu-Jitsu",
     "age": "76.00",
     "record": "11-5-0",
-    "image_url": "fighter-images/tuco-tokkos.png"
+    "image_url": "fighter-images/tuco-tokkos.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.0,
+      "sub_rate": 0.3333333333333333,
+      "slpm": 3.50253807106599,
+      "sapm": 8.832487309644671,
+      "td_per_min": 0.6091370558375635,
+      "stance": "Orthodox"
+    }
   },
   "Victor Henry": {
     "country": "United States",
@@ -1213,7 +2720,20 @@
     "style": "",
     "age": "67.00",
     "record": "25-7-0",
-    "image_url": "fighter-images/victor-henry.png"
+    "image_url": "fighter-images/victor-henry.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.2857142857142857,
+      "ko_rate": 0.14285714285714285,
+      "sub_rate": 0.0,
+      "slpm": 23.15724052206339,
+      "sapm": 43.55500310752019,
+      "td_per_min": 0.22374145431945305,
+      "stance": "Switch"
+    }
   },
   "Victor Valenzuela": {
     "country": "United States",
@@ -1229,7 +2749,20 @@
     "style": "Wrestling",
     "age": "67.00",
     "record": "16-10-0",
-    "image_url": "fighter-images/vince-morales.png"
+    "image_url": "fighter-images/vince-morales.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 0,
+      "loss_streak": 5,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.18181818181818182,
+      "ko_rate": 0.18181818181818182,
+      "sub_rate": 0.0,
+      "slpm": 9.595338297183554,
+      "sapm": 26.338620912916802,
+      "td_per_min": 0.11654257041113629,
+      "stance": "Orthodox"
+    }
   },
   "Waldo Cortes-Acosta": {
     "country": "",
@@ -1237,7 +2770,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Wes Schultz": {
     "country": "United States",
@@ -1245,7 +2779,20 @@
     "style": "MMA",
     "age": "74.00",
     "record": "8-3-0",
-    "image_url": "fighter-images/wes-schultz.png"
+    "image_url": "fighter-images/wes-schultz.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 1.2,
+      "sapm": 5.2,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "William Gomis": {
     "country": "France",
@@ -1253,7 +2800,20 @@
     "style": "",
     "age": "72.00",
     "record": "15-3-0",
-    "image_url": "fighter-images/william-gomis.png"
+    "image_url": "fighter-images/william-gomis.png",
+    "stats": {
+      "n_fights": 6,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.16666666666666666,
+      "ko_rate": 0.16666666666666666,
+      "sub_rate": 0.0,
+      "slpm": 11.121951219512194,
+      "sapm": 22.280487804878046,
+      "td_per_min": 0.18292682926829268,
+      "stance": "Southpaw"
+    }
   },
   "Yaroslav Amosov": {
     "country": "Ukraine",
@@ -1261,7 +2821,20 @@
     "style": "",
     "age": "72.00",
     "record": "29-1-0",
-    "image_url": "fighter-images/yaroslav-amosov.png"
+    "image_url": "fighter-images/yaroslav-amosov.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.0,
+      "sub_rate": 1.0,
+      "slpm": 2.783505154639175,
+      "sapm": 5.876288659793814,
+      "td_per_min": 0.30927835051546393,
+      "stance": "nan"
+    }
   },
   "Yi Sak Lee": {
     "country": "South Korea",
@@ -1269,7 +2842,20 @@
     "style": "",
     "age": "May. 30, 2026",
     "record": "0-0-0",
-    "image_url": "fighter-images/yi-sak-lee.png"
+    "image_url": "fighter-images/yi-sak-lee.png",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Youssef Zalal": {
     "country": "Morocco",
@@ -1285,7 +2871,20 @@
     "style": "",
     "age": "64.00",
     "record": "6-1-0",
-    "image_url": "fighter-images/yuneisy-duben.png"
+    "image_url": "fighter-images/yuneisy-duben.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 8.4,
+      "sapm": 24.599999999999998,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Zhang Mingyang": {
     "country": "China",
@@ -1293,7 +2892,20 @@
     "style": "MMA",
     "age": "74.00",
     "record": "19-7-0",
-    "image_url": "fighter-images/zhang-mingyang.png"
+    "image_url": "fighter-images/zhang-mingyang.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 10.866873065015481,
+      "sapm": 17.647058823529413,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "\u00c9dgar Ch\u00e1irez": {
     "country": "Mexico",
@@ -1301,6 +2913,7 @@
     "style": "Freestyle",
     "age": "67.00",
     "record": "13-6-0",
-    "image_url": "fighter-images/edgar-chairez.png"
+    "image_url": "fighter-images/edgar-chairez.png",
+    "stats": {}
   }
 }

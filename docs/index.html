@@ -124,6 +124,61 @@
 
   main { max-width: 1320px; margin: 1.5rem auto; padding: 0 1.25rem; }
 
+  /* ─── Search bar ─── */
+  .search-bar {
+    position: relative; margin-bottom: 1rem;
+  }
+  .search-bar input {
+    width: 100%; padding: 0.65rem 1rem 0.65rem 2.4rem;
+    background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--light); font-family: inherit;
+    font-size: var(--sm); transition: all 0.15s;
+  }
+  .search-bar input:focus {
+    outline: none; border-color: var(--matrix);
+    box-shadow: 0 0 0 3px rgba(0,255,136,0.08);
+  }
+  .search-bar::before {
+    content: "⌕"; position: absolute; left: 0.85rem; top: 50%;
+    transform: translateY(-50%); color: var(--muted); font-size: 1rem;
+  }
+  .search-result-count {
+    font-size: var(--xs); color: var(--muted); margin-top: 0.25rem;
+    padding-left: 0.25rem;
+  }
+
+  /* ─── Next event highlight ─── */
+  .next-badge {
+    display: inline-block;
+    font-size: 0.55rem; font-weight: 800;
+    padding: 2px 7px; border-radius: 3px;
+    background: linear-gradient(135deg, var(--matrix), var(--matrix-dim));
+    color: #000; text-transform: uppercase; letter-spacing: 0.1em;
+    margin-left: 0.5rem; vertical-align: middle;
+    box-shadow: 0 0 12px rgba(0,255,136,0.5);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(0,255,136,0.5); }
+    50%      { box-shadow: 0 0 24px rgba(0,255,136,0.85); }
+  }
+
+  /* Tooltips */
+  [data-tt] { position: relative; cursor: help; border-bottom: 1px dotted var(--muted); }
+  [data-tt]::after {
+    content: attr(data-tt);
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-4px);
+    background: #0a0a0c; color: var(--light);
+    padding: 6px 10px; border-radius: 6px;
+    font-size: var(--xs); white-space: nowrap; max-width: 280px; white-space: normal;
+    width: max-content; max-width: 240px;
+    text-align: left; line-height: 1.45;
+    border: 1px solid var(--border);
+    opacity: 0; pointer-events: none; transition: opacity 0.15s;
+    z-index: 100;
+  }
+  [data-tt]:hover::after { opacity: 1; }
+
   /* ─── Disclaimer / Tagline strip ─── */
   .matrix-tagline {
     background: linear-gradient(90deg, rgba(0,255,136,0.06), rgba(200,160,250,0.04), rgba(230,57,70,0.05));
@@ -554,7 +609,7 @@
     
   </div>
 
-  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-04-27 13:06 UTC</div>
+  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-04-28 09:58 UTC</div>
 </header>
 
 <nav>
@@ -712,13 +767,23 @@
   <!-- ═══════════ FIGHTS PANEL ═══════════ -->
   <div id="fights-panel">
     
+    <div class="search-bar">
+      <input type="text" id="fight-search" placeholder="Search fighters..."
+             oninput="filterFights(this.value)" autocomplete="off">
+      <div class="search-result-count" id="search-result-count"></div>
+    </div>
+    
 
+    
+
+    
     
     
     <div class="event-card " id="event-2026-05-02">
       <div class="event-header">
         <h2>
           UFC Fight Night: Della Maddalena vs. Prates
+          <span class="next-badge">⚡ Next Event</span>
           
         </h2>
         <span class="date">2026-05-02</span>
@@ -2889,11 +2954,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2929,10 +2994,12 @@
     </div>
     
     
+    
     <div class="event-card " id="event-2026-05-09">
       <div class="event-header">
         <h2>
           UFC 328: Chimaev vs. Strickland
+          
           
         </h2>
         <span class="date">2026-05-09</span>
@@ -4239,11 +4306,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4491,11 +4558,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4743,11 +4810,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4995,11 +5062,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -5035,10 +5102,12 @@
     </div>
     
     
+    
     <div class="event-card " id="event-2026-05-16">
       <div class="event-header">
         <h2>
           UFC Fight Night: Allen vs. Costa
+          
           
         </h2>
         <span class="date">2026-05-16</span>
@@ -7643,11 +7712,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -7683,10 +7752,12 @@
     </div>
     
     
+    
     <div class="event-card " id="event-2026-05-30">
       <div class="event-header">
         <h2>
           UFC Fight Night: Song vs. Figueiredo
+          
           
         </h2>
         <span class="date">2026-05-30</span>
@@ -9428,10 +9499,12 @@
     </div>
     
     
+    
     <div class="event-card " id="event-2026-06-06">
       <div class="event-header">
         <h2>
           UFC Fight Night: Muhammad vs. Bonfim
+          
           
         </h2>
         <span class="date">2026-06-06</span>
@@ -11394,10 +11467,12 @@
     </div>
     
     
+    
     <div class="event-card " id="event-2026-06-15">
       <div class="event-header">
         <h2>
           UFC Freedom 250: Topuria vs. Gaethje
+          
           
         </h2>
         <span class="date">2026-06-15</span>
@@ -11619,11 +11694,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -11876,11 +11951,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -12128,11 +12203,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -12380,11 +12455,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -12632,11 +12707,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -12889,11 +12964,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -13222,11 +13297,11 @@
                 <thead>
                   <tr>
                     <th>Bet</th>
-                    <th>Model %</th>
-                    <th>SB Odds</th>
-                    <th>Win Payout / $100</th>
-                    <th>Expected Profit / $100</th>
-                    <th>Suggested Stake</th>
+                    <th><span data-tt="The probability our model assigns to this outcome.">Model %</span></th>
+                    <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
+                    <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
+                    <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
+                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -13343,10 +13418,12 @@
     </div>
     
     
+    
     <div class="event-card preview-event" id="event-2026-06-27">
       <div class="event-header">
         <h2>
           UFC Fight Night: Baku
+          
           <span class="preview-tag">predictions soon</span>
         </h2>
         <span class="date">2026-06-27</span>
@@ -13530,10 +13607,12 @@
     </div>
     
     
+    
     <div class="event-card preview-event" id="event-2026-07-11">
       <div class="event-header">
         <h2>
           UFC 329
+          
           <span class="preview-tag">predictions soon</span>
         </h2>
         <span class="date">2026-07-11</span>
@@ -13598,7 +13677,7 @@
                   
                   <span class="record-badge" title="Career W-L-D">0-0-0</span>
                   
-                  
+                  <span class="stance-badge">nan</span>
                   
                 </div>
               </div>
@@ -13619,9 +13698,62 @@
           <div class="details-inner">
             
             
-            <div class="preview-notice">
-              ⟁ This fight is on the upcoming schedule but stats and predictions aren't available yet.
-              The matrix will compute them closer to event time.
+            <div class="preview-notice" style="margin-bottom:0.75rem">
+              ⟁ Win prediction & SportsBet odds will populate closer to event night.
+              Career stats below.
+            </div>
+            <div class="details-grid">
+              <div class="detail-box">
+                <h4>Fighter Statistics</h4>
+                
+                
+                <table class="stat-table">
+                  <thead><tr><th></th><th>TBA</th><th>Steveson</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td>Career record</td>
+                      <td>—</td>
+                      <td>0-0-0</td>
+                    </tr>
+                    <tr>
+                      <td>Last 3 win %</td>
+                      <td class="">—</td>
+                      <td class="">—</td>
+                    </tr>
+                    <tr>
+                      <td>Finish rate</td>
+                      <td class="">—</td>
+                      <td class="">—</td>
+                    </tr>
+                    <tr>
+                      <td>KO/TKO rate</td>
+                      <td class="">—</td>
+                      <td class="">—</td>
+                    </tr>
+                    <tr>
+                      <td>Sub rate</td>
+                      <td class="">—</td>
+                      <td class="">—</td>
+                    </tr>
+                    <tr>
+                      <td>Sig strikes / min ↑</td>
+                      <td class="">—</td>
+                      <td class="">—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-box">
+                <h4>Predicted Outcomes</h4>
+                <p style="color:var(--muted);font-size:var(--sm);margin:0.4rem 0">
+                  Win probability and method/round breakdowns appear here once
+                  the matrix processes this card.
+                </p>
+                <p style="color:var(--purple);font-size:var(--xs);margin-top:0.6rem">
+                  Tip: stats above are computed from each fighter's full UFC history.
+                  Compare KO/TKO rate vs sub rate to gauge likely method even before predictions land.
+                </p>
+              </div>
             </div>
             
             
@@ -14761,6 +14893,55 @@ function filterBetsByEvent(eventLabel, btn) {
     }
   }
 }
+function filterFights(query) {
+  const q = (query || '').trim().toLowerCase();
+  const blocks = document.querySelectorAll('#fights-panel .fight-block');
+  const cards  = document.querySelectorAll('#fights-panel .event-card');
+  let visibleBouts = 0;
+
+  blocks.forEach(b => {
+    const names = b.querySelectorAll('.fighter-name');
+    const text = Array.from(names).map(n => n.textContent.trim().toLowerCase()).join(' | ');
+    const show = !q || text.includes(q);
+    b.style.display = show ? '' : 'none';
+    if (show) visibleBouts++;
+  });
+
+  // Hide event cards whose all bouts are hidden
+  cards.forEach(c => {
+    const visible = Array.from(c.querySelectorAll('.fight-block'))
+      .filter(b => b.style.display !== 'none');
+    c.style.display = visible.length === 0 && q ? 'none' : '';
+  });
+
+  const counter = document.getElementById('search-result-count');
+  if (counter) {
+    if (q) {
+      counter.textContent = visibleBouts === 0
+        ? `No fighters matching "${query}"`
+        : `${visibleBouts} bout${visibleBouts === 1 ? '' : 's'} matching "${query}"`;
+    } else {
+      counter.textContent = '';
+    }
+  }
+}
+
+// Keyboard shortcut: "/" to focus search
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    const s = document.getElementById('fight-search');
+    if (s) {
+      showTab('fights', document.getElementById('tab-fights'));
+      s.focus();
+    }
+  }
+  if (e.key === 'Escape') {
+    const s = document.getElementById('fight-search');
+    if (s && s.value) { s.value = ''; filterFights(''); }
+  }
+});
+
 function jumpFromBetsToEvent() {
   if (_activeEvent === '__all__') return;
   // Switch to Fights tab and find the event card

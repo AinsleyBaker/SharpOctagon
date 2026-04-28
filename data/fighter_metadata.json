@@ -141,7 +141,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Beneil Dariush": {
     "country": "Iran",
@@ -213,7 +214,20 @@
     "style": "",
     "age": "",
     "record": "2-0-0",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 10.122249388753056,
+      "sapm": 22.73838630806846,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
   },
   "Cameron Smotherman": {
     "country": "United States",
@@ -397,7 +411,20 @@
     "style": "",
     "age": "Apr. 27, 2026",
     "record": "0-0-0",
-    "image_url": "fighter-images/gable-steveson.jpg"
+    "image_url": "fighter-images/gable-steveson.jpg",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Gabriel Bonfim": {
     "country": "Brazil",
@@ -509,7 +536,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Jaqueline Amorim": {
     "country": "Brazil",
@@ -701,7 +729,20 @@
     "style": "Wrestler",
     "age": "74.00",
     "record": "15-0-0",
-    "image_url": "fighter-images/khamzat-chimaev.png"
+    "image_url": "fighter-images/khamzat-chimaev.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 9,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.6666666666666666,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.4444444444444444,
+      "slpm": 10.311418685121108,
+      "sapm": 16.955017301038062,
+      "td_per_min": 0.8996539792387543,
+      "stance": "Orthodox"
+    }
   },
   "King Green": {
     "country": "United States",
@@ -757,7 +798,20 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
   },
   "Luis Gurule": {
     "country": "United States",
@@ -917,7 +971,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Ozzy Diaz": {
     "country": "United States",
@@ -1117,7 +1172,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Tai Tuivasa": {
     "country": "Australia",
@@ -1173,7 +1229,20 @@
     "style": "",
     "age": "",
     "record": "2-2-0",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.25,
+      "ko_rate": 0.25,
+      "sub_rate": 0.0,
+      "slpm": 7.823788546255508,
+      "sapm": 16.176211453744497,
+      "td_per_min": 0.31718061674008813,
+      "stance": "Orthodox"
+    }
   },
   "Tom Nolan": {
     "country": "Australia",
@@ -1189,7 +1258,20 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
   },
   "Trey Ogden": {
     "country": "United States",
@@ -1237,7 +1319,8 @@
     "style": "",
     "age": "",
     "record": "",
-    "image_url": ""
+    "image_url": "",
+    "stats": {}
   },
   "Wes Schultz": {
     "country": "United States",

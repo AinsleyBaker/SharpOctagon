@@ -682,6 +682,7 @@
 
     {% for event in events %}
     {% set is_next = (loop.first and not event.is_preview) %}
+    {% set ev_idx = loop.index %}
     {% set anchor = "event-" + (event.event_date or "")|replace(":", "")|replace(" ", "-") %}
     <div class="event-card {{ 'preview-event' if event.is_preview else '' }}" id="{{ anchor[:18] }}">
       <div class="event-header">
@@ -698,7 +699,7 @@
 
         <!-- Main row -->
         <div class="fight-main fav-{{ bout.favourite }}"
-             onclick="toggleDetails('{{ loop.index }}-{{ loop.index0 }}')">
+             onclick="toggleDetails('{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}')">
 
           <div class="match-row">
 
@@ -737,7 +738,10 @@
               <div class="prob-bar">
                 <div class="pba" style="width:{{ ((bout.prob_a_wins or 0.5)*100)|int }}%"></div>
               </div>
-              <div class="wc-txt">{{ bout.weight_class or '—' }}</div>
+              <div class="wc-txt">
+                {{ bout.weight_class or '—' }}
+                {% if bout.fight_time_aest %}<br><span style="color:var(--matrix);font-weight:600">⏱ {{ bout.fight_time_aest }}</span>{% endif %}
+              </div>
             </div>
 
             <!-- Fighter B -->
@@ -767,13 +771,13 @@
           <div class="fight-right">
             {% if bout.sb_odds_a %}<span class="sb-odds-badge">{{ bout.sb_odds_a }} / {{ bout.sb_odds_b or '—' }}</span>{% endif %}
             {% if bout.value_bet_count %}<span class="value-badge-main">{{ bout.value_bet_count }} value bets</span>{% endif %}
-            <span class="expand-icon" id="icon-{{ loop.index }}-{{ loop.index0 }}">▼</span>
+            <span class="expand-icon" id="icon-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">▼</span>
           </div>
 
         </div>
 
         <!-- Details -->
-        <div class="fight-details" id="details-{{ loop.index }}-{{ loop.index0 }}">
+        <div class="fight-details" id="details-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">
           <div class="details-inner">
             {% if bout.is_preview %}
             {% if bout.has_stats %}
@@ -1094,6 +1098,7 @@
     {% endif %}
 
     {% for event in past_events %}
+    {% set ev_idx = "past-" + loop.index|string %}
     <div class="event-card past-event">
       <div class="event-header" style="background:linear-gradient(90deg,rgba(0,255,136,0.05),rgba(13,13,16,0.5));border-color:rgba(0,255,136,0.18)">
         <h2>
@@ -1108,7 +1113,7 @@
       </div>
       {% for bout in event.bouts %}
       <div class="fight-block">
-        <div class="fight-main">
+        <div class="fight-main" onclick="toggleDetails('{{ ev_idx }}-{{ loop.index }}')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -1152,6 +1157,108 @@
                   {% if bout.b_flag %}<span class="flag">{{ bout.b_flag }}</span>{% endif %}
                   {% if bout.b_record %}<span class="record-badge">{{ bout.b_record }}</span>{% endif %}
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="fight-right">
+            <span class="expand-icon" id="icon-{{ ev_idx }}-{{ loop.index }}">▼</span>
+          </div>
+        </div>
+        <div class="fight-details" id="details-{{ ev_idx }}-{{ loop.index }}">
+          <div class="details-inner">
+            <div class="details-grid">
+              <!-- Predicted vs Actual -->
+              <div class="detail-box">
+                <h4>Model Prediction vs Actual Result</h4>
+                <table class="stat-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Predicted</th>
+                      <th>Actual</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Winner</td>
+                      <td>
+                        {% set pa = (bout.prob_a_wins or 0.5)|float %}
+                        {% if pa >= 0.5 %}{{ bout.fighter_a_name }} ({{ (pa*100)|round(0)|int }}%){% else %}{{ bout.fighter_b_name }} ({{ ((1-pa)*100)|round(0)|int }}%){% endif %}
+                      </td>
+                      <td style="color:{{ 'var(--green)' if bout.pred_correct else 'var(--red)' if bout.pred_correct == False else 'var(--muted)' }}">
+                        {{ bout.actual_winner_name or 'pending' }}
+                        {% if bout.pred_correct is not none %} {{ '✓' if bout.pred_correct else '✗' }}{% endif %}
+                      </td>
+                    </tr>
+                    {% if bout.props %}
+                    {% set methods = bout.props %}
+                    {% set pred_method = 'KO/TKO' if methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0) > methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0) and methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0) > methods.get('prob_decision',0) else 'Submission' if methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0) > methods.get('prob_decision',0) else 'Decision' %}
+                    {% set ko_p  = ((methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0))*100)|round(0)|int %}
+                    {% set sub_p = ((methods.get('prob_a_wins_sub',0)    + methods.get('prob_b_wins_sub',0))*100)|round(0)|int %}
+                    {% set dec_p = ((methods.get('prob_decision',0))*100)|round(0)|int %}
+                    <tr>
+                      <td>KO/TKO</td>
+                      <td>{{ ko_p }}%</td>
+                      <td style="color:{{ 'var(--green)' if 'KO' in (bout.actual_method or '') else 'var(--muted)' }}">
+                        {{ '✓ happened' if 'KO' in (bout.actual_method or '') else '—' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Submission</td>
+                      <td>{{ sub_p }}%</td>
+                      <td style="color:{{ 'var(--green)' if 'SUB' in (bout.actual_method or '').upper() else 'var(--muted)' }}">
+                        {{ '✓ happened' if 'SUB' in (bout.actual_method or '').upper() else '—' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Decision</td>
+                      <td>{{ dec_p }}%</td>
+                      <td style="color:{{ 'var(--green)' if 'DEC' in (bout.actual_method or '').upper() or 'POINT' in (bout.actual_method or '').upper() else 'var(--muted)' }}">
+                        {{ '✓ happened' if ('DEC' in (bout.actual_method or '').upper() or 'POINT' in (bout.actual_method or '').upper()) else '—' }}
+                      </td>
+                    </tr>
+                    {% if bout.actual_round %}
+                    <tr>
+                      <td>Ending round</td>
+                      <td>R{{ pred_round if pred_round else '?' }}</td>
+                      <td>R{{ bout.actual_round }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Model confidence at the time -->
+              <div class="detail-box">
+                <h4>Pre-fight Model Confidence</h4>
+                <div class="outcome-row">
+                  <span class="outcome-label">Win probability ({{ bout.fighter_a_name }})</span>
+                  <span class="outcome-prob" style="color:var(--red)">{{ ((bout.prob_a_wins or 0.5)*100)|round(0)|int }}%</span>
+                </div>
+                <div class="outcome-row">
+                  <span class="outcome-label">Win probability ({{ bout.fighter_b_name }})</span>
+                  <span class="outcome-prob" style="color:var(--blue)">{{ ((1-(bout.prob_a_wins or 0.5))*100)|round(0)|int }}%</span>
+                </div>
+                {% if bout.uncertainty_std is not none %}
+                <div class="outcome-row">
+                  <span class="outcome-label">Uncertainty (±)</span>
+                  <span class="outcome-prob" style="color:var(--muted)">{{ ((bout.uncertainty_std or 0)*100)|round(1) }}%</span>
+                </div>
+                {% endif %}
+                {% if bout.props and bout.props.get('prob_rounds') %}
+                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
+                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
+                  {% for rk, rv in bout.props.prob_rounds.items() %}
+                  {% if rv > 0.005 %}
+                  <div class="outcome-row">
+                    <span class="outcome-label">Finish in {{ rk }}</span>
+                    <span class="outcome-prob" style="color:{{ 'var(--green)' if bout.actual_round and rk == 'R' + bout.actual_round|string else 'var(--muted)' }}">{{ (rv*100)|round(1) }}%</span>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}
               </div>
             </div>
           </div>

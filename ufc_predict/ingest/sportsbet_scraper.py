@@ -327,6 +327,7 @@ def match_odds_to_predictions(
             pred["sportsbet_odds"] = {
                 "source": "sportsbet.com.au",
                 "fight_name_raw": best_sb.get("fight_name"),
+                "start_time": best_sb.get("start_time"),
                 "match_score": best_score,
                 "moneyline_a": _find_odds_by_name(moneyline, fa_key or ""),
                 "moneyline_b": _find_odds_by_name(moneyline, fb_key or ""),

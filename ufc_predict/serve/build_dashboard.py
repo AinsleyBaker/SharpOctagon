@@ -107,6 +107,44 @@ def _data_quality(a_n, b_n) -> str:
     return "sparse"
 
 
+def _format_fight_time_aest(start_time, event_date: str) -> str:
+    """
+    Format fight start time in AEST. SportsBet provides Unix timestamps
+    OR ISO strings; ESPN provides ISO. Returns short display like
+    "Sat 9:00 AM AEST" for fights this week, or "Sat 3 May" for further out.
+    """
+    if not start_time:
+        return ""
+    try:
+        from datetime import datetime, timedelta, timezone
+        # Parse: int (Unix sec/ms) or ISO string
+        if isinstance(start_time, (int, float)):
+            ts = int(start_time)
+            if ts > 1e12:  # milliseconds
+                ts = ts // 1000
+            dt_utc = datetime.fromtimestamp(ts, tz=timezone.utc)
+        else:
+            s = str(start_time).rstrip("Z")
+            if s.endswith("+0000"):
+                s = s[:-5]
+            dt_utc = datetime.fromisoformat(s).replace(tzinfo=timezone.utc) if "T" in s else None
+            if dt_utc is None:
+                return ""
+        # Convert to AEST (UTC+10, no DST for simplicity — Sydney is mostly +10/+11)
+        aest = dt_utc + timedelta(hours=10)
+        # Cross-platform 12-hour format (no leading zero)
+        hour = aest.hour % 12 or 12
+        ampm = "AM" if aest.hour < 12 else "PM"
+        weekday = aest.strftime("%a")
+        days_out = (aest.date() - date.today()).days
+        # Always include AEST so users know the timezone
+        if -2 <= days_out <= 7:
+            return f"{weekday} {hour}:{aest.minute:02d} {ampm} AEST"
+        return f"{weekday} {aest.day} {aest.strftime('%b')} · {hour}:{aest.minute:02d} {ampm} AEST"
+    except Exception:
+        return ""
+
+
 def _streak_display(win_s, loss_s) -> tuple[str, str]:
     """Return (label, css_class). Plain English: '3-fight win streak'."""
     win_s  = int(win_s  or 0)
@@ -278,6 +316,7 @@ def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[
             parts = (n or "").split()
             return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
 
+        sb = p.get("sportsbet_odds") or {}
         bout = {
             **p,  # keep all original prediction data (probs, props, etc.)
             "a_initials":   _initials(a_name),
@@ -290,6 +329,9 @@ def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[
             "b_nationality": b_meta.get("country", ""),
             "a_record":     a_meta.get("record", ""),
             "b_record":     b_meta.get("record", ""),
+            "fight_time_aest": _format_fight_time_aest(
+                sb.get("start_time"), str(p.get("event_date", ""))
+            ),
         }
         ev["bouts"].append(bout)
 
@@ -346,12 +388,18 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
             for bout in ev.get("bouts", []):
                 pa = bout.get("fighter_a_name", "")
                 pb = bout.get("fighter_b_name", "")
-                # Find best matching fight row near this date
+                # Find best matching fight row near this date — try both
+                # orientations because DB red/blue order may not match our A/B.
                 best_score, best_row = 0, None
                 for row in rows:
-                    if abs((date.fromisoformat(str(row.date)) - date.fromisoformat(ev_date)).days) > 3:
+                    try:
+                        if abs((date.fromisoformat(str(row.date)) - date.fromisoformat(ev_date)).days) > 3:
+                            continue
+                    except ValueError:
                         continue
-                    s = min(_score(pa, row.name_a), _score(pb, row.name_b))
+                    s_normal  = min(_score(pa, row.name_a), _score(pb, row.name_b))
+                    s_flipped = min(_score(pa, row.name_b), _score(pb, row.name_a))
+                    s = max(s_normal, s_flipped)
                     if s > best_score:
                         best_score, best_row = s, row
                 if best_row is None or best_score < 70:
@@ -359,7 +407,7 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                     bout["actual_method"] = ""
                     bout["pred_correct"]  = None
                     continue
-                # Determine winner side relative to our fighter A
+                # Determine which side our fighter A is on in the DB row
                 a_score_red  = _score(pa, best_row.name_a)
                 a_score_blue = _score(pa, best_row.name_b)
                 a_is_red = a_score_red >= a_score_blue
@@ -579,6 +627,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             sb = bout.get("sportsbet_odds") or {}
             bout["sb_odds_a"] = f"{sb['moneyline_a']:.2f}" if sb.get("moneyline_a") else None
             bout["sb_odds_b"] = f"{sb['moneyline_b']:.2f}" if sb.get("moneyline_b") else None
+            # Fight time in AEST (from SportsBet event when available)
+            bout["fight_time_aest"] = _format_fight_time_aest(
+                sb.get("start_time"), str(bout.get("event_date", ""))
+            )
 
     from ufc_predict.eval.bet_analysis import top_value_bets
     top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event

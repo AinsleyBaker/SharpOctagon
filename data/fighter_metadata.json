@@ -881,7 +881,7 @@
     "country": "",
     "hometown": "",
     "style": "",
-    "age": "Apr. 27, 2026",
+    "age": "Apr. 28, 2026",
     "record": "0-0-0",
     "image_url": "fighter-images/gable-steveson.jpg",
     "stats": {
@@ -2914,6 +2914,36 @@
     "age": "67.00",
     "record": "13-6-0",
     "image_url": "fighter-images/edgar-chairez.png",
+    "stats": {}
+  },
+  "Marwan Rahiki": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "68.00",
+    "record": "8-0-0",
+    "image_url": "fighter-images/marwan-rahiki.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 18.0,
+      "sapm": 32.8,
+      "td_per_min": 0.0,
+      "stance": "nan"
+    }
+  },
+  "Ollie Schmid": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "71.00",
+    "record": "4-2-0",
+    "image_url": "fighter-images/ollie-schmid.png",
     "stats": {}
   }
 }

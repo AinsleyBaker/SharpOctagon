@@ -10,6 +10,12 @@
         "is_title_bout": false
       },
       {
+        "fighter_a": "Marwan Rahiki",
+        "fighter_b": "Ollie Schmid",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
         "fighter_a": "Themba Gorimbo",
         "fighter_b": "Jonathan Micallef",
         "weight_class": "",

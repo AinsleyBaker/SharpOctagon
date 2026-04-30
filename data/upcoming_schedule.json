@@ -10,12 +10,6 @@
         "is_title_bout": false
       },
       {
-        "fighter_a": "Marwan Rahiki",
-        "fighter_b": "Ollie Schmid",
-        "weight_class": "",
-        "is_title_bout": false
-      },
-      {
         "fighter_a": "Themba Gorimbo",
         "fighter_b": "Jonathan Micallef",
         "weight_class": "",
@@ -60,6 +54,12 @@
       {
         "fighter_a": "Shamil Gaziev",
         "fighter_b": "Brando Peri\u010di\u0107",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Marwan Rahiki",
+        "fighter_b": "Ollie Schmid",
         "weight_class": "",
         "is_title_bout": false
       },
@@ -288,6 +288,12 @@
       {
         "fighter_a": "Alex Perez",
         "fighter_b": "Sumudaerji",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Zhu Kangjie",
+        "fighter_b": "Ramon Taveras",
         "weight_class": "",
         "is_title_bout": false
       },

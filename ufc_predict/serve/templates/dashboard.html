@@ -352,7 +352,12 @@
     display: flex; align-items: center; gap: 0.3rem; margin-top: 2px; flex-wrap: wrap;
   }
   .fighter-card.right .fighter-meta { justify-content: flex-end; }
-  .flag { font-size: 0.95rem; line-height: 1; }
+  .flag {
+    display: inline-block; width: 18px; height: 13px;
+    vertical-align: middle; margin-right: 2px; border-radius: 2px;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+  }
   .stance-badge {
     font-size: 0.58rem; font-weight: 600; padding: 1px 5px; border-radius: 3px;
     background: #222228; color: #888; text-transform: uppercase; letter-spacing: 0.04em;
@@ -752,7 +757,7 @@
                   {{ bout.fighter_a_name }}
                 </div>
                 <div class="fighter-meta">
-                  {% if bout.a_flag %}<span class="flag" title="{{ bout.a_nationality }}">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_flag %}<img class="flag" src="{{ bout.a_flag }}" alt="{{ bout.a_nationality }}" title="{{ bout.a_nationality }}" loading="lazy">{% endif %}
                   {% if bout.a_record %}<span class="record-badge" title="Career W-L-D">{{ bout.a_record }}</span>{% endif %}
                   {% if bout.a_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.a_ufc_style }}</span>{% endif %}
                   {% if bout.a_stance %}<span class="stance-badge">{{ bout.a_stance }}</span>{% endif %}
@@ -797,7 +802,7 @@
               <div class="fighter-info">
                 <div class="fighter-name">{{ bout.fighter_b_name }}</div>
                 <div class="fighter-meta">
-                  {% if bout.b_flag %}<span class="flag" title="{{ bout.b_nationality }}">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_flag %}<img class="flag" src="{{ bout.b_flag }}" alt="{{ bout.b_nationality }}" title="{{ bout.b_nationality }}" loading="lazy">{% endif %}
                   {% if bout.b_record %}<span class="record-badge" title="Career W-L-D">{{ bout.b_record }}</span>{% endif %}
                   {% if bout.b_ufc_style %}<span class="ufc-style-badge" title="UFC fighting style">{{ bout.b_ufc_style }}</span>{% endif %}
                   {% if bout.b_stance %}<span class="stance-badge">{{ bout.b_stance }}</span>{% endif %}
@@ -1163,7 +1168,7 @@
               <div class="fighter-info">
                 <div class="fighter-name">{{ bout.fighter_a_name }}</div>
                 <div class="fighter-meta">
-                  {% if bout.a_flag %}<span class="flag">{{ bout.a_flag }}</span>{% endif %}
+                  {% if bout.a_flag %}<img class="flag" src="{{ bout.a_flag }}" alt="{{ bout.a_nationality }}" title="{{ bout.a_nationality }}" loading="lazy">{% endif %}
                   {% if bout.a_record %}<span class="record-badge">{{ bout.a_record }}</span>{% endif %}
                 </div>
               </div>
@@ -1194,7 +1199,7 @@
               <div class="fighter-info">
                 <div class="fighter-name">{{ bout.fighter_b_name }}</div>
                 <div class="fighter-meta">
-                  {% if bout.b_flag %}<span class="flag">{{ bout.b_flag }}</span>{% endif %}
+                  {% if bout.b_flag %}<img class="flag" src="{{ bout.b_flag }}" alt="{{ bout.b_nationality }}" title="{{ bout.b_nationality }}" loading="lazy">{% endif %}
                   {% if bout.b_record %}<span class="record-badge">{{ bout.b_record }}</span>{% endif %}
                 </div>
               </div>

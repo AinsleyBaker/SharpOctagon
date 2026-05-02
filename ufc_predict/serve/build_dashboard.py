@@ -188,13 +188,25 @@ _COUNTRY_ISO: dict[str, str] = {
 
 
 def _flag_emoji(country: str | None) -> str:
+    """
+    Return a URL to a flag image (24x18 PNG) for the given country name.
+
+    Switched from Unicode regional-indicator characters because Windows browsers
+    don't ship flag glyphs in their default font set — those characters render
+    as bare two-letter ASCII (e.g. "AU"). flagcdn.com serves stable flag PNGs
+    by ISO 3166-1 alpha-2 code; subdivisions (Scotland etc.) fall back to GB.
+    Function name kept for backward compat — many template/build callsites
+    reference `bout.a_flag` etc.
+    """
     if not country:
         return ""
     iso = _COUNTRY_ISO.get(country, "")
-    if not iso or len(iso) != 2:
+    if not iso:
         return ""
-    # Convert ISO to regional indicator symbols (Unicode flag emoji)
-    return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in iso.upper())
+    base = iso.split("-")[0].lower()
+    if len(base) != 2:
+        return ""
+    return f"https://flagcdn.com/24x18/{base}.png"
 
 
 def _stat_colors(a_val, b_val, higher_is_better: bool = True) -> tuple[str, str]:

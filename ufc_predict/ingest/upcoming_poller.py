@@ -39,6 +39,9 @@ ESPN_SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scorebo
 UFC_EVENTS_URL  = "https://www.ufc.com/events"
 SCHEDULE_PATH   = Path("data/upcoming_schedule.json")
 LOOKAHEAD_DAYS  = 90
+# Also pull recently-finished events so the dashboard can persist their
+# results into past_events.json before they disappear from ESPN's window.
+LOOKBACK_DAYS   = 14
 
 
 # ---------------------------------------------------------------------------
@@ -47,12 +50,18 @@ LOOKAHEAD_DAYS  = 90
 
 def fetch_espn_upcoming() -> list[dict]:
     """
-    Fetch upcoming UFC events from ESPN's hidden API across LOOKAHEAD_DAYS days.
-    Returns list of raw bout dicts.
+    Fetch UFC events from ESPN's hidden API spanning the last LOOKBACK_DAYS
+    through the next LOOKAHEAD_DAYS. Returning recent past events as well as
+    upcoming ones lets build_dashboard persist their results into
+    past_events.json before they fall out of ESPN's window — without this
+    pre-poll, an event that just finished is dropped from the scoreboard
+    after a couple of days and the Past Events panel shows "result pending"
+    until the next Greco CSV ingest catches up (sometimes ~24h later).
     """
     today = date.today()
+    start = today - timedelta(days=LOOKBACK_DAYS)
     end   = today + timedelta(days=LOOKAHEAD_DAYS)
-    date_range = f"{today.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}"
+    date_range = f"{start.strftime('%Y%m%d')}-{end.strftime('%Y%m%d')}"
     url = f"{ESPN_SCOREBOARD}?dates={date_range}&limit=100"
     try:
         resp = requests.get(url, headers=_HEADERS, timeout=20)

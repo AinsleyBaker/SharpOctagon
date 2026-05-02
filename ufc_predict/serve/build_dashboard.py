@@ -487,6 +487,99 @@ def _enrich_props(bout: dict) -> None:
         )
 
 
+_LIVE_STATE_FIELDS = (
+    "is_completed", "is_live", "live_winner", "live_method", "live_round",
+    "result_text", "pred_correct",
+)
+
+
+def _persist_live_results(events: list[dict]) -> None:
+    """
+    Merge any bouts with live ESPN results (is_completed=True + live_winner)
+    into data/past_events.json, keyed by upcoming_bout_id. This captures the
+    state *before* ESPN's scoreboard drops the event from its current
+    window, so the dashboard can keep showing actual results in the Past
+    Events panel even after the event falls out of the live schedule.
+
+    Called during the dashboard build, after bouts have been enriched with
+    live status from upcoming_schedule.json.
+    """
+    if not events:
+        return
+
+    # Read current past_events.json. Key by (event_date, lower(name_a),
+    # lower(name_b)) — sorted so swapped corner orders dedupe cleanly. The
+    # prediction's upcoming_bout_id and synthetic preview-bout IDs vary
+    # across runs, so keying purely on bout_id leaves duplicates.
+    def _bout_key(p: dict) -> tuple:
+        a = (p.get("fighter_a_name") or "").strip().lower()
+        b = (p.get("fighter_b_name") or "").strip().lower()
+        names = tuple(sorted([a, b]))
+        return (str(p.get("event_date", "")), names)
+
+    existing: dict[tuple, dict] = {}
+    if PAST_EVENTS_PATH.exists():
+        try:
+            arr = json.loads(PAST_EVENTS_PATH.read_text(encoding="utf-8"))
+            for p in arr:
+                if not p.get("event_date"):
+                    continue
+                key = _bout_key(p)
+                if key[1][0] and key[1][1]:  # both fighter names present
+                    existing[key] = p
+        except json.JSONDecodeError:
+            existing = {}
+
+    changed = False
+    for event in events:
+        for bout in event.get("bouts", []):
+            if not bout.get("is_completed") or not bout.get("live_winner"):
+                continue
+            key = _bout_key(bout)
+            if not (key[0] and key[1][0] and key[1][1]):
+                continue  # missing event date or fighter names — can't key
+            bid = bout.get("upcoming_bout_id") or ""
+            if not bid:
+                # Preview-only bouts (early prelims missing from predictions)
+                # don't have a stable bout_id. Synthesise one so the entry has
+                # a stable identifier downstream, but dedup is by name+date.
+                bid = "live-" + str(abs(hash((
+                    str(bout.get("event_date", "")),
+                    (bout.get("fighter_a_name") or "").lower(),
+                    (bout.get("fighter_b_name") or "").lower(),
+                ))))[:16]
+            entry = dict(existing.get(key, {}))
+            # Carry forward any prediction data the bout already has, plus
+            # the live state fields so the past-events template can render
+            # winner/method/round without a DB lookup.
+            for k in (
+                "event_date", "event_name", "fighter_a_name", "fighter_b_name",
+                "weight_class", "is_title_bout", "prob_a_wins", "prob_b_wins",
+                "props", "sportsbet_odds", "bet_analysis",
+                "fighter_a_nationality", "fighter_b_nationality",
+                "uncertainty_std", "ci_90_lo", "ci_90_hi",
+            ):
+                if bout.get(k) is not None:
+                    entry[k] = bout.get(k)
+            for k in _LIVE_STATE_FIELDS:
+                if bout.get(k) is not None:
+                    entry[k] = bout.get(k)
+            entry["upcoming_bout_id"] = bid
+            if existing.get(key) != entry:
+                existing[key] = entry
+                changed = True
+
+    if not changed:
+        return
+
+    out = sorted(existing.values(),
+                 key=lambda p: str(p.get("event_date", "")),
+                 reverse=True)
+    PAST_EVENTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PAST_EVENTS_PATH.write_text(json.dumps(out, indent=2, default=str), encoding="utf-8")
+    log.info("Persisted live results: %d bouts in %s", len(out), PAST_EVENTS_PATH)
+
+
 def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[dict]:
     """
     Read data/past_events.json (accumulated by track_predictions.snapshot)
@@ -951,6 +1044,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             pb = _build_preview_bout(sb, fighter_meta, fighter_imgs, status_payload)
             if pb is None:
                 continue
+            pb["event_date"] = str(event.get("event_date", ""))
+            pb["event_name"] = event.get("event_name", "")
             pb["fight_time_aest"] = _format_fight_time_aest(
                 sb.get("start_time_iso"), str(event.get("event_date", ""))
             )
@@ -999,6 +1094,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # Build a carousel of all known upcoming events.
     # Merges predicted events (have data) with the full ESPN schedule
     # (covers events too far out for predictions, e.g. 2-3 weeks ahead).
+    # Past events (now included in the schedule for results-persistence)
+    # are excluded — the carousel is "what's coming up" only.
     schedule = load_schedule()
     pred_events_by_key = {
         (str(ev["event_date"]), ev["event_name"]): ev for ev in events
@@ -1009,8 +1106,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     event_carousel = []
     all_events = []
 
-    # Schedule entries (broad)
+    # Schedule entries (broad) — drop anything earlier than today
     for s in schedule:
+        if str(s.get("event_date", "")) < today_str:
+            continue
         key = (s["event_date"], s["event_name"])
         if key in seen_keys:
             continue
@@ -1022,8 +1121,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             "from_schedule": True,
         })
 
-    # Prediction events (may include extras the schedule missed)
+    # Prediction events (may include extras the schedule missed) — same filter
     for key, ev in pred_events_by_key.items():
+        if str(ev.get("event_date", "")) < today_str:
+            continue
         if key in seen_keys:
             continue
         seen_keys.add(key)
@@ -1083,6 +1184,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             }
             pb = _build_preview_bout(sb, fighter_meta, fighter_imgs, status_payload)
             if pb is not None:
+                pb["event_date"] = str(s["event_date"])
+                pb["event_name"] = s.get("event_name", "")
                 # Time display for preview bouts (predicted events get this in the
                 # main loop, but preview events skipped that path entirely).
                 pb["fight_time_aest"] = _format_fight_time_aest(
@@ -1102,6 +1205,13 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # Combine: predicted events first (sorted by date), then preview events
     all_events_for_template = sorted(events, key=lambda e: str(e.get("event_date", "")))
     all_events_for_template.extend(preview_events)
+
+    # Persist any completed bouts (with ESPN-derived winner/method/round) to
+    # data/past_events.json BEFORE we lose them. Once a fight night ends and
+    # the date rolls over, ESPN's scoreboard drops the event so the live
+    # state vanishes; this snapshot is what keeps the Past Events panel
+    # populated with results next build.
+    _persist_live_results(all_events_for_template)
 
     # Split events into upcoming and past, with per-bout granularity for
     # today's live card: completed bouts migrate to a Past Events row for

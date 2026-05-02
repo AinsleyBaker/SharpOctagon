@@ -162,6 +162,38 @@
     0%, 100% { box-shadow: 0 0 12px rgba(0,255,136,0.5); }
     50%      { box-shadow: 0 0 24px rgba(0,255,136,0.85); }
   }
+  /* ─── Live event / live bout / completed bout ─── */
+  .live-badge {
+    display: inline-block;
+    font-size: 0.55rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 3px;
+    background: linear-gradient(135deg, #ff3344, #b40e1d);
+    color: #fff; text-transform: uppercase; letter-spacing: 0.12em;
+    margin-left: 0.5rem; vertical-align: middle;
+    box-shadow: 0 0 14px rgba(255, 51, 68, 0.6);
+    animation: live-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255, 51, 68, 0.55); }
+    50%      { box-shadow: 0 0 22px rgba(255, 51, 68, 0.95); }
+  }
+  .live-pill {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    background: #b40e1d; color: #fff;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(255, 51, 68, 0.6);
+    animation: live-pulse 1.4s ease-in-out infinite;
+  }
+  .result-pill {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    background: rgba(120, 120, 130, 0.18); color: var(--muted);
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .result-text {
+    display: block; margin-top: 4px;
+    color: var(--matrix); font-weight: 600; font-size: 0.7rem;
+  }
 
   /* Tooltips */
   [data-tt] { position: relative; cursor: help; border-bottom: 1px dotted var(--muted); }
@@ -609,7 +641,7 @@
     
   </div>
 
-  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-05-02 11:12 UTC</div>
+  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-05-02 11:26 UTC</div>
 </header>
 
 <nav>
@@ -619,7 +651,7 @@
   </a>
   
   <a href="#" id="tab-past" onclick="showTab('past',this);return false;">
-    Past Events (2)
+    Past Events (1)
   </a>
   
 </nav>
@@ -856,7 +888,10 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 8:20 PM AEST</span>
+                
+                  <br><span class="result-pill">Result</span>
+                  <span class="result-text">Junior Tafa by Final R1</span>
+                
               </div>
             </div>
 
@@ -1192,7 +1227,10 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 8:45 PM AEST</span>
+                
+                  <br><span class="result-pill">Result</span>
+                  <span class="result-text">Cam Rowston by Final R3</span>
+                
               </div>
             </div>
 
@@ -1524,7 +1562,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 9:15 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 9:15 PM AEST</span>
+                
               </div>
             </div>
 
@@ -1860,7 +1900,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 9:40 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 9:40 PM AEST</span>
+                
               </div>
             </div>
 
@@ -1868,14 +1910,18 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >BP</div>
+                <img src="fighter-images/brando-pericic.png" alt="Brando Pericic" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">BP</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Brando Pericic</div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">6-1-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Wrestler</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">2-fight win streak</span>
                 </div>
@@ -1908,7 +1954,7 @@
                     <tr>
                       <td>Career record</td>
                       <td>14-2-0</td>
-                      <td>—</td>
+                      <td>6-1-0</td>
                     </tr>
                     <tr>
                       <td>Last 3 win %</td>
@@ -2192,7 +2238,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:05 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:05 PM AEST</span>
+                
               </div>
             </div>
 
@@ -2514,7 +2562,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:30 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:30 PM AEST</span>
+                
               </div>
             </div>
 
@@ -2814,7 +2864,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:55 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 10:55 PM AEST</span>
+                
               </div>
             </div>
 
@@ -3150,7 +3202,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 11:30 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 11:30 PM AEST</span>
+                
               </div>
             </div>
 
@@ -3497,7 +3551,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -3717,7 +3773,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -3937,7 +3995,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -4157,7 +4217,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:10 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:10 AM AEST</span>
+                
               </div>
             </div>
 
@@ -4412,7 +4474,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:40 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:40 AM AEST</span>
+                
               </div>
             </div>
 
@@ -4667,7 +4731,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 10:10 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 10:10 AM AEST</span>
+                
               </div>
             </div>
 
@@ -4675,14 +4741,18 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >MR</div>
+                <img src="fighter-images/mateusz-rebecki.png" alt="Mateusz Rebecki" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">MR</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Mateusz Rebecki</div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">20-4-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Brazilian Jiu-Jitsu</span>
                   <span class="stance-badge">Southpaw</span>
                   <span class="streak-label streak-l">2-fight loss streak</span>
                 </div>
@@ -4715,7 +4785,7 @@
                     <tr>
                       <td>Career record</td>
                       <td>23-3-1</td>
-                      <td>—</td>
+                      <td>20-4-0</td>
                     </tr>
                     <tr>
                       <td>Last 3 win %</td>
@@ -4918,7 +4988,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 10:30 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 10:30 AM AEST</span>
+                
               </div>
             </div>
 
@@ -4926,14 +4998,18 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >JA</div>
+                <img src="fighter-images/joel-alvarez.png" alt="Joel Alvarez" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JA</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Joel Alvarez</div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">23-3-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Striker</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">4-fight win streak</span>
                 </div>
@@ -4966,7 +5042,7 @@
                     <tr>
                       <td>Career record</td>
                       <td>29-1-0</td>
-                      <td>—</td>
+                      <td>23-3-0</td>
                     </tr>
                     <tr>
                       <td>Last 3 win %</td>
@@ -5169,7 +5245,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 9:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -5389,7 +5467,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -5609,7 +5689,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 11:30 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 11:30 AM AEST</span>
+                
               </div>
             </div>
 
@@ -5829,7 +5911,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 12:30 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 12:30 PM AEST</span>
+                
               </div>
             </div>
 
@@ -6165,7 +6249,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 1:30 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 1:30 PM AEST</span>
+                
               </div>
             </div>
 
@@ -6517,7 +6603,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -6737,7 +6825,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -6957,7 +7047,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -7177,7 +7269,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -7397,7 +7491,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -7617,7 +7713,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -7833,7 +7931,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -8053,7 +8153,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -8240,7 +8342,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >BS</div>
+                <img src="fighter-images/benardo-sopaj.png" alt="Benardo Sopaj" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">BS</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -8249,8 +8355,8 @@
                 </div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">12-3-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">MMA</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">1 win</span>
                 </div>
@@ -8316,7 +8422,7 @@
                   <tbody>
                     <tr>
                       <td>Career record</td>
-                      <td>—</td>
+                      <td>12-3-0</td>
                       <td>2-2-0</td>
                     </tr>
                     <tr>
@@ -8485,7 +8591,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -8705,7 +8813,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -8925,7 +9035,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 17 May · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -9145,7 +9257,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 12:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 10 May · 12:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -9416,7 +9530,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -9852,7 +9968,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -10284,7 +10402,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -10504,7 +10624,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 6:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -10945,7 +11067,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -11165,7 +11289,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -11380,7 +11506,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -11600,7 +11728,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -11820,7 +11950,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sat 30 May · 9:00 PM AEST</span>
+                
               </div>
             </div>
 
@@ -12056,7 +12188,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -12276,7 +12410,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -12496,7 +12632,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -12683,7 +12821,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >FZ</div>
+                <img src="fighter-images/fares-ziam.png" alt="Fares Ziam" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">FZ</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -12692,8 +12834,8 @@
                 </div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">18-4-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Kickboxer</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">6-fight win streak</span>
                 </div>
@@ -12763,7 +12905,7 @@
                   <tbody>
                     <tr>
                       <td>Career record</td>
-                      <td>—</td>
+                      <td>18-4-0</td>
                       <td>10-1-0</td>
                     </tr>
                     <tr>
@@ -12899,7 +13041,11 @@
             <div class="fighter-card">
               <div class="avatar av-a">
                 
-                <div class="initials" >JW</div>
+                <img src="fighter-images/jakub-wiklacz.png" alt="Jakub Wiklacz" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">JW</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">
@@ -12908,8 +13054,8 @@
                 </div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">18-3-2</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Grappler</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">2-fight win streak</span>
                 </div>
@@ -12979,7 +13125,7 @@
                   <tbody>
                     <tr>
                       <td>Career record</td>
-                      <td>—</td>
+                      <td>18-3-2</td>
                       <td>10-2-0</td>
                     </tr>
                     <tr>
@@ -13148,7 +13294,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -13368,7 +13516,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -13588,7 +13738,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -13816,14 +13968,18 @@
             <div class="fighter-card right">
               <div class="avatar av-b">
                 
-                <div class="initials" >EC</div>
+                <img src="fighter-images/edgar-chairez.png" alt="Edgar Chairez" loading="lazy"
+                     referrerpolicy="no-referrer"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                
+                <div class="initials" style="display:none">EC</div>
               </div>
               <div class="fighter-info">
                 <div class="fighter-name">Edgar Chairez</div>
                 <div class="fighter-meta">
                   
-                  
-                  
+                  <span class="record-badge" title="Career W-L-D">13-6-0</span>
+                  <span class="ufc-style-badge" title="UFC fighting style">Freestyle</span>
                   <span class="stance-badge">Orthodox</span>
                   <span class="streak-label streak-w">2-fight win streak</span>
                 </div>
@@ -13856,7 +14012,7 @@
                     <tr>
                       <td>Career record</td>
                       <td>15-8-2</td>
-                      <td>—</td>
+                      <td>13-6-0</td>
                     </tr>
                     <tr>
                       <td>Last 3 win %</td>
@@ -14024,7 +14180,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -14244,7 +14402,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -14464,7 +14624,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 7 Jun · 11:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -14700,7 +14862,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -14920,7 +15084,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:15 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:15 AM AEST</span>
+                
               </div>
             </div>
 
@@ -15175,7 +15341,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:45 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 8:45 AM AEST</span>
+                
               </div>
             </div>
 
@@ -15395,7 +15563,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 9:15 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 9:15 AM AEST</span>
+                
               </div>
             </div>
 
@@ -15650,7 +15820,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 9:45 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 9:45 AM AEST</span>
+                
               </div>
             </div>
 
@@ -15910,7 +16082,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 10:30 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 10:30 AM AEST</span>
+                
               </div>
             </div>
 
@@ -16246,7 +16420,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 11:15 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Mon 15 Jun · 11:15 AM AEST</span>
+                
               </div>
             </div>
 
@@ -16598,7 +16774,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 7:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 7:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -16818,7 +16996,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -17038,7 +17218,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -17258,7 +17440,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -17478,7 +17662,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -17698,7 +17884,9 @@
               </div>
               <div class="wc-txt">
                 —
-                <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ Sun 21 Jun · 10:00 AM AEST</span>
+                
               </div>
             </div>
 
@@ -21717,1224 +21905,6 @@
     <div class="event-card past-event">
       <div class="event-header" style="background:linear-gradient(90deg,rgba(0,255,136,0.05),rgba(13,13,16,0.5));border-color:rgba(0,255,136,0.18)">
         <h2>
-          UFC Fight Night: Della Maddalena vs. Prates
-          
-        </h2>
-        <span class="date">2026-05-02</span>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-1')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/junior-tafa.png" alt="Junior Tafa" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">JT</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Junior Tafa</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇦🇺</span>
-                  <span class="record-badge">6-5-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/kevin-christian.png" alt="Kevin Christian" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">KC</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Kevin Christian</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇧🇷</span>
-                  <span class="record-badge">9-3-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-1">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-1">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Kevin Christian (55%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>53%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>14%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>33%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Junior Tafa)</span>
-                  <span class="outcome-prob" style="color:var(--red)">45%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Kevin Christian)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">55%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">9.2%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">37.1%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">23.6%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">6.4%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-2')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/robert-bryczek.png" alt="Robert Bryczek" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">RB</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Robert Bryczek</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇵🇱</span>
-                  <span class="record-badge">18-6-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                
-                <div class="initials" >CR</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Cam Rowston</div>
-                <div class="fighter-meta">
-                  
-                  <span class="record-badge">2-0-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-2">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-2">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Cam Rowston (72%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>43%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>10%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>47%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Robert Bryczek)</span>
-                  <span class="outcome-prob" style="color:var(--red)">28%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Cam Rowston)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">72%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">10.1%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">28.6%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">15.9%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">8.6%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-3')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/tai-tuivasa.png" alt="Tai Tuivasa" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">TT</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Tai Tuivasa</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇦🇺</span>
-                  <span class="record-badge">15-9-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/louie-sutherland.png" alt="Louie Sutherland" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">LS</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Louie Sutherland</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇬🇧</span>
-                  <span class="record-badge">10-5-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-3">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-3">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Louie Sutherland (52%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>42%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>15%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>44%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Tai Tuivasa)</span>
-                  <span class="outcome-prob" style="color:var(--red)">48%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Louie Sutherland)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">52%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">9.7%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">33.0%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">18.3%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">5.1%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-4')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/shamil-gaziev.png" alt="Shamil Gaziev" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">SG</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Shamil Gaziev</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇷🇺</span>
-                  <span class="record-badge">14-2-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                
-                <div class="initials" >BP</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Brando Pericic</div>
-                <div class="fighter-meta">
-                  
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-4">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-4">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Brando Pericic (53%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>47%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>13%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>40%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Shamil Gaziev)</span>
-                  <span class="outcome-prob" style="color:var(--red)">47%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Brando Pericic)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">53%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">8.1%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">35.1%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">19.6%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">5.4%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-5')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/marwan-rahiki.png" alt="Marwan Rahiki" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">MR</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Marwan Rahiki</div>
-                <div class="fighter-meta">
-                  
-                  <span class="record-badge">8-0-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/ollie-schmid.png" alt="Ollie Schmid" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">OS</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Ollie Schmid</div>
-                <div class="fighter-meta">
-                  
-                  <span class="record-badge">4-2-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-5">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-5">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Marwan Rahiki (74%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>61%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>20%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>20%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Marwan Rahiki)</span>
-                  <span class="outcome-prob" style="color:var(--red)">74%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Ollie Schmid)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">26%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">7.3%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">51.5%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">28.6%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-6')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/tim-elliott.png" alt="Tim Elliott" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">TE</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Tim Elliott</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇺🇸</span>
-                  <span class="record-badge">22-13-1</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/steve-erceg.png" alt="Steve Erceg" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">SE</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Steve Erceg</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇦🇺</span>
-                  <span class="record-badge">13-4-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-6">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-6">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Steve Erceg (67%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>21%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>11%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>68%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Tim Elliott)</span>
-                  <span class="outcome-prob" style="color:var(--red)">33%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Steve Erceg)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">67%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">8.3%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">16.1%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">10.5%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">5.7%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-7')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/beneil-dariush.png" alt="Beneil Dariush" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">BD</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Beneil Dariush</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇮🇷</span>
-                  <span class="record-badge">23-7-1</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/quillan-salkilld.png" alt="Quillan Salkilld" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">QS</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Quillan Salkilld</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇦🇺</span>
-                  <span class="record-badge">11-1-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-7">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-7">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Quillan Salkilld (83%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>40%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>25%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>35%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Beneil Dariush)</span>
-                  <span class="outcome-prob" style="color:var(--red)">17%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Quillan Salkilld)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">83%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">8.4%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">35.0%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">19.5%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R3</span>
-                    <span class="outcome-prob" style="color:var(--muted)">10.5%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-1-8')">
-          <div class="match-row">
-            <div class="fighter-card">
-              <div class="avatar av-a">
-                <img src="fighter-images/carlos-prates.png" alt="Carlos Prates" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">CP</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Carlos Prates</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇧🇷</span>
-                  <span class="record-badge">23-7-0</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-center">
-              
-              <div style="font-size:var(--xs);color:var(--muted)">result pending</div>
-              
-            </div>
-            <div class="fighter-card right">
-              <div class="avatar av-b">
-                <img src="fighter-images/jack-della-maddalena.png" alt="Jack Della Maddalena" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="initials" style="display:none">JM</div>
-              </div>
-              <div class="fighter-info">
-                <div class="fighter-name">Jack Della Maddalena</div>
-                <div class="fighter-meta">
-                  <span class="flag">🇦🇺</span>
-                  <span class="record-badge">18-3-0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fight-right">
-            <span class="expand-icon" id="icon-past-1-8">▼</span>
-          </div>
-        </div>
-        <div class="fight-details" id="details-past-1-8">
-          <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Predicted</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Winner</td>
-                      <td>
-                        
-                        Carlos Prates (51%)
-                      </td>
-                      <td style="color:var(--muted)">
-                        pending
-                        
-                      </td>
-                    </tr>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <tr>
-                      <td>KO/TKO</td>
-                      <td>50%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>8%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>42%</td>
-                      <td style="color:var(--muted)">
-                        —
-                      </td>
-                    </tr>
-                    
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Carlos Prates)</span>
-                  <span class="outcome-prob" style="color:var(--red)">51%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability (Jack Della Maddalena)</span>
-                  <span class="outcome-prob" style="color:var(--blue)">49%</span>
-                </div>
-                
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">10.7%</span>
-                </div>
-                
-                
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R1</span>
-                    <span class="outcome-prob" style="color:var(--muted)">37.6%</span>
-                  </div>
-                  
-                  
-                  
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in R2</span>
-                    <span class="outcome-prob" style="color:var(--muted)">20.9%</span>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    
-    
-    <div class="event-card past-event">
-      <div class="event-header" style="background:linear-gradient(90deg,rgba(0,255,136,0.05),rgba(13,13,16,0.5));border-color:rgba(0,255,136,0.18)">
-        <h2>
           UFC Fight Night: Sterling vs. Zalal
           
           <span class="record-badge" style="margin-left:0.5rem;background:rgba(0,255,136,0.12);color:var(--matrix)">
@@ -22946,7 +21916,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-1')">
+        <div class="fight-main" onclick="toggleDetails('past-1-1')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -22992,10 +21962,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-1">▼</span>
+            <span class="expand-icon" id="icon-past-1-1">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-1">
+        <div class="fight-details" id="details-past-1-1">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23115,7 +22085,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-2')">
+        <div class="fight-main" onclick="toggleDetails('past-1-2')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -23161,10 +22131,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-2">▼</span>
+            <span class="expand-icon" id="icon-past-1-2">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-2">
+        <div class="fight-details" id="details-past-1-2">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23279,7 +22249,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-3')">
+        <div class="fight-main" onclick="toggleDetails('past-1-3')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -23325,10 +22295,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-3">▼</span>
+            <span class="expand-icon" id="icon-past-1-3">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-3">
+        <div class="fight-details" id="details-past-1-3">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23448,7 +22418,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-4')">
+        <div class="fight-main" onclick="toggleDetails('past-1-4')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -23494,10 +22464,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-4">▼</span>
+            <span class="expand-icon" id="icon-past-1-4">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-4">
+        <div class="fight-details" id="details-past-1-4">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23617,7 +22587,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-5')">
+        <div class="fight-main" onclick="toggleDetails('past-1-5')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -23663,10 +22633,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-5">▼</span>
+            <span class="expand-icon" id="icon-past-1-5">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-5">
+        <div class="fight-details" id="details-past-1-5">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23786,7 +22756,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-6')">
+        <div class="fight-main" onclick="toggleDetails('past-1-6')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -23832,10 +22802,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-6">▼</span>
+            <span class="expand-icon" id="icon-past-1-6">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-6">
+        <div class="fight-details" id="details-past-1-6">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -23955,7 +22925,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-7')">
+        <div class="fight-main" onclick="toggleDetails('past-1-7')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24001,10 +22971,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-7">▼</span>
+            <span class="expand-icon" id="icon-past-1-7">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-7">
+        <div class="fight-details" id="details-past-1-7">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24129,7 +23099,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-8')">
+        <div class="fight-main" onclick="toggleDetails('past-1-8')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24175,10 +23145,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-8">▼</span>
+            <span class="expand-icon" id="icon-past-1-8">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-8">
+        <div class="fight-details" id="details-past-1-8">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24298,7 +23268,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-9')">
+        <div class="fight-main" onclick="toggleDetails('past-1-9')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24344,10 +23314,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-9">▼</span>
+            <span class="expand-icon" id="icon-past-1-9">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-9">
+        <div class="fight-details" id="details-past-1-9">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24467,7 +23437,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-10')">
+        <div class="fight-main" onclick="toggleDetails('past-1-10')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24513,10 +23483,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-10">▼</span>
+            <span class="expand-icon" id="icon-past-1-10">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-10">
+        <div class="fight-details" id="details-past-1-10">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24636,7 +23606,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-11')">
+        <div class="fight-main" onclick="toggleDetails('past-1-11')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24682,10 +23652,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-11">▼</span>
+            <span class="expand-icon" id="icon-past-1-11">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-11">
+        <div class="fight-details" id="details-past-1-11">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24805,7 +23775,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-12')">
+        <div class="fight-main" onclick="toggleDetails('past-1-12')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -24851,10 +23821,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-12">▼</span>
+            <span class="expand-icon" id="icon-past-1-12">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-12">
+        <div class="fight-details" id="details-past-1-12">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->
@@ -24974,7 +23944,7 @@
       </div>
       
       <div class="fight-block">
-        <div class="fight-main" onclick="toggleDetails('past-2-13')">
+        <div class="fight-main" onclick="toggleDetails('past-1-13')">
           <div class="match-row">
             <div class="fighter-card">
               <div class="avatar av-a">
@@ -25020,10 +23990,10 @@
             </div>
           </div>
           <div class="fight-right">
-            <span class="expand-icon" id="icon-past-2-13">▼</span>
+            <span class="expand-icon" id="icon-past-1-13">▼</span>
           </div>
         </div>
-        <div class="fight-details" id="details-past-2-13">
+        <div class="fight-details" id="details-past-1-13">
           <div class="details-inner">
             <div class="details-grid">
               <!-- Predicted vs Actual -->

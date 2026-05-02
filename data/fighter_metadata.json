@@ -3305,5 +3305,215 @@
       "td_per_min": 0.20960698689956334,
       "stance": "Orthodox"
     }
+  },
+  "Benardo Sopaj": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "66.00",
+    "record": "12-3-0",
+    "image_url": "fighter-images/benardo-sopaj.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 13.012048192771084,
+      "sapm": 23.23580034423408,
+      "td_per_min": 0.5163511187607573,
+      "stance": "Orthodox"
+    }
+  },
+  "Brando Pericic": {
+    "country": "",
+    "hometown": "",
+    "style": "Wrestler",
+    "age": "77.00",
+    "record": "6-1-0",
+    "image_url": "fighter-images/brando-pericic.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 12.914798206278027,
+      "sapm": 20.179372197309416,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Edgar Chairez": {
+    "country": "",
+    "hometown": "",
+    "style": "Freestyle",
+    "age": "67.00",
+    "record": "13-6-0",
+    "image_url": "fighter-images/edgar-chairez.png",
+    "stats": {
+      "n_fights": 6,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.0,
+      "sub_rate": 0.3333333333333333,
+      "slpm": 8.444130127298445,
+      "sapm": 18.033946251768032,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Fares Ziam": {
+    "country": "",
+    "hometown": "",
+    "style": "Kickboxer",
+    "age": "73.00",
+    "record": "18-4-0",
+    "image_url": "fighter-images/fares-ziam.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 6,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.3,
+      "ko_rate": 0.2,
+      "sub_rate": 0.0,
+      "slpm": 8.261351052048726,
+      "sapm": 15.725359911406422,
+      "td_per_min": 0.3322259136212624,
+      "stance": "Orthodox"
+    }
+  },
+  "Jakub Wiklacz": {
+    "country": "",
+    "hometown": "",
+    "style": "Grappler",
+    "age": "69.00",
+    "record": "18-3-2",
+    "image_url": "fighter-images/jakub-wiklacz.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.5,
+      "ko_rate": 0.0,
+      "sub_rate": 0.5,
+      "slpm": 10.217028380634389,
+      "sapm": 23.138564273789648,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Joel Alvarez": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "74.00",
+    "record": "23-3-0",
+    "image_url": "fighter-images/joel-alvarez.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.8,
+      "ko_rate": 0.5,
+      "sub_rate": 0.3,
+      "slpm": 11.196029776674939,
+      "sapm": 20.30769230769231,
+      "td_per_min": 0.029776674937965264,
+      "stance": "Orthodox"
+    }
+  },
+  "Mateusz Rebecki": {
+    "country": "",
+    "hometown": "",
+    "style": "Brazilian Jiu-Jitsu",
+    "age": "67.00",
+    "record": "20-4-0",
+    "image_url": "fighter-images/mateusz-rebecki.png",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.42857142857142855,
+      "ko_rate": 0.2857142857142857,
+      "sub_rate": 0.14285714285714285,
+      "slpm": 15.106267029972752,
+      "sapm": 32.403269754768395,
+      "td_per_min": 0.5885558583106267,
+      "stance": "Southpaw"
+    }
+  },
+  "Xiong Jingnan": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
+  },
+  "nan Aoriqileng": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
+  },
+  "nan Sumudaerji": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Southpaw"
+    }
   }
 }

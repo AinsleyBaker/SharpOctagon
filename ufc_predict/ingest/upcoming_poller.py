@@ -358,20 +358,28 @@ def export_schedule(bouts: list[dict]) -> None:
 
 
 def poll(db_url: str | None = None) -> int:
-    from ufc_predict.db.session import get_session_factory
-    factory = get_session_factory(db_url)
-
     espn_bouts = fetch_espn_upcoming()
     time.sleep(1)
     ufc_bouts = fetch_ufc_upcoming()
 
     all_bouts = espn_bouts + ufc_bouts
 
-    # Always export the schedule, even when DB upsert fails
+    # Always export the schedule first — the dashboard only needs this JSON,
+    # and we want the live workflow to keep working even when the DB is
+    # missing or unreachable (fresh runner, broken file, schema drift).
     export_schedule(all_bouts)
 
-    with factory() as session:
-        return upsert_bouts(all_bouts, session)
+    try:
+        from ufc_predict.db.session import get_session_factory
+        factory = get_session_factory(db_url)
+        with factory() as session:
+            return upsert_bouts(all_bouts, session)
+    except Exception as e:  # pragma: no cover — defensive guard
+        log.warning(
+            "Skipping DB upsert (%s: %s). Schedule JSON was still written.",
+            type(e).__name__, e,
+        )
+        return 0
 
 
 if __name__ == "__main__":

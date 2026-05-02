@@ -266,6 +266,52 @@ def _is_live_status(status: str) -> bool:
     return bool(status) and status not in _LIVE_TERMINAL
 
 
+def _was_prediction_correct(
+    actual_winner: str,
+    fighter_a_name: str,
+    fighter_b_name: str,
+    prob_a_wins: float | None,
+) -> bool | None:
+    """
+    Compare ESPN's actual winner against our model's pick.
+    Returns True/False, or None when the result isn't decidable
+    (no probability, or the winner string doesn't match either fighter).
+    """
+    if prob_a_wins is None or actual_winner is None:
+        return None
+    try:
+        prob_a = float(prob_a_wins)
+    except (TypeError, ValueError):
+        return None
+
+    aw = (actual_winner or "").strip().lower()
+    fa = (fighter_a_name or "").strip().lower()
+    fb = (fighter_b_name or "").strip().lower()
+    if not aw:
+        return None
+
+    # Match on full name OR last-name token (ESPN sometimes returns just one
+    # name segment for fighters with diacritics or compound names).
+    def _matches(a: str, b: str) -> bool:
+        if not a or not b:
+            return False
+        if a == b or a in b or b in a:
+            return True
+        a_last = a.split()[-1] if a.split() else a
+        b_last = b.split()[-1] if b.split() else b
+        return bool(a_last) and bool(b_last) and (a_last == b_last)
+
+    if _matches(aw, fa):
+        a_won = True
+    elif _matches(aw, fb):
+        a_won = False
+    else:
+        return None
+
+    predicted_a = prob_a >= 0.5
+    return predicted_a == a_won
+
+
 def _format_result_text(winner: str, method_raw: str, round_num: int | None) -> str:
     """
     Build a clean "Winner by METHOD R#" string from ESPN status fields.
@@ -840,8 +886,15 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 bout["result_text"] = _format_result_text(
                     bout["live_winner"], bout["live_method"], bout["live_round"]
                 )
+                bout["pred_correct"] = _was_prediction_correct(
+                    bout["live_winner"],
+                    bout.get("fighter_a_name", ""),
+                    bout.get("fighter_b_name", ""),
+                    bout.get("prob_a_wins"),
+                )
             else:
                 bout["result_text"] = ""
+                bout["pred_correct"] = None
 
     # Some bouts on a predicted event may be missing from predictions.json
     # (typical for early prelims that finished before the predict step ran,
@@ -1028,9 +1081,25 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     all_events_for_template = sorted(events, key=lambda e: str(e.get("event_date", "")))
     all_events_for_template.extend(preview_events)
 
-    # Split into upcoming (event_date >= today) and past (< today).
-    upcoming_events = [e for e in all_events_for_template if str(e.get("event_date", "")) >= today_str]
-    past_events_today = [e for e in all_events_for_template if str(e.get("event_date", "")) <  today_str]
+    # Split into upcoming (event_date >= today) and past (< today). Today's
+    # event stays on the upcoming card while bouts are still happening; once
+    # every bout on it is FINAL we move it to past events immediately so the
+    # full prediction-vs-actual breakdown shows up without waiting for the
+    # date rollover.
+    def _all_bouts_final(ev: dict) -> bool:
+        bouts = ev.get("bouts") or []
+        return bool(bouts) and all(b.get("is_completed") for b in bouts)
+
+    upcoming_events: list[dict] = []
+    past_events_today: list[dict] = []
+    for e in all_events_for_template:
+        ev_date = str(e.get("event_date", ""))
+        if ev_date < today_str:
+            past_events_today.append(e)
+        elif ev_date == today_str and _all_bouts_final(e):
+            past_events_today.append(e)
+        else:
+            upcoming_events.append(e)
 
     # Pull historical past events from data/past_events.json (persisted across
     # workflow runs). Predictions.json only contains upcoming events, so once

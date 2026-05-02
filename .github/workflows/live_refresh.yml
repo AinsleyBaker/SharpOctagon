@@ -1,0 +1,60 @@
+name: Live Event Refresh
+
+# Lightweight refresh that runs every 5 min during typical UFC fight-night
+# windows. Only re-polls ESPN's scoreboard + rebuilds the dashboard, then
+# commits if anything actually changed. Skips the heavy steps (Greco CSVs,
+# DB load, closing odds, SportsBet, predict, fighter metadata, image
+# downloads) that the daily refresh handles.
+#
+# UTC windows chosen to cover the realistic UFC schedule:
+#   • Sat 06:00–16:59 UTC — APAC events (e.g. AU fight nights run 08:00–14:00 UTC)
+#   • Sat 22:00–23:59 UTC — start of Vegas main cards
+#   • Sun 00:00–08:59 UTC — Vegas main card + Pacific late-night
+# Outside these windows: nothing runs (saves Actions minutes).
+
+on:
+  schedule:
+    - cron: "*/5 6-16 * * 6"     # Saturday APAC daytime
+    - cron: "*/5 22-23 * * 6"    # Saturday US prime time start
+    - cron: "*/5 0-8 * * 0"      # Sunday US prime time + Pacific
+  workflow_dispatch:
+
+# Skip queued duplicates if a previous run is still going.
+concurrency:
+  group: live-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Poll ESPN scoreboard
+        run: python -m ufc_predict.ingest.upcoming_poller
+
+      - name: Rebuild dashboard
+        run: python -m ufc_predict.serve.build_dashboard
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html data/upcoming_schedule.json
+          [ -f data/past_events.json ] && git add data/past_events.json || true
+          if git diff --cached --quiet; then
+            echo "No live changes; nothing to commit."
+          else
+            git commit -m "chore: live refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi

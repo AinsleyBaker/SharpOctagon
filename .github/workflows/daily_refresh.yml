@@ -8,6 +8,13 @@ on:
     - cron: "0 18 * * 5,6"
   workflow_dispatch:           # allow manual trigger
 
+# Serialise pushes to main across all workflows that commit (live_refresh,
+# weekly_retrain). Without this, two scheduled jobs can finish at the same
+# time and the second push gets "fetch first" rejected.
+concurrency:
+  group: main-push
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -88,4 +95,22 @@ jobs:
           # Downloaded fighter images live under docs/fighter-images/ (served by Pages)
           [ -d docs/fighter-images ]          && git add docs/fighter-images/         || true
           git diff --cached --quiet || git commit -m "chore: refresh predictions $(date -u +%Y-%m-%dT%H:%M)"
-          git push
+
+          # Push with retry: if another concurrent workflow beat us to the
+          # remote, rebase onto theirs (taking our local build for any
+          # generated-file conflicts) and retry up to 3 times.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — pulling and retrying"
+            git fetch origin main
+            git rebase -X theirs origin/main || {
+              git rebase --abort || true
+              echo "Rebase failed — aborting"
+              exit 1
+            }
+          done
+          echo "Push failed after 3 attempts"
+          exit 1

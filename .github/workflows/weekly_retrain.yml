@@ -6,6 +6,12 @@ on:
     - cron: "0 8 * * 1"
   workflow_dispatch:
 
+# Serialise pushes to main with the other refresh workflows so concurrent
+# runs don't race the remote.
+concurrency:
+  group: main-push
+  cancel-in-progress: false
+
 jobs:
   retrain:
     runs-on: ubuntu-latest
@@ -64,4 +70,21 @@ jobs:
           [ -f data/predictions.json ]    && git add data/predictions.json    || true
           [ -f data/sportsbet_odds.json ] && git add data/sportsbet_odds.json || true
           git diff --cached --quiet || git commit -m "chore: weekly retrain $(date -u +%Y-%m-%dT%H:%M)"
-          git push
+
+          # Push with retry — rebase preferring our local artifacts on
+          # generated-file conflicts, up to 3 attempts.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — pulling and retrying"
+            git fetch origin main
+            git rebase -X theirs origin/main || {
+              git rebase --abort || true
+              echo "Rebase failed — aborting"
+              exit 1
+            }
+          done
+          echo "Push failed after 3 attempts"
+          exit 1

@@ -21,9 +21,10 @@ on:
     - cron: "*/30 * * * 1-4"    # every 30 min Mon–Thu — catches announcements
   workflow_dispatch:
 
-# Skip queued duplicates if a previous run is still going.
+# Serialise pushes to main across all workflows (daily_refresh,
+# weekly_retrain) so concurrent runs don't race the remote.
 concurrency:
-  group: live-refresh
+  group: main-push
   cancel-in-progress: false
 
 jobs:
@@ -66,7 +67,25 @@ jobs:
           [ -f data/past_events.json ] && git add data/past_events.json || true
           if git diff --cached --quiet; then
             echo "No live changes; nothing to commit."
-          else
-            git commit -m "chore: live refresh $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
+            exit 0
           fi
+          git commit -m "chore: live refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+
+          # Push with retry: rebase onto origin/main if another workflow
+          # beat us, preferring our freshly-built generated files for any
+          # conflicts. Up to 3 attempts before giving up.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected on attempt $attempt — pulling and retrying"
+            git fetch origin main
+            git rebase -X theirs origin/main || {
+              git rebase --abort || true
+              echo "Rebase failed — aborting"
+              exit 1
+            }
+          done
+          echo "Push failed after 3 attempts"
+          exit 1

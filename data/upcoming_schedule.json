@@ -1,5 +1,143 @@
 [
   {
+    "event_name": "UFC Fight Night: Burns vs. Malott",
+    "event_date": "2026-04-18",
+    "bouts": [
+      {
+        "fighter_a": "Jamie Siraj",
+        "fighter_b": "John Yannis",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "John Yannis",
+        "espn_method": "Final",
+        "espn_round": 1
+      },
+      {
+        "fighter_a": "John Castaneda",
+        "fighter_b": "Mark Vologdin",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "JJ Aldrich",
+        "fighter_b": "Jamey-Lyn Horth",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "JJ Aldrich",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "Daria Zhelezniakova",
+        "fighter_b": "Melissa Croden",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Melissa Croden",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "Tanner Boser",
+        "fighter_b": "Gokhan Saricam",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Gokhan Saricam",
+        "espn_method": "Final",
+        "espn_round": 2
+      },
+      {
+        "fighter_a": "Robert Valentin",
+        "fighter_b": "Julien LeBlanc",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Robert Valentin",
+        "espn_method": "Final",
+        "espn_round": 1
+      },
+      {
+        "fighter_a": "Dennis Buzukja",
+        "fighter_b": "Marcio Barbosa",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-18T21:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Marcio Barbosa",
+        "espn_method": "Final",
+        "espn_round": 1
+      },
+      {
+        "fighter_a": "Thiago Mois\u00e9s",
+        "fighter_b": "Gauge Young",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-19T00:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Gauge Young",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "Karine Silva",
+        "fighter_b": "Jasmine Jasudavicius",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-19T00:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Jasmine Jasudavicius",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "Mandel Nallo",
+        "fighter_b": "Jai Herbert",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-19T00:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Jai Herbert",
+        "espn_method": "Final",
+        "espn_round": 1
+      },
+      {
+        "fighter_a": "Kyler Phillips",
+        "fighter_b": "Charles Jourdain",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-19T00:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Charles Jourdain",
+        "espn_method": "Final",
+        "espn_round": 3
+      },
+      {
+        "fighter_a": "Gilbert Burns",
+        "fighter_b": "Mike Malott",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-04-19T00:00Z",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Mike Malott",
+        "espn_method": "Final",
+        "espn_round": 3
+      }
+    ]
+  },
+  {
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "event_date": "2026-04-25",
     "bouts": [
@@ -1089,34 +1227,6 @@
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
         "espn_method": "Sat, July 11th at 6:00 PM EDT",
-        "espn_round": 0
-      }
-    ]
-  },
-  {
-    "event_name": "UFC Fight Night: Belgrade",
-    "event_date": "2026-08-01",
-    "bouts": [
-      {
-        "fighter_a": "TBA",
-        "fighter_b": "Opponent TBA",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-08-01T16:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, August 1st at 12:00 PM EDT",
-        "espn_round": 0
-      },
-      {
-        "fighter_a": "TBA",
-        "fighter_b": "Opponent TBA",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-08-01T19:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, August 1st at 3:00 PM EDT",
         "espn_round": 0
       }
     ]

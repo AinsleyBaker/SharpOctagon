@@ -93,11 +93,20 @@ def _parse_record_from_html(html: str) -> str:
 
 def fetch_metadata(name: str) -> dict | None:
     """Return {country, style, image_url, hometown, age, record} or None."""
+    import re
     slug = _name_to_slug(name)
     url  = f"{_UFC_BASE}/{slug}"
     try:
         r = requests.get(url, headers=_HEADERS, timeout=12)
         if r.status_code != 200:
+            return None
+        # Same sanity check as fetch_image_url — confirm the page is actually
+        # for this fighter. Otherwise we end up scraping someone else's bio
+        # for a debut fighter who has no UFC profile yet.
+        title_m = re.search(r"<title>([^<]+)</title>", r.text)
+        title_text = (title_m.group(1) if title_m else "").lower()
+        last_name = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        if not last_name or last_name not in title_text:
             return None
         bio = _parse_bio_fields(r.text)
         record = _parse_record_from_html(r.text)

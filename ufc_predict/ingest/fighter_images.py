@@ -49,6 +49,13 @@ def fetch_image_url(name: str) -> str | None:
     Return the UFC full-body image URL for a fighter, or None.
     Uses the ufc.com/images/... URL with the Drupal itok security token —
     bare CDN URLs without itok return 403.
+
+    Includes a sanity check that the resolved page is actually for the
+    requested fighter — UFC.com sometimes returns 200 with an unrelated
+    page (search fallback, redirect to a similar slug) when the requested
+    fighter has no profile, which would otherwise pull a random image and
+    cache it under the wrong name (e.g. opponent's image rendered for a
+    debut fighter who has no UFC bio yet).
     """
     slug = _name_to_slug(name)
     url  = f"{_UFC_BASE}/{slug}"
@@ -56,6 +63,19 @@ def fetch_image_url(name: str) -> str | None:
         r = requests.get(url, headers=_HEADERS, timeout=12)
         if r.status_code != 200:
             return None
+
+        # Verify the page is for THIS fighter: the <title> should contain
+        # the fighter's surname. UFC titles look like "Ollie Schmid | UFC".
+        title_m = re.search(r"<title>([^<]+)</title>", r.text)
+        title_text = (title_m.group(1) if title_m else "").lower()
+        last_name = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        if not last_name or last_name not in title_text:
+            log.debug(
+                "Skipping image for '%s' — page title %r doesn't reference fighter",
+                name, title_text[:80],
+            )
+            return None
+
         # Capture the FULL URL including ?itok=... query parameter.
         # Try styles in order of preference: full body, headshot, hero card.
         for style in (

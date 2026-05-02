@@ -130,9 +130,9 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_END_OF_ROUND",
-        "espn_winner_name": "",
-        "espn_method": "End R1",
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Quillan Salkilld",
+        "espn_method": "Final",
         "espn_round": 1
       },
       {
@@ -141,10 +141,10 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_SCHEDULED",
+        "espn_status": "STATUS_IN_PROGRESS_2",
         "espn_winner_name": "",
-        "espn_method": "Sat, May 2nd at 7:00 AM EDT",
-        "espn_round": 0
+        "espn_method": "R2, 0:21",
+        "espn_round": 2
       }
     ]
   },

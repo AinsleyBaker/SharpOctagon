@@ -3011,5 +3011,299 @@
       "td_per_min": null,
       "stance": "Orthodox"
     }
+  },
+  "Allan Nascimento": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "68.50",
+    "record": "22-6-0",
+    "image_url": "fighter-images/allan-nascimento.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.4,
+      "ko_rate": 0.0,
+      "sub_rate": 0.4,
+      "slpm": 5.306439100077579,
+      "sapm": 11.12490302560124,
+      "td_per_min": 0.23273855702094645,
+      "stance": "Orthodox"
+    }
+  },
+  "Andre Lima": {
+    "country": "",
+    "hometown": "",
+    "style": "Kickboxer",
+    "age": "67.00",
+    "record": "11-0-0",
+    "image_url": "fighter-images/andre-lima.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.0,
+      "sub_rate": 0.3333333333333333,
+      "slpm": 13.528662420382165,
+      "sapm": 22.62420382165605,
+      "td_per_min": 0.3057324840764331,
+      "stance": "Orthodox"
+    }
+  },
+  "Bia Mesquita": {
+    "country": "",
+    "hometown": "",
+    "style": "Brazilian Jiu-Jitsu",
+    "age": "66.00",
+    "record": "6-0-0",
+    "image_url": "fighter-images/bia-mesquita.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 0.0,
+      "sub_rate": 1.0,
+      "slpm": 12.413793103448278,
+      "sapm": 20.689655172413794,
+      "td_per_min": 0.6896551724137931,
+      "stance": "Orthodox"
+    }
+  },
+  "Christian Rodriguez": {
+    "country": "",
+    "hometown": "",
+    "style": "Freestyle",
+    "age": "67.00",
+    "record": "12-4-0",
+    "image_url": "fighter-images/christian-rodriguez.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.2222222222222222,
+      "ko_rate": 0.0,
+      "sub_rate": 0.1111111111111111,
+      "slpm": 9.537177541729893,
+      "sapm": 18.23216995447648,
+      "td_per_min": 0.3414264036418816,
+      "stance": "Orthodox"
+    }
+  },
+  "Hyder Amil": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "69.00",
+    "record": "11-2-0",
+    "image_url": "fighter-images/hyder-amil.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6,
+      "ko_rate": 0.6,
+      "sub_rate": 0.0,
+      "slpm": 20.749697702539297,
+      "sapm": 39.10519951632406,
+      "td_per_min": 0.14510278113663846,
+      "stance": "Switch"
+    }
+  },
+  "Ion Cutelaba": {
+    "country": "",
+    "hometown": "",
+    "style": "Sambo",
+    "age": "73.00",
+    "record": "20-11-1",
+    "image_url": "fighter-images/ion-cutelaba.png",
+    "stats": {
+      "n_fights": 20,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.65,
+      "ko_rate": 0.35,
+      "sub_rate": 0.1,
+      "slpm": 9.672796751850967,
+      "sapm": 22.111296871268213,
+      "td_per_min": 0.5732027704800573,
+      "stance": "Southpaw"
+    }
+  },
+  "Jared Gordon": {
+    "country": "",
+    "hometown": "",
+    "style": "Freestyle",
+    "age": "69.00",
+    "record": "21-8-0",
+    "image_url": "fighter-images/jared-gordon.png",
+    "stats": {
+      "n_fights": 17,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.47058823529411764,
+      "ko_rate": 0.4117647058823529,
+      "sub_rate": 0.0,
+      "slpm": 14.90354846391998,
+      "sapm": 27.692307692307693,
+      "td_per_min": 0.3143605620385806,
+      "stance": "Orthodox"
+    }
+  },
+  "Jim Miller": {
+    "country": "",
+    "hometown": "",
+    "style": "Jiu-Jitsu",
+    "age": "68.00",
+    "record": "38-19-0",
+    "image_url": "fighter-images/jim-miller.png",
+    "stats": {
+      "n_fights": 46,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5217391304347826,
+      "ko_rate": 0.17391304347826086,
+      "sub_rate": 0.2826086956521739,
+      "slpm": 7.964816499848348,
+      "sapm": 18.926296633303007,
+      "td_per_min": 0.27297543221110104,
+      "stance": "Southpaw"
+    }
+  },
+  "Kevin Borjas": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "65.00",
+    "record": "10-5-0",
+    "image_url": "fighter-images/kevin-borjas.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 12.426778242677825,
+      "sapm": 27.991631799163184,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Kyoji Horiguchi": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "64.00",
+    "record": "36-5-0",
+    "image_url": "fighter-images/kyoji-horiguchi.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 5,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.4,
+      "ko_rate": 0.2,
+      "sub_rate": 0.1,
+      "slpm": 11.750741839762613,
+      "sapm": 24.770029673590507,
+      "td_per_min": 0.3338278931750742,
+      "stance": "Orthodox"
+    }
+  },
+  "Manel Kape": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "65.00",
+    "record": "22-7-0",
+    "image_url": "fighter-images/manel-kape.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 13.589018974566008,
+      "sapm": 24.150181671376668,
+      "td_per_min": 0.07266855066612839,
+      "stance": "Southpaw"
+    }
+  },
+  "Melissa Mullins": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "67.00",
+    "record": "7-2-0",
+    "image_url": "fighter-images/melissa-mullins.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.5,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 11.431870669745958,
+      "sapm": 22.655889145496534,
+      "td_per_min": 0.4157043879907621,
+      "stance": "Orthodox"
+    }
+  },
+  "Mitch Raposo": {
+    "country": "",
+    "hometown": "",
+    "style": "Freestyle",
+    "age": "65.00",
+    "record": "10-3-0",
+    "image_url": "fighter-images/mitch-raposo.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 6.2,
+      "sapm": 14.2,
+      "td_per_min": 0.1,
+      "stance": "Switch"
+    }
+  },
+  "Navajo Stirling": {
+    "country": "",
+    "hometown": "",
+    "style": "Kickboxer",
+    "age": "76.00",
+    "record": "9-0-0",
+    "image_url": "fighter-images/navajo-stirling.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.25,
+      "ko_rate": 0.25,
+      "sub_rate": 0.0,
+      "slpm": 17.397379912663755,
+      "sapm": 34.427947598253276,
+      "td_per_min": 0.20960698689956334,
+      "stance": "Orthodox"
+    }
   }
 }

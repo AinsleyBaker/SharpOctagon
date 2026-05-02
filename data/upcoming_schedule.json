@@ -112,6 +112,12 @@
         "is_title_bout": false
       },
       {
+        "fighter_a": "Jim Miller",
+        "fighter_b": "Jared Gordon",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
         "fighter_a": "Grant Dawson",
         "fighter_b": "Mateusz R\u0119becki",
         "weight_class": "",
@@ -444,6 +450,48 @@
       {
         "fighter_a": "Justin Gaethje",
         "fighter_b": "Ilia Topuria",
+        "weight_class": "",
+        "is_title_bout": false
+      }
+    ]
+  },
+  {
+    "event_name": "UFC Fight Night: Kape vs. Horiguchi",
+    "event_date": "2026-06-20",
+    "bouts": [
+      {
+        "fighter_a": "Kevin Borjas",
+        "fighter_b": "Andre Lima",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Ion Cutelaba",
+        "fighter_b": "Navajo Stirling",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Melissa Mullins",
+        "fighter_b": "Bia Mesquita",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Christian Rodriguez",
+        "fighter_b": "Hyder Amil",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Allan Nascimento",
+        "fighter_b": "Mitch Raposo",
+        "weight_class": "",
+        "is_title_bout": false
+      },
+      {
+        "fighter_a": "Kyoji Horiguchi",
+        "fighter_b": "Manel Kape",
         "weight_class": "",
         "is_title_bout": false
       }

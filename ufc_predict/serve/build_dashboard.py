@@ -475,6 +475,23 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     fighter_meta = load_fighter_metadata()
     events = _group_by_event(predictions)
 
+    # Per-bout start times from the ESPN-derived schedule, used as a fallback
+    # when SportsBet has no start_time for a fight (prelims often missing
+    # from SportsBet's competition listing until close to fight day).
+    schedule_for_lookup = load_schedule()
+    schedule_time_lookup: dict[tuple, str] = {}
+    for _ev in schedule_for_lookup:
+        ev_date = str(_ev.get("event_date", ""))
+        for _b in _ev.get("bouts") or []:
+            t = _b.get("start_time_iso") or ""
+            if not t:
+                continue
+            fa = (_b.get("fighter_a") or "").strip().lower()
+            fb = (_b.get("fighter_b") or "").strip().lower()
+            if fa and fb:
+                schedule_time_lookup[(ev_date, fa, fb)] = t
+                schedule_time_lookup[(ev_date, fb, fa)] = t
+
     def _meta_lookup(name: str, key: str, default: str = "") -> str:
         meta = fighter_meta.get(name, {})
         val = meta.get(key) or default
@@ -627,10 +644,16 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             sb = bout.get("sportsbet_odds") or {}
             bout["sb_odds_a"] = f"{sb['moneyline_a']:.2f}" if sb.get("moneyline_a") else None
             bout["sb_odds_b"] = f"{sb['moneyline_b']:.2f}" if sb.get("moneyline_b") else None
-            # Fight time in AEST (from SportsBet event when available)
-            bout["fight_time_aest"] = _format_fight_time_aest(
-                sb.get("start_time"), str(bout.get("event_date", ""))
+            # Fight time in AEST. Prefer SportsBet's per-event start_time;
+            # fall back to ESPN's per-competition date from the schedule when
+            # SportsBet hasn't listed this fight yet (typical for prelims).
+            ev_date_str = str(bout.get("event_date", ""))
+            fa_key = (bout.get("fighter_a_name") or "").strip().lower()
+            fb_key = (bout.get("fighter_b_name") or "").strip().lower()
+            start_time = sb.get("start_time") or schedule_time_lookup.get(
+                (ev_date_str, fa_key, fb_key)
             )
+            bout["fight_time_aest"] = _format_fight_time_aest(start_time, ev_date_str)
 
     from ufc_predict.eval.bet_analysis import top_value_bets
     top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event

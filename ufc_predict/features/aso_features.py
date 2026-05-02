@@ -297,7 +297,8 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
         SELECT fight_id, date, red_fighter_id, blue_fighter_id,
                winner_fighter_id, weight_class, is_title_bout, is_five_round,
                red_is_short_notice, blue_is_short_notice,
-               red_missed_weight, blue_missed_weight
+               red_missed_weight, blue_missed_weight,
+               closing_odds_red, closing_odds_blue
         FROM fights
         WHERE date >= :since
           AND method NOT IN ('NC', 'DQ', 'CANCELLED')
@@ -348,6 +349,11 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             "is_title_bout": int(bool(fight.is_title_bout)),
             "is_five_round": int(bool(fight.is_five_round)),
             "label": label,
+            # Closing odds + corner tracking — used ONLY in evaluation (Vegas
+            # benchmark, Kelly ROI). Never used as model features.
+            "closing_odds_red":  fight.closing_odds_red,
+            "closing_odds_blue": fight.closing_odds_blue,
+            "a_is_red": int(not swap),
             # Raw features (used for debugging / interpretability)
             "a_n_fights": a_feat["n_fights"],
             "b_n_fights": b_feat["n_fights"],
@@ -444,6 +450,9 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         mirrored[col] = -mirrored[col]
     for a_col, b_col in swap_pairs:
         mirrored[a_col], mirrored[b_col] = base[b_col].copy(), base[a_col].copy()
+    # a_is_red flips when we mirror — the mirrored row's "A" is the other corner.
+    if "a_is_red" in mirrored.columns:
+        mirrored["a_is_red"] = 1 - mirrored["a_is_red"]
 
     result = pd.concat([base, mirrored], ignore_index=True)
     result = result.sort_values("date").reset_index(drop=True)

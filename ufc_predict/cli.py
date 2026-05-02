@@ -27,7 +27,9 @@ def ingest_sportsbet():
     """Fetch UFC odds from SportsBet Australia and update predictions.json."""
     import json
     from pathlib import Path
-    from ufc_predict.ingest.sportsbet_scraper import fetch_ufc_markets, match_odds_to_predictions
+    from ufc_predict.ingest.sportsbet_scraper import (
+        fetch_ufc_markets, match_odds_to_predictions, save_markets,
+    )
     from ufc_predict.eval.bet_analysis import analyze_all_fights
 
     preds_path = Path("data/predictions.json")
@@ -46,6 +48,7 @@ def ingest_sportsbet():
         raise SystemExit(1)
 
     click.echo(f"Fetched {len(sb_fights)} fights. Matching to predictions…")
+    save_markets(sb_fights)
     predictions = match_odds_to_predictions(sb_fights, predictions)
 
     matched = sum(1 for p in predictions if p.get("sportsbet_odds"))

@@ -127,32 +127,49 @@ def evaluate_past_predictions(db_url: str | None = None) -> dict:
     factory  = get_session_factory(db_url)
     today    = date.today()
     records  = []
+    seen_keys: set[tuple] = set()
+
+    def _ingest(p: dict, source: str) -> None:
+        event_date_str = p.get("event_date")
+        if not event_date_str:
+            return
+        try:
+            event_date = date.fromisoformat(str(event_date_str)[:10])
+        except ValueError:
+            return
+        if event_date >= today:
+            return  # fight hasn't happened yet
+        bid = p.get("upcoming_bout_id") or ""
+        key = (str(event_date), p.get("fighter_a_name"), p.get("fighter_b_name"), bid)
+        if key in seen_keys:
+            return
+        seen_keys.add(key)
+        records.append({
+            "snap_file":      source,
+            "event_date":     event_date,
+            "event_name":     p.get("event_name"),
+            "fighter_a":      p.get("fighter_a_name"),
+            "fighter_b":      p.get("fighter_b_name"),
+            "prob_a_wins":    float(p.get("prob_a_wins") or 0.5),
+            "sportsbet_odds": p.get("sportsbet_odds"),
+            "bet_analysis":   p.get("bet_analysis") or [],
+        })
+
+    # Primary source: past_events.json — accumulated across runs and committed
+    # to the repo, so it survives ephemeral CI runners. Snapshot files in
+    # HISTORY_DIR are a local-only fallback.
+    if PAST_EVENTS_PATH.exists():
+        try:
+            for p in json.loads(PAST_EVENTS_PATH.read_text(encoding="utf-8")):
+                _ingest(p, PAST_EVENTS_PATH.name)
+        except json.JSONDecodeError:
+            log.warning("past_events.json unreadable — falling back to snapshot dir")
 
     for snap_path in sorted(HISTORY_DIR.glob("predictions_*.json")):
         with open(snap_path) as f:
             preds = json.load(f)
-
         for p in preds:
-            event_date_str = p.get("event_date")
-            if not event_date_str:
-                continue
-            try:
-                event_date = date.fromisoformat(str(event_date_str)[:10])
-            except ValueError:
-                continue
-            if event_date >= today:
-                continue  # fight hasn't happened yet
-
-            records.append({
-                "snap_file":    snap_path.name,
-                "event_date":   event_date,
-                "event_name":   p.get("event_name"),
-                "fighter_a":    p.get("fighter_a_name"),
-                "fighter_b":    p.get("fighter_b_name"),
-                "prob_a_wins":  float(p.get("prob_a_wins") or 0.5),
-                "sportsbet_odds": p.get("sportsbet_odds"),
-                "bet_analysis":   p.get("bet_analysis") or [],
-            })
+            _ingest(p, snap_path.name)
 
     if not records:
         log.info("No past predictions to evaluate.")
@@ -315,14 +332,19 @@ def backtest(db_url: str | None = None, since_year: int = 2020) -> dict:
 
     import pandas as pd
     oof = pd.read_parquet(oof_path)
-    if oof.empty or "label" not in oof.columns or "oof_prob" not in oof.columns:
-        log.warning("OOF parquet missing required columns: label, oof_prob")
+    # train.run_cv writes the OOF prediction column as `pred_prob`. Older
+    # snapshots may have used `oof_prob`; accept either to stay compatible.
+    prob_col = "pred_prob" if "pred_prob" in oof.columns else (
+        "oof_prob" if "oof_prob" in oof.columns else None
+    )
+    if oof.empty or "label" not in oof.columns or prob_col is None:
+        log.warning("OOF parquet missing required columns: label, pred_prob/oof_prob")
         return {}
 
     oof = oof[oof["date"].dt.year >= since_year].copy() if "date" in oof.columns else oof
 
     labels = oof["label"].values
-    probs  = oof["oof_prob"].values
+    probs  = oof[prob_col].values
 
     accuracy   = float(((probs >= 0.5).astype(int) == labels).mean())
     brier      = float(np.mean((probs - labels) ** 2))

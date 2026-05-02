@@ -28,6 +28,7 @@ log = logging.getLogger(__name__)
 
 MODEL_DIR = Path("models")
 N_BOOTSTRAP = 20
+CAL_YEARS = 1  # most recent N years held out from training, used only for isotonic calibration
 
 FEATURE_COLS = [
     # Difference features
@@ -139,16 +140,27 @@ def run_cv(df: pd.DataFrame) -> pd.DataFrame:
         if len(train_df) < 100 or len(val_df) < 10:
             continue
 
-        X_train, y_train = _X_y(train_df)
+        # Hold out the most recent CAL_YEARS of training data as a calibration
+        # slice the booster never sees. Fitting isotonic on data the booster
+        # was trained on yields in-sample probabilities and inflates extreme
+        # predictions, which is what the audit identified as the root cause
+        # of mean CV log-loss > 1.0.
+        train_years = pd.to_datetime(train_df["date"]).dt.year
+        cal_mask = train_years >= (fold.train_end - CAL_YEARS)
+        booster_df = train_df[~cal_mask]
+        cal_df = train_df[cal_mask]
+        if len(booster_df) < 100 or len(cal_df) < 50:
+            log.warning(
+                "Fold %d: insufficient booster/cal split (%d/%d) — skipping",
+                fold.val_start, len(booster_df), len(cal_df),
+            )
+            continue
+
+        X_booster, y_booster = _X_y(booster_df)
+        X_cal, y_cal = _X_y(cal_df)
         X_val, y_val = _X_y(val_df)
 
-        model = train_lgbm(X_train, y_train, X_val, y_val)
-
-        # Use last 2 years of training data as calibration fold
-        cal_years = pd.to_datetime(train_df["date"]).dt.year
-        cal_mask = cal_years >= (fold.train_end - 2)
-        X_cal, y_cal = _X_y(train_df[cal_mask])
-
+        model = train_lgbm(X_booster, y_booster, X_val, y_val)
         iso = fit_isotonic_calibration(model, X_cal, y_cal)
         preds = calibrated_predict(model, iso, X_val)
 
@@ -176,19 +188,23 @@ def run_cv(df: pd.DataFrame) -> pd.DataFrame:
 
 def train_final_model(df: pd.DataFrame) -> tuple:
     """
-    Train the final production model on ALL data.
-    Uses the most recent 2 years as calibration fold.
-    Returns (model, iso_calibrator, feature_cols_used).
+    Train the final production model on data BEFORE the calibration cutoff,
+    then fit isotonic on the held-out CAL_YEARS slice the booster never saw.
+    Returns (model, iso_calibrator).
     """
-    X, y = _X_y(df)
-
-    # Calibration fold: last 2 years before today
-    cal_cutoff = pd.Timestamp(date.today()) - pd.DateOffset(years=2)
+    cal_cutoff = pd.Timestamp(date.today()) - pd.DateOffset(years=CAL_YEARS)
     cal_mask = pd.to_datetime(df["date"]) >= cal_cutoff
-    X_cal, y_cal = _X_y(df[cal_mask])
+    booster_df = df[~cal_mask]
+    cal_df = df[cal_mask]
 
-    log.info("Training final model on %d rows (calibration on %d)", len(df), cal_mask.sum())
-    model = train_lgbm(X, y)
+    X_b, y_b = _X_y(booster_df)
+    X_cal, y_cal = _X_y(cal_df)
+
+    log.info(
+        "Training final model on %d rows (held-out cal slice: %d rows, last %dy)",
+        len(booster_df), len(cal_df), CAL_YEARS,
+    )
+    model = train_lgbm(X_b, y_b)
     iso = fit_isotonic_calibration(model, X_cal, y_cal)
 
     return model, iso
@@ -204,28 +220,29 @@ def train_bootstrap_ensemble(df: pd.DataFrame, n: int = N_BOOTSTRAP) -> list[tup
     ensemble = []
     rng = np.random.default_rng(seed=0)
 
-    all_indices = np.arange(len(df))
-    cal_cutoff = pd.Timestamp(date.today()) - pd.DateOffset(years=2)
+    # Hold out the same CAL_YEARS slice as the final model. Each bag is sampled
+    # only from the booster pool, then calibrated on the held-out slice.
+    cal_cutoff = pd.Timestamp(date.today()) - pd.DateOffset(years=CAL_YEARS)
     cal_mask = pd.to_datetime(df["date"]) >= cal_cutoff
+    booster_pool = df[~cal_mask].reset_index(drop=True)
+    X_cal, y_cal = _X_y(df[cal_mask])
+
+    if len(booster_pool) < 100 or len(X_cal) < 50:
+        log.warning(
+            "Bootstrap ensemble: insufficient booster/cal split (%d/%d)",
+            len(booster_pool), len(X_cal),
+        )
 
     for i in range(n):
-        idx = rng.choice(len(df), size=len(df), replace=True)
-        bag_df = df.iloc[idx]
+        idx = rng.choice(len(booster_pool), size=len(booster_pool), replace=True)
+        bag_df = booster_pool.iloc[idx]
         X_bag, y_bag = _X_y(bag_df)
 
         params = {**LGBM_PARAMS, "random_state": i}
         model = lgb.LGBMClassifier(**params)
         model.fit(X_bag, y_bag, callbacks=[lgb.log_evaluation(0)])
 
-        # Calibrate on out-of-bag samples (unseen by this bag's model).
-        # Fall back to global recent data if OOB set is too small.
-        oob_mask = np.ones(len(df), dtype=bool)
-        oob_mask[np.unique(idx)] = False
-        oob_df = df.iloc[oob_mask]
-        if len(oob_df) >= 50:
-            X_cal, y_cal = _X_y(oob_df)
-        else:
-            X_cal, y_cal = _X_y(df[cal_mask])
+        # Always calibrate on the held-out slice (booster never saw it).
         iso = fit_isotonic_calibration(model, X_cal, y_cal)
 
         ensemble.append((model, iso))

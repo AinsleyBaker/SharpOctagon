@@ -45,7 +45,13 @@ PROP_EXTRA_COLS = [
     "a_ctrl_ratio", "b_ctrl_ratio",
 ]
 
-_CAL_SPLIT = 0.80  # 80/20 chronological split for calibration
+# Three-way chronological split: booster / early-stop / calibration.
+# Previously this was 80/20 with the val slice doing double duty as early-stop
+# AND isotonic-fit data — which made the calibrator see in-sample probabilities.
+# The cal slice below is held out from BOTH training and early-stopping so the
+# isotonic fit is unbiased.
+_TRAIN_END   = 0.70
+_EARLYSTOP_END = 0.85   # → cal slice = last 15% of chronological rows
 
 
 # ---------------------------------------------------------------------------
@@ -159,12 +165,15 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     if not available:
         raise ValueError("No matching feature columns found in the feature matrix")
 
-    # Sort chronologically for the calibration split
+    # Sort chronologically for the three-way split
     df = df.sort_values("date").reset_index(drop=True)
-    split = int(len(df) * _CAL_SPLIT)
+    n = len(df)
+    s_train = int(n * _TRAIN_END)
+    s_es    = int(n * _EARLYSTOP_END)
 
-    X_tr = df[available].iloc[:split]
-    X_val = df[available].iloc[split:]
+    X_tr  = df[available].iloc[:s_train]
+    X_es  = df[available].iloc[s_train:s_es]
+    X_cal = df[available].iloc[s_es:]
 
     artifacts: dict = {}
 
@@ -173,8 +182,9 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     # -----------------------------------------------------------------------
     method_enc = {cls: i for i, cls in enumerate(METHOD_CLASSES)}
     y_method = df["method_class"].map(method_enc).fillna(2).astype(int)  # fallback → A_DEC
-    y_tr_m = y_method.iloc[:split].values
-    y_val_m = y_method.iloc[split:].values
+    y_tr_m  = y_method.iloc[:s_train].values
+    y_es_m  = y_method.iloc[s_train:s_es].values
+    y_cal_m = y_method.iloc[s_es:].values
 
     method_params = {
         "objective": "multiclass",
@@ -193,16 +203,16 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     method_model = lgb.LGBMClassifier(**method_params)
     method_model.fit(
         X_tr, y_tr_m,
-        eval_set=[(X_val.values, y_val_m)],
+        eval_set=[(X_es.values, y_es_m)],
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(period=-1)],
     )
 
-    # Calibrate each class independently with isotonic regression
-    val_probs_m = method_model.predict_proba(X_val)
+    # Calibrate each class on the held-out cal slice (booster never saw it).
+    cal_probs_m = method_model.predict_proba(X_cal)
     method_isos: list[IsotonicRegression] = []
     for cls_idx in range(len(METHOD_CLASSES)):
         iso = IsotonicRegression(out_of_bounds="clip")
-        iso.fit(val_probs_m[:, cls_idx], (y_val_m == cls_idx).astype(float))
+        iso.fit(cal_probs_m[:, cls_idx], (y_cal_m == cls_idx).astype(float))
         method_isos.append(iso)
 
     artifacts["method_model"] = method_model
@@ -234,28 +244,32 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
         artifacts["feature_cols"] = available
         return artifacts
 
-    split_f = int(len(df_finish) * _CAL_SPLIT)
-    X_tr_f  = df_finish[available].iloc[:split_f]
-    X_val_f = df_finish[available].iloc[split_f:]
+    nf = len(df_finish)
+    s_train_f = int(nf * _TRAIN_END)
+    s_es_f    = int(nf * _EARLYSTOP_END)
+    X_tr_f  = df_finish[available].iloc[:s_train_f]
+    X_es_f  = df_finish[available].iloc[s_train_f:s_es_f]
+    X_cal_f = df_finish[available].iloc[s_es_f:]
 
     round_enc = {cls: i for i, cls in enumerate(ROUND_CLASSES)}
     y_round_f = df_finish["round_class"].map(round_enc).fillna(0).astype(int)
-    y_tr_r    = y_round_f.iloc[:split_f].values
-    y_val_r   = y_round_f.iloc[split_f:].values
+    y_tr_r  = y_round_f.iloc[:s_train_f].values
+    y_es_r  = y_round_f.iloc[s_train_f:s_es_f].values
+    y_cal_r = y_round_f.iloc[s_es_f:].values
 
     round_params = {**method_params, "num_class": len(ROUND_CLASSES)}
     round_model = lgb.LGBMClassifier(**round_params)
     round_model.fit(
         X_tr_f, y_tr_r,
-        eval_set=[(X_val_f.values, y_val_r)],
+        eval_set=[(X_es_f.values, y_es_r)],
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(period=-1)],
     )
 
-    val_probs_r = round_model.predict_proba(X_val_f)
+    cal_probs_r = round_model.predict_proba(X_cal_f)
     round_isos: list[IsotonicRegression] = []
     for cls_idx in range(len(ROUND_CLASSES)):
         iso = IsotonicRegression(out_of_bounds="clip")
-        iso.fit(val_probs_r[:, cls_idx], (y_val_r == cls_idx).astype(float))
+        iso.fit(cal_probs_r[:, cls_idx], (y_cal_r == cls_idx).astype(float))
         round_isos.append(iso)
 
     artifacts["round_model"] = round_model
@@ -337,19 +351,32 @@ def predict_props(
 
             idx = {cls: j for j, cls in enumerate(METHOD_CLASSES)}
 
-            prop["prob_a_wins_ko_tko"] = round(float(cal_m[idx["A_KO_TKO"]]), 4)
-            prop["prob_a_wins_sub"]    = round(float(cal_m[idx["A_SUB"]]),    4)
-            prop["prob_a_wins_dec"]    = round(float(cal_m[idx["A_DEC"]]),    4)
-            prop["prob_b_wins_ko_tko"] = round(float(cal_m[idx["B_KO_TKO"]]), 4)
-            prop["prob_b_wins_sub"]    = round(float(cal_m[idx["B_SUB"]]),    4)
-            prop["prob_b_wins_dec"]    = round(float(cal_m[idx["B_DEC"]]),    4)
+            # The method model produces 6 probs that sum to 1, but A's three
+            # don't generally sum to the main model's P(A wins). Rescale each
+            # side so:
+            #   prob_a_wins_ko_tko + prob_a_wins_sub + prob_a_wins_dec == prob_a
+            #   prob_b_wins_ko_tko + prob_b_wins_sub + prob_b_wins_dec == 1 - prob_a
+            # while preserving the method model's WITHIN-side method ratios.
+            a_raw = (float(cal_m[idx["A_KO_TKO"]]) + float(cal_m[idx["A_SUB"]])
+                     + float(cal_m[idx["A_DEC"]]))
+            b_raw = (float(cal_m[idx["B_KO_TKO"]]) + float(cal_m[idx["B_SUB"]])
+                     + float(cal_m[idx["B_DEC"]]))
+            a_scale = (prob_a / a_raw) if a_raw > 1e-9 else 0.0
+            b_scale = ((1.0 - prob_a) / b_raw) if b_raw > 1e-9 else 0.0
+
+            prop["prob_a_wins_ko_tko"] = round(float(cal_m[idx["A_KO_TKO"]]) * a_scale, 4)
+            prop["prob_a_wins_sub"]    = round(float(cal_m[idx["A_SUB"]])    * a_scale, 4)
+            prop["prob_a_wins_dec"]    = round(float(cal_m[idx["A_DEC"]])    * a_scale, 4)
+            prop["prob_b_wins_ko_tko"] = round(float(cal_m[idx["B_KO_TKO"]]) * b_scale, 4)
+            prop["prob_b_wins_sub"]    = round(float(cal_m[idx["B_SUB"]])    * b_scale, 4)
+            prop["prob_b_wins_dec"]    = round(float(cal_m[idx["B_DEC"]])    * b_scale, 4)
 
             prop["prob_finish"]  = round(
-                float(cal_m[idx["A_KO_TKO"]] + cal_m[idx["A_SUB"]] +
-                      cal_m[idx["B_KO_TKO"]] + cal_m[idx["B_SUB"]]), 4
+                prop["prob_a_wins_ko_tko"] + prop["prob_a_wins_sub"]
+                + prop["prob_b_wins_ko_tko"] + prop["prob_b_wins_sub"], 4
             )
             prop["prob_decision"] = round(
-                float(cal_m[idx["A_DEC"]] + cal_m[idx["B_DEC"]]), 4
+                prop["prob_a_wins_dec"] + prop["prob_b_wins_dec"], 4
             )
         else:
             # Fallback heuristic: use absolute KO/sub rates when available,

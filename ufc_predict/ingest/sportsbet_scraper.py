@@ -362,6 +362,18 @@ def save_markets(fights: list[dict], path: Path = ODDS_CACHE_PATH) -> None:
     log.info("SportsBet odds cached to %s (%d fights)", path, len(fights))
 
 
+def cache_age_hours(path: Path = ODDS_CACHE_PATH) -> float | None:
+    """Age of the SportsBet cache in hours, or None if missing/unreadable."""
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        fetched_at = datetime.fromisoformat(data["fetched_at"])
+        return (datetime.now(timezone.utc) - fetched_at).total_seconds() / 3600
+    except (json.JSONDecodeError, KeyError, ValueError):
+        return None
+
+
 def load_markets(path: Path = ODDS_CACHE_PATH) -> list[dict] | None:
     """Load previously cached markets. Returns None if no cache exists."""
     if not path.exists():

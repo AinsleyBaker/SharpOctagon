@@ -9,7 +9,7 @@ import pandas as pd
 
 from ufc_predict.db.session import get_session_factory
 from ufc_predict.features.aso_features import build_fight_feature_rows, symmetrize_rows
-from ufc_predict.features.ratings import attach_ratings
+from ufc_predict.features.ratings import attach_ratings, save_latest_ratings
 
 log = logging.getLogger(__name__)
 OUTPUT_PATH = Path("data/feature_matrix.parquet")
@@ -29,7 +29,10 @@ def run(db_url: str | None = None, since_year: int = 2001) -> None:
 
     # Ratings must be computed on the N-row base df (chronological order matters).
     # Symmetrize AFTER rating attachment so rating columns are swapped correctly.
-    df = attach_ratings(df)
+    # Capture the final post-fight states so we can persist the latest rating
+    # per (fighter, weight_class) for the live predict step to consume.
+    df, elo_states, glicko_states = attach_ratings(df, return_states=True)
+    save_latest_ratings(elo_states, glicko_states)
     df = symmetrize_rows(df)
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)

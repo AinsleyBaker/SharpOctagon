@@ -226,13 +226,28 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         log.info("No upcoming bouts with resolved fighter IDs.")
         return pd.DataFrame()
 
-    # Attach Elo/Glicko — we need to reconstruct ratings from historical data
-    # For upcoming bouts, fetch the latest stored ratings (from training run)
-    # For now, fill with NaN — ratings are attached during the full feature build
-    upcoming_df["diff_elo"] = np.nan
-    upcoming_df["diff_glicko"] = np.nan
-    upcoming_df["glicko_rd_a"] = np.nan
-    upcoming_df["glicko_rd_b"] = np.nan
+    # Attach Elo/Glicko from the snapshot persisted by build_matrix. RD is
+    # inflated for days-since-last-fight so an inactive fighter's uncertainty
+    # is reflected at predict time, mirroring the in-training inactivity rule.
+    from ufc_predict.features.ratings import load_latest_ratings, lookup_ratings
+    ratings_snapshot = load_latest_ratings()
+    today = date.today()
+    elo_a, elo_b, gl_a, gl_b, rd_a, rd_b = [], [], [], [], [], []
+    for _, row in upcoming_df.iterrows():
+        ra = lookup_ratings(ratings_snapshot, row["fighter_a_id"], row.get("weight_class"), today)
+        rb = lookup_ratings(ratings_snapshot, row["fighter_b_id"], row.get("weight_class"), today)
+        elo_a.append(ra["elo"]);   elo_b.append(rb["elo"])
+        gl_a.append(ra["glicko"]); gl_b.append(rb["glicko"])
+        rd_a.append(ra["glicko_rd"]); rd_b.append(rb["glicko_rd"])
+    upcoming_df["diff_elo"]    = np.array(elo_a) - np.array(elo_b)
+    upcoming_df["diff_glicko"] = np.array(gl_a) - np.array(gl_b)
+    upcoming_df["glicko_rd_a"] = rd_a
+    upcoming_df["glicko_rd_b"] = rd_b
+    if not ratings_snapshot:
+        log.warning(
+            "No persisted fighter_ratings.json found — ratings defaulted to base. "
+            "Run weekly_retrain (or `python -m ufc_predict.features.build_matrix`) to populate."
+        )
 
     # Build feature matrix
     available = [c for c in feature_cols if c in upcoming_df.columns]
@@ -301,16 +316,26 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     predictions_list = _df_to_records(output, bout_id_to_props)
     try:
         from ufc_predict.ingest.sportsbet_scraper import (
-            fetch_ufc_markets, load_markets, save_markets, match_odds_to_predictions,
+            cache_age_hours, fetch_ufc_markets, load_markets, save_markets,
+            match_odds_to_predictions,
         )
-        # Prefer cached odds (committed to repo) so CI runners don't need
-        # geo-access to sportsbet.com.au. Fall back to live fetch if no cache.
-        sb_fights = load_markets()
-        if not sb_fights:
-            log.info("No cached SportsBet odds — attempting live fetch…")
+        # Prefer fresh data: live-fetch if cache is missing or older than the
+        # threshold. Fall back to stale cache when live fetch fails (CI is
+        # geo-blocked from sportsbet.com.au).
+        CACHE_FRESH_HOURS = 36
+        age = cache_age_hours()
+        if age is not None and age < CACHE_FRESH_HOURS:
+            sb_fights = load_markets()
+            log.info("Using SportsBet cache (age %.1fh)", age)
+        else:
+            log.info("SportsBet cache stale or missing (age=%s) — live fetch…", age)
             sb_fights = fetch_ufc_markets()
             if sb_fights:
                 save_markets(sb_fights)
+            else:
+                sb_fights = load_markets()
+                if sb_fights:
+                    log.warning("Live fetch failed; falling back to stale cache")
 
         if sb_fights:
             predictions_list = match_odds_to_predictions(sb_fights, predictions_list)

@@ -88,9 +88,14 @@ def fetch_espn_upcoming() -> list[dict]:
             weight_class = notes[0].get("headline", "") if notes else ""
             is_title = "title" in weight_class.lower() or "championship" in weight_class.lower()
 
+            # Per-bout start time. ESPN often returns the same value as the
+            # event's date, but for cards with staggered prelims it's per-fight.
+            start_time_iso = comp.get("date") or event.get("date") or ""
+
             bouts.append({
                 "event_name": event_name,
                 "event_date": event_date,
+                "start_time_iso": start_time_iso,
                 "red_name_raw": red,
                 "blue_name_raw": blue,
                 "weight_class": weight_class,
@@ -161,20 +166,64 @@ def _bout_id(event_date, red_name, blue_name) -> str:
     return hashlib.sha1(key.encode()).hexdigest()[:16]
 
 
-def _resolve_fighter(name: str | None, session: Session) -> str | None:
-    """Attempt to match raw fighter name to a canonical_fighter_id."""
+def _resolve_fighter(
+    name: str | None,
+    session: Session,
+    weight_class: str | None = None,
+    fighter_cache: list | None = None,
+) -> str | None:
+    """
+    Attempt to match raw fighter name to a canonical_fighter_id.
+
+    Strategy: exact (case-insensitive) → unaccented exact → fuzzy token-set
+    ratio ≥ 88, gated by weight_class when provided. Diacritics-stripping
+    fixes the "José Aldo" ≠ "Jose Aldo" failure mode.
+    """
     if not name:
         return None
-    name_lower = name.strip().lower()
-    # Try exact match first
+    raw = name.strip()
+    if not raw:
+        return None
+
     fighter = session.query(Fighter).filter(
-        Fighter.full_name.ilike(name_lower)
+        Fighter.full_name.ilike(raw)
     ).first()
     if fighter:
         return fighter.canonical_fighter_id
 
-    # Try partial match via name_variants JSON — would need JSON contains query
-    # For now, return None and leave for the ID resolver to handle
+    import unicodedata
+    def _norm(s: str) -> str:
+        return unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower().strip()
+
+    target = _norm(raw)
+
+    # Cache the candidate set so we don't re-query the DB per bout.
+    if fighter_cache is None or not fighter_cache:
+        all_fighters = session.query(Fighter).all()
+        if fighter_cache is not None:
+            fighter_cache.extend(all_fighters)
+    else:
+        all_fighters = fighter_cache
+
+    for f in all_fighters:
+        if f.full_name and _norm(f.full_name) == target:
+            return f.canonical_fighter_id
+
+    # Fuzzy fallback. Higher threshold than the 70 used elsewhere because
+    # this runs at ingest time, where a wrong match silently corrupts the
+    # whole upcoming card. Weight-class gate when known.
+    from rapidfuzz import fuzz
+    best_id, best_score = None, 0
+    for f in all_fighters:
+        if not f.full_name:
+            continue
+        if weight_class and f.primary_weight_class and f.primary_weight_class != weight_class:
+            continue
+        score = fuzz.token_set_ratio(target, _norm(f.full_name))
+        if score > best_score:
+            best_id, best_score = f.canonical_fighter_id, score
+    if best_score >= 88:
+        return best_id
     return None
 
 
@@ -182,6 +231,7 @@ def upsert_bouts(bouts: list[dict], session: Session) -> int:
     now = datetime.now(timezone.utc)
     upserted = 0
     seen_ids: set[str] = set()
+    fighter_cache: list = []  # populated lazily by the first _resolve_fighter call
 
     for bout in bouts:
         if not bout.get("red_name_raw") and not bout.get("blue_name_raw"):
@@ -210,8 +260,9 @@ def upsert_bouts(bouts: list[dict], session: Session) -> int:
             existing.is_cancelled = bout.get("is_cancelled", False)
             continue
 
-        red_id = _resolve_fighter(bout.get("red_name_raw"), session)
-        blue_id = _resolve_fighter(bout.get("blue_name_raw"), session)
+        wc = bout.get("weight_class") or None
+        red_id  = _resolve_fighter(bout.get("red_name_raw"),  session, wc, fighter_cache)
+        blue_id = _resolve_fighter(bout.get("blue_name_raw"), session, wc, fighter_cache)
 
         session.add(UpcomingBout(
             upcoming_bout_id=bout_id,
@@ -259,6 +310,7 @@ def export_schedule(bouts: list[dict]) -> None:
                 "fighter_b": bout.get("blue_name_raw", ""),
                 "weight_class": bout.get("weight_class", ""),
                 "is_title_bout": bout.get("is_title_bout", False),
+                "start_time_iso": bout.get("start_time_iso", ""),
             })
 
     schedule = sorted(by_event.values(), key=lambda e: e["event_date"])

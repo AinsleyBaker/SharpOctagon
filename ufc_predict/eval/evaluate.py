@@ -245,7 +245,10 @@ def full_report(
     p = oof_df["pred_prob"].values
 
     metrics = compute_metrics(y, p)
-    log.info("Overall — log_loss=%.4f  brier=%.4f  auc=%.4f  n=%d", **metrics)
+    log.info(
+        "Overall — log_loss=%.4f  brier=%.4f  auc=%.4f  n=%d",
+        metrics["log_loss"], metrics["brier"], metrics["auc"], metrics["n"],
+    )
 
     report = {"overall": metrics}
 

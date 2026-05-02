@@ -475,22 +475,33 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     fighter_meta = load_fighter_metadata()
     events = _group_by_event(predictions)
 
-    # Per-bout start times from the ESPN-derived schedule, used as a fallback
-    # when SportsBet has no start_time for a fight (prelims often missing
-    # from SportsBet's competition listing until close to fight day).
+    # Per-bout start times AND live status from the ESPN-derived schedule.
+    # We use them as fallbacks when SportsBet has nothing (prelims often
+    # missing from SportsBet's listing until close to fight day) and to
+    # render LIVE / RESULT state during live cards.
     schedule_for_lookup = load_schedule()
     schedule_time_lookup: dict[tuple, str] = {}
+    schedule_status_lookup: dict[tuple, dict] = {}
     for _ev in schedule_for_lookup:
         ev_date = str(_ev.get("event_date", ""))
         for _b in _ev.get("bouts") or []:
-            t = _b.get("start_time_iso") or ""
-            if not t:
-                continue
             fa = (_b.get("fighter_a") or "").strip().lower()
             fb = (_b.get("fighter_b") or "").strip().lower()
-            if fa and fb:
+            if not (fa and fb):
+                continue
+            t = _b.get("start_time_iso") or ""
+            if t:
                 schedule_time_lookup[(ev_date, fa, fb)] = t
                 schedule_time_lookup[(ev_date, fb, fa)] = t
+            status_payload = {
+                "status":  _b.get("espn_status") or "",
+                "winner":  _b.get("espn_winner_name") or "",
+                "method":  _b.get("espn_method") or "",
+                "round":   int(_b.get("espn_round") or 0),
+            }
+            if status_payload["status"]:
+                schedule_status_lookup[(ev_date, fa, fb)] = status_payload
+                schedule_status_lookup[(ev_date, fb, fa)] = status_payload
 
     def _meta_lookup(name: str, key: str, default: str = "") -> str:
         meta = fighter_meta.get(name, {})
@@ -654,6 +665,34 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 (ev_date_str, fa_key, fb_key)
             )
             bout["fight_time_aest"] = _format_fight_time_aest(start_time, ev_date_str)
+
+            # Live status — drives LIVE / RESULT pills on the bout row and the
+            # event-level LIVE EVENT header. Status is empty for everything
+            # not on the current/next-day window.
+            sched_status = schedule_status_lookup.get((ev_date_str, fa_key, fb_key)) or {}
+            espn_status = sched_status.get("status", "")
+            bout["is_live"]      = espn_status == "STATUS_IN_PROGRESS"
+            bout["is_completed"] = espn_status == "STATUS_FINAL"
+            bout["live_winner"]  = sched_status.get("winner", "")
+            bout["live_method"]  = sched_status.get("method", "")
+            bout["live_round"]   = sched_status.get("round", 0)
+            if bout["is_completed"] and bout["live_winner"]:
+                method = (bout["live_method"] or "").upper()
+                method_short = (
+                    "KO/TKO" if "KO" in method or "TKO" in method
+                    else "SUB"     if "SUB" in method
+                    else "DEC"     if "DEC" in method or "DECISION" in method
+                    else (bout["live_method"] or "")
+                )
+                rnd_part = f" R{bout['live_round']}" if bout["live_round"] else ""
+                bout["result_text"] = f"{bout['live_winner']} by {method_short}{rnd_part}".strip()
+            else:
+                bout["result_text"] = ""
+
+    # Mark each event as live if ANY of its bouts are currently in progress;
+    # the template renders a "LIVE EVENT" badge in place of "Next Event".
+    for event in events:
+        event["is_live"] = any(b.get("is_live") for b in event.get("bouts", []))
 
     from ufc_predict.eval.bet_analysis import top_value_bets
     top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event

@@ -162,6 +162,38 @@
     0%, 100% { box-shadow: 0 0 12px rgba(0,255,136,0.5); }
     50%      { box-shadow: 0 0 24px rgba(0,255,136,0.85); }
   }
+  /* ─── Live event / live bout / completed bout ─── */
+  .live-badge {
+    display: inline-block;
+    font-size: 0.55rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 3px;
+    background: linear-gradient(135deg, #ff3344, #b40e1d);
+    color: #fff; text-transform: uppercase; letter-spacing: 0.12em;
+    margin-left: 0.5rem; vertical-align: middle;
+    box-shadow: 0 0 14px rgba(255, 51, 68, 0.6);
+    animation: live-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255, 51, 68, 0.55); }
+    50%      { box-shadow: 0 0 22px rgba(255, 51, 68, 0.95); }
+  }
+  .live-pill {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    background: #b40e1d; color: #fff;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(255, 51, 68, 0.6);
+    animation: live-pulse 1.4s ease-in-out infinite;
+  }
+  .result-pill {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    background: rgba(120, 120, 130, 0.18); color: var(--muted);
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .result-text {
+    display: block; margin-top: 4px;
+    color: var(--matrix); font-weight: 600; font-size: 0.7rem;
+  }
 
   /* Tooltips */
   [data-tt] { position: relative; cursor: help; border-bottom: 1px dotted var(--muted); }
@@ -688,7 +720,8 @@
       <div class="event-header">
         <h2>
           {{ event.event_name }}
-          {% if is_next %}<span class="next-badge">⚡ Next Event</span>{% endif %}
+          {% if event.is_live %}<span class="live-badge">● Live Event</span>
+          {% elif is_next %}<span class="next-badge">⚡ Next Event</span>{% endif %}
           {% if event.is_preview %}<span class="preview-tag">predictions soon</span>{% endif %}
         </h2>
         <span class="date">{{ event.event_date }}</span>
@@ -740,7 +773,14 @@
               </div>
               <div class="wc-txt">
                 {{ bout.weight_class or '—' }}
-                {% if bout.fight_time_aest %}<br><span style="color:var(--matrix);font-weight:600">⏱ {{ bout.fight_time_aest }}</span>{% endif %}
+                {% if bout.is_live %}
+                  <br><span class="live-pill">● Live</span>
+                {% elif bout.is_completed %}
+                  <br><span class="result-pill">Result</span>
+                  {% if bout.result_text %}<span class="result-text">{{ bout.result_text }}</span>{% endif %}
+                {% elif bout.fight_time_aest %}
+                  <br><span style="color:var(--matrix);font-weight:600">⏱ {{ bout.fight_time_aest }}</span>
+                {% endif %}
               </div>
             </div>
 

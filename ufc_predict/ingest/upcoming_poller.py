@@ -80,9 +80,24 @@ def fetch_espn_upcoming() -> list[dict]:
             blue = competitors[1].get("athlete", {}).get("displayName", "")
             status = comp.get("status", {}).get("type", {}).get("name", "")
 
-            # Skip completed fights
-            if status in ("STATUS_FINAL", "STATUS_CANCELED"):
-                continue
+            if status == "STATUS_CANCELED":
+                continue  # cancelled fights drop entirely
+
+            # ESPN result fields populated only when STATUS_FINAL.
+            winner_name = ""
+            for side in competitors:
+                if side.get("winner"):
+                    winner_name = side.get("athlete", {}).get("displayName", "")
+                    break
+            # Method / round live in different shapes per ESPN sport. Try the
+            # common ones; absent values fall through as empty strings.
+            status_obj = comp.get("status", {}) or {}
+            method = (
+                (status_obj.get("type") or {}).get("description")
+                or status_obj.get("description")
+                or ""
+            )
+            round_ended = status_obj.get("period") or 0
 
             notes = comp.get("notes", [{}])
             weight_class = notes[0].get("headline", "") if notes else ""
@@ -103,6 +118,12 @@ def fetch_espn_upcoming() -> list[dict]:
                 "is_five_round": is_title or "main event" in weight_class.lower(),
                 "source": "espn",
                 "is_confirmed": True,
+                # Live status — surfaced through to the schedule JSON so the
+                # dashboard can render per-bout LIVE/COMPLETED/SCHEDULED state.
+                "espn_status":      status,           # STATUS_SCHEDULED / IN_PROGRESS / FINAL
+                "espn_winner_name": winner_name,
+                "espn_method":      method,
+                "espn_round":       int(round_ended) if round_ended else 0,
             })
 
     log.info("ESPN: %d upcoming bouts fetched", len(bouts))
@@ -311,6 +332,11 @@ def export_schedule(bouts: list[dict]) -> None:
                 "weight_class": bout.get("weight_class", ""),
                 "is_title_bout": bout.get("is_title_bout", False),
                 "start_time_iso": bout.get("start_time_iso", ""),
+                # Live state from ESPN (only meaningful on/near fight day).
+                "espn_status":      bout.get("espn_status", ""),
+                "espn_winner_name": bout.get("espn_winner_name", ""),
+                "espn_method":      bout.get("espn_method", ""),
+                "espn_round":       bout.get("espn_round", 0),
             })
 
     schedule = sorted(by_event.values(), key=lambda e: e["event_date"])

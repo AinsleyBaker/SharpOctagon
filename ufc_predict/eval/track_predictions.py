@@ -75,15 +75,14 @@ def _accumulate_past_events(predictions: list[dict]) -> None:
         except (json.JSONDecodeError, KeyError):
             existing = {}
 
-    # ALSO scan the current predictions for any whose date is today or past.
-    # This catches the day-of and day-after windows when an event has finished
-    # but workflow hasn't yet refreshed the upcoming_bouts table.
+    # Accumulate strictly-past events (event_date < today) into past_events.json.
+    # Today's events are LEFT in upcoming so that mid-card the user still sees
+    # the bouts that haven't happened yet. The dashboard handles per-bout
+    # completion within a live event using ESPN status (see upcoming_poller).
     for p in predictions:
         ev_date = str(p.get("event_date", ""))
         bid = p.get("upcoming_bout_id", "")
-        # We accumulate any prediction where event date is past OR today.
-        # Newer entries overwrite older ones for the same bout.
-        if ev_date and bid and ev_date <= today_str:
+        if ev_date and bid and ev_date < today_str:
             existing[bid] = p
 
     # Save back as a sorted list, newest events first

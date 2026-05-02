@@ -893,7 +893,7 @@
     "country": "",
     "hometown": "",
     "style": "",
-    "age": "May. 1, 2026",
+    "age": "May. 2, 2026",
     "record": "0-0-0",
     "image_url": "fighter-images/gable-steveson.jpg",
     "stats": {
@@ -2955,6 +2955,7 @@
     "style": "Striker",
     "age": "71.00",
     "record": "4-2-0",
+    "image_url": "fighter-images/ollie-schmid.png",
     "stats": {
       "n_fights": 0,
       "win_streak": 0,
@@ -3329,10 +3330,10 @@
   "Brando Pericic": {
     "country": "",
     "hometown": "",
-    "style": "Wrestler",
-    "age": "77.00",
-    "record": "6-1-0",
-    "image_url": "fighter-images/brando-pericic.png",
+    "style": "",
+    "age": "",
+    "record": "2-0-0",
+    "image_url": "",
     "stats": {
       "n_fights": 2,
       "win_streak": 2,
@@ -3371,10 +3372,10 @@
   "Fares Ziam": {
     "country": "",
     "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "8-2-0",
-    "image_url": "",
+    "style": "Kickboxer",
+    "age": "73.00",
+    "record": "18-4-0",
+    "image_url": "fighter-images/fares-ziam.png",
     "stats": {
       "n_fights": 10,
       "win_streak": 6,
@@ -3413,10 +3414,10 @@
   "Joel Alvarez": {
     "country": "",
     "hometown": "",
-    "style": "Striker",
-    "age": "74.00",
-    "record": "23-3-0",
-    "image_url": "fighter-images/joel-alvarez.png",
+    "style": "",
+    "age": "",
+    "record": "8-2-0",
+    "image_url": "fighter-images/joel-alvarez.jpg",
     "stats": {
       "n_fights": 10,
       "win_streak": 4,
@@ -3434,10 +3435,10 @@
   "Mateusz Rebecki": {
     "country": "",
     "hometown": "",
-    "style": "Brazilian Jiu-Jitsu",
-    "age": "67.00",
-    "record": "20-4-0",
-    "image_url": "fighter-images/mateusz-rebecki.png",
+    "style": "",
+    "age": "",
+    "record": "4-3-0",
+    "image_url": "",
     "stats": {
       "n_fights": 7,
       "win_streak": 0,

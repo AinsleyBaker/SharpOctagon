@@ -130,9 +130,9 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_PRE_FIGHT",
+        "espn_status": "STATUS_FIGHTERS_WALKING",
         "espn_winner_name": "",
-        "espn_method": "Pre-fight",
+        "espn_method": "Walkouts",
         "espn_round": 0
       },
       {

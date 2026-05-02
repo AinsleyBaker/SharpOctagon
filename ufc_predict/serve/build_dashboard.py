@@ -609,9 +609,31 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                     if s > best_score:
                         best_score, best_row = s, row
                 if best_row is None or best_score < 70:
-                    bout["actual_winner"] = "?"
-                    bout["actual_method"] = ""
-                    bout["pred_correct"]  = None
+                    # No DB match — but live ESPN status may already have a
+                    # winner (typical for bouts that finished in the last few
+                    # hours and haven't been ingested into the fights table yet).
+                    if bout.get("is_completed") and bout.get("live_winner"):
+                        bout["actual_winner_name"] = bout["live_winner"]
+                        # Map winner name back to A/B side for the template.
+                        lw = (bout["live_winner"] or "").strip().lower()
+                        a_lc = (pa or "").strip().lower()
+                        b_lc = (pb or "").strip().lower()
+                        if a_lc and (lw == a_lc or lw in a_lc or a_lc in lw):
+                            bout["actual_winner_side"] = "a"
+                        elif b_lc and (lw == b_lc or lw in b_lc or b_lc in lw):
+                            bout["actual_winner_side"] = "b"
+                        bout["actual_method"] = bout.get("live_method", "")
+                        bout["actual_round"]  = bout.get("live_round", 0)
+                        # pred_correct was already computed in the live path.
+                        if bout.get("pred_correct") is True:
+                            n_correct  += 1
+                            n_resolved += 1
+                        elif bout.get("pred_correct") is False:
+                            n_resolved += 1
+                    else:
+                        bout["actual_winner"] = "?"
+                        bout["actual_method"] = ""
+                        bout["pred_correct"]  = None
                     continue
                 # Determine which side our fighter A is on in the DB row
                 a_score_red  = _score(pa, best_row.name_a)
@@ -1081,25 +1103,41 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     all_events_for_template = sorted(events, key=lambda e: str(e.get("event_date", "")))
     all_events_for_template.extend(preview_events)
 
-    # Split into upcoming (event_date >= today) and past (< today). Today's
-    # event stays on the upcoming card while bouts are still happening; once
-    # every bout on it is FINAL we move it to past events immediately so the
-    # full prediction-vs-actual breakdown shows up without waiting for the
-    # date rollover.
-    def _all_bouts_final(ev: dict) -> bool:
-        bouts = ev.get("bouts") or []
-        return bool(bouts) and all(b.get("is_completed") for b in bouts)
-
+    # Split events into upcoming and past, with per-bout granularity for
+    # today's live card: completed bouts migrate to a Past Events row for
+    # the same event the moment they finish, while live + scheduled bouts
+    # stay on the upcoming card. Once every bout has finished, the upcoming
+    # entry drops away entirely (the past row already has them all).
     upcoming_events: list[dict] = []
     past_events_today: list[dict] = []
     for e in all_events_for_template:
         ev_date = str(e.get("event_date", ""))
         if ev_date < today_str:
             past_events_today.append(e)
-        elif ev_date == today_str and _all_bouts_final(e):
-            past_events_today.append(e)
-        else:
-            upcoming_events.append(e)
+            continue
+        bouts = e.get("bouts") or []
+        completed = [b for b in bouts if b.get("is_completed")]
+        live_or_scheduled = [b for b in bouts if not b.get("is_completed")]
+        if completed:
+            # Split: completed bouts become a Past Events row for this event.
+            past_events_today.append({
+                "event_name": e.get("event_name", ""),
+                "event_date": ev_date,
+                "bouts":      completed,
+                "is_past":    True,
+                # Tag so the template can render a "Live event in progress"
+                # hint — distinguishes from fully-finished historical events.
+                "is_partial": bool(live_or_scheduled),
+                "anchor":     "past-" + (ev_date or "").replace("-", "")[:8],
+            })
+        if live_or_scheduled:
+            # Strip completed ones from the upcoming entry but keep the rest.
+            e_upcoming = dict(e)
+            e_upcoming["bouts"] = live_or_scheduled
+            # Recompute is_live for the trimmed list
+            e_upcoming["is_live"] = any(b.get("is_live") for b in live_or_scheduled)
+            upcoming_events.append(e_upcoming)
+        # If both are empty (no bouts at all) the event simply isn't shown.
 
     # Pull historical past events from data/past_events.json (persisted across
     # workflow runs). Predictions.json only contains upcoming events, so once

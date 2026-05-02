@@ -119,10 +119,10 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_PRE_FIGHT",
-        "espn_winner_name": "",
-        "espn_method": "Pre-fight",
-        "espn_round": 0
+        "espn_status": "STATUS_FINAL",
+        "espn_winner_name": "Steve Erceg",
+        "espn_method": "Final",
+        "espn_round": 3
       },
       {
         "fighter_a": "Beneil Dariush",
@@ -130,9 +130,9 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_SCHEDULED",
+        "espn_status": "STATUS_PRE_FIGHT",
         "espn_winner_name": "",
-        "espn_method": "Sat, May 2nd at 7:00 AM EDT",
+        "espn_method": "Pre-fight",
         "espn_round": 0
       },
       {

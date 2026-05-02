@@ -130,10 +130,10 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_FIGHTERS_WALKING",
+        "espn_status": "STATUS_END_OF_ROUND",
         "espn_winner_name": "",
-        "espn_method": "Walkouts",
-        "espn_round": 0
+        "espn_method": "End R1",
+        "espn_round": 1
       },
       {
         "fighter_a": "Carlos Prates",

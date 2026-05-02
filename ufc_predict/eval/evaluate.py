@@ -163,7 +163,7 @@ def kelly_roi_simulation(
     y_true: np.ndarray,
     y_model: np.ndarray,
     closing_odds_a: np.ndarray,
-    kelly_fraction: float = KELLY_FRACTION,
+    fraction: float = KELLY_FRACTION,
     starting_bankroll: float = STARTING_BANKROLL,
 ) -> pd.DataFrame:
     """
@@ -200,7 +200,7 @@ def kelly_roi_simulation(
             dec_odds = dec_odds_b
             outcome = 1 - int(won)
 
-        frac = kelly_fraction(our_prob, dec_odds, kelly_fraction)
+        frac = kelly_fraction(our_prob, dec_odds, fraction)
         bet_amount = bankroll * frac
 
         pnl = bet_amount * (dec_odds - 1) if outcome == 1 else -bet_amount
@@ -256,35 +256,47 @@ def full_report(
     rel = reliability_data(y, p)
     rel.to_csv(output_dir / "reliability.csv", index=False)
 
-    # Closing-line benchmark (if odds available)
+    # Closing-line benchmark (if odds available).
+    # SQLAlchemy returns Python None for NULLs which yields object-dtype columns
+    # in pandas; coerce to float once here so downstream np.isnan works.
     if "closing_odds_red" in oof_df.columns:
-        # Map closing odds back to fighter_a direction (corner randomization was applied)
-        # In oof_df, fighter_a is whichever was assigned "A" after corner randomization.
-        # closing_odds_red corresponds to the original red corner.
-        # We need to track whether A was red or blue — store that during feature building.
-        # For now: best-effort using stored columns if present.
-        if "a_is_red" in oof_df.columns:
-            odds_a = np.where(
-                oof_df["a_is_red"],
-                oof_df["closing_odds_red"].values,
-                oof_df["closing_odds_blue"].values,
+        odds_red  = pd.to_numeric(oof_df["closing_odds_red"],  errors="coerce").to_numpy(dtype=float)
+        odds_blue = pd.to_numeric(oof_df["closing_odds_blue"], errors="coerce").to_numpy(dtype=float)
+
+        both_present = np.isfinite(odds_red) & np.isfinite(odds_blue)
+        n_with_odds = int(both_present.sum())
+
+        if n_with_odds == 0:
+            log.warning(
+                "Closing-line benchmark skipped: no rows have both closing_odds_red and "
+                "closing_odds_blue populated. Backfill BestFightOdds to enable this."
             )
+            report["vs_closing_line"] = {"skipped": "no closing odds in OOF"}
         else:
-            odds_a = oof_df["closing_odds_red"].values  # approximate
+            log.info("Closing-line benchmark: %d/%d rows have both sides of odds", n_with_odds, len(oof_df))
+            # Map closing odds to fighter_a direction (corner randomization was applied
+            # during feature building; a_is_red tells us which corner is currently "A").
+            if "a_is_red" in oof_df.columns:
+                a_is_red = oof_df["a_is_red"].astype(bool).to_numpy()
+                odds_a = np.where(a_is_red, odds_red, odds_blue)
+                odds_b = np.where(a_is_red, odds_blue, odds_red)
+            else:
+                odds_a = odds_red
+                odds_b = odds_blue
 
-        bench = benchmark_vs_closing_line(y, p, odds_a, oof_df["closing_odds_blue"].values)
-        report["vs_closing_line"] = bench
+            bench = benchmark_vs_closing_line(y, p, odds_a, odds_b)
+            report["vs_closing_line"] = bench
 
-        kelly_df = kelly_roi_simulation(y, p, odds_a)
-        kelly_df.to_csv(output_dir / "kelly_simulation.csv", index=False)
+            kelly_df = kelly_roi_simulation(y, p, odds_a)
+            kelly_df.to_csv(output_dir / "kelly_simulation.csv", index=False)
 
-        if len(kelly_df):
-            report["kelly_roi"] = {
-                "n_bets": len(kelly_df),
-                "final_bankroll": float(kelly_df["bankroll"].iloc[-1]),
-                "roi_pct": float((kelly_df["bankroll"].iloc[-1] - STARTING_BANKROLL) / STARTING_BANKROLL * 100),
-                "win_rate": float((kelly_df["outcome"] == 1).mean()),
-            }
+            if len(kelly_df):
+                report["kelly_roi"] = {
+                    "n_bets": len(kelly_df),
+                    "final_bankroll": float(kelly_df["bankroll"].iloc[-1]),
+                    "roi_pct": float((kelly_df["bankroll"].iloc[-1] - STARTING_BANKROLL) / STARTING_BANKROLL * 100),
+                    "win_rate": float((kelly_df["outcome"] == 1).mean()),
+                }
 
     # Per-year breakdown
     oof_df["year"] = pd.to_datetime(oof_df["date"]).dt.year

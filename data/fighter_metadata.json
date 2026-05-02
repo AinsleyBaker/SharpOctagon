@@ -4,8 +4,21 @@
     "hometown": "",
     "style": "",
     "age": "",
-    "record": "",
-    "image_url": ""
+    "record": "0-1-0",
+    "image_url": "",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 19.8,
+      "sapm": 39.2,
+      "td_per_min": 0.2,
+      "stance": "nan"
+    }
   },
   "Aiemann Zahabi": {
     "country": "Canada",
@@ -2933,7 +2946,7 @@
     "hometown": "",
     "style": "Striker",
     "age": "68.00",
-    "record": "8-0-0",
+    "record": "9-0-0",
     "image_url": "fighter-images/marwan-rahiki.png",
     "stats": {
       "n_fights": 1,
@@ -3515,5 +3528,485 @@
       "td_per_min": null,
       "stance": "Southpaw"
     }
+  },
+  "Charles Jourdain": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "69.00",
+    "record": "18-8-1",
+    "image_url": "fighter-images/charles-jourdain.png",
+    "stats": {
+      "n_fights": 17,
+      "win_streak": 3,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.47058823529411764,
+      "ko_rate": 0.17647058823529413,
+      "sub_rate": 0.23529411764705882,
+      "slpm": 14.79896543616271,
+      "sapm": 29.93651540089349,
+      "td_per_min": 0.07053844345168117,
+      "stance": "Switch"
+    }
+  },
+  "Daria Zhelezniakova": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "69.00",
+    "record": "10-3-0",
+    "image_url": "fighter-images/daria-zhelezniakova.png",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.25,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 10.706713780918728,
+      "sapm": 26.660777385159008,
+      "td_per_min": 0.053003533568904596,
+      "stance": "Orthodox"
+    }
+  },
+  "Dennis Buzukja": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "69.00",
+    "record": "12-6-0",
+    "image_url": "fighter-images/dennis-buzukja.png",
+    "stats": {
+      "n_fights": 5,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.6,
+      "ko_rate": 0.6,
+      "sub_rate": 0.0,
+      "slpm": 15.731225296442688,
+      "sapm": 38.10276679841897,
+      "td_per_min": 0.0,
+      "stance": "Switch"
+    }
+  },
+  "Gauge Young": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "69.00",
+    "record": "11-3-0",
+    "image_url": "fighter-images/gauge-young.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 20.3,
+      "sapm": 40.9,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Gilbert Burns": {
+    "country": "",
+    "hometown": "",
+    "style": "Brazilian Jiu-Jitsu",
+    "age": "70.00",
+    "record": "22-10-0",
+    "image_url": "fighter-images/gilbert-burns.png",
+    "stats": {
+      "n_fights": 25,
+      "win_streak": 0,
+      "loss_streak": 5,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.52,
+      "ko_rate": 0.32,
+      "sub_rate": 0.2,
+      "slpm": 9.398520424573817,
+      "sapm": 19.54004503055645,
+      "td_per_min": 0.4052750080411708,
+      "stance": "Orthodox"
+    }
+  },
+  "Gokhan Saricam": {
+    "country": "",
+    "hometown": "",
+    "style": "Boxing",
+    "age": "75.00",
+    "record": "12-2-0",
+    "image_url": "fighter-images/gokhan-saricam.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 12.084805653710246,
+      "sapm": 25.653710247349824,
+      "td_per_min": 0.0,
+      "stance": "nan"
+    }
+  },
+  "JJ Aldrich": {
+    "country": "",
+    "hometown": "",
+    "style": "Striker",
+    "age": "65.00",
+    "record": "15-7-0",
+    "image_url": "fighter-images/jj-aldrich.png",
+    "stats": {
+      "n_fights": 17,
+      "win_streak": 2,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.17647058823529413,
+      "ko_rate": 0.11764705882352941,
+      "sub_rate": 0.0,
+      "slpm": 11.458160729080364,
+      "sapm": 24.84258492129246,
+      "td_per_min": 0.13670256835128416,
+      "stance": "Southpaw"
+    }
+  },
+  "Jai Herbert": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "73.00",
+    "record": "14-6-1",
+    "image_url": "fighter-images/jai-herbert.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.5,
+      "ko_rate": 0.4,
+      "sub_rate": 0.0,
+      "slpm": 9.203778677462887,
+      "sapm": 22.132253711201077,
+      "td_per_min": 0.08097165991902833,
+      "stance": "Orthodox"
+    }
+  },
+  "Jamey-Lyn Horth": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "4-3-0",
+    "image_url": "",
+    "stats": {
+      "n_fights": 7,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.14285714285714285,
+      "ko_rate": 0.14285714285714285,
+      "sub_rate": 0.0,
+      "slpm": 10.90909090909091,
+      "sapm": 22.909090909090914,
+      "td_per_min": 0.18701298701298705,
+      "stance": "Orthodox"
+    }
+  },
+  "Jamie Siraj": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "67.00",
+    "record": "14-4-0",
+    "image_url": "fighter-images/jamie-siraj.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 2.2085889570552144,
+      "sapm": 8.834355828220858,
+      "td_per_min": 0.0,
+      "stance": "nan"
+    }
+  },
+  "Jasmine Jasudavicius": {
+    "country": "",
+    "hometown": "",
+    "style": "Brawler",
+    "age": "67.00",
+    "record": "15-4-0",
+    "image_url": "fighter-images/jasmine-jasudavicius.png",
+    "stats": {
+      "n_fights": 12,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.08333333333333333,
+      "sub_rate": 0.25,
+      "slpm": 9.95727900098587,
+      "sapm": 22.37923102201775,
+      "td_per_min": 0.49293460400920147,
+      "stance": "Orthodox"
+    }
+  },
+  "John Castaneda": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "66.00",
+    "record": "21-8-1",
+    "image_url": "fighter-images/john-castaneda.png",
+    "stats": {
+      "n_fights": 9,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.2222222222222222,
+      "sub_rate": 0.1111111111111111,
+      "slpm": 14.66938775510204,
+      "sapm": 28.408163265306122,
+      "td_per_min": 0.2693877551020408,
+      "stance": "Switch"
+    }
+  },
+  "John Yannis": {
+    "country": "",
+    "hometown": "",
+    "style": "Freestyle",
+    "age": "67.00",
+    "record": "10-4-0",
+    "image_url": "fighter-images/john-yannis.png",
+    "stats": {
+      "n_fights": 2,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.5,
+      "finish_rate": 1.0,
+      "ko_rate": 0.5,
+      "sub_rate": 0.0,
+      "slpm": 3.2984293193717273,
+      "sapm": 6.12565445026178,
+      "td_per_min": 0.0,
+      "stance": "Southpaw"
+    }
+  },
+  "Julien LeBlanc": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "74.00",
+    "record": "10-3-0",
+    "image_url": "fighter-images/julien-leblanc.png",
+    "stats": {}
+  },
+  "Karine Silva": {
+    "country": "",
+    "hometown": "",
+    "style": "Brazilian Jiu-Jitsu",
+    "age": "65.00",
+    "record": "19-7-0",
+    "image_url": "fighter-images/karine-silva.png",
+    "stats": {
+      "n_fights": 8,
+      "win_streak": 0,
+      "loss_streak": 2,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.375,
+      "ko_rate": 0.0,
+      "sub_rate": 0.375,
+      "slpm": 5.375170532060026,
+      "sapm": 13.533424283765346,
+      "td_per_min": 0.3274215552523874,
+      "stance": "Orthodox"
+    }
+  },
+  "Kyler Phillips": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "68.00",
+    "record": "12-5-0",
+    "image_url": "fighter-images/kyler-phillips.png",
+    "stats": {
+      "n_fights": 10,
+      "win_streak": 0,
+      "loss_streak": 3,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.2,
+      "ko_rate": 0.1,
+      "sub_rate": 0.1,
+      "slpm": 15.11755485893417,
+      "sapm": 35.242946708463954,
+      "td_per_min": 0.6112852664576803,
+      "stance": "Orthodox"
+    }
+  },
+  "Mandel Nallo": {
+    "country": "",
+    "hometown": "",
+    "style": "Kickboxer",
+    "age": "72.00",
+    "record": "14-4-0",
+    "image_url": "fighter-images/mandel-nallo.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 7.68,
+      "sapm": 14.879999999999999,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Marcio Barbosa": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "66.00",
+    "record": "17-2-0",
+    "image_url": "fighter-images/marcio-barbosa.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 1.0,
+      "ko_rate": 1.0,
+      "sub_rate": 0.0,
+      "slpm": 3.0,
+      "sapm": 6.0,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Mark Vologdin": {
+    "country": "",
+    "hometown": "",
+    "style": "Karate",
+    "age": "63.00",
+    "record": "12-4-2",
+    "image_url": "fighter-images/mark-vologdin.png",
+    "stats": {
+      "n_fights": 1,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.0,
+      "finish_rate": 0.0,
+      "ko_rate": 0.0,
+      "sub_rate": 0.0,
+      "slpm": 18.2,
+      "sapm": 43.4,
+      "td_per_min": 0.2,
+      "stance": "Orthodox"
+    }
+  },
+  "Melissa Croden": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "69.00",
+    "record": "8-3-0",
+    "image_url": "fighter-images/melissa-croden.png",
+    "stats": {
+      "n_fights": 3,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.6666666666666666,
+      "finish_rate": 0.3333333333333333,
+      "ko_rate": 0.3333333333333333,
+      "sub_rate": 0.0,
+      "slpm": 13.073394495412844,
+      "sapm": 27.660550458715598,
+      "td_per_min": 0.41284403669724773,
+      "stance": "nan"
+    }
+  },
+  "Mike Malott": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "73.00",
+    "record": "14-2-1",
+    "image_url": "fighter-images/mike-malott.png",
+    "stats": {
+      "n_fights": 8,
+      "win_streak": 4,
+      "loss_streak": 0,
+      "l3_win_rate": 1.0,
+      "finish_rate": 0.75,
+      "ko_rate": 0.5,
+      "sub_rate": 0.25,
+      "slpm": 11.394321766561514,
+      "sapm": 21.804416403785492,
+      "td_per_min": 0.3028391167192429,
+      "stance": "Orthodox"
+    }
+  },
+  "Robert Valentin": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "1-3-0",
+    "image_url": "",
+    "stats": {
+      "n_fights": 4,
+      "win_streak": 1,
+      "loss_streak": 0,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.75,
+      "ko_rate": 0.5,
+      "sub_rate": 0.25,
+      "slpm": 3.1884057971014492,
+      "sapm": 5.70048309178744,
+      "td_per_min": 0.0966183574879227,
+      "stance": "Orthodox"
+    }
+  },
+  "Tanner Boser": {
+    "country": "",
+    "hometown": "",
+    "style": "Karate",
+    "age": "74.00",
+    "record": "22-11-1",
+    "image_url": "fighter-images/tanner-boser.png",
+    "stats": {
+      "n_fights": 11,
+      "win_streak": 0,
+      "loss_streak": 1,
+      "l3_win_rate": 0.3333333333333333,
+      "finish_rate": 0.45454545454545453,
+      "ko_rate": 0.45454545454545453,
+      "sub_rate": 0.0,
+      "slpm": 12.914798206278027,
+      "sapm": 24.12556053811659,
+      "td_per_min": 0.0,
+      "stance": "Orthodox"
+    }
+  },
+  "Thiago Mois\u00e9s": {
+    "country": "",
+    "hometown": "",
+    "style": "MMA",
+    "age": "69.00",
+    "record": "19-10-0",
+    "image_url": "fighter-images/thiago-moises.png",
+    "stats": {}
   }
 }

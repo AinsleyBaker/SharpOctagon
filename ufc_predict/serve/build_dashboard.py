@@ -252,6 +252,154 @@ def _fighter_type(ko_rate, sub_rate, td_per_min, slpm, sig_acc) -> str:
     return ""  # no clear style — hide badge in template
 
 
+_LIVE_TERMINAL = {"STATUS_FINAL", "STATUS_SCHEDULED", "STATUS_CANCELED",
+                  "STATUS_POSTPONED", "", None}
+
+
+def _is_live_status(status: str) -> bool:
+    """
+    Treat any ESPN status that isn't terminal (final/scheduled/canceled) and
+    isn't empty as 'live'. This catches STATUS_IN_PROGRESS, STATUS_PRE_FIGHT,
+    STATUS_FIGHTERS_WALKING, STATUS_FIGHTER_INTRODUCTIONS, STATUS_END_OF_PERIOD,
+    etc. — all of which mean the bout is happening *right now*.
+    """
+    return bool(status) and status not in _LIVE_TERMINAL
+
+
+def _format_result_text(winner: str, method_raw: str, round_num: int | None) -> str:
+    """
+    Build a clean "Winner by METHOD R#" string from ESPN status fields.
+    `method_raw` may be a real finish method ("KO/TKO", "Decision - Unanimous"),
+    or just "Final" — in which case we drop the "by METHOD" portion entirely.
+    """
+    if not winner:
+        return ""
+    method = (method_raw or "").strip()
+    method_upper = method.upper()
+    method_short = ""
+    if "KO" in method_upper or "TKO" in method_upper:
+        method_short = "KO/TKO"
+    elif "SUB" in method_upper:
+        method_short = "SUB"
+    elif "DEC" in method_upper or "DECISION" in method_upper:
+        method_short = "DEC"
+    elif method_upper and method_upper != "FINAL":
+        method_short = method  # unrecognised but non-empty — show raw
+
+    rnd_part = f" R{int(round_num)}" if round_num else ""
+    if method_short:
+        return f"{winner} by {method_short}{rnd_part}".strip()
+    # No usable method — just winner (+ round if known)
+    return f"{winner}{rnd_part}".strip()
+
+
+def _build_preview_bout(
+    sb: dict,
+    fighter_meta: dict,
+    fighter_imgs: dict,
+    status_payload: dict | None = None,
+) -> dict | None:
+    """
+    Construct a preview-style bout dict from a schedule entry.
+    Used both for fully schedule-only events (no predictions yet) and to
+    fill in completed/upcoming bouts on a predicted event when those bouts
+    are missing from predictions.json (typical for early prelims that
+    finished before the predict step ran).
+    """
+    fa = (sb.get("fighter_a") or "").strip()
+    fb = (sb.get("fighter_b") or "").strip()
+    if not fa or not fb:
+        return None
+
+    def _initials(n: str) -> str:
+        parts = (n or "").split()
+        return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
+
+    a_meta = fighter_meta.get(fa, {})
+    b_meta = fighter_meta.get(fb, {})
+    a_stats = a_meta.get("stats", {}) or {}
+    b_stats = b_meta.get("stats", {}) or {}
+
+    a_lbl, a_cls = _streak_display(a_stats.get("win_streak"), a_stats.get("loss_streak"))
+    b_lbl, b_cls = _streak_display(b_stats.get("win_streak"), b_stats.get("loss_streak"))
+
+    def _pct(v):
+        return f"{float(v)*100:.0f}%" if v is not None else "—"
+    def _f(v, fmt=".1f"):
+        return format(float(v), fmt) if v is not None else "—"
+
+    bout = {
+        "is_preview":     True,
+        "fighter_a_name": fa,
+        "fighter_b_name": fb,
+        "weight_class":   sb.get("weight_class") or "",
+        "is_title_bout":  sb.get("is_title_bout", False),
+        "favourite":      "toss-up",
+        "prob_a_pct":     "—",
+        "prob_b_pct":     "—",
+        "prob_a_wins":    0.5,
+        "a_initials":     _initials(fa),
+        "b_initials":     _initials(fb),
+        "a_img":          a_meta.get("image_url") or fighter_imgs.get(fa, ""),
+        "b_img":          b_meta.get("image_url") or fighter_imgs.get(fb, ""),
+        "a_streak":       a_lbl,
+        "b_streak":       b_lbl,
+        "a_streak_class": a_cls,
+        "b_streak_class": b_cls,
+        "a_flag":         _flag_emoji(a_meta.get("country", "")),
+        "b_flag":         _flag_emoji(b_meta.get("country", "")),
+        "a_nationality":  a_meta.get("country", ""),
+        "b_nationality":  b_meta.get("country", ""),
+        "a_ufc_style":    a_meta.get("style", ""),
+        "b_ufc_style":    b_meta.get("style", ""),
+        "a_record":       a_meta.get("record", ""),
+        "b_record":       b_meta.get("record", ""),
+        "a_stance":       a_stats.get("stance", ""),
+        "b_stance":       b_stats.get("stance", ""),
+        "a_n_fights":     a_stats.get("n_fights", 0),
+        "b_n_fights":     b_stats.get("n_fights", 0),
+        "a_l3":           _pct(a_stats.get("l3_win_rate")),
+        "b_l3":           _pct(b_stats.get("l3_win_rate")),
+        "a_finish_rate":  _pct(a_stats.get("finish_rate")),
+        "b_finish_rate":  _pct(b_stats.get("finish_rate")),
+        "a_ko_rate":      _pct(a_stats.get("ko_rate")),
+        "b_ko_rate":      _pct(b_stats.get("ko_rate")),
+        "a_sub_rate":     _pct(a_stats.get("sub_rate")),
+        "b_sub_rate":     _pct(b_stats.get("sub_rate")),
+        "a_slpm":         _f(a_stats.get("slpm")),
+        "b_slpm":         _f(b_stats.get("slpm")),
+        "col_l3":         _stat_colors(a_stats.get("l3_win_rate"), b_stats.get("l3_win_rate")),
+        "col_finish":     _stat_colors(a_stats.get("finish_rate"), b_stats.get("finish_rate")),
+        "col_ko":         _stat_colors(a_stats.get("ko_rate"), b_stats.get("ko_rate")),
+        "col_sub":        _stat_colors(a_stats.get("sub_rate"), b_stats.get("sub_rate")),
+        "col_slpm":       _stat_colors(a_stats.get("slpm"), b_stats.get("slpm")),
+        "a_fighter_type": "",
+        "b_fighter_type": "",
+        "show_fighter_type": False,
+        "value_bet_count": 0,
+        "has_bets":       False,
+        "has_props":      False,
+        "has_stats":      bool(a_stats or b_stats),
+    }
+
+    # Live status (LIVE pill, RESULT pill + result text)
+    sp = status_payload or {}
+    espn_status = sp.get("status", "")
+    bout["is_live"]      = _is_live_status(espn_status)
+    bout["is_completed"] = espn_status == "STATUS_FINAL"
+    bout["live_winner"]  = sp.get("winner", "")
+    bout["live_method"]  = sp.get("method", "")
+    bout["live_round"]   = int(sp.get("round") or 0)
+    if bout["is_completed"] and bout["live_winner"]:
+        bout["result_text"] = _format_result_text(
+            bout["live_winner"], bout["live_method"], bout["live_round"]
+        )
+    else:
+        bout["result_text"] = ""
+
+    return bout
+
+
 def _enrich_props(bout: dict) -> None:
     """Add formatted prop probability strings to a bout dict."""
     props = bout.get("props") or {}
@@ -683,23 +831,75 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             # not on the current/next-day window.
             sched_status = schedule_status_lookup.get((ev_date_str, fa_key, fb_key)) or {}
             espn_status = sched_status.get("status", "")
-            bout["is_live"]      = espn_status == "STATUS_IN_PROGRESS"
+            bout["is_live"]      = _is_live_status(espn_status)
             bout["is_completed"] = espn_status == "STATUS_FINAL"
             bout["live_winner"]  = sched_status.get("winner", "")
             bout["live_method"]  = sched_status.get("method", "")
             bout["live_round"]   = sched_status.get("round", 0)
             if bout["is_completed"] and bout["live_winner"]:
-                method = (bout["live_method"] or "").upper()
-                method_short = (
-                    "KO/TKO" if "KO" in method or "TKO" in method
-                    else "SUB"     if "SUB" in method
-                    else "DEC"     if "DEC" in method or "DECISION" in method
-                    else (bout["live_method"] or "")
+                bout["result_text"] = _format_result_text(
+                    bout["live_winner"], bout["live_method"], bout["live_round"]
                 )
-                rnd_part = f" R{bout['live_round']}" if bout["live_round"] else ""
-                bout["result_text"] = f"{bout['live_winner']} by {method_short}{rnd_part}".strip()
             else:
                 bout["result_text"] = ""
+
+    # Some bouts on a predicted event may be missing from predictions.json
+    # (typical for early prelims that finished before the predict step ran,
+    # or for fights too far out to score). Merge in any schedule bouts not
+    # already present so the card shows ALL fights with live/result state.
+    schedule_by_event: dict[tuple, dict] = {
+        (str(_e.get("event_date", "")), _e.get("event_name", "")): _e
+        for _e in schedule_for_lookup
+    }
+    for event in events:
+        ekey = (str(event.get("event_date", "")), event.get("event_name", ""))
+        sched_event = schedule_by_event.get(ekey)
+        if not sched_event:
+            continue
+        existing_pairs = set()
+        for b in event["bouts"]:
+            a = (b.get("fighter_a_name") or "").strip().lower()
+            bn = (b.get("fighter_b_name") or "").strip().lower()
+            existing_pairs.add((a, bn))
+            existing_pairs.add((bn, a))
+        for sb in sched_event.get("bouts", []):
+            fa = (sb.get("fighter_a") or "").strip().lower()
+            fb = (sb.get("fighter_b") or "").strip().lower()
+            if (fa, fb) in existing_pairs:
+                continue
+            status_payload = {
+                "status":  sb.get("espn_status") or "",
+                "winner":  sb.get("espn_winner_name") or "",
+                "method":  sb.get("espn_method") or "",
+                "round":   sb.get("espn_round") or 0,
+            }
+            pb = _build_preview_bout(sb, fighter_meta, fighter_imgs, status_payload)
+            if pb is None:
+                continue
+            pb["fight_time_aest"] = _format_fight_time_aest(
+                sb.get("start_time_iso"), str(event.get("event_date", ""))
+            )
+            event["bouts"].append(pb)
+
+        # Order bouts to match the schedule (ESPN lists earliest prelim first
+        # → main event last). Bouts not in the schedule fall to the end.
+        sched_order = {
+            (
+                (sb.get("fighter_a") or "").strip().lower(),
+                (sb.get("fighter_b") or "").strip().lower(),
+            ): i
+            for i, sb in enumerate(sched_event.get("bouts", []))
+        }
+
+        def _bout_sort_key(b: dict) -> int:
+            a = (b.get("fighter_a_name") or "").strip().lower()
+            bn = (b.get("fighter_b_name") or "").strip().lower()
+            return sched_order.get(
+                (a, bn),
+                sched_order.get((bn, a), 10_000),
+            )
+
+        event["bouts"].sort(key=_bout_sort_key)
 
     # Mark each event as live if ANY of its bouts are currently in progress;
     # the template renders a "LIVE EVENT" badge in place of "Next Event".
@@ -797,93 +997,30 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         key = (s["event_date"], s["event_name"])
         if key in pred_keys or not s.get("bouts"):
             continue
-        # Build minimal bout dicts that share enough fields with the full template
         anchor = "event-" + (s["event_date"] or "").replace(":", "").replace(" ", "-")[:12]
         preview_bouts = []
         for sb in s["bouts"]:
-            fa = (sb.get("fighter_a") or "").strip()
-            fb = (sb.get("fighter_b") or "").strip()
-            if not fa or not fb:
-                continue
-            def _initials(n: str) -> str:
-                parts = (n or "").split()
-                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
-            a_meta = fighter_meta.get(fa, {})
-            b_meta = fighter_meta.get(fb, {})
-            a_stats = a_meta.get("stats", {}) or {}
-            b_stats = b_meta.get("stats", {}) or {}
-
-            # Streak labels from the cached stats
-            a_lbl, a_cls = _streak_display(a_stats.get("win_streak"), a_stats.get("loss_streak"))
-            b_lbl, b_cls = _streak_display(b_stats.get("win_streak"), b_stats.get("loss_streak"))
-
-            def _pct(v):
-                return f"{float(v)*100:.0f}%" if v is not None else "—"
-            def _f(v, fmt=".1f"):
-                return format(float(v), fmt) if v is not None else "—"
-
-            # Stat colour classes for the comparison table
-            preview_bouts.append({
-                "is_preview":     True,
-                "fighter_a_name": fa,
-                "fighter_b_name": fb,
-                "weight_class":   sb.get("weight_class") or "",
-                "is_title_bout":  sb.get("is_title_bout", False),
-                "favourite":      "toss-up",
-                "prob_a_pct":     "—",
-                "prob_b_pct":     "—",
-                "prob_a_wins":    0.5,
-                "a_initials":     _initials(fa),
-                "b_initials":     _initials(fb),
-                "a_img":          a_meta.get("image_url") or fighter_imgs.get(fa, ""),
-                "b_img":          b_meta.get("image_url") or fighter_imgs.get(fb, ""),
-                "a_streak":       a_lbl,
-                "b_streak":       b_lbl,
-                "a_streak_class": a_cls,
-                "b_streak_class": b_cls,
-                "a_flag":         _flag_emoji(a_meta.get("country", "")),
-                "b_flag":         _flag_emoji(b_meta.get("country", "")),
-                "a_nationality":  a_meta.get("country", ""),
-                "b_nationality":  b_meta.get("country", ""),
-                "a_ufc_style":    a_meta.get("style", ""),
-                "b_ufc_style":    b_meta.get("style", ""),
-                "a_record":       a_meta.get("record", ""),
-                "b_record":       b_meta.get("record", ""),
-                "a_stance":       a_stats.get("stance", ""),
-                "b_stance":       b_stats.get("stance", ""),
-                "a_n_fights":     a_stats.get("n_fights", 0),
-                "b_n_fights":     b_stats.get("n_fights", 0),
-                # Display-formatted stats
-                "a_l3":           _pct(a_stats.get("l3_win_rate")),
-                "b_l3":           _pct(b_stats.get("l3_win_rate")),
-                "a_finish_rate":  _pct(a_stats.get("finish_rate")),
-                "b_finish_rate":  _pct(b_stats.get("finish_rate")),
-                "a_ko_rate":      _pct(a_stats.get("ko_rate")),
-                "b_ko_rate":      _pct(b_stats.get("ko_rate")),
-                "a_sub_rate":     _pct(a_stats.get("sub_rate")),
-                "b_sub_rate":     _pct(b_stats.get("sub_rate")),
-                "a_slpm":         _f(a_stats.get("slpm")),
-                "b_slpm":         _f(b_stats.get("slpm")),
-                # Stat colour classes (use raw values for comparison)
-                "col_l3":         _stat_colors(a_stats.get("l3_win_rate"), b_stats.get("l3_win_rate")),
-                "col_finish":     _stat_colors(a_stats.get("finish_rate"), b_stats.get("finish_rate")),
-                "col_ko":         _stat_colors(a_stats.get("ko_rate"), b_stats.get("ko_rate")),
-                "col_sub":        _stat_colors(a_stats.get("sub_rate"), b_stats.get("sub_rate")),
-                "col_slpm":       _stat_colors(a_stats.get("slpm"), b_stats.get("slpm")),
-                "a_fighter_type": "",
-                "b_fighter_type": "",
-                "show_fighter_type": False,
-                "value_bet_count": 0,
-                "has_bets":       False,
-                "has_props":      False,
-                "has_stats":      bool(a_stats or b_stats),
-            })
+            status_payload = {
+                "status":  sb.get("espn_status") or "",
+                "winner":  sb.get("espn_winner_name") or "",
+                "method":  sb.get("espn_method") or "",
+                "round":   sb.get("espn_round") or 0,
+            }
+            pb = _build_preview_bout(sb, fighter_meta, fighter_imgs, status_payload)
+            if pb is not None:
+                # Time display for preview bouts (predicted events get this in the
+                # main loop, but preview events skipped that path entirely).
+                pb["fight_time_aest"] = _format_fight_time_aest(
+                    sb.get("start_time_iso"), s["event_date"]
+                )
+                preview_bouts.append(pb)
         if preview_bouts:
             preview_events.append({
                 "event_name": s["event_name"],
                 "event_date": s["event_date"],
                 "bouts":      preview_bouts,
                 "is_preview": True,
+                "is_live":    any(b.get("is_live") for b in preview_bouts),
                 "anchor":     anchor[:18],
             })
 

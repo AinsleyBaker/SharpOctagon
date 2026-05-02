@@ -92,11 +92,23 @@ def fetch_espn_upcoming() -> list[dict]:
             # Method / round live in different shapes per ESPN sport. Try the
             # common ones; absent values fall through as empty strings.
             status_obj = comp.get("status", {}) or {}
+            # ESPN's `type.description` is just "Final"/"Scheduled"/etc.
+            # The actual finish method (KO/TKO, Submission, Decision) usually
+            # lives in `type.detail` or `type.shortDetail`. Prefer those, and
+            # only fall back to `description` if both are missing.
+            type_obj = status_obj.get("type") or {}
             method = (
-                (status_obj.get("type") or {}).get("description")
+                type_obj.get("detail")
+                or type_obj.get("shortDetail")
                 or status_obj.get("description")
+                or type_obj.get("description")
                 or ""
             )
+            # Strip generic prefix like "Final - " that ESPN sometimes prepends.
+            if method.lower().startswith("final"):
+                _rest = method[5:].lstrip(" -:")
+                if _rest:
+                    method = _rest
             round_ended = status_obj.get("period") or 0
 
             notes = comp.get("notes", [{}])

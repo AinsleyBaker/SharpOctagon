@@ -86,10 +86,10 @@
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-05-02T11:00Z",
-        "espn_status": "STATUS_PRE_FIGHT",
+        "espn_status": "STATUS_FIGHTERS_INTRODUCTION",
         "espn_winner_name": "",
-        "espn_method": "Pre-fight",
-        "espn_round": 0
+        "espn_method": "Intros",
+        "espn_round": 1
       },
       {
         "fighter_a": "Shamil Gaziev",

@@ -3372,10 +3372,10 @@
   "Fares Ziam": {
     "country": "",
     "hometown": "",
-    "style": "Kickboxer",
-    "age": "73.00",
-    "record": "18-4-0",
-    "image_url": "fighter-images/fares-ziam.png",
+    "style": "",
+    "age": "",
+    "record": "8-2-0",
+    "image_url": "",
     "stats": {
       "n_fights": 10,
       "win_streak": 6,

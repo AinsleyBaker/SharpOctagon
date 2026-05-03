@@ -283,6 +283,11 @@ def _was_prediction_correct(
         prob_a = float(prob_a_wins)
     except (TypeError, ValueError):
         return None
+    # Placeholder probability (0.5 — model never ran for this fight): treat
+    # as ungraded. Otherwise we'd be scoring a coin-flip pick against the
+    # actual outcome, producing ~50% noise that looks like real accuracy.
+    if abs(prob_a - 0.5) < 0.005:
+        return None
 
     aw = (actual_winner or "").strip().lower()
     fa = (fighter_a_name or "").strip().lower()
@@ -717,8 +722,19 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                             bout["actual_winner_side"] = "b"
                         bout["actual_method"] = bout.get("live_method", "")
                         bout["actual_round"]  = bout.get("live_round", 0)
-                        # pred_correct was already computed in the live path.
-                        if bout.get("pred_correct") is True:
+                        # Override stale persisted pred_correct when the input
+                        # prob is a 0.5 placeholder — those grades are bogus
+                        # coin flips. See _was_prediction_correct rationale.
+                        _pa_raw = bout.get("prob_a_wins")
+                        try:
+                            _is_placeholder = (
+                                _pa_raw is None or abs(float(_pa_raw) - 0.5) < 0.005
+                            )
+                        except (TypeError, ValueError):
+                            _is_placeholder = True
+                        if _is_placeholder:
+                            bout["pred_correct"] = None
+                        elif bout.get("pred_correct") is True:
                             n_correct  += 1
                             n_resolved += 1
                         elif bout.get("pred_correct") is False:
@@ -738,13 +754,18 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                 bout["actual_winner_side"] = "a" if a_won else "b"
                 bout["actual_method"]      = best_row.method or ""
                 bout["actual_round"]       = best_row.round_ended
-                # Was our prediction correct?
-                pa_prob = float(bout.get("prob_a_wins") or 0.5)
-                predicted_a = pa_prob >= 0.5
-                bout["pred_correct"] = (predicted_a == a_won)
-                n_resolved += 1
-                if bout["pred_correct"]:
-                    n_correct += 1
+                # Was our prediction correct? Skip grading for 0.5 placeholders
+                # (model never ran for this fight) — same reason as above.
+                _pa_raw = bout.get("prob_a_wins")
+                if _pa_raw is None or abs(float(_pa_raw) - 0.5) < 0.005:
+                    bout["pred_correct"] = None
+                else:
+                    pa_prob = float(_pa_raw)
+                    predicted_a = pa_prob >= 0.5
+                    bout["pred_correct"] = (predicted_a == a_won)
+                    n_resolved += 1
+                    if bout["pred_correct"]:
+                        n_correct += 1
 
             ev["n_correct"]  = n_correct
             ev["n_resolved"] = n_resolved

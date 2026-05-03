@@ -43,17 +43,36 @@ _UFC_BASE = "https://www.ufc.com/athlete"
 
 
 def _parse_bio_fields(html: str) -> dict[str, str]:
-    """Extract all <Label, Text> pairs from the c-bio__* blocks."""
-    labels = re.findall(
-        r'class="[^"]*c-bio__label[^"]*"[^>]*>\s*([^<]+?)\s*</', html
-    )
-    texts = re.findall(
-        r'class="[^"]*c-bio__text[^"]*"[^>]*>\s*([^<]+?)\s*</', html
-    )
+    """Extract <Label, Text> pairs from the c-bio__field blocks.
+
+    Each block is `<div class="c-bio__field"><div class="c-bio__label">L</div>
+    <div class="c-bio__text">T</div></div>`. For some labels (Age) the text
+    is nested inside `<div class="field field__item">VALUE</div>`. The earlier
+    flat zip(labels, texts) misaligned in those cases. BeautifulSoup handles
+    the nesting cleanly.
+    """
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html, "lxml")
     out: dict[str, str] = {}
-    for lbl, txt in zip(labels, texts):
-        out[lbl.strip()] = txt.strip()
+    for field in soup.select("div.c-bio__field"):
+        label_el = field.select_one(".c-bio__label")
+        text_el = field.select_one(".c-bio__text")
+        if not label_el or not text_el:
+            continue
+        # Prefer nested .field__item (Age) over the outer text node
+        nested = text_el.select_one(".field__item")
+        value = (nested or text_el).get_text(strip=True)
+        out[label_el.get_text(strip=True)] = value
     return out
+
+
+def _inches_to_cm(text: str) -> float | None:
+    """UFC.com renders height/reach as inches (e.g. '77.00'). Convert to cm."""
+    try:
+        v = float(text)
+    except (TypeError, ValueError):
+        return None
+    return round(v * 2.54, 1) if v > 0 else None
 
 
 def _extract_country(hometown: str) -> str | None:
@@ -299,6 +318,112 @@ def refresh(force: bool = False) -> dict[str, dict]:
     return cache
 
 
+def enrich_physicals(
+    session=None,
+    force: bool = False,
+    active_since: str | None = None,
+    limit: int | None = None,
+) -> dict:
+    """Fill `fighters.reach_cm` / `height_cm` from UFC.com athlete pages.
+
+    Iterates fighters with reach_cm OR height_cm missing, fetches the bio
+    block, and persists. UFC.com renders both as inches (e.g. "78.00") which
+    we convert to cm.
+
+    Args:
+      force: overwrite existing non-null values too (e.g. correcting bad
+             upstream data like reach=height for some Greco rows).
+      active_since: ISO date — only enrich fighters with at least one fight
+             on or after this date. Use to prioritise active roster (high
+             value for bet predictions).
+      limit: cap how many fighters to attempt this run.
+    """
+    from sqlalchemy import text
+    from ufc_predict.db.models import Fighter
+    from ufc_predict.db.session import get_session_factory
+
+    own_session = False
+    if session is None:
+        factory = get_session_factory()
+        session = factory()
+        own_session = True
+
+    q = session.query(Fighter)
+    if not force:
+        q = q.filter((Fighter.reach_cm.is_(None)) | (Fighter.height_cm.is_(None)))
+
+    if active_since:
+        active_ids = {row[0] for row in session.execute(text("""
+            SELECT red_fighter_id FROM fights WHERE date >= :d
+            UNION
+            SELECT blue_fighter_id FROM fights WHERE date >= :d
+        """), {"d": active_since}).fetchall()}
+        q = q.filter(Fighter.canonical_fighter_id.in_(active_ids))
+
+    fighters = q.all()
+    if limit:
+        fighters = fighters[:limit]
+
+    stats = {"n_attempted": 0, "n_updated": 0, "n_no_match": 0, "n_no_data": 0}
+    log.info("enrich_physicals: %d fighters with missing reach/height", len(fighters))
+
+    try:
+        for fighter in fighters:
+            stats["n_attempted"] += 1
+            slug = _name_to_slug(fighter.full_name)
+            url = f"{_UFC_BASE}/{slug}"
+            try:
+                r = requests.get(url, headers=_HEADERS, timeout=12)
+            except requests.RequestException:
+                stats["n_no_match"] += 1
+                continue
+            if r.status_code != 200:
+                stats["n_no_match"] += 1
+                continue
+
+            # Sanity: title must contain the fighter's last name (avoid scraping
+            # a different person's bio for fighters that share a slug stem).
+            title_m = re.search(r"<title>([^<]+)</title>", r.text)
+            title = (title_m.group(1) if title_m else "").lower()
+            last = (fighter.full_name or "").strip().split()[-1].lower()
+            if not last or last not in title:
+                stats["n_no_match"] += 1
+                continue
+
+            bio = _parse_bio_fields(r.text)
+            h_cm = _inches_to_cm(bio.get("Height", ""))
+            r_cm = _inches_to_cm(bio.get("Reach", ""))
+            if h_cm is None and r_cm is None:
+                stats["n_no_data"] += 1
+                continue
+
+            changed = False
+            if r_cm is not None and (force or fighter.reach_cm is None):
+                fighter.reach_cm = r_cm
+                changed = True
+            if h_cm is not None and (force or fighter.height_cm is None):
+                fighter.height_cm = h_cm
+                changed = True
+            if changed:
+                stats["n_updated"] += 1
+                if stats["n_updated"] % 25 == 0:
+                    session.commit()
+                    log.info("  ✓ %d updated…", stats["n_updated"])
+            time.sleep(_DELAY_S)
+
+        session.commit()
+    finally:
+        if own_session:
+            session.close()
+
+    log.info("enrich_physicals: %s", stats)
+    return stats
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    refresh()
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "physicals":
+        enrich_physicals(force="--force" in sys.argv)
+    else:
+        refresh()

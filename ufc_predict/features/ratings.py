@@ -29,6 +29,7 @@ import pandas as pd
 log = logging.getLogger(__name__)
 
 LATEST_RATINGS_PATH = Path("models/fighter_ratings.json")
+LATEST_SOS_PATH = Path("models/fighter_sos.json")
 
 # ---------------------------------------------------------------------------
 # Elo
@@ -277,10 +278,103 @@ def compute_glicko2(fights_df: pd.DataFrame, return_states: bool = False):
     return df
 
 
+def attach_sos_features(df: pd.DataFrame, window: int = 5) -> pd.DataFrame:
+    """Add strength-of-schedule features per fighter, computed strictly
+    pre-fight (shift-by-1 within each fighter's chronology).
+
+    For each fighter X at fight i, we compute over X's previous `window` fights:
+      sos_avg_opp_elo  : mean pre-fight Elo of opponents X faced
+      sos_quality_wins : mean of [won × (opp_elo - 1500)/200] — measures how
+                         strong were the opponents X actually beat
+      sos_quality_losses: mean of [(1-won) × (opp_elo - 1500)/200] — measures
+                         how strong were the opponents X lost to
+
+    The 200-point divisor normalizes by an Elo standard deviation: a 200-pt
+    gap corresponds to a ~75% expected score. So a `quality_wins` of 1.0
+    means X was averaging wins over fighters 200 pts above league mean.
+
+    Adds columns: a_sos_*, b_sos_*, diff_sos_*. Requires `elo_a`/`elo_b` to
+    already be on `df` (call attach_ratings first).
+    """
+    required = {"fight_id", "fighter_a_id", "fighter_b_id", "elo_a", "elo_b", "label", "date"}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"attach_sos_features: missing columns {missing}")
+
+    # Long form: one row per (fighter, fight)
+    a = df[["fight_id", "date", "fighter_a_id", "elo_b", "label"]].rename(
+        columns={"fighter_a_id": "_fighter", "elo_b": "_opp_elo"})
+    a["_won"] = a["label"]
+    b = df[["fight_id", "date", "fighter_b_id", "elo_a", "label"]].rename(
+        columns={"fighter_b_id": "_fighter", "elo_a": "_opp_elo"})
+    b["_won"] = 1 - b["label"]
+    melted = pd.concat([a, b], ignore_index=True)[
+        ["fight_id", "_fighter", "date", "_opp_elo", "_won"]]
+    melted = melted.sort_values(["_fighter", "date"]).reset_index(drop=True)
+
+    # Normalize opponent strength: (elo - 1500) / 200 ≈ z-score in Elo SDs.
+    melted["_opp_z"] = (melted["_opp_elo"] - 1500.0) / 200.0
+    melted["_qw"] = melted["_won"] * melted["_opp_z"]
+    melted["_ql"] = (1 - melted["_won"]) * melted["_opp_z"]
+
+    # Strict pre-fight: shift by 1 within each fighter group, then rolling mean
+    def _rolling(s):
+        return s.shift(1).rolling(window, min_periods=1).mean()
+
+    g = melted.groupby("_fighter", group_keys=False)
+    melted["sos_avg_opp_elo"]   = g["_opp_elo"].apply(_rolling)
+    melted["sos_quality_wins"]  = g["_qw"].apply(_rolling)
+    melted["sos_quality_losses"]= g["_ql"].apply(_rolling)
+
+    # Also compute UN-shifted rolling SOS — used for predict-time snapshot.
+    # Shifted version (above) is correct for training to avoid label leakage.
+    # For a NEW (future) fight, we want SOS computed over the fighter's LAST
+    # 5 actual historical fights (inclusive of the most recent one).
+    def _rolling_unshifted(s):
+        return s.rolling(window, min_periods=1).mean()
+
+    melted["sos_avg_opp_elo_now"]    = g["_opp_elo"].apply(_rolling_unshifted)
+    melted["sos_quality_wins_now"]   = g["_qw"].apply(_rolling_unshifted)
+    melted["sos_quality_losses_now"] = g["_ql"].apply(_rolling_unshifted)
+
+    # Per-fighter latest snapshot (last row in chronological order)
+    snapshot = (melted.groupby("_fighter")
+                .agg({"sos_avg_opp_elo_now": "last",
+                      "sos_quality_wins_now": "last",
+                      "sos_quality_losses_now": "last"})
+                .rename(columns={"sos_avg_opp_elo_now":   "sos_avg_opp_elo",
+                                 "sos_quality_wins_now":  "sos_quality_wins",
+                                 "sos_quality_losses_now":"sos_quality_losses"}))
+    save_latest_sos(snapshot.to_dict("index"))
+
+    out = melted[["fight_id", "_fighter",
+                  "sos_avg_opp_elo", "sos_quality_wins", "sos_quality_losses"]]
+
+    # Merge back as a_* and b_*
+    out_a = out.rename(columns={
+        "_fighter": "fighter_a_id",
+        "sos_avg_opp_elo":    "a_sos_avg_opp_elo",
+        "sos_quality_wins":   "a_sos_quality_wins",
+        "sos_quality_losses": "a_sos_quality_losses",
+    })
+    out_b = out.rename(columns={
+        "_fighter": "fighter_b_id",
+        "sos_avg_opp_elo":    "b_sos_avg_opp_elo",
+        "sos_quality_wins":   "b_sos_quality_wins",
+        "sos_quality_losses": "b_sos_quality_losses",
+    })
+    df = df.merge(out_a, on=["fight_id", "fighter_a_id"], how="left")
+    df = df.merge(out_b, on=["fight_id", "fighter_b_id"], how="left")
+    df["diff_sos_avg_opp_elo"]    = df["a_sos_avg_opp_elo"]    - df["b_sos_avg_opp_elo"]
+    df["diff_sos_quality_wins"]   = df["a_sos_quality_wins"]   - df["b_sos_quality_wins"]
+    df["diff_sos_quality_losses"] = df["a_sos_quality_losses"] - df["b_sos_quality_losses"]
+    return df
+
+
 def attach_ratings(
     fights_df: pd.DataFrame, return_states: bool = False
 ):
-    """Convenience: attach both Elo and Glicko-2 columns to a feature DataFrame.
+    """Convenience: attach Elo, Glicko-2, and SOS columns to a feature DataFrame.
 
     When return_states=True, also returns (elo_states, glicko_states) for
     persistence via save_latest_ratings().
@@ -288,9 +382,11 @@ def attach_ratings(
     if return_states:
         df, elo_states = compute_elo(fights_df, return_states=True)
         df, glicko_states = compute_glicko2(df, return_states=True)
+        df = attach_sos_features(df)
         return df, elo_states, glicko_states
     df = compute_elo(fights_df)
     df = compute_glicko2(df)
+    df = attach_sos_features(df)
     return df
 
 
@@ -344,6 +440,46 @@ def load_latest_ratings(path: Path = LATEST_RATINGS_PATH) -> dict:
     except json.JSONDecodeError:
         log.warning("fighter_ratings.json unreadable — using base ratings")
         return {}
+
+
+def save_latest_sos(snapshot: dict, path: Path = LATEST_SOS_PATH) -> None:
+    """Persist per-fighter SOS (un-shifted, including most recent fight) for
+    use at predict time. Keys are canonical_fighter_id; values are dicts of
+    sos_avg_opp_elo, sos_quality_wins, sos_quality_losses.
+    """
+    out: dict[str, dict] = {}
+    for fid, vals in snapshot.items():
+        if not fid:
+            continue
+        out[str(fid)] = {
+            k: (None if (v is None or (isinstance(v, float) and math.isnan(v))) else float(v))
+            for k, v in vals.items()
+        }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out), encoding="utf-8")
+    log.info("Saved per-fighter SOS for %d fighters to %s", len(out), path)
+
+
+def load_latest_sos(path: Path = LATEST_SOS_PATH) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
+def lookup_sos(sos_snapshot: dict, fighter_id: str) -> dict:
+    """Return SOS dict for a fighter, defaulting to neutral (mean opponent,
+    no quality wins/losses) when unknown — typical for debutants."""
+    rec = sos_snapshot.get(fighter_id) if fighter_id else None
+    if not rec:
+        return {"sos_avg_opp_elo": 1500.0, "sos_quality_wins": 0.0, "sos_quality_losses": 0.0}
+    return {
+        "sos_avg_opp_elo":    rec.get("sos_avg_opp_elo")    or 1500.0,
+        "sos_quality_wins":   rec.get("sos_quality_wins")   or 0.0,
+        "sos_quality_losses": rec.get("sos_quality_losses") or 0.0,
+    }
 
 
 def lookup_ratings(

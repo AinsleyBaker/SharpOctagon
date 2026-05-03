@@ -1,0 +1,6 @@
+{
+  "alpha": 0.1,
+  "scaled_quantile": 1.3285420837131063,
+  "n_calibration": 9628,
+  "kind": "locally_weighted"
+}

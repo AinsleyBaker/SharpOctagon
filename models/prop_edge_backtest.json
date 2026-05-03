@@ -1,0 +1,581 @@
+{
+  "n_bets_total": 26466,
+  "market_classes": [
+    "distance",
+    "ends_round",
+    "inside_distance",
+    "method",
+    "starts_round",
+    "total_rounds",
+    "wins_round"
+  ],
+  "buckets": [
+    {
+      "market_class": "distance",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 892,
+      "win_rate": 0.6076233183856502,
+      "flat_roi_pct": -4.164137278523453,
+      "avg_odds": 1.6215784455543232
+    },
+    {
+      "market_class": "distance",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 108,
+      "win_rate": 0.4722222222222222,
+      "flat_roi_pct": -6.943346883996866,
+      "avg_odds": 2.0318223860518754
+    },
+    {
+      "market_class": "distance",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 170,
+      "win_rate": 0.3764705882352941,
+      "flat_roi_pct": -22.28524948376645,
+      "avg_odds": 2.1530186746212094
+    },
+    {
+      "market_class": "distance",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 246,
+      "win_rate": 0.43902439024390244,
+      "flat_roi_pct": -2.191034910399798,
+      "avg_odds": 2.3403965317200037
+    },
+    {
+      "market_class": "distance",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 279,
+      "win_rate": 0.34767025089605735,
+      "flat_roi_pct": -9.662211892768813,
+      "avg_odds": 2.7083503487072305
+    },
+    {
+      "market_class": "distance",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 89,
+      "win_rate": 0.33707865168539325,
+      "flat_roi_pct": 342.2765293383271,
+      "avg_odds": 8.43828556695435
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 738,
+      "win_rate": 0.6382113821138211,
+      "flat_roi_pct": -1.3792198345237836,
+      "avg_odds": 3.7189095051770495
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 162,
+      "win_rate": 0.21604938271604937,
+      "flat_roi_pct": -35.99234333339271,
+      "avg_odds": 6.939428418517924
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 340,
+      "win_rate": 0.11764705882352941,
+      "flat_roi_pct": -30.20041787206686,
+      "avg_odds": 7.513260527161685
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 583,
+      "win_rate": 0.15265866209262435,
+      "flat_roi_pct": -21.30372770866804,
+      "avg_odds": 7.486334571762012
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 877,
+      "win_rate": 0.17445838084378562,
+      "flat_roi_pct": -16.891674556209818,
+      "avg_odds": 6.284635135851812
+    },
+    {
+      "market_class": "ends_round",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 679,
+      "win_rate": 0.19440353460972018,
+      "flat_roi_pct": -3.804123711340206,
+      "avg_odds": 5.491831124202259
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 1782,
+      "win_rate": 0.4483726150392817,
+      "flat_roi_pct": -26.206303124468448,
+      "avg_odds": 2.226325650545338
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 226,
+      "win_rate": 0.4911504424778761,
+      "flat_roi_pct": -8.753133822108353,
+      "avg_odds": 2.8040697289655494
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 343,
+      "win_rate": 0.5539358600583091,
+      "flat_roi_pct": 8.416113744219523,
+      "avg_odds": 2.9848677815348483
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 471,
+      "win_rate": 0.5329087048832272,
+      "flat_roi_pct": 16.887625877597817,
+      "avg_odds": 3.4116535266522696
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 488,
+      "win_rate": 0.5245901639344263,
+      "flat_roi_pct": 54.111942863131226,
+      "avg_odds": 3.9490126544955797
+    },
+    {
+      "market_class": "inside_distance",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 254,
+      "win_rate": 0.6889763779527559,
+      "flat_roi_pct": 163.9709628660715,
+      "avg_odds": 5.756706122423007
+    },
+    {
+      "market_class": "method",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 3207,
+      "win_rate": 0.1618334892422825,
+      "flat_roi_pct": -37.23066667519118,
+      "avg_odds": 5.900138314764989
+    },
+    {
+      "market_class": "method",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 462,
+      "win_rate": 0.14935064935064934,
+      "flat_roi_pct": 10.479437229437229,
+      "avg_odds": 10.64224025974026
+    },
+    {
+      "market_class": "method",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 633,
+      "win_rate": 0.1484992101105845,
+      "flat_roi_pct": 34.34044233807267,
+      "avg_odds": 10.517169562927858
+    },
+    {
+      "market_class": "method",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 599,
+      "win_rate": 0.15692821368948248,
+      "flat_roi_pct": 27.679465776293824,
+      "avg_odds": 10.373313856427378
+    },
+    {
+      "market_class": "method",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 391,
+      "win_rate": 0.24040920716112532,
+      "flat_roi_pct": 110.26001705029837,
+      "avg_odds": 9.626832907075874
+    },
+    {
+      "market_class": "method",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 72,
+      "win_rate": 0.3194444444444444,
+      "flat_roi_pct": 222.15277777777774,
+      "avg_odds": 13.069444444444445
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 1420,
+      "win_rate": 0.6697183098591549,
+      "flat_roi_pct": -0.5356261441127421,
+      "avg_odds": 1.5979833169060216
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 8,
+      "win_rate": 0.625,
+      "flat_roi_pct": 99.77676966721711,
+      "avg_odds": 3.261517696672171
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 35,
+      "win_rate": 0.34285714285714286,
+      "flat_roi_pct": -34.305632046075026,
+      "avg_odds": 2.158530634822146
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 78,
+      "win_rate": 0.41025641025641024,
+      "flat_roi_pct": 78.71668687457232,
+      "avg_odds": 4.4104439403392695
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 276,
+      "win_rate": 0.35144927536231885,
+      "flat_roi_pct": 159.33136165682086,
+      "avg_odds": 7.066529100329911
+    },
+    {
+      "market_class": "starts_round",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 1023,
+      "win_rate": 0.31573802541544477,
+      "flat_roi_pct": 10.097287806531591,
+      "avg_odds": 4.007717304701627
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 1906,
+      "win_rate": 0.5545645330535152,
+      "flat_roi_pct": 2.7091024541489492,
+      "avg_odds": 1.9914699456471885
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 2,
+      "win_rate": 0.5,
+      "flat_roi_pct": -11.97718631178708,
+      "avg_odds": 1.7604562737642584
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 2,
+      "win_rate": 0.0,
+      "flat_roi_pct": -100.0,
+      "avg_odds": 1.7753801767145518
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 2,
+      "win_rate": 1.0,
+      "flat_roi_pct": 25.238095238095237,
+      "avg_odds": 1.2523809523809524
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 38,
+      "win_rate": 0.8421052631578947,
+      "flat_roi_pct": 192.74773931975105,
+      "avg_odds": 3.252511523238059
+    },
+    {
+      "market_class": "total_rounds",
+      "edge_lo": 0.2,
+      "edge_hi": 1.0,
+      "n": 1862,
+      "win_rate": 0.4371643394199785,
+      "flat_roi_pct": 0.16502237048386434,
+      "avg_odds": 2.643254856347554
+    },
+    {
+      "market_class": "wins_round",
+      "edge_lo": -1.0,
+      "edge_hi": 0.0,
+      "n": 4280,
+      "win_rate": 0.07359813084112149,
+      "flat_roi_pct": -33.74641555922251,
+      "avg_odds": 11.246703215972994
+    },
+    {
+      "market_class": "wins_round",
+      "edge_lo": 0.0,
+      "edge_hi": 0.02,
+      "n": 656,
+      "win_rate": 0.053353658536585365,
+      "flat_roi_pct": -14.40548780487805,
+      "avg_odds": 17.355868902439024
+    },
+    {
+      "market_class": "wins_round",
+      "edge_lo": 0.02,
+      "edge_hi": 0.05,
+      "n": 504,
+      "win_rate": 0.0992063492063492,
+      "flat_roi_pct": 30.396825396825392,
+      "avg_odds": 16.677579365079364
+    },
+    {
+      "market_class": "wins_round",
+      "edge_lo": 0.05,
+      "edge_hi": 0.1,
+      "n": 230,
+      "win_rate": 0.13043478260869565,
+      "flat_roi_pct": 83.15217391304348,
+      "avg_odds": 15.778586956521739
+    },
+    {
+      "market_class": "wins_round",
+      "edge_lo": 0.1,
+      "edge_hi": 0.2,
+      "n": 53,
+      "win_rate": 0.24528301886792453,
+      "flat_roi_pct": 240.37735849056602,
+      "avg_odds": 15.983962264150943
+    }
+  ],
+  "kelly": [
+    {
+      "market_class": "distance",
+      "min_edge": 0.0,
+      "n_bets": 892,
+      "final_bankroll": 109703.76317927262,
+      "roi_pct": 10870.376317927261
+    },
+    {
+      "market_class": "distance",
+      "min_edge": 0.02,
+      "n_bets": 784,
+      "final_bankroll": 109703.76317927262,
+      "roi_pct": 10870.376317927261
+    },
+    {
+      "market_class": "distance",
+      "min_edge": 0.05,
+      "n_bets": 614,
+      "final_bankroll": 112609.60094714777,
+      "roi_pct": 11160.960094714777
+    },
+    {
+      "market_class": "distance",
+      "min_edge": 0.1,
+      "n_bets": 368,
+      "final_bankroll": 136696.8321476335,
+      "roi_pct": 13569.68321476335
+    },
+    {
+      "market_class": "ends_round",
+      "min_edge": 0.0,
+      "n_bets": 2641,
+      "final_bankroll": 7.146062129272996e-06,
+      "roi_pct": -99.99999928539378
+    },
+    {
+      "market_class": "ends_round",
+      "min_edge": 0.02,
+      "n_bets": 2479,
+      "final_bankroll": 7.485641338109078e-06,
+      "roi_pct": -99.99999925143587
+    },
+    {
+      "market_class": "ends_round",
+      "min_edge": 0.05,
+      "n_bets": 2139,
+      "final_bankroll": 2.9130864874614906e-05,
+      "roi_pct": -99.99999708691351
+    },
+    {
+      "market_class": "ends_round",
+      "min_edge": 0.1,
+      "n_bets": 1556,
+      "final_bankroll": 0.0007716095653981635,
+      "roi_pct": -99.99992283904346
+    },
+    {
+      "market_class": "inside_distance",
+      "min_edge": 0.0,
+      "n_bets": 1780,
+      "final_bankroll": 93446896515541.94,
+      "roi_pct": 9344689651454.193
+    },
+    {
+      "market_class": "inside_distance",
+      "min_edge": 0.02,
+      "n_bets": 1554,
+      "final_bankroll": 94022311638415.03,
+      "roi_pct": 9402231163741.504
+    },
+    {
+      "market_class": "inside_distance",
+      "min_edge": 0.05,
+      "n_bets": 1211,
+      "final_bankroll": 96974631394156.39,
+      "roi_pct": 9697463139315.64
+    },
+    {
+      "market_class": "inside_distance",
+      "min_edge": 0.1,
+      "n_bets": 740,
+      "final_bankroll": 20811517061624.77,
+      "roi_pct": 2081151706062.477
+    },
+    {
+      "market_class": "method",
+      "min_edge": 0.0,
+      "n_bets": 2157,
+      "final_bankroll": 1436425054523.5652,
+      "roi_pct": 143642505352.35654
+    },
+    {
+      "market_class": "method",
+      "min_edge": 0.02,
+      "n_bets": 1695,
+      "final_bankroll": 1496179879336.1724,
+      "roi_pct": 149617987833.61725
+    },
+    {
+      "market_class": "method",
+      "min_edge": 0.05,
+      "n_bets": 1062,
+      "final_bankroll": 161950825911.77603,
+      "roi_pct": 16195082491.177603
+    },
+    {
+      "market_class": "method",
+      "min_edge": 0.1,
+      "n_bets": 463,
+      "final_bankroll": 24055562639.781517,
+      "roi_pct": 2405556163.978152
+    },
+    {
+      "market_class": "starts_round",
+      "min_edge": 0.0,
+      "n_bets": 1420,
+      "final_bankroll": 50734.56268599995,
+      "roi_pct": 4973.4562685999945
+    },
+    {
+      "market_class": "starts_round",
+      "min_edge": 0.02,
+      "n_bets": 1412,
+      "final_bankroll": 44124.987627169074,
+      "roi_pct": 4312.498762716907
+    },
+    {
+      "market_class": "starts_round",
+      "min_edge": 0.05,
+      "n_bets": 1377,
+      "final_bankroll": 47310.62538100798,
+      "roi_pct": 4631.062538100798
+    },
+    {
+      "market_class": "starts_round",
+      "min_edge": 0.1,
+      "n_bets": 1299,
+      "final_bankroll": 13543.114453348668,
+      "roi_pct": 1254.311445334867
+    },
+    {
+      "market_class": "total_rounds",
+      "min_edge": 0.0,
+      "n_bets": 1904,
+      "final_bankroll": 92.09525093403853,
+      "roi_pct": -90.79047490659615
+    },
+    {
+      "market_class": "total_rounds",
+      "min_edge": 0.02,
+      "n_bets": 1902,
+      "final_bankroll": 93.39136686197082,
+      "roi_pct": -90.6608633138029
+    },
+    {
+      "market_class": "total_rounds",
+      "min_edge": 0.05,
+      "n_bets": 1900,
+      "final_bankroll": 103.48073890523085,
+      "roi_pct": -89.65192610947692
+    },
+    {
+      "market_class": "total_rounds",
+      "min_edge": 0.1,
+      "n_bets": 1898,
+      "final_bankroll": 102.30527749814361,
+      "roi_pct": -89.76947225018564
+    },
+    {
+      "market_class": "wins_round",
+      "min_edge": 0.0,
+      "n_bets": 1443,
+      "final_bankroll": 1420594.528077895,
+      "roi_pct": 141959.4528077895
+    },
+    {
+      "market_class": "wins_round",
+      "min_edge": 0.02,
+      "n_bets": 787,
+      "final_bankroll": 1660891.4785921304,
+      "roi_pct": 165989.14785921303
+    },
+    {
+      "market_class": "wins_round",
+      "min_edge": 0.05,
+      "n_bets": 283,
+      "final_bankroll": 567631.1934110037,
+      "roi_pct": 56663.11934110036
+    },
+    {
+      "market_class": "wins_round",
+      "min_edge": 0.1,
+      "n_bets": 53,
+      "final_bankroll": 28939.35165404786,
+      "roi_pct": 2793.935165404786
+    }
+  ]
+}

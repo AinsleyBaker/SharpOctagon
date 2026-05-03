@@ -141,6 +141,31 @@ class FightStatsRound(Base):
     fight = relationship("Fight", back_populates="round_stats")
 
 
+class FightPropOdds(Base):
+    """Closing odds for prop markets (totals, distance, method, round-of-finish).
+
+    One row per (fight, prop_type, side). Populated by the BFO prop scraper
+    and used by the prop ROI backtest to identify which prop markets our
+    model can profitably bet against.
+
+    `prop_type` examples: 'distance', 'total_rounds_2.5', 'f1_method_KO_TKO',
+    'f1_wins_round_3', 'starts_round_2'. `side` is 'yes' / 'no' / 'over' /
+    'under'. Together they uniquely identify a prop bet.
+    """
+
+    __tablename__ = "fight_prop_odds"
+    __table_args__ = (UniqueConstraint("fight_id", "prop_type", "side"),)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    fight_id = Column(String, ForeignKey("fights.fight_id"), nullable=False, index=True)
+    prop_type = Column(String, nullable=False)
+    side = Column(String, nullable=False)
+    american_odds = Column(Float, nullable=False)
+    n_books = Column(Integer, default=1)
+    raw_label = Column(String)
+    scraped_at = Column(DateTime)
+
+
 class UpcomingBout(Base):
     """Scheduled but not-yet-fought bouts. Written by the live-data pipeline."""
 

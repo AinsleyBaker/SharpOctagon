@@ -114,10 +114,12 @@ def fetch_espn_upcoming() -> list[dict]:
                 or ""
             )
             # Strip generic prefix like "Final - " that ESPN sometimes prepends.
+            # If ESPN only gives us bare "Final" with no method detail, clear
+            # it — we don't know the method yet (data lag), and downstream
+            # consumers will fall back to the DB / Greco CSV when available.
             if method.lower().startswith("final"):
                 _rest = method[5:].lstrip(" -:")
-                if _rest:
-                    method = _rest
+                method = _rest  # may be "" — that's correct when method unknown
             round_ended = status_obj.get("period") or 0
 
             notes = comp.get("notes", [{}])

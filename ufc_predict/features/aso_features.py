@@ -23,6 +23,49 @@ log = logging.getLogger(__name__)
 
 # Minimum fights before we trust rolling stats (use shrinkage below this)
 MIN_FIGHTS_TRUST = 5
+
+# Empirical peak ages per weight class, derived from our 8.6k-fight data
+# (data/age_curve_empirical.csv). Used to compute the post-peak decline
+# feature. Note these are 2-7y EARLIER than the Tandfonline 2023 literature
+# claims — the lit values are biological-peak; ours reflect win rate
+# contaminated by UFC matchmaking selection (older fighters who are still
+# competing face tougher opposition). For prediction we want the empirical
+# value because the model is fitting our actual win-rate distribution.
+EMPIRICAL_PEAK_AGE = {
+    "heavyweight": 28,
+    "light heavyweight": 24,
+    "middleweight": 25,
+    "welterweight": 25,
+    "lightweight": 26,
+    "featherweight": 26,
+    "bantamweight": 24,
+    "flyweight": 27,
+    "women's strawweight": 24,
+    "women's flyweight": 24,
+    "women's bantamweight": 26,
+}
+
+
+def normalize_weight_class(s: str | None) -> str:
+    """Normalize a raw weight class string to the canonical lowercase form
+    used as the categorical feature value. 'UFC Lightweight Title Bout' →
+    'lightweight'."""
+    import re as _re
+    s = str(s or "").lower()
+    s = s.replace("ufc ", "").replace("title bout", "").replace(" bout", "")
+    return _re.sub(r"\s+", " ", s).strip()
+
+
+def post_peak_years(age: float | None, weight_class: str | None) -> float:
+    """ReLU-style post-peak distance: 0 if at-or-below peak for the class,
+    else (age - peak). NaN-safe — returns 0 when age or class is unknown."""
+    if age is None or pd.isna(age):
+        return 0.0
+    wc = normalize_weight_class(weight_class)
+    peak = EMPIRICAL_PEAK_AGE.get(wc)
+    if peak is None:
+        return 0.0
+    return max(0.0, float(age) - peak)
 # Weight class means for shrinkage (populated lazily from DB)
 _WC_MEANS: dict[str, dict[str, float]] = {}
 
@@ -129,6 +172,16 @@ def fighter_aso_stats(
     l3_slpm = l3["sig_landed"].sum() / max(l3["total_time_min"].sum(), 0.5)
     l5_slpm = l5["sig_landed"].sum() / max(l5["total_time_min"].sum(), 0.5)
 
+    # --- EWMA recent form (halflife = 3 fights) ---
+    # Smooth decay weights recent fights more without dropping the 4th-most-recent
+    # like a fixed L3 window. Halflife 3 was chosen to roughly match L3 in
+    # effective sample size while preserving older-fight signal.
+    df_per_fight_slpm = df["sig_landed"] / df["total_time_min"]
+    ewma_win_rate = _ewma(df["won"].values, halflife=3.0)
+    ewma_finish_rate = _ewma(df["finish"].values, halflife=3.0)
+    ewma_slpm = _ewma(df_per_fight_slpm.values, halflife=3.0)
+    ewma_kd_per_fight = _ewma(df["knockdowns"].values, halflife=3.0)
+
     # Win streak / loss streak
     outcomes = df["won"].tolist()
     win_streak = _current_streak(outcomes, 1)
@@ -162,6 +215,11 @@ def fighter_aso_stats(
         "loss_streak": loss_streak,
         "days_since_last_fight": days_since_last,
         "fight_frequency_24m": _fight_freq(df, as_of, months=24),
+        # EWMA form — exponentially decayed last-N (halflife 3 fights)
+        "ewma_win_rate": ewma_win_rate,
+        "ewma_finish_rate": ewma_finish_rate,
+        "ewma_slpm": ewma_slpm,
+        "ewma_kd_per_fight": ewma_kd_per_fight,
     }
 
     # Apply Bayesian shrinkage for fighters with few fights
@@ -173,6 +231,23 @@ def fighter_aso_stats(
 
 def _safe_ratio(num: float, denom: float) -> float:
     return num / denom if denom > 0 else 0.0
+
+
+def _ewma(values: np.ndarray, halflife: float = 3.0) -> float:
+    """Recency-weighted mean of `values` (sorted oldest→newest, like the df).
+    The most recent value gets weight 1.0; weight halves every `halflife`
+    fights going back. NaN-tolerant — drops missing values from the mean.
+    """
+    arr = np.asarray(values, dtype=float)
+    if arr.size == 0:
+        return float("nan")
+    mask = ~np.isnan(arr)
+    if not mask.any():
+        return float("nan")
+    arr = arr[mask]
+    recency = (len(arr) - 1) - np.arange(len(arr))  # 0=newest, n-1=oldest
+    weights = np.power(0.5, recency / halflife)
+    return float((arr * weights).sum() / weights.sum())
 
 
 def _current_streak(outcomes: list[int], target: int) -> int:
@@ -204,6 +279,8 @@ def _empty_features(fighter_id: str, as_of: date) -> dict:
         "l3_kd": 0, "l3_td_rate": np.nan, "l3_slpm": np.nan, "l5_slpm": np.nan,
         "win_streak": 0, "loss_streak": 0,
         "days_since_last_fight": np.nan, "fight_frequency_24m": 0.0,
+        "ewma_win_rate": np.nan, "ewma_finish_rate": np.nan,
+        "ewma_slpm": np.nan, "ewma_kd_per_fight": np.nan,
     }
     return feat
 
@@ -310,6 +387,16 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
     fights = session.execute(sql, {"since": date(since_year, 1, 1)}).fetchall()
     log.info("Building feature rows for %d fights since %d", len(fights), since_year)
 
+    # Pre-load fighter physicals + stance once. Avoids N queries inside the loop
+    # and gives us a stable dict keyed by canonical_fighter_id.
+    fighter_meta_rows = session.execute(text(
+        "SELECT canonical_fighter_id, stance, reach_cm, height_cm FROM fighters"
+    )).fetchall()
+    FIGHTER_META: dict[str, dict] = {
+        r[0]: {"stance": r[1], "reach_cm": r[2], "height_cm": r[3]}
+        for r in fighter_meta_rows
+    }
+
     rng = np.random.default_rng(seed=42)
     rows = []
 
@@ -376,6 +463,8 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             "l3_win_rate", "l5_win_rate", "l3_finish_rate",
             "l3_kd", "l3_td_rate", "l3_slpm", "l5_slpm",
             "win_streak", "loss_streak", "fight_frequency_24m",
+            # EWMA versions — recency-weighted (halflife 3 fights)
+            "ewma_win_rate", "ewma_finish_rate", "ewma_slpm", "ewma_kd_per_fight",
         ]
 
         for k in diff_keys:
@@ -391,6 +480,47 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             row["diff_age"] = a_age - b_age
         else:
             row["diff_age"] = np.nan
+
+        # Weight-class-aware age decline. Empirical peaks per class (NOT lit) —
+        # see EMPIRICAL_PEAK_AGE. The linear class offset cancels in diff_age,
+        # so the signal lives in this ReLU-style transform.
+        row["weight_class_clean"] = normalize_weight_class(fight.weight_class)
+        a_pp = post_peak_years(a_age, fight.weight_class)
+        b_pp = post_peak_years(b_age, fight.weight_class)
+        row["a_post_peak"] = a_pp
+        row["b_post_peak"] = b_pp
+        row["diff_post_peak"] = a_pp - b_pp
+
+        # --- Physicals (reach, height) --------------------------------
+        a_meta = FIGHTER_META.get(a_id) or {}
+        b_meta = FIGHTER_META.get(b_id) or {}
+        a_reach = a_meta.get("reach_cm")
+        b_reach = b_meta.get("reach_cm")
+        a_height = a_meta.get("height_cm")
+        b_height = b_meta.get("height_cm")
+        row["a_reach_cm"] = a_reach
+        row["b_reach_cm"] = b_reach
+        row["a_height_cm"] = a_height
+        row["b_height_cm"] = b_height
+        row["diff_reach_cm"] = (
+            (a_reach - b_reach) if (a_reach is not None and b_reach is not None) else np.nan
+        )
+        row["diff_height_cm"] = (
+            (a_height - b_height) if (a_height is not None and b_height is not None) else np.nan
+        )
+
+        # --- Stance interaction ---------------------------------------
+        # Loffing 2017 + MMA replications: orthodox-vs-southpaw matchups have
+        # a small but documented southpaw edge (~1-2pp). We encode the four
+        # mismatch states so LGBM can pick up the asymmetric effect.
+        a_stance = (a_meta.get("stance") or "").strip().lower()
+        b_stance = (b_meta.get("stance") or "").strip().lower()
+        # Treat "switch" as orthodox (the more common base for switch-stance)
+        def _ortho(s): return s in {"orthodox", "switch", ""}
+        def _south(s): return s == "southpaw"
+        row["a_southpaw_vs_b_orthodox"] = int(_south(a_stance) and _ortho(b_stance))
+        row["a_orthodox_vs_b_southpaw"] = int(_ortho(a_stance) and _south(b_stance))
+        row["both_southpaw"]            = int(_south(a_stance) and _south(b_stance))
 
         # Absolute per-fighter finish rates — used by the prop model only.
         # Diff features cancel out when both fighters have similar styles;
@@ -441,6 +571,19 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         ("a_sapm",        "b_sapm"),
         ("a_sig_acc",     "b_sig_acc"),
         ("a_ctrl_ratio",  "b_ctrl_ratio"),
+        # Post-peak (Week 2)
+        ("a_post_peak", "b_post_peak"),
+        # Physicals (week 3)
+        ("a_reach_cm",  "b_reach_cm"),
+        ("a_height_cm", "b_height_cm"),
+        # Strength-of-schedule (Week 3, Phase 5) — last-5 opponent strength
+        ("a_sos_avg_opp_elo",    "b_sos_avg_opp_elo"),
+        ("a_sos_quality_wins",   "b_sos_quality_wins"),
+        ("a_sos_quality_losses", "b_sos_quality_losses"),
+        # Stance pairs are NOT a simple swap: a_southpaw_vs_b_orthodox in the
+        # mirrored row should become a_orthodox_vs_b_southpaw (the opposite
+        # asymmetric flag). both_southpaw is invariant under swap.
+        ("a_southpaw_vs_b_orthodox", "a_orthodox_vs_b_southpaw"),
     ]
     swap_pairs = [(a, b) for a, b in _swap_pairs if a in base.columns and b in base.columns]
 

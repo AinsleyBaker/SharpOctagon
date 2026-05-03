@@ -1,0 +1,203 @@
+{
+  "alpha": 0.1,
+  "global_halfwidth": 0.6383394952968804,
+  "n_calibration": 9628,
+  "per_group": {
+    "featherweight": {
+      "halfwidth": 0.5972559348336113,
+      "n": 1092,
+      "fallback": false
+    },
+    "welterweight": {
+      "halfwidth": 0.6420357460321345,
+      "n": 1334,
+      "fallback": false
+    },
+    "lightweight": {
+      "halfwidth": 0.5761960474723599,
+      "n": 1340,
+      "fallback": false
+    },
+    "bantamweight": {
+      "halfwidth": 0.6386712822753591,
+      "n": 1014,
+      "fallback": false
+    },
+    "heavyweight": {
+      "halfwidth": 0.6375830697881373,
+      "n": 718,
+      "fallback": false
+    },
+    "women's strawweight": {
+      "halfwidth": 0.6410221568782661,
+      "n": 624,
+      "fallback": false
+    },
+    "light heavyweight": {
+      "halfwidth": 0.6467063746638425,
+      "n": 720,
+      "fallback": false
+    },
+    "flyweight": {
+      "halfwidth": 0.6390813547890176,
+      "n": 552,
+      "fallback": false
+    },
+    "middleweight": {
+      "halfwidth": 0.5781022898764859,
+      "n": 1098,
+      "fallback": false
+    },
+    "catch weight": {
+      "halfwidth": 0.5693956978817079,
+      "n": 124,
+      "fallback": false
+    },
+    "women's bantamweight": {
+      "halfwidth": 0.6392331919697355,
+      "n": 364,
+      "fallback": false
+    },
+    "interim light heavyweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "women's flyweight": {
+      "halfwidth": 0.6401375584635605,
+      "n": 524,
+      "fallback": false
+    },
+    "ultimate fighter 23 women's strawweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 23 light heavyweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "interim featherweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 6,
+      "fallback": true
+    },
+    "ultimate fighter latin america 3 lightweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "women's featherweight": {
+      "halfwidth": 0.6478374269724488,
+      "n": 58,
+      "fallback": false
+    },
+    "ultimate fighter 25 welterweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "interim middleweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 4,
+      "fallback": true
+    },
+    "interim lightweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 6,
+      "fallback": true
+    },
+    "interim welterweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 27 lightweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 27 featherweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 28 heavyweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 28 women's featherweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "interim heavyweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 6,
+      "fallback": true
+    },
+    "interim bantamweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "interim flyweight": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 1 lightweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 1 flyweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 1 bantamweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 32 middleweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 32 featherweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 3 women's strawweight tournament titlebout": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 3 bantamweight tournament titlebout": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "road to 3 flyweight tournament titlebout": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 33 flyweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    },
+    "ultimate fighter 33 welterweight tournament": {
+      "halfwidth": 0.6383394952968804,
+      "n": 2,
+      "fallback": true
+    }
+  },
+  "min_group_size": 50
+}

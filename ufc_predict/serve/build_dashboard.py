@@ -283,6 +283,11 @@ def _was_prediction_correct(
         prob_a = float(prob_a_wins)
     except (TypeError, ValueError):
         return None
+    # Placeholder probability (model never ran for this fight) — treat as
+    # ungraded. Otherwise we'd be grading a coin-flip pick against actual
+    # outcomes, which produces noise like the original past-events bug.
+    if abs(prob_a - 0.5) < 0.005:
+        return None
 
     aw = (actual_winner or "").strip().lower()
     fa = (fighter_a_name or "").strip().lower()
@@ -579,6 +584,93 @@ def _persist_live_results(events: list[dict]) -> None:
     PAST_EVENTS_PATH.write_text(json.dumps(out, indent=2, default=str), encoding="utf-8")
     log.info("Persisted live results: %d bouts in %s", len(out), PAST_EVENTS_PATH)
 
+    # Self-heal stale "Final" entries when Greco's CSV brings proper method
+    # into our DB. Runs every build; idempotent for already-fixed entries.
+    _backfill_past_events_method_from_db()
+
+
+def _backfill_past_events_method_from_db() -> int:
+    """ESPN's scoreboard sometimes returns just "Final" with no method detail
+    (data lag). Once Greco's daily CSV brings the proper KO/SUB/Decision
+    method into our DB, this re-reads past_events.json and overwrites the
+    bare "Final" entries with the DB method/round. Idempotent — safe to call
+    every dashboard build. Returns count of entries updated."""
+    if not PAST_EVENTS_PATH.exists():
+        return 0
+    try:
+        events = json.loads(PAST_EVENTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return 0
+
+    needs_fix = [
+        e for e in events
+        if e.get("is_completed") and e.get("live_winner")
+        and (not e.get("live_method") or e["live_method"].lower() == "final")
+    ]
+    if not needs_fix:
+        return 0
+
+    import re as _re
+    import sqlite3 as _sql
+    db_path = Path("data/ufc.db")
+    if not db_path.exists():
+        return 0
+    con = _sql.connect(str(db_path))
+
+    def _norm(s):  # last-name + first-initial key
+        return _re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+
+    def _key(name):
+        toks = _norm(name).split()
+        if not toks:
+            return ("", "")
+        return (toks[-1], toks[0][:1] if toks[0] else "")
+
+    # Pull only fights from the date range we care about
+    dates = sorted({e.get("event_date", "") for e in needs_fix if e.get("event_date")})
+    if not dates:
+        return 0
+    rows = con.execute(
+        f"""SELECT f.date, fr.full_name, fb.full_name, f.method, f.round_ended
+            FROM fights f
+            JOIN fighters fr ON fr.canonical_fighter_id = f.red_fighter_id
+            JOIN fighters fb ON fb.canonical_fighter_id = f.blue_fighter_id
+            WHERE f.date >= ? AND f.method IS NOT NULL""",
+        (dates[0],),
+    ).fetchall()
+
+    fights = {
+        (str(d), frozenset({_key(ra), _key(rb)})): (m, rnd)
+        for d, ra, rb, m, rnd in rows
+    }
+    con.close()
+
+    fixed = 0
+    for ev in needs_fix:
+        key = (str(ev.get("event_date")),
+               frozenset({_key(ev.get("fighter_a_name", "")),
+                          _key(ev.get("fighter_b_name", ""))}))
+        rec = fights.get(key)
+        if not rec:
+            continue
+        method, rnd = rec
+        ev["live_method"] = method
+        if rnd:
+            ev["live_round"] = int(rnd)
+        winner = ev.get("live_winner", "")
+        if method:
+            ev["result_text"] = (
+                f"{winner} via {method} R{ev['live_round']}" if rnd else f"{winner} via {method}"
+            )
+        fixed += 1
+
+    if fixed:
+        PAST_EVENTS_PATH.write_text(
+            json.dumps(events, indent=2, default=str), encoding="utf-8",
+        )
+        log.info("Backfilled live_method from DB for %d past_events entries", fixed)
+    return fixed
+
 
 def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[dict]:
     """
@@ -707,7 +799,6 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                     # hours and haven't been ingested into the fights table yet).
                     if bout.get("is_completed") and bout.get("live_winner"):
                         bout["actual_winner_name"] = bout["live_winner"]
-                        # Map winner name back to A/B side for the template.
                         lw = (bout["live_winner"] or "").strip().lower()
                         a_lc = (pa or "").strip().lower()
                         b_lc = (pb or "").strip().lower()
@@ -717,12 +808,25 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                             bout["actual_winner_side"] = "b"
                         bout["actual_method"] = bout.get("live_method", "")
                         bout["actual_round"]  = bout.get("live_round", 0)
-                        # pred_correct was already computed in the live path.
-                        if bout.get("pred_correct") is True:
+                        # Override stale pred_correct when prob_a_wins is a
+                        # placeholder (no real model prediction). Persisted
+                        # past_events.json may carry True/False from earlier
+                        # buggy builds; treat those as ungraded.
+                        pa_raw = bout.get("prob_a_wins")
+                        try:
+                            is_placeholder = pa_raw is None or abs(float(pa_raw) - 0.5) < 0.005
+                        except (TypeError, ValueError):
+                            is_placeholder = True
+                        if is_placeholder:
+                            bout["pred_correct"] = None
+                            bout["no_prediction"] = True
+                        elif bout.get("pred_correct") is True:
                             n_correct  += 1
                             n_resolved += 1
+                            bout["no_prediction"] = False
                         elif bout.get("pred_correct") is False:
                             n_resolved += 1
+                            bout["no_prediction"] = False
                     else:
                         bout["actual_winner"] = "?"
                         bout["actual_method"] = ""
@@ -738,19 +842,36 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                 bout["actual_winner_side"] = "a" if a_won else "b"
                 bout["actual_method"]      = best_row.method or ""
                 bout["actual_round"]       = best_row.round_ended
-                # Was our prediction correct?
-                pa_prob = float(bout.get("prob_a_wins") or 0.5)
-                predicted_a = pa_prob >= 0.5
-                bout["pred_correct"] = (predicted_a == a_won)
-                n_resolved += 1
-                if bout["pred_correct"]:
-                    n_correct += 1
+
+                # Grade the prediction only if a real one was made. Snapshots
+                # for events the model was never run on have prob_a_wins=0.5
+                # (the placeholder) — grading those as wins/losses produces
+                # bogus 50%-accuracy noise. Treat placeholder as ungraded.
+                pa_raw = bout.get("prob_a_wins")
+                if pa_raw is None or abs(float(pa_raw) - 0.5) < 0.005:
+                    bout["pred_correct"] = None
+                    bout["no_prediction"] = True
+                else:
+                    pa_prob = float(pa_raw)
+                    predicted_a = pa_prob >= 0.5
+                    bout["pred_correct"] = (predicted_a == a_won)
+                    bout["no_prediction"] = False
+                    n_resolved += 1
+                    if bout["pred_correct"]:
+                        n_correct += 1
 
             ev["n_correct"]  = n_correct
             ev["n_resolved"] = n_resolved
             ev["accuracy_pct"] = (
                 round(100 * n_correct / n_resolved) if n_resolved > 0 else None
             )
+            # If every bout was a placeholder (model never ran for this event),
+            # mark the whole event so the template can render it without
+            # showing bogus "0/0 correct" or wrong/right badges.
+            ev["no_predictions"] = all(
+                bout.get("no_prediction") for bout in ev.get("bouts", [])
+                if bout.get("is_completed")
+            ) and n_resolved == 0
 
     return past_events
 

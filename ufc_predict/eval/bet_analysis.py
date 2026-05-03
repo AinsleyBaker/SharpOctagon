@@ -28,6 +28,98 @@ MIN_EDGE         = 0.03   # minimum 3% edge to flag as value
 MIN_ODDS         = 1.05   # skip near-certainty markets (likely bad parse)
 MAX_PROB_SANITY  = 0.995  # clamp our probability here
 
+# Empirical edge → flat-ROI maps from backtest reports. Loaded lazily.
+# Two sources:
+#   models/edge_backtest.json       — moneyline OOF backtest (1792 bets).
+#                                     ALL buckets currently negative — Vegas wins.
+#   models/prop_edge_backtest.json  — prop OOF backtest (~20k bets across markets).
+#                                     Several markets show positive ROI in mid-edge buckets:
+#                                     method, starts_round, inside_distance, wins_round.
+_BACKTEST_ML: list[tuple[float, float, float, int]] | None = None
+_BACKTEST_PROPS: dict[str, list[tuple[float, float, float, int]]] | None = None
+
+# Bet-type → backtest market_class mapping
+_BET_TYPE_TO_MARKET: dict[str, str] = {
+    "moneyline":           "moneyline",
+    "method":              "method",
+    "method_neutral":      "method",      # KO/SUB/DEC neutral — same model bucket
+    "method_combo":        "method",
+    "distance":            "distance",
+    "total_rounds":        "total_rounds",
+    "round_survival":      "starts_round",
+    "winning_round":       "wins_round",  # primary mapping; ends_round also overlaps
+    "alt_finish_timing":   "ends_round",
+    "alt_round":           "wins_round",
+}
+
+# Threshold for marking a bucket "historically profitable" — guard against
+# small-sample noise. n=30 minimum and ROI > 5% as the value gate.
+_MIN_BUCKET_N = 30
+_MIN_BUCKET_ROI_PCT = 5.0
+
+
+def _load_backtests() -> tuple[list, dict]:
+    """Lazy-load both moneyline and prop backtest results."""
+    global _BACKTEST_ML, _BACKTEST_PROPS
+    if _BACKTEST_ML is not None and _BACKTEST_PROPS is not None:
+        return _BACKTEST_ML, _BACKTEST_PROPS
+    import json
+    from pathlib import Path
+
+    # Moneyline
+    ml_path = Path("models/edge_backtest.json")
+    _BACKTEST_ML = []
+    if ml_path.exists():
+        try:
+            data = json.loads(ml_path.read_text(encoding="utf-8"))
+            _BACKTEST_ML = [
+                (float(b["edge_lo"]), float(b["edge_hi"]),
+                 float(b.get("roi_pct", 0)), int(b.get("n", 0)))
+                for b in data.get("buckets", []) if int(b.get("n", 0)) > 0
+            ]
+        except (json.JSONDecodeError, KeyError, TypeError):
+            _BACKTEST_ML = []
+
+    # Props (per market_class)
+    props_path = Path("models/prop_edge_backtest.json")
+    _BACKTEST_PROPS = {}
+    if props_path.exists():
+        try:
+            data = json.loads(props_path.read_text(encoding="utf-8"))
+            for b in data.get("buckets", []):
+                if int(b.get("n", 0)) <= 0:
+                    continue
+                mc = b.get("market_class", "")
+                _BACKTEST_PROPS.setdefault(mc, []).append((
+                    float(b["edge_lo"]), float(b["edge_hi"]),
+                    float(b.get("flat_roi_pct", 0)), int(b.get("n", 0)),
+                ))
+        except (json.JSONDecodeError, KeyError, TypeError):
+            _BACKTEST_PROPS = {}
+
+    return _BACKTEST_ML, _BACKTEST_PROPS
+
+
+def _historical_roi_for_edge(edge: float, bet_type: str) -> tuple[float | None, int, bool]:
+    """Look up backtested flat ROI% for the bet's edge bucket.
+
+    Returns (roi_pct, n_samples, market_backtested). market_backtested=True
+    means we have empirical data for this bet type's market class.
+    """
+    ml, props = _load_backtests()
+    market = _BET_TYPE_TO_MARKET.get(bet_type)
+    if market == "moneyline":
+        for lo, hi, roi, n in ml:
+            if lo <= edge < hi:
+                return roi, n, True
+        return None, 0, True  # market backtested but bucket has no data
+    if market and market in props:
+        for lo, hi, roi, n in props[market]:
+            if lo <= edge < hi:
+                return roi, n, True
+        return None, 0, True
+    return None, 0, False  # market not backtested
+
 
 # ---------------------------------------------------------------------------
 # Core formulas
@@ -66,16 +158,43 @@ def _bet_row(
     edge    = our_prob - impl
     ev      = expected_value(our_prob, decimal_odds)
     kel     = kelly(our_prob, decimal_odds)
+
+    # Per-market historical ROI for this edge bucket. Both moneyline and
+    # prop markets are now backtested (Week 6: prop_edge_backtest covers
+    # ~20k prop bets across method/distance/starts_round/wins_round/etc).
+    hist_roi, hist_n, market_backtested = _historical_roi_for_edge(edge, bet_type)
+
+    # Empirical value gate: only flag is_value=True if the bet's bucket has
+    # *backtested* positive ROI > _MIN_BUCKET_ROI_PCT and n_bets ≥ _MIN_BUCKET_N.
+    # If the market is backtested but the bucket lacks data, default to False
+    # (we have evidence in adjacent buckets — silence is informative).
+    # If the market isn't backtested at all, fall back to the edge threshold.
+    if market_backtested:
+        is_value = (
+            hist_roi is not None
+            and hist_roi > _MIN_BUCKET_ROI_PCT
+            and hist_n >= _MIN_BUCKET_N
+            and ev > 0
+            and edge >= MIN_EDGE
+        )
+    else:
+        is_value = (ev > 0 and edge >= MIN_EDGE)
+
     return {
-        "bet_type":    bet_type,
-        "description": description,
-        "our_prob":    round(our_prob, 4),
-        "sb_odds":     round(decimal_odds, 2),
+        "bet_type":     bet_type,
+        "description":  description,
+        "our_prob":     round(our_prob, 4),
+        "sb_odds":      round(decimal_odds, 2),
         "implied_prob": round(impl, 4),
-        "edge":        round(edge, 4),
-        "ev_pct":      round(ev * 100, 2),
-        "kelly_pct":   round(kel * 100, 2),
-        "is_value":    (ev > 0 and edge >= MIN_EDGE),
+        "edge":         round(edge, 4),
+        "ev_pct":       round(ev * 100, 2),
+        "kelly_pct":    round(kel * 100, 2),
+        "is_value":     is_value,
+        # Empirical bucket ROI from prop_edge_backtest.json. None means either
+        # the bucket has no historical samples or this market isn't backtested.
+        "historical_roi_pct": (round(hist_roi, 2) if hist_roi is not None else None),
+        "historical_n_bets":  hist_n,
+        "market_backtested":  market_backtested,
     }
 
 

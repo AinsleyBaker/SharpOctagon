@@ -26,7 +26,10 @@ from sqlalchemy.orm import Session
 from ufc_predict.db.models import Fighter, UpcomingBout
 from ufc_predict.eval.evaluate import kelly_fraction_fn, american_to_decimal
 from ufc_predict.eval.bet_analysis import analyze_all_fights
-from ufc_predict.features.aso_features import fighter_aso_stats, _fighter_age
+from ufc_predict.features.aso_features import (
+    fighter_aso_stats, _fighter_age,
+    normalize_weight_class, post_peak_years,
+)
 from ufc_predict.models.prop_models import load_prop_artifacts, predict_props
 from ufc_predict.models.train import (
     FEATURE_COLS,
@@ -70,6 +73,56 @@ def calibrate_conformal(
     return result
 
 
+def calibrate_conformal_mondrian(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    groups: np.ndarray,
+    alpha: float = 0.10,
+    min_group_size: int = 50,
+) -> dict:
+    """Per-group ("Mondrian") split-conformal calibration.
+
+    Each group (e.g. weight class) gets its own halfwidth based on its local
+    nonconformity distribution. Heavyweight (high variance, fewer fights)
+    naturally gets a wider band; Lightweight (low variance, many fights) a
+    tighter one. Same finite-sample coverage guarantee as global conformal,
+    just stratified.
+
+    Groups with fewer than `min_group_size` samples fall back to the global
+    halfwidth — the per-group quantile estimate is too noisy below that.
+    """
+    residuals = np.abs(y_true - y_pred)
+    n_total = len(residuals)
+    level = min(np.ceil((n_total + 1) * (1 - alpha)) / n_total, 1.0)
+    global_hw = float(np.quantile(residuals, level))
+
+    per_group: dict[str, dict] = {}
+    unique_groups = pd.unique(groups)
+    for g in unique_groups:
+        mask = (groups == g)
+        n = int(mask.sum())
+        if n < min_group_size:
+            per_group[str(g)] = {"halfwidth": global_hw, "n": n, "fallback": True}
+            continue
+        glevel = min(np.ceil((n + 1) * (1 - alpha)) / n, 1.0)
+        gq = float(np.quantile(residuals[mask], glevel))
+        per_group[str(g)] = {"halfwidth": gq, "n": n, "fallback": False}
+
+    log.info(
+        "Mondrian conformal: %d groups, global=%.4f, range=[%.4f, %.4f]",
+        len(per_group), global_hw,
+        min(v["halfwidth"] for v in per_group.values()),
+        max(v["halfwidth"] for v in per_group.values()),
+    )
+    return {
+        "alpha": alpha,
+        "global_halfwidth": global_hw,
+        "n_calibration": n_total,
+        "per_group": per_group,
+        "min_group_size": min_group_size,
+    }
+
+
 def conformal_interval(
     y_pred: np.ndarray,
     halfwidth: float,
@@ -77,6 +130,80 @@ def conformal_interval(
     """Apply pre-computed conformal halfwidth to get prediction intervals."""
     lo = np.clip(y_pred - halfwidth, 0.0, 1.0)
     hi = np.clip(y_pred + halfwidth, 0.0, 1.0)
+    return lo, hi
+
+
+def _bernoulli_sd(p: np.ndarray, eps: float = 1e-2) -> np.ndarray:
+    """Local uncertainty proxy: sqrt(p(1-p)) — maximal at p=0.5, near zero at
+    p=0 or 1. The eps floor avoids divide-by-zero for confident predictions
+    that would otherwise get useless 0-width intervals."""
+    return np.sqrt(np.clip(p * (1.0 - p), eps, None))
+
+
+def calibrate_conformal_locally_weighted(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    alpha: float = 0.10,
+) -> dict:
+    """Locally-weighted (normalized) split-conformal calibration.
+
+    Standardize residuals by the local Bernoulli SD: s_i = |y_i - p_i| / σ(p_i)
+    where σ(p) = sqrt(p(1-p)). Compute the (1-α) quantile of s. At predict
+    time, halfwidth(x) = q × σ(p(x)) — confident predictions get tighter bands,
+    pick'em fights get wider ones, all under the same coverage guarantee.
+
+    This addresses the Mondrian shortcoming: residuals are evenly distributed
+    across weight classes, but they ARE concentrated near p=0.5. Locally-
+    weighted conformal exploits that structure.
+    """
+    sigma = _bernoulli_sd(y_pred)
+    scores = np.abs(y_true - y_pred) / sigma
+    n = len(scores)
+    level = min(np.ceil((n + 1) * (1 - alpha)) / n, 1.0)
+    q = float(np.quantile(scores, level))
+
+    # Diagnostic: estimate the average and range of resulting halfwidths
+    sample_hws = q * sigma
+    log.info(
+        "Locally-weighted conformal: q=%.4f  halfwidths range=[%.4f, %.4f]  mean=%.4f",
+        q, float(sample_hws.min()), float(sample_hws.max()), float(sample_hws.mean()),
+    )
+    return {
+        "alpha": alpha,
+        "scaled_quantile": q,
+        "n_calibration": n,
+        "kind": "locally_weighted",
+    }
+
+
+def locally_weighted_interval(
+    y_pred: np.ndarray,
+    quantiles: dict,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Apply locally-weighted halfwidth: hw(x) = q × sqrt(p(x)(1-p(x)))."""
+    q = float(quantiles.get("scaled_quantile", quantiles.get("conformal_halfwidth", 0.5)))
+    sigma = _bernoulli_sd(y_pred)
+    hw = q * sigma
+    lo = np.clip(y_pred - hw, 0.0, 1.0)
+    hi = np.clip(y_pred + hw, 0.0, 1.0)
+    return lo, hi
+
+
+def mondrian_interval(
+    y_pred: np.ndarray,
+    groups: np.ndarray,
+    quantiles: dict,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Apply Mondrian halfwidths group-by-group; fall back to global for
+    groups that weren't seen at calibration time."""
+    per_group = quantiles.get("per_group", {})
+    global_hw = quantiles.get("global_halfwidth", quantiles.get("conformal_halfwidth", 0.5))
+    hws = np.array([
+        per_group.get(str(g), {}).get("halfwidth", global_hw)
+        for g in groups
+    ])
+    lo = np.clip(y_pred - hws, 0.0, 1.0)
+    hi = np.clip(y_pred + hws, 0.0, 1.0)
     return lo, hi
 
 
@@ -169,6 +296,7 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             "l3_win_rate", "l5_win_rate", "l3_finish_rate",
             "l3_kd", "l3_td_rate", "l3_slpm", "l5_slpm",
             "win_streak", "loss_streak", "fight_frequency_24m",
+            "ewma_win_rate", "ewma_finish_rate", "ewma_slpm", "ewma_kd_per_fight",
         ]
         for k in diff_keys:
             av = a_feat.get(k, np.nan)
@@ -179,6 +307,35 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             row["diff_age"] = a_age - b_age
         else:
             row["diff_age"] = np.nan
+
+        # Weight-class-aware age decline (must mirror training-time features)
+        row["weight_class_clean"] = normalize_weight_class(bout.weight_class)
+        a_pp = post_peak_years(a_age, bout.weight_class)
+        b_pp = post_peak_years(b_age, bout.weight_class)
+        row["diff_post_peak"] = a_pp - b_pp
+
+        # --- Physicals + stance (Week 3) ---
+        a_reach = fa_obj.reach_cm if fa_obj else None
+        b_reach = fb_obj.reach_cm if fb_obj else None
+        a_height = fa_obj.height_cm if fa_obj else None
+        b_height = fb_obj.height_cm if fb_obj else None
+        row["a_reach_cm"] = a_reach
+        row["b_reach_cm"] = b_reach
+        row["a_height_cm"] = a_height
+        row["b_height_cm"] = b_height
+        row["diff_reach_cm"] = (
+            (a_reach - b_reach) if (a_reach is not None and b_reach is not None) else np.nan
+        )
+        row["diff_height_cm"] = (
+            (a_height - b_height) if (a_height is not None and b_height is not None) else np.nan
+        )
+        a_st = (a_stance or "").strip().lower()
+        b_st = (b_stance or "").strip().lower()
+        _is_o = lambda s: s in {"orthodox", "switch", ""}
+        _is_s = lambda s: s == "southpaw"
+        row["a_southpaw_vs_b_orthodox"] = int(_is_s(a_st) and _is_o(b_st))
+        row["a_orthodox_vs_b_southpaw"] = int(_is_o(a_st) and _is_s(b_st))
+        row["both_southpaw"]            = int(_is_s(a_st) and _is_s(b_st))
 
         row["a_win_streak"]  = int(a_feat.get("win_streak",  0) or 0)
         row["b_win_streak"]  = int(b_feat.get("win_streak",  0) or 0)
@@ -229,20 +386,34 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     # Attach Elo/Glicko from the snapshot persisted by build_matrix. RD is
     # inflated for days-since-last-fight so an inactive fighter's uncertainty
     # is reflected at predict time, mirroring the in-training inactivity rule.
-    from ufc_predict.features.ratings import load_latest_ratings, lookup_ratings
+    from ufc_predict.features.ratings import (
+        load_latest_ratings, lookup_ratings, load_latest_sos, lookup_sos,
+    )
     ratings_snapshot = load_latest_ratings()
+    sos_snapshot = load_latest_sos()
     today = date.today()
     elo_a, elo_b, gl_a, gl_b, rd_a, rd_b = [], [], [], [], [], []
+    sos_a_avg, sos_b_avg = [], []
+    sos_a_qw, sos_b_qw = [], []
+    sos_a_ql, sos_b_ql = [], []
     for _, row in upcoming_df.iterrows():
         ra = lookup_ratings(ratings_snapshot, row["fighter_a_id"], row.get("weight_class"), today)
         rb = lookup_ratings(ratings_snapshot, row["fighter_b_id"], row.get("weight_class"), today)
         elo_a.append(ra["elo"]);   elo_b.append(rb["elo"])
         gl_a.append(ra["glicko"]); gl_b.append(rb["glicko"])
         rd_a.append(ra["glicko_rd"]); rd_b.append(rb["glicko_rd"])
+        sa = lookup_sos(sos_snapshot, row["fighter_a_id"])
+        sb = lookup_sos(sos_snapshot, row["fighter_b_id"])
+        sos_a_avg.append(sa["sos_avg_opp_elo"]); sos_b_avg.append(sb["sos_avg_opp_elo"])
+        sos_a_qw.append(sa["sos_quality_wins"]); sos_b_qw.append(sb["sos_quality_wins"])
+        sos_a_ql.append(sa["sos_quality_losses"]); sos_b_ql.append(sb["sos_quality_losses"])
     upcoming_df["diff_elo"]    = np.array(elo_a) - np.array(elo_b)
     upcoming_df["diff_glicko"] = np.array(gl_a) - np.array(gl_b)
     upcoming_df["glicko_rd_a"] = rd_a
     upcoming_df["glicko_rd_b"] = rd_b
+    upcoming_df["diff_sos_avg_opp_elo"]    = np.array(sos_a_avg) - np.array(sos_b_avg)
+    upcoming_df["diff_sos_quality_wins"]   = np.array(sos_a_qw)  - np.array(sos_b_qw)
+    upcoming_df["diff_sos_quality_losses"] = np.array(sos_a_ql)  - np.array(sos_b_ql)
     if not ratings_snapshot:
         log.warning(
             "No persisted fighter_ratings.json found — ratings defaulted to base. "
@@ -253,15 +424,78 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     available = [c for c in feature_cols if c in upcoming_df.columns]
     X = upcoming_df[available].copy()
 
+    # Restore categorical dtypes to match training. LightGBM's predict path
+    # checks dtype equality for categorical features and errors on mismatch
+    # ("train and valid dataset categorical_feature do not match"). Pull the
+    # category levels from the booster's pandas_categorical metadata.
+    try:
+        booster_cats = model.booster_.pandas_categorical or []
+        # booster_cats is a list aligned with the feature index of categoricals
+        cat_feature_names = [c for c in available if c in {"weight_class_clean"}]
+        for name, cats in zip(cat_feature_names, booster_cats):
+            X[name] = pd.Categorical(X[name], categories=cats)
+    except Exception as exc:
+        log.warning("Could not align categorical dtypes (%s) — continuing", exc)
+
     # Ensemble prediction → mean ± std
     mean_prob, std_prob = ensemble_predict(ensemble, X)
+
+    # Meta-blender (LGBM-stacked + Elo-only) — applied if the artifact exists
+    # and was saved during training (only saved when it improved OOF LL).
+    meta_path = Path("models/meta_blender.pkl")
+    if meta_path.exists():
+        try:
+            with open(meta_path, "rb") as f:
+                import pickle as _pkl
+                meta = _pkl.load(f)
+            elo_diff = upcoming_df["diff_elo"].astype(float).values
+            elo_only = 1.0 / (1.0 + 10.0 ** (-elo_diff / 400.0))
+            X_meta = np.column_stack([
+                np.clip(mean_prob, 1e-6, 1 - 1e-6),
+                np.clip(elo_only, 1e-6, 1 - 1e-6),
+            ])
+            X_meta_logit = np.log(X_meta / (1 - X_meta))
+            mean_prob = meta.predict_proba(X_meta_logit)[:, 1]
+            log.info("Meta blender applied to %d predictions", len(mean_prob))
+        except Exception as exc:
+            log.warning("Meta blender load/apply failed: %s — using raw ensemble", exc)
+
     upcoming_df["prob_a_wins"] = mean_prob
     upcoming_df["prob_b_wins"] = 1 - mean_prob
     upcoming_df["uncertainty_std"] = std_prob
 
-    # Conformal prediction intervals
+    # Conformal prediction intervals — preference order:
+    #   1. Locally-weighted (per-prediction halfwidth via Bernoulli-SD scaling)
+    #   2. Mondrian (per-weight-class halfwidths)
+    #   3. Global split-conformal (single halfwidth for everyone)
+    lw_path = Path("models/conformal_quantiles_locally_weighted.json")
+    mondrian_path = Path("models/conformal_quantiles_mondrian.json")
     quantiles = load_conformal_quantiles()
-    if quantiles:
+    locally_weighted = None
+    mondrian = None
+    if lw_path.exists():
+        try:
+            locally_weighted = json.loads(lw_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            locally_weighted = None
+    if mondrian_path.exists():
+        try:
+            mondrian = json.loads(mondrian_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            mondrian = None
+
+    if locally_weighted:
+        lo, hi = locally_weighted_interval(mean_prob, locally_weighted)
+        coverage = int((1 - locally_weighted["alpha"]) * 100)
+        upcoming_df[f"ci_{coverage}_lo"] = lo
+        upcoming_df[f"ci_{coverage}_hi"] = hi
+    elif mondrian and "weight_class_clean" in upcoming_df.columns:
+        groups = upcoming_df["weight_class_clean"].astype(str).fillna("Unknown").values
+        lo, hi = mondrian_interval(mean_prob, groups, mondrian)
+        coverage = int((1 - mondrian["alpha"]) * 100)
+        upcoming_df[f"ci_{coverage}_lo"] = lo
+        upcoming_df[f"ci_{coverage}_hi"] = hi
+    elif quantiles:
         hw = quantiles["conformal_halfwidth"]
         lo, hi = conformal_interval(mean_prob, hw)
         coverage = int((1 - quantiles["alpha"]) * 100)

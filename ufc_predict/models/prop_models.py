@@ -201,9 +201,13 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
         "verbose": -1,
     }
     method_model = lgb.LGBMClassifier(**method_params)
+    # Pass DataFrames (not .values) so categorical dtype survives. categorical_feature
+    # tells LGBM which columns to treat as native categorical.
+    cat_feat = [c for c in ("weight_class_clean",) if c in X_tr.columns]
     method_model.fit(
         X_tr, y_tr_m,
-        eval_set=[(X_es.values, y_es_m)],
+        eval_set=[(X_es, y_es_m)],
+        categorical_feature=cat_feat or "auto",
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(period=-1)],
     )
 
@@ -259,9 +263,11 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
 
     round_params = {**method_params, "num_class": len(ROUND_CLASSES)}
     round_model = lgb.LGBMClassifier(**round_params)
+    cat_feat_r = [c for c in ("weight_class_clean",) if c in X_tr_f.columns]
     round_model.fit(
         X_tr_f, y_tr_r,
-        eval_set=[(X_es_f.values, y_es_r)],
+        eval_set=[(X_es_f, y_es_r)],
+        categorical_feature=cat_feat_r or "auto",
         callbacks=[lgb.early_stopping(50, verbose=False), lgb.log_evaluation(period=-1)],
     )
 
@@ -331,6 +337,17 @@ def predict_props(
     feature_cols = artifacts.get("feature_cols", [])
     available = [c for c in feature_cols if c in X.columns]
     X_feat = X[available].copy() if available else X.copy()
+
+    # Align categorical dtypes with training (LGBM predict_proba checks this)
+    method_model = artifacts.get("method_model")
+    if method_model is not None:
+        try:
+            booster_cats = method_model.booster_.pandas_categorical or []
+            cat_names = [c for c in available if c in {"weight_class_clean"}]
+            for name, cats in zip(cat_names, booster_cats):
+                X_feat[name] = pd.Categorical(X_feat[name], categories=cats)
+        except Exception:
+            pass
 
     method_model = artifacts.get("method_model")
     method_isos  = artifacts.get("method_isos", [])
@@ -450,6 +467,127 @@ def predict_props(
         results.append(prop)
 
     return results
+
+
+def run_cv(feature_cols: list[str], db_url: str | None = None,
+           start_year: int = 2018) -> pd.DataFrame:
+    """Walk-forward CV for the prop model. For each year ≥ start_year, train
+    on all earlier data and predict on that year. Returns a DataFrame with
+    fight_id, date, true labels, and per-class probabilities for both method
+    (6 classes) and round (5 classes, finish-conditional).
+
+    The CV gives us OOF prop predictions across thousands of historical
+    fights — the foundation for prop ROI backtesting and prop calibration
+    evaluation. Without this, prop probabilities only exist for upcoming
+    bouts and we have no way to validate them.
+    """
+    import lightgbm as lgb
+    from sklearn.isotonic import IsotonicRegression
+
+    df = _load_labeled_matrix(db_url)
+    prop_cols = list(dict.fromkeys(feature_cols + PROP_EXTRA_COLS))
+    available = [c for c in prop_cols if c in df.columns]
+    if not available:
+        raise ValueError("No matching feature columns found in the feature matrix")
+    df = df.sort_values("date").reset_index(drop=True)
+
+    method_enc = {cls: i for i, cls in enumerate(METHOD_CLASSES)}
+    df["_method_idx"] = df["method_class"].map(method_enc).fillna(2).astype(int)
+    df["_year"] = pd.to_datetime(df["date"]).dt.year
+
+    method_params = {
+        "objective": "multiclass", "num_class": len(METHOD_CLASSES),
+        "num_leaves": 31, "learning_rate": 0.05, "n_estimators": 500,
+        "min_child_samples": 20, "subsample": 0.8, "colsample_bytree": 0.8,
+        "reg_alpha": 0.1, "reg_lambda": 0.1, "random_state": 42, "verbose": -1,
+    }
+
+    cat_feat = [c for c in ("weight_class_clean",) if c in df.columns]
+    last_year = int(df["_year"].max())
+    oof_rows: list[dict] = []
+
+    def _apply_per_class_iso(raw: np.ndarray, isos: list) -> np.ndarray:
+        """Apply per-class isotonic + renormalize so rows sum to 1."""
+        cal = np.zeros_like(raw)
+        for j, iso in enumerate(isos):
+            cal[:, j] = iso.transform(raw[:, j])
+        s = cal.sum(axis=1, keepdims=True).clip(min=1e-9)
+        return cal / s
+
+    for val_year in range(start_year, last_year + 1):
+        train = df[df["_year"] < val_year]
+        val   = df[df["_year"] == val_year]
+        if len(train) < 200 or len(val) < 10:
+            continue
+
+        # Within-train chronological cal slice (last 15% of train) — used to
+        # fit per-class isotonic. Booster trains on the remaining 85% so iso
+        # sees out-of-sample probabilities, matching production behavior.
+        train_sorted = train.sort_values("date").reset_index(drop=True)
+        s_b = int(len(train_sorted) * 0.85)
+        booster_df = train_sorted.iloc[:s_b]
+        cal_df = train_sorted.iloc[s_b:]
+
+        # --- Method model (6-class) with per-class iso calibration ---
+        m = lgb.LGBMClassifier(**method_params)
+        m.fit(booster_df[available], booster_df["_method_idx"].values,
+              categorical_feature=cat_feat or "auto",
+              callbacks=[lgb.log_evaluation(period=-1)])
+        # Calibrate on cal slice
+        cal_raw_m = m.predict_proba(cal_df[available])
+        method_isos = []
+        for j in range(len(METHOD_CLASSES)):
+            iso_j = IsotonicRegression(out_of_bounds="clip")
+            iso_j.fit(cal_raw_m[:, j], (cal_df["_method_idx"].values == j).astype(float))
+            method_isos.append(iso_j)
+        method_raw = m.predict_proba(val[available])
+        method_probs = _apply_per_class_iso(method_raw, method_isos)
+
+        # --- Round model (5-class, finish-conditional) with iso calibration ---
+        finish_train = booster_df[~booster_df["method_class"].str.endswith("_DEC")]
+        finish_cal   = cal_df[~cal_df["method_class"].str.endswith("_DEC")]
+        round_probs = None
+        if len(finish_train) >= 100 and len(finish_cal) >= 30:
+            round_enc = {c: i for i, c in enumerate(ROUND_CLASSES)}
+            y_r_train = finish_train["round_class"].map(round_enc).fillna(0).astype(int)
+            y_r_cal   = finish_cal["round_class"].map(round_enc).fillna(0).astype(int)
+            r_params = {**method_params, "num_class": len(ROUND_CLASSES)}
+            r = lgb.LGBMClassifier(**r_params)
+            r.fit(finish_train[available], y_r_train.values,
+                  categorical_feature=cat_feat or "auto",
+                  callbacks=[lgb.log_evaluation(period=-1)])
+            cal_raw_r = r.predict_proba(finish_cal[available])
+            round_isos = []
+            for j in range(len(ROUND_CLASSES)):
+                iso_j = IsotonicRegression(out_of_bounds="clip")
+                iso_j.fit(cal_raw_r[:, j], (y_r_cal.values == j).astype(float))
+                round_isos.append(iso_j)
+            round_raw = r.predict_proba(val[available])
+            round_probs = _apply_per_class_iso(round_raw, round_isos)
+
+        for i, (_, row) in enumerate(val.iterrows()):
+            rec = {
+                "fight_id": row.get("fight_id"),
+                "date": row.get("date"),
+                "fold_year": val_year,
+                "method_class_true": row.get("method_class"),
+                "round_class_true": row.get("round_class"),
+                "is_five_round": int(row.get("is_five_round", 0) or 0),
+            }
+            for j, cls in enumerate(METHOD_CLASSES):
+                rec[f"prob_{cls.lower()}"] = float(method_probs[i, j])
+            if round_probs is not None:
+                for j, cls in enumerate(ROUND_CLASSES):
+                    rec[f"prob_{cls}"] = float(round_probs[i, j])
+            oof_rows.append(rec)
+
+        log.info("prop CV fold %d: train=%d val=%d", val_year, len(train), len(val))
+
+    out = pd.DataFrame(oof_rows)
+    out_path = MODELS_DIR / "prop_oof.parquet"
+    out.to_parquet(out_path, index=False)
+    log.info("Prop OOF saved: %s  shape=%s", out_path, out.shape)
+    return out
 
 
 def run_training(db_url: str | None = None) -> None:

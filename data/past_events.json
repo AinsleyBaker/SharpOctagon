@@ -547,7 +547,7 @@
     "live_round": 1,
     "result_text": "Junior Tafa R1",
     "pred_correct": false,
-    "upcoming_bout_id": "live-7138497562064855"
+    "upcoming_bout_id": "live-7189136354124134"
   },
   {
     "event_date": "2026-05-02",
@@ -1097,7 +1097,7 @@
     "live_round": 3,
     "result_text": "Cam Rowston R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-1216872719006439"
+    "upcoming_bout_id": "live-3565873784305327"
   },
   {
     "event_date": "2026-05-02",
@@ -1647,7 +1647,7 @@
     "live_round": 3,
     "result_text": "Louie Sutherland R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-8724958863627201"
+    "upcoming_bout_id": "live-9460850298684107"
   },
   {
     "event_date": "2026-05-02",
@@ -2142,7 +2142,7 @@
     "live_round": 1,
     "result_text": "Marwan Rahiki R1",
     "pred_correct": true,
-    "upcoming_bout_id": "live-1589577487853346"
+    "upcoming_bout_id": "live-3186115277933029"
   },
   {
     "event_date": "2026-05-02",
@@ -2692,7 +2692,7 @@
     "live_round": 3,
     "result_text": "Steve Erceg R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-3745317238714969"
+    "upcoming_bout_id": "live-8398918141639905"
   },
   {
     "event_date": "2026-05-02",
@@ -3242,7 +3242,7 @@
     "live_round": 1,
     "result_text": "Quillan Salkilld R1",
     "pred_correct": true,
-    "upcoming_bout_id": "live-7434113699008858"
+    "upcoming_bout_id": "live-7758152505640494"
   },
   {
     "event_date": "2026-05-02",
@@ -3802,7 +3802,7 @@
     "live_round": 3,
     "result_text": "Carlos Prates R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-5384139971258859"
+    "upcoming_bout_id": "live-1215639381134053"
   },
   {
     "event_date": "2026-05-02",
@@ -3818,7 +3818,7 @@
     "live_method": "Final",
     "live_round": 1,
     "result_text": "Kody Steele R1",
-    "upcoming_bout_id": "live-3038322649979147"
+    "upcoming_bout_id": "live-1288619834224682"
   },
   {
     "event_date": "2026-05-02",
@@ -3834,7 +3834,7 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Jonathan Micallef R3",
-    "upcoming_bout_id": "live-7002014389730791"
+    "upcoming_bout_id": "live-1273021108970062"
   },
   {
     "event_date": "2026-05-02",
@@ -3850,7 +3850,7 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Wes Schultz R3",
-    "upcoming_bout_id": "live-6833066867010609"
+    "upcoming_bout_id": "live-4489380971128594"
   },
   {
     "event_date": "2026-05-02",
@@ -3866,7 +3866,7 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Colby Thicknesse R3",
-    "upcoming_bout_id": "live-2035896587466625"
+    "upcoming_bout_id": "live-8313901415053046"
   },
   {
     "event_date": "2026-05-02",
@@ -3882,7 +3882,7 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Jacob Malkoun R3",
-    "upcoming_bout_id": "live-8817839261206170"
+    "upcoming_bout_id": "live-4148076528013213"
   },
   {
     "event_date": "2026-05-02",
@@ -3898,10 +3898,10 @@
     "live_method": "Final",
     "live_round": 2,
     "result_text": "Brando Peri\u010di\u0107 R2",
-    "upcoming_bout_id": "live-4389190536413729"
+    "upcoming_bout_id": "live-5648058711661480"
   },
   {
-    "upcoming_bout_id": "live-8398869655905819",
+    "upcoming_bout_id": "live-3611779664728307",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Julia Polastri",
@@ -4483,7 +4483,7 @@
     "result_text": "Talita Alencar R3"
   },
   {
-    "upcoming_bout_id": "live-2966719140589850",
+    "upcoming_bout_id": "live-1605928298850395",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Max Griffin",
@@ -5032,7 +5032,7 @@
     "result_text": "Victor Valenzuela R3"
   },
   {
-    "upcoming_bout_id": "live-3905698384215008",
+    "upcoming_bout_id": "live-6953439001000376",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Lucas Brennan",
@@ -5589,7 +5589,7 @@
     "result_text": "Francis Marshall R3"
   },
   {
-    "upcoming_bout_id": "live-1051041115090799",
+    "upcoming_bout_id": "live-2154581450072210",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Jafel Filho",
@@ -5700,7 +5700,7 @@
     "result_text": "Cody Durden R3"
   },
   {
-    "upcoming_bout_id": "live-8037984593276834",
+    "upcoming_bout_id": "live-1063915435663868",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Mayra Bueno Silva",
@@ -6282,7 +6282,7 @@
     "result_text": "Michelle Montague R3"
   },
   {
-    "upcoming_bout_id": "live-1522802025206307",
+    "upcoming_bout_id": "live-2044383022206590",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Sedriques Dumas",
@@ -6864,7 +6864,7 @@
     "result_text": "Jackson McVey R1"
   },
   {
-    "upcoming_bout_id": "live-5313206488114281",
+    "upcoming_bout_id": "live-5655333637889700",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Eric McConico",
@@ -7446,7 +7446,7 @@
     "result_text": "Eric McConico R3"
   },
   {
-    "upcoming_bout_id": "live-5573770271829232",
+    "upcoming_bout_id": "live-5700330414368883",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Ryan Spann",
@@ -8028,7 +8028,7 @@
     "result_text": "Ryan Spann R2"
   },
   {
-    "upcoming_bout_id": "live-1498229748482973",
+    "upcoming_bout_id": "live-6240616498534640",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Raoni Barcelos",
@@ -8610,7 +8610,7 @@
     "result_text": "Raoni Barcelos R3"
   },
   {
-    "upcoming_bout_id": "live-4177162754896797",
+    "upcoming_bout_id": "live-2855344386013690",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Davey Grant",
@@ -9192,7 +9192,7 @@
     "result_text": "Davey Grant R3"
   },
   {
-    "upcoming_bout_id": "live-4941021259459239",
+    "upcoming_bout_id": "live-4303226683620989",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Alexander Hernandez",
@@ -9774,7 +9774,7 @@
     "result_text": "Rafa Garcia R3"
   },
   {
-    "upcoming_bout_id": "live-5091638907161007",
+    "upcoming_bout_id": "live-5741838276017099",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Joselyne Edwards",
@@ -10356,7 +10356,7 @@
     "result_text": "Joselyne Edwards R3"
   },
   {
-    "upcoming_bout_id": "live-5254317872729779",
+    "upcoming_bout_id": "live-2538087366660619",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Aljamain Sterling",

@@ -968,14 +968,34 @@ def _actual_outcome_key(bout: dict) -> str | None:
     return f"{side}|{method}|{rnd_int}"
 
 
-def _grade_bet(bet: dict, actual_key: str | None) -> str | None:
-    """Return 'won' / 'lost' / None for a single bet given the actual outcome key."""
-    if not actual_key:
-        return None
+def _grade_bet(bet: dict, actual_key: str | None,
+               actual_side: str | None = None) -> str | None:
+    """
+    Return 'won' / 'lost' / None for a single bet given the actual outcome key.
+
+    Side-only fallback: when the canonical method is unknown (ESPN gives
+    only "Final" until UFCStats ingests the real method), we can still
+    grade any bet whose outcome_keys are all on a single side — moneyline,
+    "X wins by KO or Decision", "X wins in Round Y", etc. Method-neutral
+    bets (e.g. "Fight goes to Decision") stay un-graded until method lands.
+    """
     keys = bet.get("outcome_keys") or []
     if not keys:
         return None
-    return "won" if actual_key in keys else "lost"
+    if actual_key:
+        return "won" if actual_key in keys else "lost"
+    # No canonical key — try side-only grading.
+    if not actual_side:
+        return None
+    side = actual_side.upper()
+    sides_in_keys = {k.split("|", 1)[0] for k in keys if "|" in k}
+    if not sides_in_keys:
+        return None
+    if sides_in_keys == {side}:
+        return "won"     # bet pays only on actual winner's side, all methods
+    if side not in sides_in_keys:
+        return "lost"    # bet pays only on the loser's side
+    return None          # mixed-side bet — can't grade without method
 
 
 def _attach_graded_bets(bout: dict) -> None:
@@ -987,9 +1007,10 @@ def _attach_graded_bets(bout: dict) -> None:
         return
 
     actual_key = _actual_outcome_key(bout)
+    actual_side = bout.get("actual_winner_side")
     graded: list[dict] = []
     for bet in bets:
-        result = _grade_bet(bet, actual_key)
+        result = _grade_bet(bet, actual_key, actual_side)
         graded.append({
             "description":  bet.get("description") or "",
             "bet_type":     bet.get("bet_type") or "",

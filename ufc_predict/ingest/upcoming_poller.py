@@ -219,7 +219,10 @@ def _resolve_fighter(
 
     Strategy: exact (case-insensitive) → unaccented exact → fuzzy token-set
     ratio ≥ 88, gated by weight_class when provided. Diacritics-stripping
-    fixes the "José Aldo" ≠ "Jose Aldo" failure mode.
+    fixes the "José Aldo" ≠ "Jose Aldo" failure mode; punctuation-stripping
+    fixes "Waldo Cortes-Acosta" ≠ "Waldo Cortes Acosta" — the hyphen fuses
+    two tokens, dropping token_set_ratio from 100 to ~68 and missing the
+    threshold.
     """
     if not name:
         return None
@@ -233,9 +236,14 @@ def _resolve_fighter(
     if fighter:
         return fighter.canonical_fighter_id
 
+    import re
     import unicodedata
     def _norm(s: str) -> str:
-        return unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower().strip()
+        s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower().strip()
+        # Punctuation → space, then collapse runs of whitespace, so
+        # "cortes-acosta" tokenises identically to "cortes acosta".
+        s = re.sub(r"[^a-z0-9]+", " ", s)
+        return re.sub(r"\s+", " ", s).strip()
 
     target = _norm(raw)
 

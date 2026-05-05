@@ -1,806 +1,42 @@
 {
-  "fetched_at": "2026-05-02T09:08:25.097475+00:00",
+  "fetched_at": "2026-05-05T00:45:22.976950+00:00",
   "fights": [
     {
-      "sportsbet_event_id": "10419086",
-      "fight_name": "Ben Johnston v Wes Schultz",
-      "fighter_a_raw": "Ben Johnston",
-      "fighter_b_raw": "Wes Schultz",
-      "start_time": 1777712700,
+      "sportsbet_event_id": "10443567",
+      "fight_name": "Clayton Carpenter v Jose Ochoa",
+      "fighter_a_raw": "Clayton Carpenter",
+      "fighter_b_raw": "Jose Ochoa",
+      "start_time": 1778361000,
       "markets": {
         "moneyline": {
-          "Ben Johnston": 1.14,
-          "Wes Schultz": 5.0
+          "Clayton Carpenter": 2.58,
+          "Jose Ochoa": 1.5
         }
       }
     },
     {
-      "sportsbet_event_id": "10419083",
-      "fight_name": "Colby Thicknesse v Vince Morales",
-      "fighter_a_raw": "Colby Thicknesse",
-      "fighter_b_raw": "Vince Morales",
-      "start_time": 1777714200,
+      "sportsbet_event_id": "10443571",
+      "fight_name": "Baisangur Susurkaev v Djorden Santos",
+      "fighter_a_raw": "Baisangur Susurkaev",
+      "fighter_b_raw": "Djorden Santos",
+      "start_time": 1778362800,
       "markets": {
         "moneyline": {
-          "Colby Thicknesse": 1.7,
-          "Vince Morales": 2.16
-        },
-        "method": {
-          "Colby Thicknesse by KO/TKO": 13.0,
-          "Colby Thicknesse by Points": 2.2,
-          "Colby Thicknesse by Submission": 9.25,
-          "Draw": 51.0,
-          "Vince Morales by KO/TKO": 8.25,
-          "Vince Morales by Points": 3.8,
-          "Vince Morales by Submission": 7.75
-        },
-        "winning_round": {
-          "Colby Thicknesse to Win in Round 1": 9.5,
-          "Colby Thicknesse to Win in Round 2": 11.0,
-          "Colby Thicknesse to Win in Round 3": 15.0,
-          "Colby Thicknesse to Win by Decision": 2.25,
-          "Draw": 41.0,
-          "Vince Morales to Win in Round 1": 7.5,
-          "Vince Morales to Win in Round 2": 10.0,
-          "Vince Morales to Win in Round 3": 12.0,
-          "Vince Morales to Win by Decision": 3.75,
-          "Round 1": 5.2,
-          "Round 2": 7.5,
-          "Round 3": 11.0,
-          "Colby Thicknesse Round 1 or 2": 7.25,
-          "Colby Thicknesse Round 3 or by Decision": 2.08,
-          "Vince Morales Round 1 or 2": 5.3,
-          "Vince Morales Round 3 or by Decision": 3.3
-        },
-        "method_combo": {
-          "Colby Thicknesse by KO/TKO or Submission": 6.0,
-          "Colby Thicknesse by KO/TKO or on Points": 1.97,
-          "Colby Thicknesse by Submission or on Points": 1.86,
-          "Draw": 51.0,
-          "Vince Morales by KO/TKO or Submission": 4.3,
-          "Vince Morales by KO/TKO or on Points": 2.75,
-          "Vince Morales by Submission or on Points": 2.65
-        },
-        "method_neutral": {
-          "KO/TKO": 5.6,
-          "Submission": 4.6,
-          "Points": 1.41
-        },
-        "distance": {
-          "Yes": 1.42,
-          "No": 2.72
-        },
-        "total_rounds": {
-          "Over": 1.36,
-          "Under": 2.87
-        },
-        "moneyline_no_dec": {
-          "Colby Thicknesse": 2.45,
-          "Vince Morales": 1.5
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 3.32,
-          "Round 3 or by Decision": 1.3
-        },
-        "round_survival": {
-          "Yes": 1.3,
-          "No": 3.32,
-          "Start R2 Yes": 1.14,
-          "Start R2 No": 5.2,
-          "Start R3 Yes": 1.3,
-          "Start R3 No": 3.32
+          "Baisangur Susurkaev": 1.14,
+          "Djorden Santos": 5.75
         }
       }
     },
     {
-      "sportsbet_event_id": "10419082",
-      "fight_name": "Jacob Malkoun v Gerald Meerschaert",
-      "fighter_a_raw": "Jacob Malkoun",
-      "fighter_b_raw": "Gerald Meerschaert",
-      "start_time": 1777715700,
+      "sportsbet_event_id": "10443565",
+      "fight_name": "Pat Sabatini v William Gomis",
+      "fighter_a_raw": "Pat Sabatini",
+      "fighter_b_raw": "William Gomis",
+      "start_time": 1778364600,
       "markets": {
         "moneyline": {
-          "Jacob Malkoun": 1.08,
-          "Gerald Meerschaert": 8.0
-        },
-        "method": {
-          "Jacob Malkoun by KO/TKO": 2.25,
-          "Jacob Malkoun by Points": 3.35,
-          "Jacob Malkoun by Submission": 4.25,
-          "Draw": 51.0,
-          "Gerald Meerschaert by KO/TKO": 31.0,
-          "Gerald Meerschaert by Points": 12.5,
-          "Gerald Meerschaert by Submission": 21.0
-        },
-        "winning_round": {
-          "Jacob Malkoun to Win in Round 1": 3.0,
-          "Jacob Malkoun to Win in Round 2": 4.5,
-          "Jacob Malkoun to Win in Round 3": 6.0,
-          "Jacob Malkoun to Win by Decision": 3.25,
-          "Draw": 41.0,
-          "Gerald Meerschaert to Win in Round 1": 21.0,
-          "Gerald Meerschaert to Win in Round 2": 34.0,
-          "Gerald Meerschaert to Win in Round 3": 41.0,
-          "Gerald Meerschaert to Win by Decision": 10.0,
-          "Round 1": 2.9,
-          "Round 2": 4.1,
-          "Round 3": 6.25,
-          "Jacob Malkoun Round 1 or 2": 1.89,
-          "Jacob Malkoun Round 3 or by Decision": 2.35,
-          "Gerald Meerschaert Round 1 or 2": 18.0,
-          "Gerald Meerschaert Round 3 or by Decision": 10.5
-        },
-        "method_combo": {
-          "Jacob Malkoun by KO/TKO or Submission": 1.52,
-          "Jacob Malkoun by KO/TKO or on Points": 1.39,
-          "Jacob Malkoun by Submission or on Points": 1.94,
-          "Draw": 51.0,
-          "Gerald Meerschaert by KO/TKO or Submission": 14.0,
-          "Gerald Meerschaert by KO/TKO or on Points": 9.75,
-          "Gerald Meerschaert by Submission or on Points": 8.75
-        },
-        "method_neutral": {
-          "KO/TKO": 2.15,
-          "Submission": 3.7,
-          "Points": 2.65
-        },
-        "distance": {
-          "Yes": 2.76,
-          "No": 1.41
-        },
-        "total_rounds": {
-          "Over": 1.57,
-          "Under": 2.25
-        },
-        "moneyline_no_dec": {
-          "Jacob Malkoun": 1.05,
-          "Gerald Meerschaert": 8.0
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.77,
-          "Round 3 or by Decision": 1.97
-        },
-        "round_survival": {
-          "Yes": 1.97,
-          "No": 1.77,
-          "Start R2 Yes": 1.36,
-          "Start R2 No": 3.0,
-          "Start R3 Yes": 1.97,
-          "Start R3 No": 1.77
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419080",
-      "fight_name": "Junior Tafa v Kevin Christian",
-      "fighter_a_raw": "Junior Tafa",
-      "fighter_b_raw": "Kevin Christian",
-      "start_time": 1777717200,
-      "markets": {
-        "moneyline": {
-          "Junior Tafa": 1.43,
-          "Kevin Christian": 2.83
-        },
-        "method": {
-          "Junior Tafa by KO/TKO": 1.72,
-          "Junior Tafa by Points": 8.5,
-          "Junior Tafa by Submission": 29.0,
-          "Draw": 51.0,
-          "Kevin Christian by KO/TKO": 7.5,
-          "Kevin Christian by Points": 12.5,
-          "Kevin Christian by Submission": 5.2
-        },
-        "winning_round": {
-          "Junior Tafa to Win in Round 1": 2.62,
-          "Junior Tafa to Win in Round 2": 5.5,
-          "Junior Tafa to Win in Round 3": 10.0,
-          "Junior Tafa to Win by Decision": 8.0,
-          "Draw": 41.0,
-          "Kevin Christian to Win in Round 1": 5.5,
-          "Kevin Christian to Win in Round 2": 8.5,
-          "Kevin Christian to Win in Round 3": 12.0,
-          "Kevin Christian to Win by Decision": 10.0,
-          "Round 1": 1.81,
-          "Round 2": 3.8,
-          "Round 3": 8.5,
-          "Junior Tafa Round 1 or 2": 1.83,
-          "Junior Tafa Round 3 or by Decision": 5.75,
-          "Kevin Christian Round 1 or 2": 3.8,
-          "Kevin Christian Round 3 or by Decision": 8.25
-        },
-        "method_combo": {
-          "Junior Tafa by KO/TKO or Submission": 1.65,
-          "Junior Tafa by KO/TKO or on Points": 1.47,
-          "Junior Tafa by Submission or on Points": 7.0,
-          "Draw": 51.0,
-          "Kevin Christian by KO/TKO or Submission": 3.3,
-          "Kevin Christian by KO/TKO or on Points": 5.25,
-          "Kevin Christian by Submission or on Points": 3.9
-        },
-        "method_neutral": {
-          "KO/TKO": 1.44,
-          "Submission": 4.6,
-          "Points": 5.25
-        },
-        "distance": {
-          "Yes": 5.2,
-          "No": 1.14
-        },
-        "total_rounds": {
-          "Over": 2.25,
-          "Under": 1.57
-        },
-        "moneyline_no_dec": {
-          "Junior Tafa": 1.4,
-          "Kevin Christian": 2.75
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.28,
-          "Round 3 or by Decision": 3.45
-        },
-        "round_survival": {
-          "Yes": 3.45,
-          "No": 1.28,
-          "Start R2 Yes": 1.9,
-          "Start R2 No": 1.83,
-          "Start R3 Yes": 3.45,
-          "Start R3 No": 1.28
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419075",
-      "fight_name": "Cam Rowston v Robert Bryczek",
-      "fighter_a_raw": "Cam Rowston",
-      "fighter_b_raw": "Robert Bryczek",
-      "start_time": 1777718700,
-      "markets": {
-        "moneyline": {
-          "Cam Rowston": 1.54,
-          "Robert Bryczek": 2.49
-        },
-        "method": {
-          "Cam Rowston by KO/TKO": 6.25,
-          "Cam Rowston by Points": 4.3,
-          "Cam Rowston by Submission": 3.3,
-          "Draw": 51.0,
-          "Robert Bryczek by KO/TKO": 3.8,
-          "Robert Bryczek by Points": 6.75,
-          "Robert Bryczek by Submission": 26.0
-        },
-        "winning_round": {
-          "Cam Rowston to Win in Round 1": 4.5,
-          "Cam Rowston to Win in Round 2": 6.0,
-          "Cam Rowston to Win in Round 3": 9.5,
-          "Cam Rowston to Win by Decision": 4.0,
-          "Draw": 41.0,
-          "Robert Bryczek to Win in Round 1": 6.0,
-          "Robert Bryczek to Win in Round 2": 8.5,
-          "Robert Bryczek to Win in Round 3": 12.0,
-          "Robert Bryczek to Win by Decision": 6.0,
-          "Round 1": 2.7,
-          "Round 2": 4.1,
-          "Round 3": 7.25,
-          "Cam Rowston Round 1 or 2": 2.7,
-          "Cam Rowston Round 3 or by Decision": 3.25,
-          "Robert Bryczek Round 1 or 2": 4.1,
-          "Robert Bryczek Round 3 or by Decision": 5.3
-        },
-        "method_combo": {
-          "Cam Rowston by KO/TKO or Submission": 2.25,
-          "Cam Rowston by KO/TKO or on Points": 2.65,
-          "Cam Rowston by Submission or on Points": 1.94,
-          "Draw": 51.0,
-          "Robert Bryczek by KO/TKO or Submission": 3.5,
-          "Robert Bryczek by KO/TKO or on Points": 2.55,
-          "Robert Bryczek by Submission or on Points": 5.8
-        },
-        "method_neutral": {
-          "KO/TKO": 2.5,
-          "Submission": 3.05,
-          "Points": 2.65
-        },
-        "distance": {
-          "Yes": 2.71,
-          "No": 1.43
-        },
-        "total_rounds": {
-          "Over": 1.66,
-          "Under": 2.1
-        },
-        "moneyline_no_dec": {
-          "Cam Rowston": 1.58,
-          "Robert Bryczek": 2.25
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.71,
-          "Round 3 or by Decision": 2.05
-        },
-        "round_survival": {
-          "Yes": 2.05,
-          "No": 1.71,
-          "Start R2 Yes": 1.4,
-          "Start R2 No": 2.8,
-          "Start R3 Yes": 2.05,
-          "Start R3 No": 1.71
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419078",
-      "fight_name": "Tai Tuivasa v Louie Sutherland",
-      "fighter_a_raw": "Tai Tuivasa",
-      "fighter_b_raw": "Louie Sutherland",
-      "start_time": 1777720500,
-      "markets": {
-        "moneyline": {
-          "Tai Tuivasa": 1.44,
-          "Louie Sutherland": 2.8
-        },
-        "method": {
-          "Tai Tuivasa by KO/TKO": 1.84,
-          "Tai Tuivasa by Points": 6.25,
-          "Tai Tuivasa by Submission": 31.0,
-          "Draw": 51.0,
-          "Louie Sutherland by KO/TKO": 5.75,
-          "Louie Sutherland by Points": 6.5,
-          "Louie Sutherland by Submission": 12.5
-        },
-        "winning_round": {
-          "Tai Tuivasa to Win in Round 1": 3.2,
-          "Tai Tuivasa to Win in Round 2": 5.5,
-          "Tai Tuivasa to Win in Round 3": 8.0,
-          "Tai Tuivasa to Win by Decision": 6.0,
-          "Draw": 41.0,
-          "Louie Sutherland to Win in Round 1": 8.5,
-          "Louie Sutherland to Win in Round 2": 9.5,
-          "Louie Sutherland to Win in Round 3": 10.5,
-          "Louie Sutherland to Win by Decision": 6.0,
-          "Round 1": 2.5,
-          "Round 2": 3.9,
-          "Round 3": 6.0,
-          "Tai Tuivasa Round 1 or 2": 2.12,
-          "Tai Tuivasa Round 3 or by Decision": 4.0,
-          "Louie Sutherland Round 1 or 2": 5.4,
-          "Louie Sutherland Round 3 or by Decision": 4.9
-        },
-        "method_combo": {
-          "Tai Tuivasa by KO/TKO or Submission": 1.78,
-          "Tai Tuivasa by KO/TKO or on Points": 1.47,
-          "Tai Tuivasa by Submission or on Points": 5.7,
-          "Draw": 51.0,
-          "Louie Sutherland by KO/TKO or Submission": 4.25,
-          "Louie Sutherland by KO/TKO or on Points": 3.25,
-          "Louie Sutherland by Submission or on Points": 4.7
-        },
-        "method_neutral": {
-          "KO/TKO": 1.43,
-          "Submission": 10.0,
-          "Points": 3.3
-        },
-        "distance": {
-          "Yes": 3.32,
-          "No": 1.3
-        },
-        "total_rounds": {
-          "Over": 1.72,
-          "Under": 2.0
-        },
-        "moneyline_no_dec": {
-          "Tai Tuivasa": 1.3,
-          "Louie Sutherland": 3.2
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.59,
-          "Round 3 or by Decision": 2.26
-        },
-        "round_survival": {
-          "Yes": 2.26,
-          "No": 1.59,
-          "Start R2 Yes": 1.47,
-          "Start R2 No": 2.57,
-          "Start R3 Yes": 2.26,
-          "Start R3 No": 1.59
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419079",
-      "fight_name": "Shamil Gaziev v Brando Pericic",
-      "fighter_a_raw": "Shamil Gaziev",
-      "fighter_b_raw": "Brando Pericic",
-      "start_time": 1777722000,
-      "markets": {
-        "moneyline": {
-          "Shamil Gaziev": 1.93,
-          "Brando Pericic": 1.91
-        },
-        "method": {
-          "Shamil Gaziev by KO/TKO": 3.7,
-          "Shamil Gaziev by Points": 8.0,
-          "Shamil Gaziev by Submission": 5.8,
-          "Draw": 51.0,
-          "Brando Pericic by KO/TKO": 2.08,
-          "Brando Pericic by Points": 21.0,
-          "Brando Pericic by Submission": 26.0
-        },
-        "winning_round": {
-          "Shamil Gaziev to Win in Round 1": 3.5,
-          "Shamil Gaziev to Win in Round 2": 7.0,
-          "Shamil Gaziev to Win in Round 3": 13.0,
-          "Shamil Gaziev to Win by Decision": 7.5,
-          "Draw": 41.0,
-          "Brando Pericic to Win in Round 1": 2.87,
-          "Brando Pericic to Win in Round 2": 6.5,
-          "Brando Pericic to Win in Round 3": 12.0,
-          "Brando Pericic to Win by Decision": 13.0,
-          "Round 1": 1.65,
-          "Round 2": 4.0,
-          "Round 3": 11.0,
-          "Shamil Gaziev Round 1 or 2": 2.55,
-          "Shamil Gaziev Round 3 or by Decision": 6.25,
-          "Brando Pericic Round 1 or 2": 2.12,
-          "Brando Pericic Round 3 or by Decision": 11.5
-        },
-        "method_combo": {
-          "Shamil Gaziev by KO/TKO or Submission": 2.35,
-          "Shamil Gaziev by KO/TKO or on Points": 2.65,
-          "Shamil Gaziev by Submission or on Points": 3.5,
-          "Draw": 51.0,
-          "Brando Pericic by KO/TKO or Submission": 1.98,
-          "Brando Pericic by KO/TKO or on Points": 1.95,
-          "Brando Pericic by Submission or on Points": 13.0
-        },
-        "method_neutral": {
-          "KO/TKO": 1.36,
-          "Submission": 5.0,
-          "Points": 5.8
-        },
-        "distance": {
-          "Yes": 5.5,
-          "No": 1.13
-        },
-        "total_rounds": {
-          "Over": 2.75,
-          "Under": 1.4
-        },
-        "moneyline_no_dec": {
-          "Shamil Gaziev": 2.08,
-          "Brando Pericic": 1.64
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.2,
-          "Round 3 or by Decision": 4.25
-        },
-        "round_survival": {
-          "Yes": 4.25,
-          "No": 1.2,
-          "Start R2 Yes": 2.13,
-          "Start R2 No": 1.66,
-          "Start R3 Yes": 4.25,
-          "Start R3 No": 1.2
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10434280",
-      "fight_name": "Marwan Rahiki v Ollie Schmid",
-      "fighter_a_raw": "Marwan Rahiki",
-      "fighter_b_raw": "Ollie Schmid",
-      "start_time": 1777723500,
-      "markets": {
-        "moneyline": {
-          "Marwan Rahiki": 1.13,
-          "Ollie Schmid": 6.0
-        },
-        "method": {
-          "Marwan Rahiki by KO/TKO": 1.68,
-          "Marwan Rahiki by Points": 8.25,
-          "Marwan Rahiki by Submission": 4.8,
-          "Draw": 51.0,
-          "Ollie Schmid by KO/TKO": 9.0,
-          "Ollie Schmid by Points": 19.0,
-          "Ollie Schmid by Submission": 21.0
-        },
-        "winning_round": {
-          "Marwan Rahiki to Win in Round 1": 2.1,
-          "Marwan Rahiki to Win in Round 2": 4.5,
-          "Marwan Rahiki to Win in Round 3": 7.5,
-          "Marwan Rahiki to Win by Decision": 7.5,
-          "Draw": 41.0,
-          "Ollie Schmid to Win in Round 1": 10.5,
-          "Ollie Schmid to Win in Round 2": 12.0,
-          "Ollie Schmid to Win in Round 3": 15.0,
-          "Ollie Schmid to Win by Decision": 12.0,
-          "Round 1": 1.9,
-          "Round 2": 3.6,
-          "Round 3": 6.75,
-          "Marwan Rahiki Round 1 or 2": 1.46,
-          "Marwan Rahiki Round 3 or by Decision": 4.5,
-          "Ollie Schmid Round 1 or 2": 8.75,
-          "Ollie Schmid Round 3 or by Decision": 11.5
-        },
-        "method_combo": {
-          "Marwan Rahiki by KO/TKO or Submission": 1.26,
-          "Marwan Rahiki by KO/TKO or on Points": 1.43,
-          "Marwan Rahiki by Submission or on Points": 3.2,
-          "Draw": 51.0,
-          "Ollie Schmid by KO/TKO or Submission": 7.0,
-          "Ollie Schmid by KO/TKO or on Points": 6.75,
-          "Ollie Schmid by Submission or on Points": 11.0
-        },
-        "method_neutral": {
-          "KO/TKO": 1.45,
-          "Submission": 4.1,
-          "Points": 5.8
-        },
-        "distance": {
-          "Yes": 5.4,
-          "No": 1.13
-        },
-        "total_rounds": {
-          "Over": 2.37,
-          "Under": 1.53
-        },
-        "moneyline_no_dec": {
-          "Marwan Rahiki": 1.1,
-          "Ollie Schmid": 5.8
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.28,
-          "Round 3 or by Decision": 3.4
-        },
-        "round_survival": {
-          "Yes": 3.4,
-          "No": 1.28,
-          "Start R2 Yes": 1.81,
-          "Start R2 No": 1.93,
-          "Start R3 Yes": 3.4,
-          "Start R3 No": 1.28
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419076",
-      "fight_name": "Tim Elliott v Steve Erceg",
-      "fighter_a_raw": "Tim Elliott",
-      "fighter_b_raw": "Steve Erceg",
-      "start_time": 1777725000,
-      "markets": {
-        "moneyline": {
-          "Tim Elliott": 2.51,
-          "Steve Erceg": 1.53
-        },
-        "method": {
-          "Tim Elliott by KO/TKO": 10.5,
-          "Tim Elliott by Points": 4.5,
-          "Tim Elliott by Submission": 7.75,
-          "Draw": 51.0,
-          "Steve Erceg by KO/TKO": 10.0,
-          "Steve Erceg by Points": 2.25,
-          "Steve Erceg by Submission": 6.25
-        },
-        "winning_round": {
-          "Tim Elliott to Win in Round 1": 8.5,
-          "Tim Elliott to Win in Round 2": 10.5,
-          "Tim Elliott to Win in Round 3": 11.0,
-          "Tim Elliott to Win by Decision": 4.5,
-          "Draw": 41.0,
-          "Steve Erceg to Win in Round 1": 8.5,
-          "Steve Erceg to Win in Round 2": 9.5,
-          "Steve Erceg to Win in Round 3": 10.5,
-          "Steve Erceg to Win by Decision": 2.25,
-          "Round 1": 5.3,
-          "Round 2": 6.75,
-          "Round 3": 8.0,
-          "Tim Elliott Round 1 or 2": 6.25,
-          "Tim Elliott Round 3 or by Decision": 3.7,
-          "Steve Erceg Round 1 or 2": 5.5,
-          "Steve Erceg Round 3 or by Decision": 2.0
-        },
-        "method_combo": {
-          "Tim Elliott by KO/TKO or Submission": 4.8,
-          "Tim Elliott by KO/TKO or on Points": 3.35,
-          "Tim Elliott by Submission or on Points": 3.0,
-          "Draw": 51.0,
-          "Steve Erceg by KO/TKO or Submission": 4.25,
-          "Steve Erceg by KO/TKO or on Points": 1.92,
-          "Steve Erceg by Submission or on Points": 1.72
-        },
-        "method_neutral": {
-          "KO/TKO": 5.75,
-          "Submission": 3.75,
-          "Points": 1.51
-        },
-        "distance": {
-          "Yes": 1.52,
-          "No": 2.41
-        },
-        "total_rounds": {
-          "Over": 1.4,
-          "Under": 2.75
-        },
-        "moneyline_no_dec": {
-          "Tim Elliott": 2.02,
-          "Steve Erceg": 1.76
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 3.25,
-          "Round 3 or by Decision": 1.31
-        },
-        "round_survival": {
-          "Yes": 1.31,
-          "No": 3.25,
-          "Start R2 Yes": 1.14,
-          "Start R2 No": 5.2,
-          "Start R3 Yes": 1.31,
-          "Start R3 No": 3.25
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10419077",
-      "fight_name": "Beneil Dariush v Quillan Salkilld",
-      "fighter_a_raw": "Beneil Dariush",
-      "fighter_b_raw": "Quillan Salkilld",
-      "start_time": 1777726500,
-      "markets": {
-        "moneyline": {
-          "Beneil Dariush": 4.1,
-          "Quillan Salkilld": 1.24
-        },
-        "method": {
-          "Beneil Dariush by KO/TKO": 9.5,
-          "Beneil Dariush by Points": 8.5,
-          "Beneil Dariush by Submission": 14.0,
-          "Draw": 51.0,
-          "Quillan Salkilld by KO/TKO": 1.71,
-          "Quillan Salkilld by Points": 7.0,
-          "Quillan Salkilld by Submission": 8.0
-        },
-        "winning_round": {
-          "Beneil Dariush to Win in Round 1": 10.0,
-          "Beneil Dariush to Win in Round 2": 12.0,
-          "Beneil Dariush to Win in Round 3": 13.0,
-          "Beneil Dariush to Win by Decision": 7.5,
-          "Draw": 41.0,
-          "Quillan Salkilld to Win in Round 1": 2.37,
-          "Quillan Salkilld to Win in Round 2": 5.5,
-          "Quillan Salkilld to Win in Round 3": 7.5,
-          "Quillan Salkilld to Win by Decision": 6.5,
-          "Round 1": 2.03,
-          "Round 2": 4.4,
-          "Round 3": 6.5,
-          "Beneil Dariush Round 1 or 2": 7.75,
-          "Beneil Dariush Round 3 or by Decision": 6.5,
-          "Quillan Salkilld Round 1 or 2": 1.7,
-          "Quillan Salkilld Round 3 or by Decision": 4.2
-        },
-        "method_combo": {
-          "Beneil Dariush by KO/TKO or Submission": 6.25,
-          "Beneil Dariush by KO/TKO or on Points": 4.9,
-          "Beneil Dariush by Submission or on Points": 5.8,
-          "Draw": 51.0,
-          "Quillan Salkilld by KO/TKO or Submission": 1.45,
-          "Quillan Salkilld by KO/TKO or on Points": 1.41,
-          "Quillan Salkilld by Submission or on Points": 4.1
-        },
-        "method_neutral": {
-          "KO/TKO": 1.49,
-          "Submission": 5.6,
-          "Points": 3.9
-        },
-        "distance": {
-          "Yes": 4.0,
-          "No": 1.22
-        },
-        "total_rounds": {
-          "Over": 1.83,
-          "Under": 1.83
-        },
-        "moneyline_no_dec": {
-          "Beneil Dariush": 5.2,
-          "Quillan Salkilld": 1.13
-        },
-        "alt_finish_timing": {
-          "Round 1 or 2": 1.44,
-          "Round 3 or by Decision": 2.67
-        },
-        "round_survival": {
-          "Yes": 2.67,
-          "No": 1.44,
-          "Start R2 Yes": 1.71,
-          "Start R2 No": 2.06,
-          "Start R3 Yes": 2.67,
-          "Start R3 No": 1.44
-        }
-      }
-    },
-    {
-      "sportsbet_event_id": "10239724",
-      "fight_name": "Jack Della Maddalena v Carlos Prates",
-      "fighter_a_raw": "Jack Della Maddalena",
-      "fighter_b_raw": "Carlos Prates",
-      "start_time": 1777728600,
-      "markets": {
-        "moneyline": {
-          "Jack Della Maddalena": 1.98,
-          "Carlos Prates": 1.86
-        },
-        "method": {
-          "Jack Della Maddalena by KO/TKO": 3.75,
-          "Jack Della Maddalena by Points": 4.5,
-          "Jack Della Maddalena by Submission": 15.0,
-          "Draw": 51.0,
-          "Carlos Prates by KO/TKO": 2.6,
-          "Carlos Prates by Points": 6.5,
-          "Carlos Prates by Submission": 23.0
-        },
-        "winning_round": {
-          "Jack Della Maddalena to Win in Round 1": 10.0,
-          "Jack Della Maddalena to Win in Round 2": 11.5,
-          "Jack Della Maddalena to Win in Round 3": 13.0,
-          "Jack Della Maddalena to Win in Round 4": 15.0,
-          "Jack Della Maddalena to Win in Round 5": 18.0,
-          "Jack Della Maddalena to Win by Decision": 4.5,
-          "Draw": 51.0,
-          "Carlos Prates to Win in Round 1": 7.75,
-          "Carlos Prates to Win in Round 2": 9.25,
-          "Carlos Prates to Win in Round 3": 10.5,
-          "Carlos Prates to Win in Round 4": 12.0,
-          "Carlos Prates to Win in Round 5": 13.0,
-          "Carlos Prates to Win by Decision": 6.5,
-          "Round 1": 4.8,
-          "Round 2": 5.6,
-          "Round 3": 6.5,
-          "Round 4": 7.5,
-          "Round 5": 8.5,
-          "Jack Della Maddalena Round 1, 2, or 3": 4.4,
-          "Jack Della Maddalena Round 4, 5, or by Decision": 3.2,
-          "Carlos Prates Round 1, 2, or 3": 3.4,
-          "Carlos Prates Round 4, 5, or by Decision": 3.6
-        },
-        "method_combo": {
-          "Jack Della Maddalena by KO/TKO or Submission": 3.15,
-          "Jack Della Maddalena by KO/TKO or on Points": 2.12,
-          "Jack Della Maddalena by Submission or on Points": 3.7,
-          "Draw": 51.0,
-          "Carlos Prates by KO/TKO or Submission": 2.4,
-          "Carlos Prates by KO/TKO or on Points": 1.93,
-          "Carlos Prates by Submission or on Points": 5.4
-        },
-        "method_neutral": {
-          "KO/TKO": 1.58,
-          "Submission": 10.0,
-          "Points": 2.7
-        },
-        "distance": {
-          "Yes": 2.78,
-          "No": 1.41
-        },
-        "total_rounds": {
-          "Over": 2.0,
-          "Under": 1.8
-        },
-        "moneyline_no_dec": {
-          "Jack Della Maddalena": 2.1,
-          "Carlos Prates": 1.68
-        },
-        "alt_finish_timing": {
-          "Round 1, 2, or 3": 2.02,
-          "Round 4, 5, or by Decision": 1.73
-        },
-        "round_survival": {
-          "Yes": 2.17,
-          "No": 1.64,
-          "Start R2 Yes": 1.17,
-          "Start R2 No": 4.65,
-          "Start R3 Yes": 1.4,
-          "Start R3 No": 2.79,
-          "Start R4 Yes": 1.73,
-          "Start R4 No": 2.02,
-          "Start R5 Yes": 2.17,
-          "Start R5 No": 1.64
+          "Pat Sabatini": 1.47,
+          "William Gomis": 2.71
         }
       }
     },
@@ -809,11 +45,11 @@
       "fight_name": "Roman Kopylov v Marco Tulio",
       "fighter_a_raw": "Roman Kopylov",
       "fighter_b_raw": "Marco Tulio",
-      "start_time": 1778368200,
+      "start_time": 1778366100,
       "markets": {
         "moneyline": {
-          "Roman Kopylov": 2.5,
-          "Marco Tulio": 1.51
+          "Roman Kopylov": 2.52,
+          "Marco Tulio": 1.53
         }
       }
     },
@@ -822,11 +58,11 @@
       "fight_name": "Jim Miller v Jared Gordon",
       "fighter_a_raw": "Jim Miller",
       "fighter_b_raw": "Jared Gordon",
-      "start_time": 1778370000,
+      "start_time": 1778368200,
       "markets": {
         "moneyline": {
-          "Jim Miller": 3.4,
-          "Jared Gordon": 1.3
+          "Jim Miller": 3.46,
+          "Jared Gordon": 1.31
         }
       }
     },
@@ -835,11 +71,11 @@
       "fight_name": "Grant Dawson v Mateusz Rebecki",
       "fighter_a_raw": "Grant Dawson",
       "fighter_b_raw": "Mateusz Rebecki",
-      "start_time": 1778371800,
+      "start_time": 1778370000,
       "markets": {
         "moneyline": {
-          "Grant Dawson": 1.72,
-          "Mateusz Rebecki": 2.1
+          "Grant Dawson": 1.57,
+          "Mateusz Rebecki": 2.41
         }
       }
     },
@@ -848,24 +84,24 @@
       "fight_name": "Yaroslav Amosov v Joel Alvarez",
       "fighter_a_raw": "Yaroslav Amosov",
       "fighter_b_raw": "Joel Alvarez",
-      "start_time": 1778373000,
+      "start_time": 1778371800,
       "markets": {
         "moneyline": {
-          "Yaroslav Amosov": 1.59,
-          "Joel Alvarez": 2.32
+          "Yaroslav Amosov": 1.55,
+          "Joel Alvarez": 2.46
         }
       }
     },
     {
-      "sportsbet_event_id": "10279934",
-      "fight_name": "Jan Blachowicz v Bogdan Guskov",
-      "fighter_a_raw": "Jan Blachowicz",
-      "fighter_b_raw": "Bogdan Guskov",
-      "start_time": 1778374800,
+      "sportsbet_event_id": "10443539",
+      "fight_name": "Ateba Gautier v Ozzy Diaz",
+      "fighter_a_raw": "Ateba Gautier",
+      "fighter_b_raw": "Ozzy Diaz",
+      "start_time": 1778373300,
       "markets": {
         "moneyline": {
-          "Jan Blachowicz": 2.08,
-          "Bogdan Guskov": 1.75
+          "Ateba Gautier": 1.1,
+          "Ozzy Diaz": 7.0
         }
       }
     },
@@ -874,11 +110,11 @@
       "fight_name": "King Green v Jeremy Stephens",
       "fighter_a_raw": "King Green",
       "fighter_b_raw": "Jeremy Stephens",
-      "start_time": 1778374800,
+      "start_time": 1778375700,
       "markets": {
         "moneyline": {
-          "King Green": 1.3,
-          "Jeremy Stephens": 3.4
+          "King Green": 1.31,
+          "Jeremy Stephens": 3.46
         }
       }
     },
@@ -887,11 +123,11 @@
       "fight_name": "Sean Brady v Joaquin Buckley",
       "fighter_a_raw": "Sean Brady",
       "fighter_b_raw": "Joaquin Buckley",
-      "start_time": 1778376600,
+      "start_time": 1778377500,
       "markets": {
         "moneyline": {
-          "Sean Brady": 1.5,
-          "Joaquin Buckley": 2.54
+          "Sean Brady": 1.57,
+          "Joaquin Buckley": 2.41
         }
       }
     },
@@ -900,11 +136,11 @@
       "fight_name": "Alexander Volkov v Waldo Cortes-Acosta",
       "fighter_a_raw": "Alexander Volkov",
       "fighter_b_raw": "Waldo Cortes-Acosta",
-      "start_time": 1778378400,
+      "start_time": 1778379300,
       "markets": {
         "moneyline": {
-          "Alexander Volkov": 1.57,
-          "Waldo Cortes-Acosta": 2.35
+          "Alexander Volkov": 1.59,
+          "Waldo Cortes-Acosta": 2.37
         }
       }
     },
@@ -913,86 +149,82 @@
       "fight_name": "Joshua Van v Tatsuro Taira",
       "fighter_a_raw": "Joshua Van",
       "fighter_b_raw": "Tatsuro Taira",
-      "start_time": 1778380200,
+      "start_time": 1778381100,
       "markets": {
         "moneyline": {
-          "Joshua Van": 2.63,
-          "Tatsuro Taira": 1.47
+          "Joshua Van": 2.44,
+          "Tatsuro Taira": 1.56
         },
         "method": {
-          "Joshua Van by KO/TKO": 4.6,
-          "Joshua Van by Points": 6.5,
-          "Joshua Van by Submission": 21.0,
+          "Joshua Van by KO/TKO": 4.4,
+          "Joshua Van by Points": 5.6,
+          "Joshua Van by Submission": 19.0,
           "Draw": 51.0,
-          "Tatsuro Taira by KO/TKO": 7.75,
-          "Tatsuro Taira by Points": 3.75,
-          "Tatsuro Taira by Submission": 3.1
+          "Tatsuro Taira by KO/TKO": 8.0,
+          "Tatsuro Taira by Points": 4.0,
+          "Tatsuro Taira by Submission": 3.2
         },
         "winning_round": {
-          "Joshua Van to Win in Round 1": 10.5,
+          "Joshua Van to Win in Round 1": 9.75,
           "Joshua Van to Win in Round 2": 13.0,
-          "Joshua Van to Win in Round 3": 18.0,
-          "Joshua Van to Win in Round 4": 23.0,
+          "Joshua Van to Win in Round 3": 17.0,
+          "Joshua Van to Win in Round 4": 21.0,
           "Joshua Van to Win in Round 5": 26.0,
-          "Joshua Van to Win by Decision": 6.5,
+          "Joshua Van to Win by Decision": 5.6,
           "Draw": 51.0,
-          "Tatsuro Taira to Win in Round 1": 6.0,
-          "Tatsuro Taira to Win in Round 2": 8.75,
+          "Tatsuro Taira to Win in Round 1": 6.5,
+          "Tatsuro Taira to Win in Round 2": 9.25,
           "Tatsuro Taira to Win in Round 3": 11.0,
-          "Tatsuro Taira to Win in Round 4": 14.0,
-          "Tatsuro Taira to Win in Round 5": 18.0,
-          "Tatsuro Taira to Win by Decision": 3.75,
-          "Round 1": 4.1,
-          "Round 2": 5.8,
+          "Tatsuro Taira to Win in Round 4": 12.5,
+          "Tatsuro Taira to Win in Round 5": 16.0,
+          "Tatsuro Taira to Win by Decision": 4.0,
+          "Round 1": 4.3,
+          "Round 2": 6.0,
           "Round 3": 7.5,
-          "Round 4": 9.5,
-          "Round 5": 12.0,
-          "Joshua Van Round 1, 2, or 3": 5.1,
-          "Joshua Van Round 4, 5, or by Decision": 4.75,
-          "Tatsuro Taira Round 1, 2, or 3": 3.0,
-          "Tatsuro Taira Round 4, 5, or by Decision": 2.7
+          "Round 4": 8.75,
+          "Round 5": 11.0,
+          "Joshua Van Round 1, 2, or 3": 4.9,
+          "Joshua Van Round 4, 5, or by Decision": 4.25,
+          "Tatsuro Taira Round 1, 2, or 3": 3.2,
+          "Tatsuro Taira Round 4, 5, or by Decision": 2.8
         },
         "method_combo": {
-          "Joshua Van by KO/TKO or Submission": 4.0,
-          "Joshua Van by KO/TKO or on Points": 2.8,
-          "Joshua Van by Submission or on Points": 5.3,
+          "Joshua Van by KO/TKO or Submission": 3.8,
+          "Joshua Van by KO/TKO or on Points": 2.6,
+          "Joshua Van by Submission or on Points": 4.7,
           "Draw": 51.0,
-          "Tatsuro Taira by KO/TKO or Submission": 2.3,
-          "Tatsuro Taira by KO/TKO or on Points": 2.65,
-          "Tatsuro Taira by Submission or on Points": 1.75
+          "Tatsuro Taira by KO/TKO or Submission": 2.35,
+          "Tatsuro Taira by KO/TKO or on Points": 2.8,
+          "Tatsuro Taira by Submission or on Points": 1.85
         },
         "method_neutral": {
-          "KO/TKO": 3.05,
-          "Submission": 2.8,
+          "KO/TKO": 3.0,
+          "Submission": 2.85,
           "Points": 2.35
         },
         "distance": {
-          "Yes": 2.44,
-          "No": 1.51
-        },
-        "total_rounds": {
-          "Over": 1.9,
-          "Under": 1.8
+          "Yes": 2.42,
+          "No": 1.52
         },
         "moneyline_no_dec": {
-          "Joshua Van": 2.6,
-          "Tatsuro Taira": 1.45
+          "Joshua Van": 2.45,
+          "Tatsuro Taira": 1.5
         },
         "alt_finish_timing": {
-          "Round 1, 2, or 3": 1.98,
-          "Round 4, 5, or by Decision": 1.76
+          "Round 1, 2, or 3": 2.04,
+          "Round 4, 5, or by Decision": 1.72
         },
         "round_survival": {
-          "Yes": 2.09,
-          "No": 1.69,
+          "Yes": 2.06,
+          "No": 1.71,
           "Start R2 Yes": 1.2,
           "Start R2 No": 4.25,
-          "Start R3 Yes": 1.47,
-          "Start R3 No": 2.57,
-          "Start R4 Yes": 1.76,
-          "Start R4 No": 1.98,
-          "Start R5 Yes": 2.09,
-          "Start R5 No": 1.69
+          "Start R3 Yes": 1.43,
+          "Start R3 No": 2.69,
+          "Start R4 Yes": 1.72,
+          "Start R4 No": 2.04,
+          "Start R5 Yes": 2.06,
+          "Start R5 No": 1.71
         }
       }
     },
@@ -1004,83 +236,83 @@
       "start_time": 1778383800,
       "markets": {
         "moneyline": {
-          "Khamzat Chimaev": 1.2,
-          "Sean Strickland": 4.4
+          "Khamzat Chimaev": 1.17,
+          "Sean Strickland": 5.1
         },
         "method": {
-          "Khamzat Chimaev by KO/TKO": 5.2,
-          "Khamzat Chimaev by Points": 3.8,
-          "Khamzat Chimaev by Submission": 2.4,
+          "Khamzat Chimaev by KO/TKO": 5.25,
+          "Khamzat Chimaev by Points": 4.2,
+          "Khamzat Chimaev by Submission": 2.12,
           "Draw": 51.0,
-          "Sean Strickland by KO/TKO": 10.5,
-          "Sean Strickland by Points": 6.5,
+          "Sean Strickland by KO/TKO": 12.0,
+          "Sean Strickland by Points": 7.25,
           "Sean Strickland by Submission": 61.0
         },
         "winning_round": {
-          "Khamzat Chimaev to Win in Round 1": 4.6,
-          "Khamzat Chimaev to Win in Round 2": 5.8,
-          "Khamzat Chimaev to Win in Round 3": 8.0,
-          "Khamzat Chimaev to Win in Round 4": 11.5,
+          "Khamzat Chimaev to Win in Round 1": 4.0,
+          "Khamzat Chimaev to Win in Round 2": 5.0,
+          "Khamzat Chimaev to Win in Round 3": 8.75,
+          "Khamzat Chimaev to Win in Round 4": 12.0,
           "Khamzat Chimaev to Win in Round 5": 16.0,
-          "Khamzat Chimaev to Win by Decision": 3.8,
+          "Khamzat Chimaev to Win by Decision": 4.2,
           "Draw": 51.0,
-          "Sean Strickland to Win in Round 1": 34.0,
-          "Sean Strickland to Win in Round 2": 34.0,
-          "Sean Strickland to Win in Round 3": 34.0,
-          "Sean Strickland to Win in Round 4": 41.0,
+          "Sean Strickland to Win in Round 1": 41.0,
+          "Sean Strickland to Win in Round 2": 41.0,
+          "Sean Strickland to Win in Round 3": 41.0,
+          "Sean Strickland to Win in Round 4": 46.0,
           "Sean Strickland to Win in Round 5": 46.0,
-          "Sean Strickland to Win by Decision": 6.5,
-          "Round 1": 4.3,
-          "Round 2": 5.3,
-          "Round 3": 7.0,
-          "Round 4": 9.75,
+          "Sean Strickland to Win by Decision": 7.25,
+          "Round 1": 3.8,
+          "Round 2": 4.6,
+          "Round 3": 7.75,
+          "Round 4": 10.0,
           "Round 5": 12.5,
-          "Khamzat Chimaev Round 1, 2, or 3": 2.1,
-          "Khamzat Chimaev Round 4, 5, or by Decision": 2.6,
-          "Sean Strickland Round 1, 2, or 3": 14.0,
-          "Sean Strickland Round 4, 5, or by Decision": 5.6
+          "Khamzat Chimaev Round 1, 2, or 3": 1.9,
+          "Khamzat Chimaev Round 4, 5, or by Decision": 2.85,
+          "Sean Strickland Round 1, 2, or 3": 16.0,
+          "Sean Strickland Round 4, 5, or by Decision": 6.0
         },
         "method_combo": {
-          "Khamzat Chimaev by KO/TKO or Submission": 1.7,
-          "Khamzat Chimaev by KO/TKO or on Points": 2.25,
-          "Khamzat Chimaev by Submission or on Points": 1.51,
+          "Khamzat Chimaev by KO/TKO or Submission": 1.56,
+          "Khamzat Chimaev by KO/TKO or on Points": 2.4,
+          "Khamzat Chimaev by Submission or on Points": 1.46,
           "Draw": 51.0,
-          "Sean Strickland by KO/TKO or Submission": 9.75,
-          "Sean Strickland by KO/TKO or on Points": 4.5,
-          "Sean Strickland by Submission or on Points": 6.25
+          "Sean Strickland by KO/TKO or Submission": 10.5,
+          "Sean Strickland by KO/TKO or on Points": 5.0,
+          "Sean Strickland by Submission or on Points": 6.75
         },
         "method_neutral": {
-          "KO/TKO": 3.75,
-          "Submission": 2.35,
-          "Points": 2.4
+          "KO/TKO": 3.9,
+          "Submission": 2.1,
+          "Points": 2.7
         },
         "distance": {
-          "Yes": 2.49,
-          "No": 1.49
+          "Yes": 2.78,
+          "No": 1.41
         },
         "total_rounds": {
-          "Over": 2.0,
-          "Under": 1.72
+          "Over": 1.72,
+          "Under": 2.0
         },
         "moneyline_no_dec": {
-          "Khamzat Chimaev": 1.08,
-          "Sean Strickland": 6.5
+          "Khamzat Chimaev": 1.07,
+          "Sean Strickland": 7.0
         },
         "alt_finish_timing": {
-          "Round 1, 2, or 3": 1.91,
-          "Round 4, 5, or by Decision": 1.82
+          "Round 1, 2, or 3": 1.76,
+          "Round 4, 5, or by Decision": 1.98
         },
         "round_survival": {
-          "Yes": 2.16,
-          "No": 1.65,
-          "Start R2 Yes": 1.2,
-          "Start R2 No": 4.25,
-          "Start R3 Yes": 1.49,
-          "Start R3 No": 2.5,
-          "Start R4 Yes": 1.82,
-          "Start R4 No": 1.91,
-          "Start R5 Yes": 2.16,
-          "Start R5 No": 1.65
+          "Yes": 2.37,
+          "No": 1.54,
+          "Start R2 Yes": 1.22,
+          "Start R2 No": 4.0,
+          "Start R3 Yes": 1.63,
+          "Start R3 No": 2.19,
+          "Start R4 Yes": 1.98,
+          "Start R4 No": 1.76,
+          "Start R5 Yes": 2.37,
+          "Start R5 No": 1.54
         }
       }
     },

@@ -37,10 +37,15 @@ _DELAY_S = 1.0
 
 def _name_to_slug(name: str) -> str:
     import unicodedata
-    # Normalise accents and build slug
+    # Normalise accents and build slug. Punctuation is replaced with a SPACE
+    # (then collapsed to a hyphen below) rather than deleted — UFC's slug for
+    # "Waldo Cortes-Acosta" is "waldo-cortes-acosta", and silently dropping
+    # the hyphen produced "waldo-cortesacosta", which 404s and leaves an
+    # empty metadata stub that the dashboard then can't render flag/image
+    # for.
     name = unicodedata.normalize("NFD", name)
     name = "".join(c for c in name if unicodedata.category(c) != "Mn")
-    name = re.sub(r"[^a-zA-Z0-9\s]", "", name).strip().lower()
+    name = re.sub(r"[^a-zA-Z0-9]+", " ", name).strip().lower()
     return re.sub(r"\s+", "-", name)
 
 
@@ -66,9 +71,13 @@ def fetch_image_url(name: str) -> str | None:
 
         # Verify the page is for THIS fighter: the <title> should contain
         # the fighter's surname. UFC titles look like "Ollie Schmid | UFC".
+        # Compare on a normalised form so "Cortes-Acosta" (input) matches
+        # "Cortes Acosta" (page title).
         title_m = re.search(r"<title>([^<]+)</title>", r.text)
-        title_text = (title_m.group(1) if title_m else "").lower()
-        last_name = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        raw_title = (title_m.group(1) if title_m else "").lower()
+        title_text = re.sub(r"[^a-z0-9]+", " ", raw_title)
+        last_name_raw = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        last_name = re.sub(r"[^a-z0-9]+", " ", last_name_raw).strip()
         if not last_name or last_name not in title_text:
             log.debug(
                 "Skipping image for '%s' — page title %r doesn't reference fighter",

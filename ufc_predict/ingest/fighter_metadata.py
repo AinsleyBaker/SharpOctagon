@@ -122,9 +122,13 @@ def fetch_metadata(name: str) -> dict | None:
         # Same sanity check as fetch_image_url — confirm the page is actually
         # for this fighter. Otherwise we end up scraping someone else's bio
         # for a debut fighter who has no UFC profile yet.
+        # Compare on a normalised form so "Cortes-Acosta" (input) matches
+        # "Cortes Acosta" (page title) — both reduce to "cortes acosta".
         title_m = re.search(r"<title>([^<]+)</title>", r.text)
-        title_text = (title_m.group(1) if title_m else "").lower()
-        last_name = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        raw_title = (title_m.group(1) if title_m else "").lower()
+        title_text = re.sub(r"[^a-z0-9]+", " ", raw_title)
+        last_name_raw = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        last_name = re.sub(r"[^a-z0-9]+", " ", last_name_raw).strip()
         if not last_name or last_name not in title_text:
             return None
         bio = _parse_bio_fields(r.text)

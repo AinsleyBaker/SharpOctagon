@@ -1238,6 +1238,26 @@
               <!-- Predicted vs Actual -->
               <div class="detail-box">
                 <h4>Model Prediction vs Actual Result</h4>
+                {# Bucket actual method into the same KO/SUB/DEC categories
+                   used by the prop probabilities so the "actual method"
+                   row alongside each predicted % is decisive, not just a
+                   checkmark in space. #}
+                {% set act_m = (bout.actual_method or '').upper() %}
+                {% set act_is_ko  = 'KO' in act_m or 'TKO' in act_m %}
+                {% set act_is_sub = 'SUB' in act_m %}
+                {% set act_is_dec = ('DEC' in act_m) or ('POINT' in act_m) %}
+                {% set act_side = bout.actual_winner_side %}
+                {# "Final" is ESPN's status string, not a method — drop it so we
+                   don't render the misleading "won by Final" until the DB
+                   ingest fills in the real KO/Sub/Decision. #}
+                {% set act_method_clean = (bout.actual_method or '') if act_is_ko or act_is_sub or act_is_dec else '' %}
+                {% set act_method_short = 'KO/TKO' if act_is_ko else 'Submission' if act_is_sub else 'Decision' if act_is_dec else '' %}
+                {% if bout.actual_winner_name %}
+                <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.6rem;font-size:var(--sm)">
+                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Actual outcome</div>
+                  <div style="margin-top:2px"><strong style="color:var(--matrix)">{{ bout.actual_winner_name }}</strong>{% if act_method_short %} by <strong>{{ act_method_short }}</strong>{% endif %}{% if bout.actual_round %} in <strong>R{{ bout.actual_round }}</strong>{% endif %}{% if not act_method_short %} <span style="color:var(--muted);font-size:var(--xs)">(method pending DB ingest)</span>{% endif %}</div>
+                </div>
+                {% endif %}
                 <table class="stat-table">
                   <thead>
                     <tr>
@@ -1260,18 +1280,13 @@
                     </tr>
                     {% if bout.props %}
                     {% set methods = bout.props %}
-                    {% set act_m = (bout.actual_method or '').upper() %}
-                    {% set act_is_ko  = 'KO' in act_m %}
-                    {% set act_is_sub = 'SUB' in act_m %}
-                    {% set act_is_dec = ('DEC' in act_m) or ('POINT' in act_m) %}
-                    {% set act_side = bout.actual_winner_side %}
                     {% macro mrow(label, prob, side, is_method) -%}
                     {% set hit = act_side == side and is_method %}
                     <tr>
                       <td>{{ label }}</td>
                       <td>{{ (prob*100)|round(0)|int }}%</td>
                       <td style="color:{{ 'var(--green)' if hit else 'var(--muted)' }}">
-                        {{ '✓ happened' if hit else '—' }}
+                        {% if hit %}✓ happened{% if bout.actual_round %} (R{{ bout.actual_round }}){% endif %}{% else %}—{% endif %}
                       </td>
                     </tr>
                     {%- endmacro %}
@@ -1281,13 +1296,37 @@
                     {{ mrow(bout.fighter_b_name + ' by KO/TKO',  methods.get('prob_b_wins_ko_tko', 0), 'b', act_is_ko) }}
                     {{ mrow(bout.fighter_b_name + ' by Sub',     methods.get('prob_b_wins_sub',    0), 'b', act_is_sub) }}
                     {{ mrow(bout.fighter_b_name + ' by Decision',methods.get('prob_b_wins_dec',    0), 'b', act_is_dec) }}
+                    <tr>
+                      <td>Method</td>
+                      <td>
+                        {# Top predicted method across both fighters #}
+                        {% set _meths = [
+                          ('KO/TKO', (methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0))),
+                          ('Submission', (methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0))),
+                          ('Decision', (methods.get('prob_a_wins_dec',0) + methods.get('prob_b_wins_dec',0))),
+                        ] %}
+                        {% set _top = (_meths | sort(attribute='1', reverse=true) | first) %}
+                        {{ _top[0] }} ({{ (_top[1]*100)|round(0)|int }}%)
+                      </td>
+                      {% set method_match = (act_is_ko and 'KO' in (_top[0] or '')) or (act_is_sub and 'Sub' in (_top[0] or '')) or (act_is_dec and 'Dec' in (_top[0] or '')) %}
+                      {% if act_method_short %}
+                      <td style="color:{{ 'var(--green)' if method_match else 'var(--red)' }}">
+                        {{ act_method_short }} {{ '✓' if method_match else '✗' }}
+                      </td>
+                      {% else %}
+                      <td style="color:var(--muted)">pending</td>
+                      {% endif %}
+                    </tr>
                     {% if bout.actual_round %}
                     {% set prob_rounds = methods.get('prob_rounds') or {} %}
                     {% set pred_round_key = (prob_rounds.items() | sort(attribute='1', reverse=true) | list | first) %}
                     <tr>
                       <td>Ending round</td>
                       <td>{{ pred_round_key[0] if pred_round_key else '?' }}</td>
-                      <td>R{{ bout.actual_round }}</td>
+                      <td style="color:{{ 'var(--green)' if pred_round_key and pred_round_key[0] == 'R' + bout.actual_round|string else 'var(--muted)' }}">
+                        R{{ bout.actual_round }}
+                        {% if pred_round_key %} {{ '✓' if pred_round_key[0] == 'R' + bout.actual_round|string else '✗' }}{% endif %}
+                      </td>
                     </tr>
                     {% endif %}
                     {% endif %}

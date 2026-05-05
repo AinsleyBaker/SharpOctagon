@@ -52,9 +52,19 @@ def load_fighter_images() -> dict[str, str]:
     if not FIGHTER_IMGS_PATH.exists():
         return {}
     try:
-        return json.loads(FIGHTER_IMGS_PATH.read_text(encoding="utf-8"))
+        raw = json.loads(FIGHTER_IMGS_PATH.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return {}
+    # Mirror the fighter_metadata behaviour: alias every entry under its
+    # normalised name so unaccented predictions hit accented image entries.
+    aliased = dict(raw)
+    for k, v in raw.items():
+        if not v:
+            continue
+        nkey = _norm_meta_key(k)
+        if nkey and nkey not in aliased:
+            aliased[nkey] = v
+    return aliased
 
 
 def load_schedule() -> list[dict]:
@@ -66,14 +76,78 @@ def load_schedule() -> list[dict]:
         return []
 
 
+def _norm_meta_key(s: str | None) -> str:
+    """Aggressive name normalisation for cross-source metadata lookups.
+
+    Strips diacritics AND punctuation so "Joel Álvarez", "Joel Alvarez",
+    and "Waldo Cortes-Acosta" / "Waldo Cortes Acosta" all collapse onto
+    the same key. Without this, the predictions side (which carries the
+    DB's unaccented name) misses metadata records keyed under the
+    UFC.com-scraped accented name and the dashboard renders without
+    flag/image/style.
+    """
+    import re
+    if not s:
+        return ""
+    nfkd = unicodedata.normalize("NFKD", str(s))
+    stripped = "".join(c for c in nfkd if not unicodedata.combining(c)).lower()
+    stripped = re.sub(r"[^a-z0-9]+", " ", stripped)
+    return re.sub(r"\s+", " ", stripped).strip()
+
+
 def load_fighter_metadata() -> dict[str, dict]:
-    """Country, official UFC fighting style, image — keyed by fighter name."""
+    """Country, official UFC fighting style, image — keyed by fighter name.
+
+    The on-disk JSON sometimes contains *duplicate logical entries* for the
+    same fighter under accented vs. unaccented spellings (the scraper
+    re-keys when UFC.com updates a profile). One copy may be richly
+    populated (Joel Álvarez → Spain, Striker, png) while the other is a
+    near-empty stub (Joel Alvarez → "", "", jpg). We merge such
+    duplicates here, preferring non-empty fields, then expose the result
+    under BOTH the original keys and a normalised-name alias so callers
+    that look up either spelling get the merged best record.
+    """
     if not FIGHTER_META_PATH.exists():
         return {}
     try:
-        return json.loads(FIGHTER_META_PATH.read_text(encoding="utf-8"))
+        raw = json.loads(FIGHTER_META_PATH.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return {}
+
+    # Group records by normalised key so duplicates can be merged.
+    groups: dict[str, list[tuple[str, dict]]] = {}
+    for k, v in raw.items():
+        if not isinstance(v, dict):
+            continue
+        groups.setdefault(_norm_meta_key(k), []).append((k, v))
+
+    merged: dict[str, dict] = {}
+    for nkey, items in groups.items():
+        if not nkey:
+            continue
+        # Field-wise merge: first non-empty wins. Iterate in reverse-length
+        # order so the most-populated record's nested dicts (stats) win
+        # ties when both sides have a value.
+        items_sorted = sorted(
+            items,
+            key=lambda kv: sum(1 for x in kv[1].values() if x),
+            reverse=True,
+        )
+        rec: dict = {}
+        for _orig_name, src in items_sorted:
+            for fld, val in src.items():
+                if val in (None, "", {}, []):
+                    continue
+                if fld not in rec or rec[fld] in (None, "", {}, []):
+                    rec[fld] = val
+        # Expose under every original key in this group …
+        for orig_name, _src in items:
+            merged[orig_name] = rec
+        # … and under the normalised alias so unaccented/punctuation-
+        # stripped lookups also resolve.
+        merged[nkey] = rec
+
+    return merged
 
 
 def _group_by_event(predictions: list[dict]) -> list[dict]:
@@ -381,8 +455,8 @@ def _build_preview_bout(
         parts = (n or "").split()
         return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
 
-    a_meta = fighter_meta.get(fa, {})
-    b_meta = fighter_meta.get(fb, {})
+    a_meta = fighter_meta.get(fa) or fighter_meta.get(_norm_meta_key(fa)) or {}
+    b_meta = fighter_meta.get(fb) or fighter_meta.get(_norm_meta_key(fb)) or {}
     a_stats = a_meta.get("stats", {}) or {}
     b_stats = b_meta.get("stats", {}) or {}
 
@@ -628,8 +702,8 @@ def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[
 
         a_name = p.get("fighter_a_name", "")
         b_name = p.get("fighter_b_name", "")
-        a_meta = fighter_meta.get(a_name, {})
-        b_meta = fighter_meta.get(b_name, {})
+        a_meta = fighter_meta.get(a_name) or fighter_meta.get(_norm_meta_key(a_name)) or {}
+        b_meta = fighter_meta.get(b_name) or fighter_meta.get(_norm_meta_key(b_name)) or {}
 
         def _initials(n: str) -> str:
             parts = (n or "").split()
@@ -893,7 +967,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 schedule_status_lookup[(ev_date, fb, fa)] = status_payload
 
     def _meta_lookup(name: str, key: str, default: str = "") -> str:
-        meta = fighter_meta.get(name, {})
+        # Try the exact name first, then fall back to the normalised alias
+        # so unaccented predictions ("Joel Alvarez") still hit the
+        # accented metadata record ("Joel Álvarez").
+        meta = fighter_meta.get(name) or fighter_meta.get(_norm_meta_key(name)) or {}
         val = meta.get(key) or default
         return val
 
@@ -1009,8 +1086,16 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
 
             # Fighter images: prefer metadata's image_url (already downloaded
             # to docs/fighter-images/). Fall back to legacy fighter_images cache.
-            a_img = _meta_lookup(a_name, "image_url") or fighter_imgs.get(a_name, "")
-            b_img = _meta_lookup(b_name, "image_url") or fighter_imgs.get(b_name, "")
+            a_img = (
+                _meta_lookup(a_name, "image_url")
+                or fighter_imgs.get(a_name)
+                or fighter_imgs.get(_norm_meta_key(a_name), "")
+            )
+            b_img = (
+                _meta_lookup(b_name, "image_url")
+                or fighter_imgs.get(b_name)
+                or fighter_imgs.get(_norm_meta_key(b_name), "")
+            )
             bout["a_img"] = a_img
             bout["b_img"] = b_img
 

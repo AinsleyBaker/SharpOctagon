@@ -1170,15 +1170,6 @@
       "stance": "Orthodox"
     }
   },
-  "Jakub Wik\u0142acz": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {}
-  },
   "Jaqueline Amorim": {
     "country": "Brazil",
     "hometown": "Manaus, Brazil",
@@ -1746,27 +1737,6 @@
     "record": "11-3-0",
     "image_url": "fighter-images/lucas-brennan.png"
   },
-  "Luis Felipe Dias": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {
-      "n_fights": 0,
-      "win_streak": 0,
-      "loss_streak": 0,
-      "l3_win_rate": null,
-      "finish_rate": null,
-      "ko_rate": null,
-      "sub_rate": null,
-      "slpm": null,
-      "sapm": null,
-      "td_per_min": null,
-      "stance": "nan"
-    }
-  },
   "Luis Gurule": {
     "country": "United States",
     "hometown": "Denver, United States",
@@ -2075,15 +2045,6 @@
     "age": "67.00",
     "record": "13-2-0",
     "image_url": "fighter-images/norma-dumont.png"
-  },
-  "Opponent TBA": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {}
   },
   "Ozzy Diaz": {
     "country": "United States",
@@ -2512,15 +2473,6 @@
     "image_url": "fighter-images/sumudaerji.png",
     "stats": {}
   },
-  "TBA": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {}
-  },
   "Tai Tuivasa": {
     "country": "Australia",
     "hometown": "Kingswood, Australia",
@@ -2676,27 +2628,6 @@
       "stance": "Southpaw"
     }
   },
-  "Tommy Gantt": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {
-      "n_fights": 0,
-      "win_streak": 0,
-      "loss_streak": 0,
-      "l3_win_rate": null,
-      "finish_rate": null,
-      "ko_rate": null,
-      "sub_rate": null,
-      "slpm": null,
-      "sapm": null,
-      "td_per_min": null,
-      "stance": "Orthodox"
-    }
-  },
   "Trey Ogden": {
     "country": "United States",
     "hometown": "Independence, United States",
@@ -2788,15 +2719,6 @@
       "td_per_min": 0.11654257041113629,
       "stance": "Orthodox"
     }
-  },
-  "Waldo Cortes-Acosta": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {}
   },
   "Wes Schultz": {
     "country": "United States",
@@ -2942,8 +2864,8 @@
     "stats": {}
   },
   "Marwan Rahiki": {
-    "country": "",
-    "hometown": "",
+    "country": "Morocco",
+    "hometown": "Morocco",
     "style": "Striker",
     "age": "23",
     "record": "9-0-0",
@@ -2963,8 +2885,8 @@
     }
   },
   "Ollie Schmid": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "New York, United States",
     "style": "Striker",
     "age": "25",
     "record": "4-2-0",
@@ -2984,8 +2906,8 @@
     }
   },
   "Ramon Taveras": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "New York, United States",
     "style": "MMA",
     "age": "31",
     "record": "10-4-0",
@@ -3005,8 +2927,8 @@
     }
   },
   "Zhu Kangjie": {
-    "country": "",
-    "hometown": "",
+    "country": "China",
+    "hometown": "China",
     "style": "",
     "age": "29",
     "record": "3-0-0",
@@ -3026,8 +2948,8 @@
     }
   },
   "Allan Nascimento": {
-    "country": "",
-    "hometown": "",
+    "country": "Brazil",
+    "hometown": "Brazil",
     "style": "Striker",
     "age": "34",
     "record": "22-6-0",
@@ -3047,8 +2969,8 @@
     }
   },
   "Andre Lima": {
-    "country": "",
-    "hometown": "",
+    "country": "Brazil",
+    "hometown": "State of Bahia, Brazil",
     "style": "Kickboxer",
     "age": "26",
     "record": "11-0-0",
@@ -3068,8 +2990,8 @@
     }
   },
   "Bia Mesquita": {
-    "country": "",
-    "hometown": "",
+    "country": "Brazil",
+    "hometown": "Brazil",
     "style": "Brazilian Jiu-Jitsu",
     "age": "34",
     "record": "6-0-0",
@@ -3089,8 +3011,8 @@
     }
   },
   "Christian Rodriguez": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "Chicago, United States",
     "style": "Freestyle",
     "age": "27",
     "record": "12-4-0",
@@ -3110,8 +3032,8 @@
     }
   },
   "Hyder Amil": {
-    "country": "",
-    "hometown": "",
+    "country": "Philippines",
+    "hometown": "Cebu City, Philippines",
     "style": "MMA",
     "age": "35",
     "record": "11-2-0",
@@ -3131,8 +3053,8 @@
     }
   },
   "Ion Cutelaba": {
-    "country": "",
-    "hometown": "",
+    "country": "Moldova",
+    "hometown": "Moldova",
     "style": "Sambo",
     "age": "32",
     "record": "20-11-1",
@@ -3152,8 +3074,8 @@
     }
   },
   "Jared Gordon": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "New York, United States",
     "style": "Freestyle",
     "age": "37",
     "record": "21-8-0",
@@ -3173,8 +3095,8 @@
     }
   },
   "Jim Miller": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "Newton, United States",
     "style": "Jiu-Jitsu",
     "age": "41",
     "record": "38-19-0",
@@ -3194,8 +3116,8 @@
     }
   },
   "Kevin Borjas": {
-    "country": "",
-    "hometown": "",
+    "country": "Peru",
+    "hometown": "Lima, Peru",
     "style": "",
     "age": "28",
     "record": "10-5-0",
@@ -3215,8 +3137,8 @@
     }
   },
   "Kyoji Horiguchi": {
-    "country": "",
-    "hometown": "",
+    "country": "Japan",
+    "hometown": "Takasaki, Japan",
     "style": "",
     "age": "35",
     "record": "36-5-0",
@@ -3236,8 +3158,8 @@
     }
   },
   "Manel Kape": {
-    "country": "",
-    "hometown": "",
+    "country": "Angola",
+    "hometown": "Angola",
     "style": "MMA",
     "age": "32",
     "record": "22-7-0",
@@ -3257,8 +3179,8 @@
     }
   },
   "Melissa Mullins": {
-    "country": "",
-    "hometown": "",
+    "country": "England",
+    "hometown": "Oxford, England",
     "style": "MMA",
     "age": "34",
     "record": "7-2-0",
@@ -3278,8 +3200,8 @@
     }
   },
   "Mitch Raposo": {
-    "country": "",
-    "hometown": "",
+    "country": "United States",
+    "hometown": "Fall River, United States",
     "style": "Freestyle",
     "age": "27",
     "record": "10-3-0",
@@ -3299,8 +3221,8 @@
     }
   },
   "Navajo Stirling": {
-    "country": "",
-    "hometown": "",
+    "country": "New Zealand",
+    "hometown": "Upper Hutt, New Zealand",
     "style": "Kickboxer",
     "age": "28",
     "record": "9-0-0",
@@ -3320,8 +3242,8 @@
     }
   },
   "Benardo Sopaj": {
-    "country": "",
-    "hometown": "",
+    "country": "Albania",
+    "hometown": "Albania",
     "style": "MMA",
     "age": "25",
     "record": "12-3-0",
@@ -3362,8 +3284,8 @@
     }
   },
   "Edgar Chairez": {
-    "country": "",
-    "hometown": "",
+    "country": "Mexico",
+    "hometown": "Baja California, Mexico",
     "style": "Freestyle",
     "age": "30",
     "record": "13-6-0",
@@ -3383,8 +3305,8 @@
     }
   },
   "Fares Ziam": {
-    "country": "",
-    "hometown": "",
+    "country": "France",
+    "hometown": "V\u00e9nissieux, Auvergne-Rh\u00f4ne-Alpes, France",
     "style": "Kickboxer",
     "age": "29",
     "record": "18-4-0",
@@ -3404,8 +3326,8 @@
     }
   },
   "Jakub Wiklacz": {
-    "country": "",
-    "hometown": "",
+    "country": "Poland",
+    "hometown": "Olsztyn, Poland",
     "style": "Grappler",
     "age": "29",
     "record": "18-3-2",
@@ -3463,69 +3385,6 @@
       "slpm": 15.106267029972752,
       "sapm": 32.403269754768395,
       "td_per_min": 0.5885558583106267,
-      "stance": "Southpaw"
-    }
-  },
-  "Xiong Jingnan": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {
-      "n_fights": 0,
-      "win_streak": 0,
-      "loss_streak": 0,
-      "l3_win_rate": null,
-      "finish_rate": null,
-      "ko_rate": null,
-      "sub_rate": null,
-      "slpm": null,
-      "sapm": null,
-      "td_per_min": null,
-      "stance": "nan"
-    }
-  },
-  "nan Aoriqileng": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {
-      "n_fights": 0,
-      "win_streak": 0,
-      "loss_streak": 0,
-      "l3_win_rate": null,
-      "finish_rate": null,
-      "ko_rate": null,
-      "sub_rate": null,
-      "slpm": null,
-      "sapm": null,
-      "td_per_min": null,
-      "stance": "Orthodox"
-    }
-  },
-  "nan Sumudaerji": {
-    "country": "",
-    "hometown": "",
-    "style": "",
-    "age": "",
-    "record": "",
-    "image_url": "",
-    "stats": {
-      "n_fights": 0,
-      "win_streak": 0,
-      "loss_streak": 0,
-      "l3_win_rate": null,
-      "finish_rate": null,
-      "ko_rate": null,
-      "sub_rate": null,
-      "slpm": null,
-      "sapm": null,
-      "td_per_min": null,
       "stance": "Southpaw"
     }
   },
@@ -4008,5 +3867,13 @@
     "record": "19-10-0",
     "image_url": "fighter-images/thiago-moises.png",
     "stats": {}
+  },
+  "Waldo Cortes Acosta": {
+    "country": "Dominican Republic",
+    "hometown": "Fundacion, Barahona, Dominican Republic",
+    "style": "Striker",
+    "age": "34",
+    "record": "17-2-0",
+    "image_url": "fighter-images/waldo-cortes-acosta.png"
   }
 }

@@ -10,6 +10,7 @@ Run once to bootstrap, then incrementally as new fighters debut.
 from __future__ import annotations
 
 import logging
+import re as _re
 import time
 from dataclasses import dataclass
 from datetime import date
@@ -102,8 +103,6 @@ def fetch_wikidata_fighters(max_retries: int = 3) -> list[WikidataFighter]:
     log.info("Fetched %d fighters from Wikidata", len(fighters))
     return fighters
 
-
-import re as _re
 
 _NAME_NORM_RE = _re.compile(r"[^a-z0-9]+")
 

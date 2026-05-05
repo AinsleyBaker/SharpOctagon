@@ -82,7 +82,6 @@ def _model_prob(prop_type: str, side: str, row: dict) -> float | None:
             return None
         threshold = int(line + 0.5)  # 2.5 → 2 (over = past R2 = R3 onward)
         prob_rounds = {f"R{i}": float(row.get(f"prob_R{i}", 0)) for i in range(1, 6)}
-        prob_dec = float(row.get("prob_a_dec", 0)) + float(row.get("prob_b_dec", 0))
         # under = finish in rounds 1..threshold; over = anything else (later finish or decision)
         p_under = sum(v for k, v in prob_rounds.items() if int(k[1:]) <= threshold)
         p_over = max(0.0, 1.0 - p_under)

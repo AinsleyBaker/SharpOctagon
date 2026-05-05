@@ -14,6 +14,8 @@ import unicodedata
 from datetime import UTC, date, datetime
 from pathlib import Path
 
+from jinja2 import Environment, FileSystemLoader
+
 
 def _norm_name(s: str | None) -> str:
     """
@@ -28,7 +30,6 @@ def _norm_name(s: str | None) -> str:
     stripped = "".join(c for c in nfkd if not unicodedata.combining(c))
     return stripped.strip().lower()
 
-from jinja2 import Environment, FileSystemLoader
 
 log = logging.getLogger(__name__)
 

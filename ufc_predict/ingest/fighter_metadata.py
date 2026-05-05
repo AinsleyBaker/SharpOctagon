@@ -29,6 +29,21 @@ log = logging.getLogger(__name__)
 METADATA_PATH = Path("data/fighter_metadata.json")
 PREDICTIONS_PATH = Path("data/predictions.json")
 SCHEDULE_PATH    = Path("data/upcoming_schedule.json")
+OVERRIDES_PATH   = Path("data/fighter_overrides.json")
+
+
+def _load_overrides() -> dict:
+    """Read manual overrides for fighters whose UFC.com profile uses a
+    different name (slug_aliases) or whose bio is missing a parseable
+    field (country). Returns the raw JSON dict, or empty if the file
+    is missing/invalid.
+    """
+    if not OVERRIDES_PATH.exists():
+        return {}
+    try:
+        return json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
 
 _HEADERS = {
     "User-Agent": (
@@ -111,37 +126,77 @@ def _parse_record_from_html(html: str) -> str:
 
 
 def fetch_metadata(name: str) -> dict | None:
-    """Return {country, style, image_url, hometown, age, record} or None."""
+    """Return {country, style, image_url, hometown, age, record} or None.
+
+    Resolution order:
+      1. Try the requested name's slug.
+      2. If that 404s/redirects to search and the name has a slug_alias
+         in fighter_overrides.json (e.g. "Tommy Gantt" → "Thomas Gantt"),
+         retry with the alias.
+      3. If a country override exists for this fighter, fill it in even
+         when the UFC.com bio omits a Hometown field (Khamzat Chimaev
+         is a notable example).
+    """
     import re
-    slug = _name_to_slug(name)
-    url  = f"{_UFC_BASE}/{slug}"
-    try:
-        r = requests.get(url, headers=_HEADERS, timeout=12)
+    overrides = _load_overrides()
+    slug_aliases = overrides.get("slug_aliases", {}) or {}
+    country_overrides = overrides.get("country", {}) or {}
+
+    candidates = [name]
+    alias = slug_aliases.get(name)
+    if alias:
+        candidates.append(alias)
+
+    bio: dict[str, str] = {}
+    record = ""
+    matched_name: str | None = None
+    img_url_arg_name = name  # which name to query for the image asset
+    for cand in candidates:
+        slug = _name_to_slug(cand)
+        url  = f"{_UFC_BASE}/{slug}"
+        try:
+            r = requests.get(url, headers=_HEADERS, timeout=12)
+        except requests.RequestException:
+            continue
         if r.status_code != 200:
-            return None
-        # Same sanity check as fetch_image_url — confirm the page is actually
-        # for this fighter. Otherwise we end up scraping someone else's bio
-        # for a debut fighter who has no UFC profile yet.
-        # Compare on a normalised form so "Cortes-Acosta" (input) matches
-        # "Cortes Acosta" (page title) — both reduce to "cortes acosta".
+            continue
+        # Confirm the page is actually for this fighter — otherwise we
+        # capture another fighter's bio (or the search-results placeholder
+        # for debut fighters) and pollute the dataset.
         title_m = re.search(r"<title>([^<]+)</title>", r.text)
         raw_title = (title_m.group(1) if title_m else "").lower()
         title_text = re.sub(r"[^a-z0-9]+", " ", raw_title)
-        last_name_raw = (name or "").strip().split()[-1].lower() if name.strip() else ""
+        last_name_raw = (cand or "").strip().split()[-1].lower() if cand.strip() else ""
         last_name = re.sub(r"[^a-z0-9]+", " ", last_name_raw).strip()
         if not last_name or last_name not in title_text:
-            return None
+            continue
         bio = _parse_bio_fields(r.text)
         record = _parse_record_from_html(r.text)
-    except requests.RequestException:
+        matched_name = cand
+        img_url_arg_name = cand
+        break
+
+    if matched_name is None:
+        # No UFC.com profile found even after alias retry. Still allow a
+        # country override to surface (some fighters have only the country
+        # override set — their bio data may come from elsewhere later).
+        if country_overrides.get(name):
+            return {
+                "country":   country_overrides[name],
+                "hometown":  "",
+                "style":     "",
+                "age":       "",
+                "record":    "",
+                "image_url": None,
+            }
         return None
 
     hometown = bio.get("Hometown", "")
-    country  = _extract_country(hometown)
+    country  = _extract_country(hometown) or country_overrides.get(name) or country_overrides.get(matched_name)
     style    = bio.get("Fighting style", "")
     age      = bio.get("Age", "")
 
-    img_url = fetch_image_url(name)
+    img_url = fetch_image_url(img_url_arg_name)
     return {
         "country":   country,
         "hometown":  hometown,

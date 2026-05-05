@@ -1,0 +1,9 @@
+{
+  "_comment": "Manual overrides for fighters whose UFC.com profile uses a different name (slug_alias) or whose bio omits a parseable hometown (country). The metadata scraper consults this file before falling back to None.",
+  "slug_aliases": {
+    "Tommy Gantt": "Thomas Gantt"
+  },
+  "country": {
+    "Khamzat Chimaev": "Russia"
+  }
+}

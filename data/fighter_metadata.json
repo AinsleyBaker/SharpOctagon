@@ -1604,7 +1604,7 @@
     }
   },
   "Khamzat Chimaev": {
-    "country": "",
+    "country": "Russia",
     "hometown": "",
     "style": "Wrestler",
     "age": "31",
@@ -3875,5 +3875,12 @@
     "age": "34",
     "record": "17-2-0",
     "image_url": "fighter-images/waldo-cortes-acosta.png"
+  },
+  "Tommy Gantt": {
+    "country": "United States",
+    "hometown": "Belleville, United States",
+    "age": "33",
+    "record": "1-0-0",
+    "image_url": "fighter-images/tommy-gantt.png"
   }
 }

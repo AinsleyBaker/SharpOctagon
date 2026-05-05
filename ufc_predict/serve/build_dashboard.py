@@ -1172,21 +1172,37 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         (str(_e.get("event_date", "")), _e.get("event_name", "")): _e
         for _e in schedule_for_lookup
     }
+    from rapidfuzz import fuzz
+
+    def _bout_already_covered(fa: str, fb: str, pairs: list[tuple[str, str]]) -> bool:
+        """Fuzzy match a (fighter_a, fighter_b) pair against existing bouts.
+
+        Strict equality misses 1-letter typos that the data sources disagree
+        on — e.g. "Bernardo Sopaj" (UFC.com / ESPN) vs "Benardo Sopaj" (DB).
+        Without this, the schedule version is treated as a new bout and the
+        dashboard renders Sopaj/Cuamba twice for the same event.
+        """
+        for ea, eb in pairs:
+            score_normal  = min(fuzz.ratio(fa, ea), fuzz.ratio(fb, eb))
+            score_flipped = min(fuzz.ratio(fa, eb), fuzz.ratio(fb, ea))
+            if max(score_normal, score_flipped) >= 88:
+                return True
+        return False
+
     for event in events:
         ekey = (str(event.get("event_date", "")), event.get("event_name", ""))
         sched_event = schedule_by_event.get(ekey)
         if not sched_event:
             continue
-        existing_pairs = set()
+        existing_pairs: list[tuple[str, str]] = []
         for b in event["bouts"]:
             a = _norm_name(b.get("fighter_a_name"))
             bn = _norm_name(b.get("fighter_b_name"))
-            existing_pairs.add((a, bn))
-            existing_pairs.add((bn, a))
+            existing_pairs.append((a, bn))
         for sb in sched_event.get("bouts", []):
             fa = _norm_name(sb.get("fighter_a"))
             fb = _norm_name(sb.get("fighter_b"))
-            if (fa, fb) in existing_pairs:
+            if _bout_already_covered(fa, fb, existing_pairs):
                 continue
             status_payload = {
                 "status":  sb.get("espn_status") or "",
@@ -1206,18 +1222,22 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
 
         # Order bouts to match the schedule (ESPN lists earliest prelim first
         # → main event last). Bouts not in the schedule fall to the end.
-        sched_order = {
-            (_norm_name(sb.get("fighter_a")), _norm_name(sb.get("fighter_b"))): i
-            for i, sb in enumerate(sched_event.get("bouts", []))
-        }
+        # Keep the schedule in list form so the sort key can fuzzy-match
+        # name typos (e.g. Bernardo vs Benardo Sopaj).
+        sched_pairs = [
+            (_norm_name(sb.get("fighter_a")), _norm_name(sb.get("fighter_b")))
+            for sb in sched_event.get("bouts", [])
+        ]
 
         def _bout_sort_key(b: dict) -> int:
             a = _norm_name(b.get("fighter_a_name"))
             bn = _norm_name(b.get("fighter_b_name"))
-            return sched_order.get(
-                (a, bn),
-                sched_order.get((bn, a), 10_000),
-            )
+            for i, (sa, sb_) in enumerate(sched_pairs):
+                score_normal  = min(fuzz.ratio(a, sa), fuzz.ratio(bn, sb_))
+                score_flipped = min(fuzz.ratio(a, sb_), fuzz.ratio(bn, sa))
+                if max(score_normal, score_flipped) >= 88:
+                    return i
+            return 10_000
 
         event["bouts"].sort(key=_bout_sort_key)
 

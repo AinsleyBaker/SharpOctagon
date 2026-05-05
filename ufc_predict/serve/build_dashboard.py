@@ -10,8 +10,23 @@ from __future__ import annotations
 
 import json
 import logging
+import unicodedata
 from datetime import date, datetime, timezone
 from pathlib import Path
+
+
+def _norm_name(s: str | None) -> str:
+    """
+    Normalize a fighter name for cross-source matching. ESPN preserves
+    diacritics ("Mateusz Rębecki", "Joel Álvarez") but predictions.json
+    strips them — without normalization, sched_order lookups miss those
+    bouts and dump them at the end of the card.
+    """
+    if not s:
+        return ""
+    nfkd = unicodedata.normalize("NFKD", str(s))
+    stripped = "".join(c for c in nfkd if not unicodedata.combining(c))
+    return stripped.strip().lower()
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -666,7 +681,7 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
     with factory() as session:
         # Map (last_name_a.lower(), last_name_b.lower(), event_date) → result row
         sql = text("""
-            SELECT f.date, fa.full_name AS name_a, fb.full_name AS name_b,
+            SELECT f.fight_id, f.date, fa.full_name AS name_a, fb.full_name AS name_b,
                    f.method, f.round_ended, f.winner_fighter_id,
                    f.red_fighter_id, f.blue_fighter_id
             FROM fights f
@@ -677,6 +692,32 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
         from datetime import timedelta
         since = (date.today() - timedelta(days=365)).isoformat()
         rows = session.execute(sql, {"since": since}).fetchall()
+
+        # Bulk-load fight totals (round=0) for every fight in the window so we
+        # can attach actual strikes/takedowns to each past-event bout without
+        # an N+1 query. Keyed by (fight_id, fighter_id).
+        stats_sql = text("""
+            SELECT s.fight_id, s.fighter_id,
+                   s.sig_strikes_landed, s.sig_strikes_attempted,
+                   s.total_strikes_landed, s.total_strikes_attempted,
+                   s.takedowns_landed, s.takedowns_attempted,
+                   s.knockdowns, s.submission_attempts, s.control_time_sec
+            FROM fight_stats_round s
+            JOIN fights f ON f.fight_id = s.fight_id
+            WHERE f.date >= :since AND s.round = 0
+        """)
+        stats_lookup: dict[tuple, dict] = {}
+        for sr in session.execute(stats_sql, {"since": since}).fetchall():
+            stats_lookup[(sr.fight_id, sr.fighter_id)] = {
+                "sig_strikes_landed":    sr.sig_strikes_landed or 0,
+                "sig_strikes_attempted": sr.sig_strikes_attempted or 0,
+                "total_strikes_landed":  sr.total_strikes_landed or 0,
+                "takedowns_landed":      sr.takedowns_landed or 0,
+                "takedowns_attempted":   sr.takedowns_attempted or 0,
+                "knockdowns":            sr.knockdowns or 0,
+                "submission_attempts":   sr.submission_attempts or 0,
+                "control_time_sec":      sr.control_time_sec or 0,
+            }
 
         from rapidfuzz import fuzz
         def _score(a: str, b: str) -> int:
@@ -754,6 +795,12 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                 bout["actual_winner_side"] = "a" if a_won else "b"
                 bout["actual_method"]      = best_row.method or ""
                 bout["actual_round"]       = best_row.round_ended
+                # Attach per-fighter fight totals (sig strikes, takedowns, etc.)
+                # using the red/blue → A/B mapping resolved above.
+                a_fid = best_row.red_fighter_id if a_is_red else best_row.blue_fighter_id
+                b_fid = best_row.blue_fighter_id if a_is_red else best_row.red_fighter_id
+                bout["actual_stats_a"] = stats_lookup.get((best_row.fight_id, a_fid))
+                bout["actual_stats_b"] = stats_lookup.get((best_row.fight_id, b_fid))
                 # Was our prediction correct? Skip grading for 0.5 placeholders
                 # (model never ran for this fight) — same reason as above.
                 _pa_raw = bout.get("prob_a_wins")
@@ -827,8 +874,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     for _ev in schedule_for_lookup:
         ev_date = str(_ev.get("event_date", ""))
         for _b in _ev.get("bouts") or []:
-            fa = (_b.get("fighter_a") or "").strip().lower()
-            fb = (_b.get("fighter_b") or "").strip().lower()
+            fa = _norm_name(_b.get("fighter_a"))
+            fb = _norm_name(_b.get("fighter_b"))
             if not (fa and fb):
                 continue
             t = _b.get("start_time_iso") or ""
@@ -1001,8 +1048,8 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             # fall back to ESPN's per-competition date from the schedule when
             # SportsBet hasn't listed this fight yet (typical for prelims).
             ev_date_str = str(bout.get("event_date", ""))
-            fa_key = (bout.get("fighter_a_name") or "").strip().lower()
-            fb_key = (bout.get("fighter_b_name") or "").strip().lower()
+            fa_key = _norm_name(bout.get("fighter_a_name"))
+            fb_key = _norm_name(bout.get("fighter_b_name"))
             start_time = sb.get("start_time") or schedule_time_lookup.get(
                 (ev_date_str, fa_key, fb_key)
             )
@@ -1047,13 +1094,13 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             continue
         existing_pairs = set()
         for b in event["bouts"]:
-            a = (b.get("fighter_a_name") or "").strip().lower()
-            bn = (b.get("fighter_b_name") or "").strip().lower()
+            a = _norm_name(b.get("fighter_a_name"))
+            bn = _norm_name(b.get("fighter_b_name"))
             existing_pairs.add((a, bn))
             existing_pairs.add((bn, a))
         for sb in sched_event.get("bouts", []):
-            fa = (sb.get("fighter_a") or "").strip().lower()
-            fb = (sb.get("fighter_b") or "").strip().lower()
+            fa = _norm_name(sb.get("fighter_a"))
+            fb = _norm_name(sb.get("fighter_b"))
             if (fa, fb) in existing_pairs:
                 continue
             status_payload = {
@@ -1075,16 +1122,13 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         # Order bouts to match the schedule (ESPN lists earliest prelim first
         # → main event last). Bouts not in the schedule fall to the end.
         sched_order = {
-            (
-                (sb.get("fighter_a") or "").strip().lower(),
-                (sb.get("fighter_b") or "").strip().lower(),
-            ): i
+            (_norm_name(sb.get("fighter_a")), _norm_name(sb.get("fighter_b"))): i
             for i, sb in enumerate(sched_event.get("bouts", []))
         }
 
         def _bout_sort_key(b: dict) -> int:
-            a = (b.get("fighter_a_name") or "").strip().lower()
-            bn = (b.get("fighter_b_name") or "").strip().lower()
+            a = _norm_name(b.get("fighter_a_name"))
+            bn = _norm_name(b.get("fighter_b_name"))
             return sched_order.get(
                 (a, bn),
                 sched_order.get((bn, a), 10_000),
@@ -1273,14 +1317,18 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # Pull historical past events from data/past_events.json (persisted across
     # workflow runs). Predictions.json only contains upcoming events, so once
     # an event passes the entry is dropped — past_events.json keeps them.
+    #
+    # Prefer the persisted version: schedule-only "preview" bouts lack props,
+    # probabilities, and bet analysis, so when both sources cover the same
+    # event the persisted entry is the richer one. Fall back to today's
+    # split-from-upcoming entries only when the event isn't in past_events.json.
     persisted_past = _load_persisted_past_events(fighter_meta, fighter_imgs)
-    # Merge: persisted past events + today's past events (dedup by event key)
-    seen_past_keys = {(str(e["event_date"]), e["event_name"]) for e in past_events_today}
-    for ev in persisted_past:
-        k = (str(ev["event_date"]), ev["event_name"])
-        if k not in seen_past_keys:
-            past_events_today.append(ev)
-            seen_past_keys.add(k)
+    persisted_keys = {(str(ev["event_date"]), ev["event_name"]) for ev in persisted_past}
+    past_events_today = [
+        e for e in past_events_today
+        if (str(e["event_date"]), e["event_name"]) not in persisted_keys
+    ]
+    past_events_today.extend(persisted_past)
 
     # Sort past events by date descending (most recent first)
     past_events = sorted(past_events_today, key=lambda e: str(e.get("event_date", "")), reverse=True)

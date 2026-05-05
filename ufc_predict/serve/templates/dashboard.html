@@ -419,11 +419,19 @@
     padding: 3px 8px; border-radius: 4px; white-space: nowrap;
     box-shadow: 0 0 10px rgba(0,255,136,0.4);
   }
-  .sb-odds-badge {
-    font-size: var(--xs); color: var(--muted);
-    border: 1px solid #333; padding: 2px 6px; border-radius: 4px;
-    font-variant-numeric: tabular-nums;
+  /* Per-fighter sportsbet odds — sits under the meta row so a missing
+     odds value on one fight doesn't shift the rest of the row layout. */
+  .fighter-odds {
+    margin-top: 3px;
+    font-size: 0.66rem; font-weight: 700;
+    color: var(--gold); font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 4px;
   }
+  .fighter-odds .lbl {
+    color: #555; font-weight: 600; font-size: 0.55rem; text-transform: uppercase;
+  }
+  .fighter-card.right .fighter-odds { justify-content: flex-end; }
   .expand-icon { color: #444; font-size: var(--xs); transition: transform 0.2s; }
 
   /* ─── Details ─── */
@@ -769,6 +777,9 @@
                   {% if bout.a_stance %}<span class="stance-badge">{{ bout.a_stance }}</span>{% endif %}
                   {% if bout.a_streak %}<span class="streak-label {{ bout.a_streak_class }}">{{ bout.a_streak }}</span>{% endif %}
                 </div>
+                {% if bout.sb_odds_a %}
+                <div class="fighter-odds" title="SportsBet decimal odds — $1 stake returns this much total if wins"><span class="lbl">SB</span> {{ bout.sb_odds_a }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -783,16 +794,17 @@
                 <div class="pba" style="width:{{ ((bout.prob_a_wins or 0.5)*100)|int }}%"></div>
               </div>
               <div class="wc-txt">
-                {{ bout.weight_class or '—' }}
+                {% set _wc = bout.weight_class %}
+                {% if _wc %}{{ _wc }}{% endif %}
                 {% if bout.is_live %}
-                  <br><span class="live-pill">● Live</span>
+                  {% if _wc %}<br>{% endif %}<span class="live-pill">● Live</span>
                 {% elif bout.is_completed %}
-                  <br><span class="result-pill">Result</span>
+                  {% if _wc %}<br>{% endif %}<span class="result-pill">Result</span>
                   {% if bout.pred_correct == true %}<span class="pred-mark pred-correct" title="Model picked correctly">✓</span>
                   {% elif bout.pred_correct == false %}<span class="pred-mark pred-wrong" title="Model picked the loser">✗</span>{% endif %}
                   {% if bout.result_text %}<span class="result-text">{{ bout.result_text }}</span>{% endif %}
                 {% elif bout.fight_time_aest %}
-                  <br><span style="color:var(--matrix);font-weight:600">⏱ {{ bout.fight_time_aest }}</span>
+                  {% if _wc %}<br>{% endif %}<span style="color:var(--matrix);font-weight:600">⏱ {{ bout.fight_time_aest }}</span>
                 {% endif %}
               </div>
             </div>
@@ -816,13 +828,15 @@
                   {% if bout.b_stance %}<span class="stance-badge">{{ bout.b_stance }}</span>{% endif %}
                   {% if bout.b_streak %}<span class="streak-label {{ bout.b_streak_class }}">{{ bout.b_streak }}</span>{% endif %}
                 </div>
+                {% if bout.sb_odds_b %}
+                <div class="fighter-odds" title="SportsBet decimal odds — $1 stake returns this much total if wins"><span class="lbl">SB</span> {{ bout.sb_odds_b }}</div>
+                {% endif %}
               </div>
             </div>
 
           </div>
 
           <div class="fight-right">
-            {% if bout.sb_odds_a %}<span class="sb-odds-badge">{{ bout.sb_odds_a }} / {{ bout.sb_odds_b or '—' }}</span>{% endif %}
             {% if bout.value_bet_count %}<span class="value-badge-main">{{ bout.value_bet_count }} value bets</span>{% endif %}
             <span class="expand-icon" id="icon-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">▼</span>
           </div>
@@ -1246,35 +1260,33 @@
                     </tr>
                     {% if bout.props %}
                     {% set methods = bout.props %}
-                    {% set pred_method = 'KO/TKO' if methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0) > methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0) and methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0) > methods.get('prob_decision',0) else 'Submission' if methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0) > methods.get('prob_decision',0) else 'Decision' %}
-                    {% set ko_p  = ((methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0))*100)|round(0)|int %}
-                    {% set sub_p = ((methods.get('prob_a_wins_sub',0)    + methods.get('prob_b_wins_sub',0))*100)|round(0)|int %}
-                    {% set dec_p = ((methods.get('prob_decision',0))*100)|round(0)|int %}
+                    {% set act_m = (bout.actual_method or '').upper() %}
+                    {% set act_is_ko  = 'KO' in act_m %}
+                    {% set act_is_sub = 'SUB' in act_m %}
+                    {% set act_is_dec = ('DEC' in act_m) or ('POINT' in act_m) %}
+                    {% set act_side = bout.actual_winner_side %}
+                    {% macro mrow(label, prob, side, is_method) -%}
+                    {% set hit = act_side == side and is_method %}
                     <tr>
-                      <td>KO/TKO</td>
-                      <td>{{ ko_p }}%</td>
-                      <td style="color:{{ 'var(--green)' if 'KO' in (bout.actual_method or '') else 'var(--muted)' }}">
-                        {{ '✓ happened' if 'KO' in (bout.actual_method or '') else '—' }}
+                      <td>{{ label }}</td>
+                      <td>{{ (prob*100)|round(0)|int }}%</td>
+                      <td style="color:{{ 'var(--green)' if hit else 'var(--muted)' }}">
+                        {{ '✓ happened' if hit else '—' }}
                       </td>
                     </tr>
-                    <tr>
-                      <td>Submission</td>
-                      <td>{{ sub_p }}%</td>
-                      <td style="color:{{ 'var(--green)' if 'SUB' in (bout.actual_method or '').upper() else 'var(--muted)' }}">
-                        {{ '✓ happened' if 'SUB' in (bout.actual_method or '').upper() else '—' }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Decision</td>
-                      <td>{{ dec_p }}%</td>
-                      <td style="color:{{ 'var(--green)' if 'DEC' in (bout.actual_method or '').upper() or 'POINT' in (bout.actual_method or '').upper() else 'var(--muted)' }}">
-                        {{ '✓ happened' if ('DEC' in (bout.actual_method or '').upper() or 'POINT' in (bout.actual_method or '').upper()) else '—' }}
-                      </td>
-                    </tr>
+                    {%- endmacro %}
+                    {{ mrow(bout.fighter_a_name + ' by KO/TKO',  methods.get('prob_a_wins_ko_tko', 0), 'a', act_is_ko) }}
+                    {{ mrow(bout.fighter_a_name + ' by Sub',     methods.get('prob_a_wins_sub',    0), 'a', act_is_sub) }}
+                    {{ mrow(bout.fighter_a_name + ' by Decision',methods.get('prob_a_wins_dec',    0), 'a', act_is_dec) }}
+                    {{ mrow(bout.fighter_b_name + ' by KO/TKO',  methods.get('prob_b_wins_ko_tko', 0), 'b', act_is_ko) }}
+                    {{ mrow(bout.fighter_b_name + ' by Sub',     methods.get('prob_b_wins_sub',    0), 'b', act_is_sub) }}
+                    {{ mrow(bout.fighter_b_name + ' by Decision',methods.get('prob_b_wins_dec',    0), 'b', act_is_dec) }}
                     {% if bout.actual_round %}
+                    {% set prob_rounds = methods.get('prob_rounds') or {} %}
+                    {% set pred_round_key = (prob_rounds.items() | sort(attribute='1', reverse=true) | list | first) %}
                     <tr>
                       <td>Ending round</td>
-                      <td>R{{ pred_round if pred_round else '?' }}</td>
+                      <td>{{ pred_round_key[0] if pred_round_key else '?' }}</td>
                       <td>R{{ bout.actual_round }}</td>
                     </tr>
                     {% endif %}
@@ -1315,6 +1327,54 @@
                 {% endif %}
               </div>
             </div>
+
+            {% if bout.actual_stats_a or bout.actual_stats_b %}
+            {% set sa = bout.actual_stats_a or {} %}
+            {% set sb = bout.actual_stats_b or {} %}
+            <div class="detail-box" style="margin-top:0.75rem">
+              <h4>Actual Fight Stats</h4>
+              <table class="stat-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>{{ bout.fighter_a_name }}</th>
+                    <th>{{ bout.fighter_b_name }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% macro statrow(label, key, attempted_key=None) -%}
+                  {% set av = sa.get(key, 0) %}
+                  {% set bv = sb.get(key, 0) %}
+                  <tr>
+                    <td>{{ label }}</td>
+                    <td class="{{ 'stat-better' if av > bv else 'stat-worse' if av < bv else '' }}">
+                      {{ av }}{% if attempted_key %}/{{ sa.get(attempted_key, 0) }}{% endif %}
+                    </td>
+                    <td class="{{ 'stat-better' if bv > av else 'stat-worse' if bv < av else '' }}">
+                      {{ bv }}{% if attempted_key %}/{{ sb.get(attempted_key, 0) }}{% endif %}
+                    </td>
+                  </tr>
+                  {%- endmacro %}
+                  {{ statrow('Sig. strikes (landed/att)', 'sig_strikes_landed', 'sig_strikes_attempted') }}
+                  {{ statrow('Total strikes landed', 'total_strikes_landed') }}
+                  {{ statrow('Knockdowns', 'knockdowns') }}
+                  {{ statrow('Takedowns (landed/att)', 'takedowns_landed', 'takedowns_attempted') }}
+                  {{ statrow('Submission attempts', 'submission_attempts') }}
+                  {% set ca = sa.get('control_time_sec', 0) %}
+                  {% set cb = sb.get('control_time_sec', 0) %}
+                  <tr>
+                    <td>Control time</td>
+                    <td class="{{ 'stat-better' if ca > cb else 'stat-worse' if ca < cb else '' }}">
+                      {{ '%d:%02d'|format(ca // 60, ca % 60) }}
+                    </td>
+                    <td class="{{ 'stat-better' if cb > ca else 'stat-worse' if cb < ca else '' }}">
+                      {{ '%d:%02d'|format(cb // 60, cb % 60) }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>

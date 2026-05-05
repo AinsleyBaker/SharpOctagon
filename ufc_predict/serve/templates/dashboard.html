@@ -582,26 +582,59 @@
   }
 
   .bankroll-input-wrap {
-    display: inline-flex; align-items: center; gap: 0.4rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
     background: var(--card-2); border: 1px solid var(--border);
-    border-radius: 6px; padding: 0.3rem 0.7rem;
+    border-radius: 6px; padding: 0.35rem 0.7rem;
   }
   .bankroll-input-wrap label {
     font-size: 0.6rem; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700;
   }
   .bankroll-input-wrap span.dollar { color: var(--gold); font-weight: 700; font-size: var(--sm); }
-  .bankroll-input-wrap select.bankroll-select {
+
+  /* Apex-styled custom dropdown — replaces the native <select> so the
+     menu items render in the same dark/matrix aesthetic across browsers. */
+  .apex-select { position: relative; display: inline-block; }
+  .apex-select-trigger {
     background: transparent; border: none; outline: none;
     color: var(--matrix); font-weight: 800; font-size: var(--sm); font-family: inherit;
-    cursor: pointer; padding-right: 2px;
+    cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 0.35rem;
+    font-variant-numeric: tabular-nums;
   }
-  .bankroll-input-wrap select.bankroll-select option { background: var(--card); color: var(--light); }
+  .apex-select-trigger:hover { color: var(--light); }
+  .apex-select-arrow {
+    color: var(--muted); font-size: 0.65rem; transition: transform 0.15s;
+  }
+  .apex-select.open .apex-select-arrow { transform: rotate(180deg); color: var(--matrix); }
+  .apex-select-menu {
+    position: absolute; top: calc(100% + 6px); left: 0; z-index: 20;
+    min-width: 160px; max-height: 280px; overflow-y: auto;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.45), 0 0 12px rgba(0,255,136,0.08);
+    padding: 0.3rem 0;
+  }
+  .apex-select-menu[hidden] { display: none; }
+  .apex-select-option {
+    padding: 0.45rem 0.85rem; font-size: var(--sm); font-weight: 600;
+    color: var(--light); cursor: pointer; font-variant-numeric: tabular-nums;
+    transition: background 0.1s;
+  }
+  .apex-select-option:hover {
+    background: rgba(0,255,136,0.08); color: var(--matrix);
+  }
+  .apex-select-option.active {
+    background: rgba(0,255,136,0.14); color: var(--matrix);
+  }
+  .apex-select-option.divider {
+    border-top: 1px solid var(--border); margin-top: 0.25rem; padding-top: 0.55rem;
+    color: var(--gold); font-style: italic;
+  }
+
   .bankroll-input-wrap input.bankroll-input {
-    width: 90px; background: transparent; border: none; outline: none;
+    width: 100px; background: transparent; border: none; outline: none;
     color: var(--matrix); font-weight: 800; font-size: var(--sm); font-family: inherit;
     font-variant-numeric: tabular-nums;
-    border-left: 1px solid var(--border); padding-left: 0.5rem; margin-left: 0.2rem;
+    border-left: 1px solid var(--border); padding-left: 0.6rem; margin-left: 0.2rem;
   }
   .bankroll-input-wrap input.bankroll-input::-webkit-outer-spin-button,
   .bankroll-input-wrap input.bankroll-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
@@ -1170,20 +1203,28 @@
   <!-- ═══════════ TOP BETS ═══════════ -->
   <div id="top-bets" class="hidden">
     {% if top_bets %}
-    <div class="section-title">⟁  Top Value Bets — Bankroll Allocation</div>
+    <div class="section-title">⟁  Top Value Bets — Stake Allocation</div>
 
     <!-- Bankroll + strategy controls -->
     <div class="top-bets-controls">
-      <div class="bankroll-input-wrap">
-        <label for="bankroll-select">Bankroll</label>
+      <div class="bankroll-input-wrap" title="Total amount you want to wager across all bets">
+        <label>Total stake</label>
         <span class="dollar">$</span>
-        <select id="bankroll-select" class="bankroll-select"
-                onchange="onBankrollSelect(this.value)">
-          {% for v in [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500] %}
-          <option value="{{ v }}">${{ v }}</option>
-          {% endfor %}
-          <option value="custom">Custom…</option>
-        </select>
+        <div class="apex-select" id="bankroll-apex-select">
+          <button type="button" class="apex-select-trigger"
+                  onclick="toggleApexSelect(event, 'bankroll-apex-select')">
+            <span class="apex-select-value" id="bankroll-select-value">1,000</span>
+            <span class="apex-select-arrow">▾</span>
+          </button>
+          <div class="apex-select-menu" hidden>
+            {% for v in [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500] %}
+            <div class="apex-select-option" data-value="{{ v }}"
+                 onclick="onBankrollSelect('{{ v }}')">${{ v }}</div>
+            {% endfor %}
+            <div class="apex-select-option divider" data-value="custom"
+                 onclick="onBankrollSelect('custom')">Custom…</div>
+          </div>
+        </div>
         <input id="global-bankroll-input" class="bankroll-input" type="number"
                min="1" max="100000" step="1" value="1000"
                style="display:none"
@@ -1269,9 +1310,9 @@
         </table>
       </div>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#666;padding:0 0.2rem">
-        Caps: max 5% of bankroll per bet, max 5 bets per fight, 15% per fight total, 50% across the whole plan.
-        Bets that can't all win in the same outcome (e.g. "KO round 1" + "fight goes to decision") are filtered.
-        <strong>Best case</strong> = the single luckiest outcome per fight.
+        Stakes are split by edge: bigger on bets where the model has more conviction. Each fight is capped at
+        5 legs, and bets that can't all win in the same outcome (e.g. "KO round 1" + "fight goes to decision")
+        are filtered. <strong>Best case</strong> = the single luckiest outcome per fight.
         <strong>Worst case</strong> = every bet loses.
       </p>
     </div>
@@ -1450,77 +1491,56 @@
                   <div style="margin-top:2px"><strong style="color:var(--matrix)">{{ bout.actual_winner_name }}</strong>{% if act_method_short %} by <strong>{{ act_method_short }}</strong>{% endif %}{% if bout.actual_round %} in <strong>R{{ bout.actual_round }}</strong>{% endif %}{% if not act_method_short %} <span style="color:var(--muted);font-size:var(--xs)">(method pending DB ingest)</span>{% endif %}</div>
                 </div>
                 {% endif %}
+                {# Compact predicted-vs-actual: just two rows — model's
+                   probability that the *actual* winner won, and that the
+                   *actual* winner won by the *actual* method. Skips the
+                   dense 6-method-by-fighter grid the old layout had. #}
+                {% set pa = (bout.prob_a_wins or 0.5)|float %}
+                {% set winner_name = bout.actual_winner_name or '' %}
+                {% set winner_prob = pa if act_side == 'a' else (1 - pa) if act_side == 'b' else None %}
+                {% set methods = bout.props or {} %}
+                {% if act_is_ko %}
+                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_ko_tko' %}
+                {% elif act_is_sub %}
+                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_sub' %}
+                {% elif act_is_dec %}
+                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_dec' %}
+                {% else %}
+                  {% set method_prob_key = '' %}
+                {% endif %}
+                {% set method_prob = methods.get(method_prob_key) if method_prob_key else None %}
                 <table class="stat-table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Predicted</th>
+                      <th>Outcome</th>
+                      <th>Model said</th>
                       <th>Actual</th>
                     </tr>
                   </thead>
                   <tbody>
+                    {% if winner_name and winner_prob is not none %}
                     <tr>
-                      <td>Winner</td>
-                      <td>
-                        {% set pa = (bout.prob_a_wins or 0.5)|float %}
-                        {% if pa >= 0.5 %}{{ bout.fighter_a_name }} ({{ (pa*100)|round(0)|int }}%){% else %}{{ bout.fighter_b_name }} ({{ ((1-pa)*100)|round(0)|int }}%){% endif %}
-                      </td>
+                      <td>{{ winner_name }} wins</td>
+                      <td>{{ (winner_prob * 100)|round(0)|int }}%</td>
                       <td style="color:{{ 'var(--green)' if bout.pred_correct else 'var(--red)' if bout.pred_correct == False else 'var(--muted)' }}">
-                        {{ bout.actual_winner_name or 'pending' }}
-                        {% if bout.pred_correct is not none %} {{ '✓' if bout.pred_correct else '✗' }}{% endif %}
-                      </td>
-                    </tr>
-                    {% if bout.props %}
-                    {% set methods = bout.props %}
-                    {% macro mrow(label, prob, side, is_method) -%}
-                    {% set hit = act_side == side and is_method %}
-                    <tr>
-                      <td>{{ label }}</td>
-                      <td>{{ (prob*100)|round(0)|int }}%</td>
-                      <td style="color:{{ 'var(--green)' if hit else 'var(--muted)' }}">
-                        {% if hit %}✓ happened{% if bout.actual_round %} (R{{ bout.actual_round }}){% endif %}{% else %}—{% endif %}
-                      </td>
-                    </tr>
-                    {%- endmacro %}
-                    {{ mrow(bout.fighter_a_name + ' by KO/TKO',  methods.get('prob_a_wins_ko_tko', 0), 'a', act_is_ko) }}
-                    {{ mrow(bout.fighter_a_name + ' by Sub',     methods.get('prob_a_wins_sub',    0), 'a', act_is_sub) }}
-                    {{ mrow(bout.fighter_a_name + ' by Decision',methods.get('prob_a_wins_dec',    0), 'a', act_is_dec) }}
-                    {{ mrow(bout.fighter_b_name + ' by KO/TKO',  methods.get('prob_b_wins_ko_tko', 0), 'b', act_is_ko) }}
-                    {{ mrow(bout.fighter_b_name + ' by Sub',     methods.get('prob_b_wins_sub',    0), 'b', act_is_sub) }}
-                    {{ mrow(bout.fighter_b_name + ' by Decision',methods.get('prob_b_wins_dec',    0), 'b', act_is_dec) }}
-                    <tr>
-                      <td>Method</td>
-                      <td>
-                        {# Top predicted method across both fighters #}
-                        {% set _meths = [
-                          ('KO/TKO', (methods.get('prob_a_wins_ko_tko',0) + methods.get('prob_b_wins_ko_tko',0))),
-                          ('Submission', (methods.get('prob_a_wins_sub',0) + methods.get('prob_b_wins_sub',0))),
-                          ('Decision', (methods.get('prob_a_wins_dec',0) + methods.get('prob_b_wins_dec',0))),
-                        ] %}
-                        {% set _top = (_meths | sort(attribute='1', reverse=true) | first) %}
-                        {{ _top[0] }} ({{ (_top[1]*100)|round(0)|int }}%)
-                      </td>
-                      {% set method_match = (act_is_ko and 'KO' in (_top[0] or '')) or (act_is_sub and 'Sub' in (_top[0] or '')) or (act_is_dec and 'Dec' in (_top[0] or '')) %}
-                      {% if act_method_short %}
-                      <td style="color:{{ 'var(--green)' if method_match else 'var(--red)' }}">
-                        {{ act_method_short }} {{ '✓' if method_match else '✗' }}
-                      </td>
-                      {% else %}
-                      <td style="color:var(--muted)">pending</td>
-                      {% endif %}
-                    </tr>
-                    {% if bout.actual_round %}
-                    {% set prob_rounds = methods.get('prob_rounds') or {} %}
-                    {% set pred_round_key = (prob_rounds.items() | sort(attribute='1', reverse=true) | list | first) %}
-                    <tr>
-                      <td>Ending round</td>
-                      <td>{{ pred_round_key[0] if pred_round_key else '?' }}</td>
-                      <td style="color:{{ 'var(--green)' if pred_round_key and pred_round_key[0] == 'R' + bout.actual_round|string else 'var(--muted)' }}">
-                        R{{ bout.actual_round }}
-                        {% if pred_round_key %} {{ '✓' if pred_round_key[0] == 'R' + bout.actual_round|string else '✗' }}{% endif %}
+                        ✓ won{% if bout.pred_correct is not none %} {{ '· model right' if bout.pred_correct else '· model wrong' }}{% endif %}
                       </td>
                     </tr>
                     {% endif %}
+                    {% if winner_name and act_method_short and method_prob is not none %}
+                    <tr>
+                      <td>{{ winner_name }} by {{ act_method_short }}</td>
+                      <td>{{ (method_prob * 100)|round(0)|int }}%</td>
+                      <td style="color:var(--green)">
+                        ✓ {{ act_method_short }}{% if bout.actual_round %} · R{{ bout.actual_round }}{% endif %}
+                      </td>
+                    </tr>
+                    {% elif winner_name %}
+                    <tr>
+                      <td>Method</td>
+                      <td style="color:var(--muted)">—</td>
+                      <td style="color:var(--muted)">awaiting result data</td>
+                    </tr>
                     {% endif %}
                   </tbody>
                 </table>
@@ -1647,70 +1667,109 @@ let _activeEvent  = '__all__';
 let _activeType   = '__all__';
 let _topStrategy  = 'concentrated';
 
-// ─── Bankroll & portfolio rendering ───────────────────────────────────
+// ─── Total stake & portfolio rendering ────────────────────────────────
+//
+// The "Total stake" the user enters IS the total amount they want to wager.
+// build_portfolio still computes per-bet allocations as % (with kelly /
+// per-bet / per-fight / total caps applied), but at render time we
+// renormalise so the bets sum to *exactly* the user's total. That makes the
+// summary tiles ("Expected profit", "Best case", "Worst case") scale
+// naturally — they're all expressed as the same fraction of total stake.
 function _escapeHtml(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-function getBankroll() {
-  const v = parseFloat(localStorage.getItem('apex_bankroll'));
+function getTotalStake() {
+  const v = parseFloat(localStorage.getItem('apex_total_stake'));
   return (Number.isFinite(v) && v > 0) ? v : 1000;
 }
-function setBankroll(value) {
+function setTotalStake(value) {
   const num = parseFloat(value);
   if (!Number.isFinite(num) || num <= 0) return;
-  localStorage.setItem('apex_bankroll', String(num));
-  applyBankroll();
+  localStorage.setItem('apex_total_stake', String(num));
+  applyTotalStake();
 }
+// Backwards-compatible alias for the inline oninput= on the custom input.
+function setBankroll(v) { setTotalStake(v); }
+
+// The active portfolio's total_stake_pct (sum of all bet stake_pct's after
+// caps). All [data-pct] elements get rescaled by (data-pct / this) × user
+// total so a bet at e.g. 5% of the 36% total renders as 5/36 × $1000 ≈ $139.
+let _activePortfolioTotalPct = 100;
+
 function _fmtMoney(dollars) {
   const sign = dollars < 0 ? '-' : '';
   const abs  = Math.abs(dollars);
-  // Always whole dollars. Bankroll < $1000 reads cleaner that way; larger
-  // bankrolls naturally have larger stakes so still readable.
   return sign + '$' + Math.round(abs).toLocaleString();
 }
-function applyBankroll() {
-  const bk = getBankroll();
+function applyTotalStake() {
+  const total = getTotalStake();
+  const totalPct = _activePortfolioTotalPct > 0 ? _activePortfolioTotalPct : 100;
   document.querySelectorAll('[data-pct]').forEach(el => {
     const pct = parseFloat(el.dataset.pct);
     if (!Number.isFinite(pct)) return;
-    el.textContent = _fmtMoney(bk * pct / 100);
+    el.textContent = _fmtMoney((pct / totalPct) * total);
   });
-  document.querySelectorAll('.bp-bankroll-display').forEach(el => {
-    el.textContent = '$' + Math.round(bk).toLocaleString();
-  });
-  // Sync the dropdown + custom-input pair: if the bankroll matches one of the
-  // dropdown options, select it and hide the custom input. Otherwise mark the
-  // dropdown as "Custom" and show the input pre-filled with the current value.
-  document.querySelectorAll('select.bankroll-select').forEach(sel => {
-    const matchVal = String(Math.round(bk));
-    const opt = Array.from(sel.options).find(o => o.value === matchVal);
-    if (opt) {
-      sel.value = matchVal;
-    } else {
-      sel.value = 'custom';
+  // Sync the trigger label + custom input + active option highlight.
+  const valueEl = document.getElementById('bankroll-select-value');
+  if (valueEl) valueEl.textContent = Math.round(total).toLocaleString();
+  document.querySelectorAll('.apex-select').forEach(sel => {
+    const matchVal = String(Math.round(total));
+    const opts = sel.querySelectorAll('.apex-select-option');
+    let matched = false;
+    opts.forEach(o => {
+      o.classList.remove('active');
+      if (o.dataset.value === matchVal) { o.classList.add('active'); matched = true; }
+    });
+    if (!matched) {
+      const customOpt = sel.querySelector('.apex-select-option[data-value="custom"]');
+      if (customOpt) customOpt.classList.add('active');
     }
   });
   document.querySelectorAll('input.bankroll-input').forEach(inp => {
-    if (parseFloat(inp.value) !== bk) inp.value = Math.round(bk);
-    const sel = inp.parentElement && inp.parentElement.querySelector('select.bankroll-select');
-    if (sel) inp.style.display = (sel.value === 'custom') ? '' : 'none';
+    if (parseFloat(inp.value) !== total) inp.value = Math.round(total);
+    // Show the custom input only when total isn't a preset option.
+    const opts = ['25','50','75','100','125','150','175','200','225','250',
+                  '275','300','325','350','375','400','425','450','475','500'];
+    inp.style.display = opts.includes(String(Math.round(total))) ? 'none' : '';
   });
 }
+// Backwards-compatible alias
+function applyBankroll() { applyTotalStake(); }
 function onBankrollSelect(value) {
-  // "Custom…" reveals the number input but doesn't change the bankroll until
-  // the user types. Numeric options apply immediately.
+  if (value === 'closeMenu') return;
   if (value === 'custom') {
     document.querySelectorAll('input.bankroll-input').forEach(inp => {
       inp.style.display = '';
       inp.focus();
       inp.select();
     });
-    return;
+  } else {
+    setTotalStake(value);
   }
-  setBankroll(value);
+  _closeApexSelects();
 }
+function toggleApexSelect(ev, id) {
+  ev.stopPropagation();
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  const wasOpen = sel.classList.contains('open');
+  _closeApexSelects();
+  if (!wasOpen) {
+    sel.classList.add('open');
+    const menu = sel.querySelector('.apex-select-menu');
+    if (menu) menu.hidden = false;
+  }
+}
+function _closeApexSelects() {
+  document.querySelectorAll('.apex-select.open').forEach(sel => {
+    sel.classList.remove('open');
+    const menu = sel.querySelector('.apex-select-menu');
+    if (menu) menu.hidden = true;
+  });
+}
+document.addEventListener('click', _closeApexSelects);
 function setTopStrategy(btn, strategy) {
   document.querySelectorAll('#top-strategy-toggle button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -1742,10 +1801,13 @@ function renderTopPortfolio() {
   const data   = evData[_topStrategy] || {bets: [], summary: {}};
 
   const s = data.summary || {};
+  // Active total_stake_pct drives the renormalisation in applyTotalStake
+  // so each [data-pct] becomes (data-pct / totalPct) × user_total.
+  _activePortfolioTotalPct = (s.total_stake_pct && s.total_stake_pct > 0) ? s.total_stake_pct : 100;
   const summaryEl = document.getElementById('portfolio-summary');
   if (summaryEl) {
     summaryEl.innerHTML = `
-      <div><div class="label">Total stake</div><div class="val gold" data-pct="${s.total_stake_pct||0}"></div></div>
+      <div><div class="label">Bets</div><div class="val gold">${(data.bets||[]).length}</div></div>
       <div><div class="label">Expected profit</div><div class="val pos" data-pct="${s.expected_pnl_pct||0}"></div></div>
       <div><div class="label">Best case (luckiest)</div><div class="val pos" data-pct="${s.best_case_pct||0}"></div></div>
       <div><div class="label">Worst case</div><div class="val neg" data-pct="${s.worst_case_pct||0}"></div></div>
@@ -1773,7 +1835,7 @@ function renderTopPortfolio() {
       }).join('');
     }
   }
-  applyBankroll();
+  applyTotalStake();
 }
 function _applyBetFilters() {
   document.querySelectorAll('#top-bets-tbody tr').forEach(r => {
@@ -1911,7 +1973,7 @@ function jumpToFight(fightLabel, eventLabel) {
 
 // Initial render — bankroll input + portfolio table on first load
 document.addEventListener('DOMContentLoaded', () => {
-  applyBankroll();
+  applyTotalStake();
   renderTopPortfolio();
 });
 </script>

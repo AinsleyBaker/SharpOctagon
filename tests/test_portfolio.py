@@ -8,6 +8,7 @@ from ufc_predict.eval.bet_analysis import (
     PORTFOLIO_MAX_PER_FIGHT_PCT,
     PORTFOLIO_MAX_TOTAL_PCT,
     PORTFOLIO_TOP_N,
+    analyze_fight_bets,
     build_portfolio,
 )
 
@@ -229,3 +230,46 @@ def test_best_case_legacy_bets_without_keys_falls_back():
     p = build_portfolio(bets, strategy="kelly")
     # 4% stake × payout_mult=1 = 4%
     assert abs(p["summary"]["best_case_pct"] - 4.0) < 0.05
+
+
+# ---------------------------------------------------------------------------
+# analyze_fight_bets dedupe — same outcome priced under different markets
+# ---------------------------------------------------------------------------
+
+def test_analyze_dedupes_same_outcome_keeps_best_price():
+    # Same outcome ("fight goes to decision") priced under two SportsBet
+    # markets at different odds. Dedupe should keep the best-priced version.
+    pred = {
+        "fighter_a_name": "Alpha",
+        "fighter_b_name": "Beta",
+        "prob_a_wins": 0.5,
+        "prob_b_wins": 0.5,
+        "is_five_round": False,
+        "props": {
+            "prob_a_wins_dec": 0.30,
+            "prob_b_wins_dec": 0.30,
+            "prob_a_wins_ko_tko": 0.10,
+            "prob_b_wins_ko_tko": 0.10,
+            "prob_a_wins_sub": 0.10,
+            "prob_b_wins_sub": 0.10,
+            "prob_decision": 0.60,
+            "prob_finish": 0.40,
+            "prob_rounds": {"R1": 0.15, "R2": 0.15, "R3": 0.10, "R4": 0.0, "R5": 0.0},
+        },
+        "sportsbet_odds": {
+            "moneyline_a": 2.0,
+            "moneyline_b": 2.0,
+            # Two markets pricing "fight goes to decision":
+            "distance":       {"Yes": 1.95, "No": 1.95},
+            "method_neutral": {"Points": 1.85, "KO/TKO": 4.0, "Submission": 4.0},
+        },
+    }
+    bets = analyze_fight_bets(pred)
+    # Find any bet whose outcome_keys are exactly the "either side wins by DEC" set.
+    dec_keys = frozenset({"A|DEC|DEC", "B|DEC|DEC"})
+    dec_bets = [b for b in bets if frozenset(b.get("outcome_keys") or []) == dec_keys]
+    # Should be exactly one after dedupe — and at the best (highest) odds (1.95).
+    assert len(dec_bets) == 1
+    assert dec_bets[0]["sb_odds"] == pytest.approx(1.95)
+
+

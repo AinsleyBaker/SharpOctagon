@@ -619,15 +619,38 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             _add("winning_round", f"Fight ends by finish in Round {rnum}",
                  p_finish_rn, odds, _wk_finish_any(rounds=(rnum,)))
 
-    # Deduplicate: keep the best-EV entry per unique outcome description.
-    # Same outcome (e.g. "Fight ends in Round 1") can appear at different odds
-    # from overlapping markets — keep only the highest EV one.
-    best: dict[str, dict] = {}
+    # Deduplicate by outcome identity, not description. The same atomic outcome
+    # (e.g. "fight goes to decision" → {A|DEC|DEC, B|DEC|DEC}) appears in
+    # multiple SportsBet markets at slightly different prices — distance.Yes
+    # vs method_neutral.Points, or method.X-by-DEC vs winning_round.X-by-Decision.
+    # Bets without outcome_keys (legacy markets) fall back to description so we
+    # don't accidentally collapse unrelated legacy bets.
+    #
+    # Within a duplicate group: keep the best-priced (highest-EV) version, but
+    # inherit the value flag and backtest provenance from any source that *was*
+    # value-flagged. The is_value gate uses per-market historical ROI; if the
+    # backtested market says "this outcome class is profitable" we trust that
+    # signal even when the user is grabbing a higher price from a non-backtested
+    # market for the identical outcome.
+    groups: dict = {}
     for bet in bets:
-        key = bet.get("description", "")
-        if key not in best or bet.get("ev_pct", 0) > best[key].get("ev_pct", 0):
-            best[key] = bet
-    unique_bets = list(best.values())
+        keys = bet.get("outcome_keys") or []
+        key = frozenset(keys) if keys else ("_legacy", bet.get("description", ""))
+        groups.setdefault(key, []).append(bet)
+
+    unique_bets: list[dict] = []
+    for group in groups.values():
+        best = max(group, key=lambda b: b.get("ev_pct", 0))
+        valued = next((b for b in group if b.get("is_value")), None)
+        if valued and not best.get("is_value"):
+            best = {
+                **best,
+                "is_value": True,
+                "historical_roi_pct": valued.get("historical_roi_pct"),
+                "historical_n_bets":  valued.get("historical_n_bets"),
+                "market_backtested":  valued.get("market_backtested"),
+            }
+        unique_bets.append(best)
 
     # Sort: value bets first, then by EV descending
     unique_bets.sort(key=lambda x: (-int(x.get("is_value", False)), -x.get("ev_pct", 0)))

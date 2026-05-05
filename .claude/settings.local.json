@@ -23,7 +23,9 @@
       "Bash(git stash *)",
       "Bash(git reset *)",
       "Bash(ruff check *)",
-      "Bash(awk 'NR==17905 || NR==17906 || NR==17907' docs/index.html)"
+      "Bash(awk 'NR==17905 || NR==17906 || NR==17907' docs/index.html)",
+      "PowerShell(if \\(Test-Path data\\\\sportsbet_odds.json\\) { \"{0:N1} KB\" -f \\(\\(Get-Item data\\\\sportsbet_odds.json\\).Length / 1KB\\) } else { \"missing\" })",
+      "PowerShell($d = Get-Content data\\\\sportsbet_odds.json -Raw | ConvertFrom-Json; $d.fetched_at; \"fights:\" + $d.fights.Count; foreach \\($f in $d.fights\\) { $f.fight_name + \" :: \" + \\(\\($f.markets.PSObject.Properties | ForEach-Object { $_.Name }\\) -join \", \"\\) })"
     ]
   }
 }

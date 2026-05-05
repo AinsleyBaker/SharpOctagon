@@ -33,7 +33,9 @@
       "Bash(cmd //c 'tasklist /FI \"IMAGENAME eq python.exe\"')",
       "PowerShell(Get-Process *)",
       "Bash(ufc-train props *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(GIT_EDITOR=true git -C \"C:/Users/Godfather/Documents/UFCPredict\" rebase --continue)",
+      "Bash(GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git -c core.editor=true rebase --continue)"
     ]
   }
 }

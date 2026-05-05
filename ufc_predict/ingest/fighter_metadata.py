@@ -290,7 +290,8 @@ def _full_stats_from_db(name: str, session) -> dict:
 
     def _f(v):
         # JSON-safe: NaN → None
-        if v is None: return None
+        if v is None:
+            return None
         try:
             f = float(v)
             return None if math.isnan(f) else f

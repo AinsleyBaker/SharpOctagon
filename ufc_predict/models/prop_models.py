@@ -413,8 +413,10 @@ def predict_props(
                 val = v.iloc[0] if hasattr(v, "iloc") else float(v)
                 return float(val) if val == val else float("nan")  # nan check
 
-            a_ko  = _col("a_ko_rate");  b_ko  = _col("b_ko_rate")
-            a_sub = _col("a_sub_rate"); b_sub = _col("b_sub_rate")
+            a_ko = _col("a_ko_rate")
+            b_ko = _col("b_ko_rate")
+            a_sub = _col("a_sub_rate")
+            b_sub = _col("b_sub_rate")
 
             if a_ko == a_ko and b_ko == b_ko:
                 base_ko  = (a_ko + b_ko) / 2

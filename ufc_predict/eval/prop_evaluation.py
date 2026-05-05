@@ -148,8 +148,10 @@ def evaluate(oof_path: Path = OOF_PATH) -> dict:
 
         # Map true labels: 0=KO, 1=SUB, 2=DEC
         def _neutral_idx(cls: str) -> int:
-            if cls.endswith("_KO_TKO"): return 0
-            if cls.endswith("_SUB"):    return 1
+            if cls.endswith("_KO_TKO"):
+                return 0
+            if cls.endswith("_SUB"):
+                return 1
             return 2
         y_n = valid_method["method_class_true"].map(_neutral_idx).values
         method_summary["neutral_3class"] = {

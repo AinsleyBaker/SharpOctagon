@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, UTC
 from pathlib import Path
 
 import numpy as np
@@ -47,7 +47,7 @@ def snapshot_predictions(predictions: list[dict] | None = None) -> Path:
             predictions = json.load(f)
 
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M")
+    ts = datetime.now(UTC).strftime("%Y-%m-%dT%H-%M")
     path = HISTORY_DIR / f"predictions_{ts}.json"
     with open(path, "w") as f:
         json.dump(predictions, f, indent=2, default=str)
@@ -214,7 +214,7 @@ def evaluate_past_predictions(db_url: str | None = None) -> dict:
             ev_n += 1
 
     perf = {
-        "evaluated_at":      datetime.now(timezone.utc).isoformat(),
+        "evaluated_at":      datetime.now(UTC).isoformat(),
         "n_bouts":           total,
         "accuracy":          round(correct / total, 4) if total else None,
         "mean_brier":        round(float(np.mean(briers)), 4) if briers else None,

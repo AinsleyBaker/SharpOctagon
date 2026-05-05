@@ -19,7 +19,7 @@ import json
 import logging
 import re
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, UTC
 from pathlib import Path
 from typing import Any
 
@@ -355,7 +355,7 @@ def save_markets(fights: list[dict], path: Path = ODDS_CACHE_PATH) -> None:
     """Persist scraped markets to a JSON cache so CI can read them without geo-access."""
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "fetched_at": datetime.now(UTC).isoformat(),
         "fights": fights,
     }
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
@@ -369,7 +369,7 @@ def cache_age_hours(path: Path = ODDS_CACHE_PATH) -> float | None:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         fetched_at = datetime.fromisoformat(data["fetched_at"])
-        return (datetime.now(timezone.utc) - fetched_at).total_seconds() / 3600
+        return (datetime.now(UTC) - fetched_at).total_seconds() / 3600
     except (json.JSONDecodeError, KeyError, ValueError):
         return None
 

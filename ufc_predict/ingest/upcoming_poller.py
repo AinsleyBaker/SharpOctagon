@@ -15,7 +15,7 @@ import hashlib
 import json
 import logging
 import time
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone, UTC
 from pathlib import Path
 
 import requests
@@ -278,7 +278,7 @@ def _resolve_fighter(
 
 
 def upsert_bouts(bouts: list[dict], session: Session) -> int:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     upserted = 0
     seen_ids: set[str] = set()
     fighter_cache: list = []  # populated lazily by the first _resolve_fighter call

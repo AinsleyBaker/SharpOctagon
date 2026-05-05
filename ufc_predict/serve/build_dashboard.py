@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import unicodedata
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, UTC
 from pathlib import Path
 
 
@@ -217,12 +217,12 @@ def _format_fight_time_aest(start_time, event_date: str) -> str:
             ts = int(start_time)
             if ts > 1e12:  # milliseconds
                 ts = ts // 1000
-            dt_utc = datetime.fromtimestamp(ts, tz=timezone.utc)
+            dt_utc = datetime.fromtimestamp(ts, tz=UTC)
         else:
             s = str(start_time).rstrip("Z")
             if s.endswith("+0000"):
                 s = s[:-5]
-            dt_utc = datetime.fromisoformat(s).replace(tzinfo=timezone.utc) if "T" in s else None
+            dt_utc = datetime.fromisoformat(s).replace(tzinfo=UTC) if "T" in s else None
             if dt_utc is None:
                 return ""
         # Convert to AEST (UTC+10, no DST for simplicity — Sydney is mostly +10/+11)
@@ -1489,7 +1489,7 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         event_filter_options=event_filter_options,
         portfolios_by_event=portfolios_by_event,
         event_carousel=event_carousel,
-        generated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        generated_at=datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
         n_bouts=len(predictions),
     )
 

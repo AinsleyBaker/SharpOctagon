@@ -150,6 +150,7 @@ def _bet_row(
     description: str,
     our_prob: float,
     decimal_odds: float,
+    outcome_keys: list[str] | None = None,
 ) -> dict:
     if decimal_odds < MIN_ODDS or our_prob <= 0:
         return {}
@@ -195,7 +196,61 @@ def _bet_row(
         "historical_roi_pct": (round(hist_roi, 2) if hist_roi is not None else None),
         "historical_n_bets":  hist_n,
         "market_backtested":  market_backtested,
+        # Atomic outcome keys ("A|KO|2", "B|DEC|DEC", …) the bet pays on.
+        # Used by build_portfolio() to detect within-fight conflicts so two
+        # bets that can't both win don't double-count in best-case.
+        "outcome_keys": list(outcome_keys) if outcome_keys else [],
     }
+
+
+# ---------------------------------------------------------------------------
+# Atomic outcome keys: "{winner}|{method}|{round}" where
+#   winner ∈ {A, B}; method ∈ {KO, SUB, DEC}; round ∈ {1..5} for finishes,
+#   "DEC" for decisions. Draws are ignored (separate market, no fighter
+#   attribution). Used to detect within-fight conflicts in best-case calc.
+# ---------------------------------------------------------------------------
+
+_ROUNDS = (1, 2, 3, 4, 5)
+
+
+def _canon_method(m: str) -> str:
+    """Normalise a method string to {KO, SUB, DEC}. KO/TKO collapse to KO."""
+    m = (m or "").upper()
+    if "KO" in m or m == "TKO":
+        return "KO"
+    if "SUB" in m:
+        return "SUB"
+    return "DEC"
+
+
+def _wk_method(side: str, method: str, rounds=None) -> set[str]:
+    """Outcome keys for `side` winning by `method` in any of `rounds`.
+    DEC ignores rounds (single key); finishes default to all rounds."""
+    method = _canon_method(method)
+    if method == "DEC":
+        return {f"{side}|DEC|DEC"}
+    rs = tuple(rounds) if rounds is not None else _ROUNDS
+    return {f"{side}|{method}|{r}" for r in rs}
+
+
+def _wk_winner_all(side: str) -> set[str]:
+    """All winning outcomes for `side` (any method, any round)."""
+    return _wk_method(side, "KO") | _wk_method(side, "SUB") | _wk_method(side, "DEC")
+
+
+def _wk_neutral_method(method: str, rounds=None) -> set[str]:
+    """Either fighter wins by the given method (in given rounds)."""
+    return _wk_method("A", method, rounds) | _wk_method("B", method, rounds)
+
+
+def _wk_dec_any() -> set[str]:
+    """Fight goes the distance (either fighter wins by decision)."""
+    return _wk_neutral_method("DEC")
+
+
+def _wk_finish_any(rounds=None) -> set[str]:
+    """Any KO or SUB by either fighter, optionally restricted to `rounds`."""
+    return _wk_neutral_method("KO", rounds) | _wk_neutral_method("SUB", rounds)
 
 
 # ---------------------------------------------------------------------------
@@ -316,16 +371,19 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
 
     bets: list[dict] = []
 
-    def _add(bet_type, label, our_p, odds):
-        b = _bet_row(bet_type, label, our_p, odds)
+    def _add(bet_type, label, our_p, odds, outcome_keys=None):
+        b = _bet_row(bet_type, label, our_p, odds, outcome_keys=outcome_keys)
         if b:
             bets.append(b)
 
     # ---- Moneyline --------------------------------------------------------
-    for name, prob, key in [(name_a, prob_a, "moneyline_a"), (name_b, prob_b, "moneyline_b")]:
+    for name, prob, key, side in [
+        (name_a, prob_a, "moneyline_a", "A"),
+        (name_b, prob_b, "moneyline_b", "B"),
+    ]:
         odds = sb.get(key)
         if odds and odds > MIN_ODDS:
-            _add("moneyline", f"{name} wins", prob, odds)
+            _add("moneyline", f"{name} wins", prob, odds, _wk_winner_all(side))
 
     # ---- Method of victory (fighter-attributed) ---------------------------
     for sel_name, odds in (sb.get("method") or {}).items():
@@ -343,7 +401,7 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             label = f"{name_b} wins by {method.replace('_', '/')}"
         else:
             continue
-        _add("method", label, our_p, odds)
+        _add("method", label, our_p, odds, _wk_method(side, method))
 
     # ---- Method neutral ("How fight will End") ----------------------------
     for sel_name, odds in (sb.get("method_neutral") or {}).items():
@@ -351,11 +409,14 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         lname = sel_name.lower()
         if "ko" in lname or "tko" in lname:
-            _add("method_neutral", "Fight ends by KO/TKO", prob_ko_any, odds)
+            _add("method_neutral", "Fight ends by KO/TKO", prob_ko_any, odds,
+                 _wk_neutral_method("KO"))
         elif "sub" in lname:
-            _add("method_neutral", "Fight ends by Submission", prob_sub_any, odds)
+            _add("method_neutral", "Fight ends by Submission", prob_sub_any, odds,
+                 _wk_neutral_method("SUB"))
         elif any(w in lname for w in ("point", "dec", "judge")):
-            _add("method_neutral", "Fight goes to Decision", prob_dec, odds)
+            _add("method_neutral", "Fight goes to Decision", prob_dec, odds,
+                 _wk_dec_any())
 
     # ---- Double chance (method combo per fighter) -------------------------
     for sel_name, odds in (sb.get("method_combo") or {}).items():
@@ -378,11 +439,14 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         lname = sel_name.lower()
         if "ko" in lname and "sub" in lname:
-            _add("method_combo", f"{pfx} wins by KO or Sub", ko + sub, odds)
+            _add("method_combo", f"{pfx} wins by KO or Sub", ko + sub, odds,
+                 _wk_method(side, "KO") | _wk_method(side, "SUB"))
         elif "ko" in lname and any(w in lname for w in ("point", "dec")):
-            _add("method_combo", f"{pfx} wins by KO or Decision", ko + dec, odds)
+            _add("method_combo", f"{pfx} wins by KO or Decision", ko + dec, odds,
+                 _wk_method(side, "KO") | _wk_method(side, "DEC"))
         elif "sub" in lname and any(w in lname for w in ("point", "dec")):
-            _add("method_combo", f"{pfx} wins by Sub or Decision", sub + dec, odds)
+            _add("method_combo", f"{pfx} wins by Sub or Decision", sub + dec, odds,
+                 _wk_method(side, "SUB") | _wk_method(side, "DEC"))
 
     # ---- Go the distance --------------------------------------------------
     for sel_name, odds in (sb.get("distance") or {}).items():
@@ -390,9 +454,9 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
             continue
         lname = sel_name.lower()
         if "yes" in lname or "go" in lname:
-            _add("distance", "Fight goes to decision", prob_dec, odds)
+            _add("distance", "Fight goes to decision", prob_dec, odds, _wk_dec_any())
         elif "no" in lname or "not" in lname:
-            _add("distance", "Fight ends before decision", prob_finish, odds)
+            _add("distance", "Fight ends before decision", prob_finish, odds, _wk_finish_any())
 
     # ---- Total rounds (over/under line) ----------------------------------
     for sel_name, odds in (sb.get("total_rounds") or {}).items():
@@ -404,7 +468,13 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         direction, line = parsed
         our_p = _prob_over_under(prob_rounds, direction, line, prob_dec)
         label = f"{'Over' if direction == 'over' else 'Under'} {line} rounds"
-        _add("total_rounds", label, our_p, odds)
+        # "Over X.5" → finishes in (X+1)..5 OR decision; "Under X.5" → finishes in 1..X.
+        threshold = int(line + 0.5)  # 2.5 → 2
+        if direction == "over":
+            keys = _wk_finish_any(rounds=range(threshold + 1, 6)) | _wk_dec_any()
+        else:
+            keys = _wk_finish_any(rounds=range(1, threshold + 1))
+        _add("total_rounds", label, our_p, odds, keys)
 
     # ---- Round survival ("Fight To Start Round X") -----------------------
     for sel_name, odds in (sb.get("round_survival") or {}).items():
@@ -420,9 +490,12 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         p_early_finish = sum(prob_rounds.get(f"R{i}", 0) for i in range(1, rnum))
         p_survives = max(0.0, 1.0 - p_early_finish)
         if "yes" in sel_name.lower():
-            _add("round_survival", f"Fight reaches Round {rnum}", p_survives, odds)
+            # Reaches round N = finishes in N..5 OR goes to decision
+            keys = _wk_finish_any(rounds=range(rnum, 6)) | _wk_dec_any()
+            _add("round_survival", f"Fight reaches Round {rnum}", p_survives, odds, keys)
         elif "no" in sel_name.lower():
-            _add("round_survival", f"Finish before Round {rnum}", p_early_finish, odds)
+            keys = _wk_finish_any(rounds=range(1, rnum))
+            _add("round_survival", f"Finish before Round {rnum}", p_early_finish, odds, keys)
 
     # ---- Alt finish timing ("Round 1 or 2" / "Round 3 or Decision") -----
     for sel_name, odds in (sb.get("alt_finish_timing") or {}).items():
@@ -432,11 +505,13 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         if "1 or 2" in lname:
             # Only finishes end here — no decisions
             our_p = prob_rounds.get("R1", 0) + prob_rounds.get("R2", 0)
-            _add("alt_finish_timing", "Ends in Round 1 or 2", our_p, odds)
+            _add("alt_finish_timing", "Ends in Round 1 or 2", our_p, odds,
+                 _wk_finish_any(rounds=(1, 2)))
         elif "3" in lname or "dec" in lname:
             # Finishes in R3+ PLUS all decisions (they definitely go to R3)
             our_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6)) + prob_dec
-            _add("alt_finish_timing", "Ends in Round 3+ / Decision", our_p, odds)
+            _add("alt_finish_timing", "Ends in Round 3+ / Decision", our_p, odds,
+                 _wk_finish_any(rounds=(3, 4, 5)) | _wk_dec_any())
 
     # ---- Alt round betting (fighter + timing combo) ----------------------
     for sel_name, odds in (sb.get("alt_round") or {}).items():
@@ -453,11 +528,15 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         if "1 or 2" in lname:
             timing_p = prob_rounds.get("R1", 0) + prob_rounds.get("R2", 0)
             _add("alt_round", f"{pfx} wins in R1 or R2",
-                 winner_p * timing_p, odds)
+                 winner_p * timing_p, odds,
+                 _wk_method(side, "KO", (1, 2)) | _wk_method(side, "SUB", (1, 2)))
         elif "3" in lname or "dec" in lname:
             timing_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(3, 6))
             _add("alt_round", f"{pfx} wins in R3 or by Decision",
-                 winner_p * timing_p, odds)
+                 winner_p * timing_p, odds,
+                 _wk_method(side, "KO", (3, 4, 5))
+                 | _wk_method(side, "SUB", (3, 4, 5))
+                 | _wk_method(side, "DEC"))
 
     # ---- Winning round ---------------------------------------------------
     # Covers three selection types from SportsBet:
@@ -485,9 +564,11 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
                 continue
             side = _fighter_side(sel_name, name_a, name_b)
             if side == "A":
-                _add("winning_round", f"{name_a} wins by Decision", float(props.get("prob_a_wins_dec", 0)), odds)
+                _add("winning_round", f"{name_a} wins by Decision",
+                     float(props.get("prob_a_wins_dec", 0)), odds, _wk_method("A", "DEC"))
             elif side == "B":
-                _add("winning_round", f"{name_b} wins by Decision", float(props.get("prob_b_wins_dec", 0)), odds)
+                _add("winning_round", f"{name_b} wins by Decision",
+                     float(props.get("prob_b_wins_dec", 0)), odds, _wk_method("B", "DEC"))
             continue
 
         # "Fighter A Round X or by Decision" (alt_round entries that bled into winning_round)
@@ -500,7 +581,13 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
                 pfx      = name_a if side == "A" else name_b
                 timing_p = sum(prob_rounds.get(f"R{i}", 0) for i in range(rnum, 6))
                 our_p    = winner_p * timing_p + (prob_a if side == "A" else prob_b) * prob_dec
-                _add("winning_round", f"{pfx} wins in R{rnum}+ or by Decision", our_p, odds)
+                keys = (
+                    _wk_method(side, "KO", range(rnum, 6))
+                    | _wk_method(side, "SUB", range(rnum, 6))
+                    | _wk_method(side, "DEC")
+                )
+                _add("winning_round", f"{pfx} wins in R{rnum}+ or by Decision",
+                     our_p, odds, keys)
             continue
 
         # Standard: "Fighter A to Win in Round N" or neutral "Round N"
@@ -515,13 +602,18 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         if side == "A":
             cond  = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
             our_p = prob_a * cond
-            _add("winning_round", f"{name_a} wins by finish in Round {rnum}", our_p, odds)
+            _add("winning_round", f"{name_a} wins by finish in Round {rnum}",
+                 our_p, odds,
+                 _wk_method("A", "KO", (rnum,)) | _wk_method("A", "SUB", (rnum,)))
         elif side == "B":
             cond  = p_finish_rn / prob_finish if prob_finish > 0.01 else 0
             our_p = prob_b * cond
-            _add("winning_round", f"{name_b} wins by finish in Round {rnum}", our_p, odds)
+            _add("winning_round", f"{name_b} wins by finish in Round {rnum}",
+                 our_p, odds,
+                 _wk_method("B", "KO", (rnum,)) | _wk_method("B", "SUB", (rnum,)))
         else:
-            _add("winning_round", f"Fight ends by finish in Round {rnum}", p_finish_rn, odds)
+            _add("winning_round", f"Fight ends by finish in Round {rnum}",
+                 p_finish_rn, odds, _wk_finish_any(rounds=(rnum,)))
 
     # Deduplicate: keep the best-EV entry per unique outcome description.
     # Same outcome (e.g. "Fight ends in Round 1") can appear at different odds
@@ -562,3 +654,191 @@ def top_value_bets(predictions: list[dict], n: int = 20) -> list[dict]:
                 })
     all_bets.sort(key=lambda x: -x.get("ev_pct", 0))
     return all_bets[:n]
+
+
+# ---------------------------------------------------------------------------
+# Portfolio allocation: Kelly vs flat-stake, with correlation/risk caps
+# ---------------------------------------------------------------------------
+
+# A single bet on a single fight max
+PORTFOLIO_MAX_PER_BET_PCT   = 5.0
+# Sum of all stakes on the same bout (handles correlated legs — e.g. method
+# KO + winning round 1 of the same fighter overlap heavily).
+PORTFOLIO_MAX_PER_FIGHT_PCT = 15.0
+# Sum across the whole portfolio. 50% keeps a sane reserve even if the entire
+# card fails — half-Kelly already assumes our probs are calibrated, so this
+# is a belt-and-braces guard against model error.
+PORTFOLIO_MAX_TOTAL_PCT     = 50.0
+# Drop bets that round to less than this — saves the user from $0.30 stakes
+# on a $100 bankroll that aren't actually placeable.
+PORTFOLIO_MIN_BET_PCT       = 1.0
+# How many bets the "concentrated" strategy keeps. Picked to give 5–10
+# actionable stakes ($3–5 each on a $100 bankroll) instead of 30+ tiny ones.
+PORTFOLIO_TOP_N             = 8
+
+
+def _fight_best_case_pct(fight_bets: list[dict]) -> float:
+    """Best achievable net pct for one bout's bets, accounting for the fact
+    that mutually-exclusive bets (e.g. Method KO + Method SUB on the same
+    fighter) cannot both win.
+
+    For each atomic outcome the bet set covers, sum the wins minus the losses
+    in that outcome, then take the max. If a bet has no outcome_keys (legacy
+    or unsupported market), conservatively treat it as winning in every
+    scenario the other bets cover — this collapses to the old "sum all
+    payouts" behavior, which is the right upper bound when we don't know
+    which scenarios it actually pays on.
+    """
+    if not fight_bets:
+        return 0.0
+    universe: set[str] = set()
+    for b in fight_bets:
+        keys = b.get("outcome_keys")
+        if keys:
+            universe.update(keys)
+    if not universe:
+        # No outcome data anywhere — fall back to the optimistic upper bound.
+        return sum(b["stake_pct"] * b["payout_mult"] for b in fight_bets)
+
+    best = -float("inf")
+    for omega in universe:
+        net = 0.0
+        for b in fight_bets:
+            keys = b.get("outcome_keys") or []
+            wins = (omega in keys) if keys else True   # legacy bets: always win
+            if wins:
+                net += b["stake_pct"] * b["payout_mult"]
+            else:
+                net -= b["stake_pct"]
+        if net > best:
+            best = net
+    return best
+
+
+def build_portfolio(
+    bets: list[dict],
+    strategy: str = "kelly",
+    max_per_bet_pct: float = PORTFOLIO_MAX_PER_BET_PCT,
+    max_per_fight_pct: float = PORTFOLIO_MAX_PER_FIGHT_PCT,
+    max_total_pct: float = PORTFOLIO_MAX_TOTAL_PCT,
+    min_bet_pct: float = PORTFOLIO_MIN_BET_PCT,
+    top_n: int = PORTFOLIO_TOP_N,
+) -> dict:
+    """Allocate bankroll across value bets.
+
+    Strategies:
+      - "kelly":        fractional-Kelly stakes (each bet's pre-computed
+                        kelly_pct, already 1/4 Kelly), then per-bet/fight/total
+                        caps applied.
+      - "flat":         equal stakes across all qualifying bets, same caps.
+      - "concentrated": top-N Kelly-ranked bets only, each at its full Kelly
+                        stake. Yields fewer, larger, more actionable stakes —
+                        designed for small bankrolls where 30 tiny bets aren't
+                        practical at most sportsbooks.
+
+    Each bet must contain: 'fight' (correlation key), 'our_prob', 'sb_odds',
+    'kelly_pct'. Other descriptive fields pass through unchanged.
+
+    Returns:
+      {
+        "strategy": str,
+        "bets":     [bet + stake_pct sorted desc by stake],
+        "summary":  {total_stake_pct, expected_pnl_pct, best_case_pct,
+                     worst_case_pct, n_bets, n_fights},
+      }
+    """
+    empty = {
+        "strategy": strategy,
+        "bets":     [],
+        "summary": {
+            "total_stake_pct":  0.0,
+            "expected_pnl_pct": 0.0,
+            "best_case_pct":    0.0,
+            "worst_case_pct":   0.0,
+            "n_bets":           0,
+            "n_fights":         0,
+        },
+    }
+    if not bets:
+        return empty
+
+    # 1) Initial stake per bet
+    if strategy == "kelly":
+        stakes = [float(b.get("kelly_pct") or 0) for b in bets]
+    elif strategy == "flat":
+        equal = max_total_pct / len(bets)
+        stakes = [equal] * len(bets)
+    elif strategy == "concentrated":
+        # Rank bets by raw Kelly stake; keep the top N, zero the rest.
+        # The downstream caps then apply only to this concentrated subset.
+        kelly_pcts = [float(b.get("kelly_pct") or 0) for b in bets]
+        order = sorted(range(len(bets)), key=lambda i: -kelly_pcts[i])
+        keep = set(order[:top_n])
+        stakes = [kelly_pcts[i] if i in keep else 0.0 for i in range(len(bets))]
+    else:
+        raise ValueError(f"Unknown portfolio strategy: {strategy}")
+
+    # 2) Per-bet cap
+    stakes = [min(s, max_per_bet_pct) for s in stakes]
+
+    # 3) Per-fight scaling — correlated legs on the same bout share a budget.
+    fight_keys = [b.get("fight") or f"_unk_{i}" for i, b in enumerate(bets)]
+    fight_totals: dict[str, float] = {}
+    for fk, s in zip(fight_keys, stakes):
+        fight_totals[fk] = fight_totals.get(fk, 0.0) + s
+    for fk, total in fight_totals.items():
+        if total > max_per_fight_pct and total > 0:
+            scale = max_per_fight_pct / total
+            stakes = [
+                (s * scale if fight_keys[i] == fk else s)
+                for i, s in enumerate(stakes)
+            ]
+
+    # 4) Total cap
+    grand_total = sum(stakes)
+    if grand_total > max_total_pct and grand_total > 0:
+        scale = max_total_pct / grand_total
+        stakes = [s * scale for s in stakes]
+
+    # 5) Drop tiny stakes & build output
+    out_bets: list[dict] = []
+    for bet, stake in zip(bets, stakes):
+        if stake < min_bet_pct:
+            continue
+        b = dict(bet)
+        b["stake_pct"]   = round(stake, 2)
+        b["ev_per_unit"] = float(bet.get("our_prob", 0)) * float(bet.get("sb_odds", 1)) - 1
+        b["payout_mult"] = float(bet.get("sb_odds", 1)) - 1   # net multiple if win
+        out_bets.append(b)
+
+    if not out_bets:
+        return empty
+
+    out_bets.sort(key=lambda b: -b["stake_pct"])
+
+    total_pct    = sum(b["stake_pct"] for b in out_bets)
+    expected_pnl = sum(b["stake_pct"] * b["ev_per_unit"] for b in out_bets)
+    # Best case = sum across fights of the per-fight max-payoff scenario.
+    # Mutually-exclusive bets on the same bout (e.g. Method KO + Method SUB
+    # for the same fighter) can never both hit — the per-fight calc enumerates
+    # atomic outcomes (winner × method × round) and picks the one that
+    # maximises net pct. Across fights we sum because outcomes are independent.
+    by_fight: dict[str, list[dict]] = {}
+    for b in out_bets:
+        by_fight.setdefault(b.get("fight") or "_", []).append(b)
+    best_case  = sum(_fight_best_case_pct(fb) for fb in by_fight.values())
+    worst_case = -total_pct
+    n_fights   = len(by_fight)
+
+    return {
+        "strategy": strategy,
+        "bets":     out_bets,
+        "summary": {
+            "total_stake_pct":  round(total_pct, 1),
+            "expected_pnl_pct": round(expected_pnl, 2),
+            "best_case_pct":    round(best_case, 1),
+            "worst_case_pct":   round(worst_case, 1),
+            "n_bets":           len(out_bets),
+            "n_fights":         n_fights,
+        },
+    }

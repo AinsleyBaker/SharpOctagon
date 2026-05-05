@@ -512,6 +512,110 @@
   .ev-cell-neg { color: #888; font-variant-numeric: tabular-nums; }
   .stake-cell  { color: var(--blue); font-variant-numeric: tabular-nums; }
 
+  /* ─── Bankroll plan (per-event + Top Bets page) ─── */
+  .bankroll-plan {
+    margin: 1rem 1.4rem 0; padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(74,144,217,0.04));
+    border: 1px solid rgba(0,255,136,0.22);
+    border-radius: 10px;
+  }
+  .bp-title-row {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.8rem;
+  }
+  .bp-title { font-size: var(--xs); text-transform: uppercase; letter-spacing: 0.07em; color: var(--matrix); font-weight: 700; }
+  .bp-title .bp-bankroll-display { color: var(--gold); }
+  .bp-strategy-toggle { display: inline-flex; gap: 4px; }
+  .bp-strategy-toggle button {
+    padding: 0.3rem 0.85rem; border-radius: 5px; border: 1px solid var(--border);
+    background: var(--card-2); color: var(--muted);
+    font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    cursor: pointer; font-family: inherit; transition: all 0.12s;
+  }
+  .bp-strategy-toggle button:hover { color: var(--light); }
+  .bp-strategy-toggle button.active {
+    background: rgba(0,255,136,0.14); color: var(--matrix); border-color: var(--matrix);
+    box-shadow: 0 0 8px rgba(0,255,136,0.18);
+  }
+  .bp-summary {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem;
+    margin-bottom: 0.7rem;
+  }
+  .bp-summary > div {
+    background: rgba(13,13,16,0.5); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.55rem 0.7rem;
+  }
+  .bp-summary .label {
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em;
+    font-size: 0.58rem; font-weight: 600;
+  }
+  .bp-summary .val {
+    font-weight: 800; font-variant-numeric: tabular-nums;
+    font-size: 1.1rem; margin-top: 2px; color: var(--light);
+  }
+  .bp-summary .val.pos  { color: var(--matrix); }
+  .bp-summary .val.neg  { color: #ff7878; }
+  .bp-summary .val.gold { color: var(--gold); }
+  .bp-list table { width: 100%; border-collapse: collapse; font-size: var(--sm); }
+  .bp-list th {
+    color: #555; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.07em;
+    text-align: left; padding: 0.4rem 0.7rem; background: #08080a;
+  }
+  .bp-list td {
+    padding: 0.5rem 0.7rem; border-top: 1px solid #1a1a1f; vertical-align: middle;
+  }
+  .bp-list tr:hover td { background: rgba(0,255,136,0.025); }
+  .bp-list td.stake  { color: var(--gold); font-weight: 800; font-variant-numeric: tabular-nums; }
+  .bp-list td.profit { color: var(--matrix); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .bp-list td.fight  { color: var(--muted); font-size: var(--xs); }
+  .bp-list td.odds   { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .bp-empty {
+    color: var(--muted); font-size: var(--xs); text-align: center;
+    padding: 1rem; font-style: italic;
+  }
+
+  .bankroll-input-wrap {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--card-2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.3rem 0.7rem;
+  }
+  .bankroll-input-wrap label {
+    font-size: 0.6rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700;
+  }
+  .bankroll-input-wrap span.dollar { color: var(--gold); font-weight: 700; font-size: var(--sm); }
+  .bankroll-input-wrap input {
+    width: 75px; background: transparent; border: none; outline: none;
+    color: var(--matrix); font-weight: 800; font-size: var(--sm); font-family: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+  .bankroll-input-wrap input::-webkit-outer-spin-button,
+  .bankroll-input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .top-bets-controls {
+    display: flex; flex-wrap: wrap; gap: 0.8rem;
+    align-items: center; margin-bottom: 1rem;
+  }
+
+  /* ─── Mobile: collapse the 4-col bankroll summary, stack controls ─── */
+  @media (max-width: 720px) {
+    .bp-summary { grid-template-columns: repeat(2, 1fr); }
+    .bp-summary .val { font-size: 0.95rem; }
+    .bp-title-row { flex-direction: column; align-items: flex-start; }
+    .bp-strategy-toggle { flex-wrap: wrap; }
+    .bp-strategy-toggle button { padding: 0.3rem 0.6rem; font-size: 0.6rem; }
+    .bankroll-plan { margin: 0.8rem 0.5rem 0; padding: 0.8rem 0.7rem; }
+    .bp-list th, .bp-list td { padding: 0.4rem 0.4rem; font-size: 0.7rem; }
+    .bp-list td.fight { display: none; }   /* same fight repeats per card; drop on mobile */
+    .top-bets-controls { gap: 0.5rem; }
+    .top-bets-controls .bp-strategy-toggle { width: 100%; }
+  }
+  @media (max-width: 480px) {
+    .bp-summary { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+    .bp-summary > div { padding: 0.4rem 0.5rem; }
+    .bp-list th { font-size: 0.55rem; }
+  }
+
   .bet-legend {
     padding: 0.55rem 1rem; border-top: 1px solid var(--border);
     font-size: 0.62rem; color: #666; line-height: 1.7;
@@ -745,6 +849,91 @@
         </h2>
         <span class="date">{{ event.event_date }}</span>
       </div>
+
+      {# Bankroll Plan card — render only when at least one strategy yields bets #}
+      {% if (event.portfolio_kelly and event.portfolio_kelly.bets) or (event.portfolio_flat and event.portfolio_flat.bets) or (event.portfolio_concentrated and event.portfolio_concentrated.bets) %}
+      <div class="bankroll-plan">
+        <div class="bp-title-row">
+          <span class="bp-title">⟁ Bankroll Plan</span>
+          <div class="bankroll-input-wrap">
+            <label>Bankroll</label>
+            <span class="dollar">$</span>
+            <input class="bankroll-input" type="number" min="1" step="1" value="100"
+                   oninput="setBankroll(this.value)">
+          </div>
+          <div class="bp-strategy-toggle">
+            <button type="button" class="active" data-strategy="concentrated"
+                    onclick="setEventStrategy(this, 'concentrated')"
+                    title="Top picks only — fewer, larger stakes. Best for small bankrolls where 30 tiny bets aren't practical.">
+              Top picks
+            </button>
+            <button type="button" data-strategy="kelly"
+                    onclick="setEventStrategy(this, 'kelly')"
+                    title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
+              Kelly · all bets
+            </button>
+            <button type="button" data-strategy="flat"
+                    onclick="setEventStrategy(this, 'flat')"
+                    title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
+              Flat · low variance
+            </button>
+          </div>
+        </div>
+
+        {% for strat_name, strat in [('concentrated', event.portfolio_concentrated), ('kelly', event.portfolio_kelly), ('flat', event.portfolio_flat)] %}
+        <div class="bp-strategy-block" data-strategy="{{ strat_name }}"{% if strat_name != 'concentrated' %} style="display:none"{% endif %}>
+          {% if strat and strat.bets %}
+          <div class="bp-summary">
+            <div>
+              <div class="label">Total stake</div>
+              <div class="val gold" data-pct="{{ strat.summary.total_stake_pct }}">${{ strat.summary.total_stake_pct|round|int }}</div>
+            </div>
+            <div>
+              <div class="label">Expected profit</div>
+              <div class="val pos" data-pct="{{ strat.summary.expected_pnl_pct }}">${{ strat.summary.expected_pnl_pct|round|int }}</div>
+            </div>
+            <div>
+              <div class="label">Best case (luckiest)</div>
+              <div class="val pos" data-pct="{{ strat.summary.best_case_pct }}">${{ strat.summary.best_case_pct|round|int }}</div>
+            </div>
+            <div>
+              <div class="label">Worst case</div>
+              <div class="val neg" data-pct="{{ strat.summary.worst_case_pct }}">-${{ (strat.summary.worst_case_pct|abs)|round|int }}</div>
+            </div>
+          </div>
+          <div class="bp-list">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:90px">Stake</th>
+                  <th>Bet</th>
+                  <th>Fight</th>
+                  <th style="width:60px">Odds</th>
+                  <th style="width:60px">Model</th>
+                  <th style="width:90px">If wins</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for bet in strat.bets %}
+                <tr>
+                  <td class="stake" data-pct="{{ bet.stake_pct }}">${{ bet.stake_pct|round|int }}</td>
+                  <td>{{ bet.description }}</td>
+                  <td class="fight">{{ bet.fight }}</td>
+                  <td class="odds">{{ "%.2f"|format(bet.sb_odds) }}</td>
+                  <td class="bet-prob">{{ (bet.our_prob * 100)|round|int }}%</td>
+                  <td class="profit" data-pct="{{ (bet.stake_pct * bet.payout_mult)|round(2) }}">+${{ (bet.stake_pct * bet.payout_mult)|round|int }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="bp-empty">No bets pass the bankroll caps for this strategy.</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
 
       {% for bout in event.bouts %}
       <div class="fight-block">
@@ -1052,7 +1241,39 @@
   <!-- ═══════════ TOP BETS ═══════════ -->
   <div id="top-bets" class="hidden">
     {% if top_bets %}
-    <div class="section-title">⟁  Top Value Bets — Sorted by Expected Profit</div>
+    <div class="section-title">⟁  Top Value Bets — Bankroll Allocation</div>
+
+    <!-- Bankroll + strategy controls -->
+    <div class="top-bets-controls">
+      <div class="bankroll-input-wrap">
+        <label for="global-bankroll-input">Bankroll</label>
+        <span class="dollar">$</span>
+        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="100"
+               oninput="setBankroll(this.value)">
+      </div>
+      <div class="bp-strategy-toggle" id="top-strategy-toggle">
+        <button type="button" class="active" data-strategy="concentrated"
+                onclick="setTopStrategy(this, 'concentrated')"
+                title="Top picks only — fewer, larger stakes. Best for small bankrolls.">
+          Top picks
+        </button>
+        <button type="button" data-strategy="kelly"
+                onclick="setTopStrategy(this, 'kelly')"
+                title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
+          Kelly · all bets
+        </button>
+        <button type="button" data-strategy="flat"
+                onclick="setTopStrategy(this, 'flat')"
+                title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
+          Flat · low variance
+        </button>
+        <button type="button" data-strategy="all"
+                onclick="setTopStrategy(this, 'all')"
+                title="Show every value bet sorted by EV — no portfolio caps applied.">
+          All bets
+        </button>
+      </div>
+    </div>
 
     <!-- Event filter -->
     <div class="filter-bar">
@@ -1079,8 +1300,8 @@
       </button>
     </div>
 
-    <!-- Bet type filter -->
-    <div class="filter-bar" style="margin-top:-0.4rem">
+    <!-- Bet type filter (visible only in "all bets" mode — portfolios already mix markets) -->
+    <div class="filter-bar" id="bet-type-filter" style="margin-top:-0.4rem;display:none">
       <span style="color:var(--muted);font-size:var(--xs);align-self:center;margin-right:0.3rem">market:</span>
       <button type="button" class="type-pill active" data-type="__all__" onclick="filterBetsByType('__all__', this)">All</button>
       <button type="button" class="type-pill" data-type="moneyline" onclick="filterBetsByType('moneyline', this)">Moneyline</button>
@@ -1090,48 +1311,80 @@
       <button type="button" class="type-pill" data-type="total_rounds" onclick="filterBetsByType('total_rounds', this)">Total Rounds</button>
     </div>
 
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
-      <table class="top-table">
-        <thead>
-          <tr>
-            <th>Fight</th>
-            <th>Event</th>
-            <th>Bet</th>
-            <th>Model %</th>
-            <th>SB Odds</th>
-            <th>Win Payout / $100</th>
-            <th>Expected Profit / $100</th>
-            <th>Suggested Stake</th>
-          </tr>
-        </thead>
-        <tbody id="top-bets-tbody">
-          {% for bet in top_bets %}
-          {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
-          <tr data-event="{{ bet.event|escape }}" data-type="{{ bet.bet_type }}"
-              class="bet-row" onclick="jumpToFight('{{ bet.fight|escape }}', '{{ bet.event|escape }}')"
-              style="cursor:pointer">
-            <td style="color:var(--muted);font-size:var(--xs)">↗ {{ bet.fight }}</td>
-            <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
-            <td style="font-weight:600">{{ bet.description }}</td>
-            <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
-            <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
-            <td style="color:#aaa">+${{ ((bet.sb_odds - 1) * 100)|round(0)|int }}</td>
-            <td style="color:{{ 'var(--matrix)' if ep > 0 else '#888' }};font-weight:700">
-              {{ '+' if ep > 0 else '' }}${{ ep }}
-            </td>
-            <td style="color:var(--blue)">
-              {% if bet.kelly_pct > 0 %}{{ "%.1f"|format(bet.kelly_pct) }}% of bank{% else %}&lt;1%{% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <!-- Portfolio mode (Kelly / Flat) — driven by JS from PORTFOLIOS_BY_EVENT -->
+    <div id="top-portfolio-wrap">
+      <div id="portfolio-summary" class="bp-summary" style="margin-bottom:1rem"></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+        <table class="bp-list" style="width:100%">
+          <thead>
+            <tr>
+              <th style="width:90px">Stake</th>
+              <th>Bet</th>
+              <th>Fight</th>
+              <th style="width:120px">Event</th>
+              <th style="width:60px">Odds</th>
+              <th style="width:60px">Model</th>
+              <th style="width:90px">If wins</th>
+            </tr>
+          </thead>
+          <tbody id="portfolio-tbody"></tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.6rem;font-size:var(--xs);color:#666;padding:0 0.2rem">
+        Caps: max 5% of bankroll per bet, 15% per fight (handles correlated legs), 50% across the whole plan.
+        <strong>Best case</strong> = the single luckiest outcome per fight (KO and Submission for the same fighter
+        can't both hit, so they don't both pay). <strong>Worst case</strong> = every bet loses.
+      </p>
     </div>
-    <p style="margin-top:0.6rem;font-size:var(--xs);color:#444;padding:0 0.2rem">
-      Bets shown only where our model's probability exceeds the bookmaker's implied probability by ≥ 3%.
-      <strong>Expected Profit / $100</strong> is what you'd average over many bets at this edge.
-      Always verify odds before placing.
-    </p>
+
+    <!-- All Value Bets mode — original table, hidden by default -->
+    <div id="top-all-wrap" style="display:none">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+        <table class="top-table">
+          <thead>
+            <tr>
+              <th>Fight</th>
+              <th>Event</th>
+              <th>Bet</th>
+              <th>Model %</th>
+              <th>SB Odds</th>
+              <th>Win Payout / $100</th>
+              <th>Expected Profit / $100</th>
+              <th>Suggested Stake</th>
+            </tr>
+          </thead>
+          <tbody id="top-bets-tbody">
+            {% for bet in top_bets %}
+            {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
+            <tr data-event="{{ bet.event|escape }}" data-type="{{ bet.bet_type }}"
+                class="bet-row" onclick="jumpToFight('{{ bet.fight|escape }}', '{{ bet.event|escape }}')"
+                style="cursor:pointer">
+              <td style="color:var(--muted);font-size:var(--xs)">↗ {{ bet.fight }}</td>
+              <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
+              <td style="font-weight:600">{{ bet.description }}</td>
+              <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
+              <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
+              <td style="color:#aaa">+${{ ((bet.sb_odds - 1) * 100)|round(0)|int }}</td>
+              <td style="color:{{ 'var(--matrix)' if ep > 0 else '#888' }};font-weight:700">
+                {{ '+' if ep > 0 else '' }}${{ ep }}
+              </td>
+              <td style="color:var(--blue)">
+                {% if bet.kelly_pct > 0 %}{{ "%.1f"|format(bet.kelly_pct) }}% of bank{% else %}&lt;1%{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.6rem;font-size:var(--xs);color:#444;padding:0 0.2rem">
+        Every bet where our model's probability exceeds the bookmaker's implied probability by ≥ 3%.
+        Suggested Stake is per-bet quarter-Kelly — the Kelly tab applies portfolio caps on top.
+      </p>
+    </div>
+
+    <!-- JSON payload for portfolio rendering -->
+    <script type="application/json" id="portfolios-data">{{ portfolios_by_event|tojson }}</script>
+
     {% else %}
     <p style="color:var(--muted);text-align:center;padding:3rem">
       The matrix has identified no value yet — SportsBet odds may not be published.
@@ -1451,8 +1704,122 @@ function showTab(tab, el) {
   el.classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
-let _activeEvent = '__all__';
-let _activeType  = '__all__';
+let _activeEvent  = '__all__';
+let _activeType   = '__all__';
+let _topStrategy  = 'concentrated';
+
+// ─── Bankroll & portfolio rendering ───────────────────────────────────
+function _escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function getBankroll() {
+  const v = parseFloat(localStorage.getItem('apex_bankroll'));
+  return (Number.isFinite(v) && v > 0) ? v : 100;
+}
+function setBankroll(value) {
+  const num = parseFloat(value);
+  if (!Number.isFinite(num) || num <= 0) return;
+  localStorage.setItem('apex_bankroll', String(num));
+  applyBankroll();
+}
+function _fmtMoney(dollars) {
+  const sign = dollars < 0 ? '-' : '';
+  const abs  = Math.abs(dollars);
+  // Always whole dollars. Bankroll < $1000 reads cleaner that way; larger
+  // bankrolls naturally have larger stakes so still readable.
+  return sign + '$' + Math.round(abs).toLocaleString();
+}
+function applyBankroll() {
+  const bk = getBankroll();
+  document.querySelectorAll('[data-pct]').forEach(el => {
+    const pct = parseFloat(el.dataset.pct);
+    if (!Number.isFinite(pct)) return;
+    el.textContent = _fmtMoney(bk * pct / 100);
+  });
+  document.querySelectorAll('.bp-bankroll-display').forEach(el => {
+    el.textContent = '$' + Math.round(bk).toLocaleString();
+  });
+  // Sync every bankroll input on the page (Top Bets controls + per-event cards)
+  // so changing one updates the others without each maintaining its own state.
+  document.querySelectorAll('input.bankroll-input').forEach(inp => {
+    if (parseFloat(inp.value) !== bk) inp.value = Math.round(bk);
+  });
+}
+function setEventStrategy(btn, strategy) {
+  const card = btn.closest('.bankroll-plan');
+  if (!card) return;
+  card.querySelectorAll('.bp-strategy-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  card.querySelectorAll('.bp-strategy-block').forEach(blk => {
+    blk.style.display = (blk.dataset.strategy === strategy) ? '' : 'none';
+  });
+}
+function setTopStrategy(btn, strategy) {
+  document.querySelectorAll('#top-strategy-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _topStrategy = strategy;
+  renderTopPortfolio();
+}
+function renderTopPortfolio() {
+  const portWrap   = document.getElementById('top-portfolio-wrap');
+  const allWrap    = document.getElementById('top-all-wrap');
+  const typeFilter = document.getElementById('bet-type-filter');
+  if (!portWrap || !allWrap) return;
+
+  if (_topStrategy === 'all') {
+    portWrap.style.display = 'none';
+    allWrap.style.display  = '';
+    if (typeFilter) typeFilter.style.display = '';
+    _applyBetFilters();
+    return;
+  }
+  if (typeFilter) typeFilter.style.display = 'none';
+  portWrap.style.display = '';
+  allWrap.style.display  = 'none';
+
+  const dataEl = document.getElementById('portfolios-data');
+  if (!dataEl) return;
+  let portfolios = {};
+  try { portfolios = JSON.parse(dataEl.textContent || '{}'); } catch (e) { portfolios = {}; }
+  const evData = portfolios[_activeEvent] || portfolios['__all__'] || {};
+  const data   = evData[_topStrategy] || {bets: [], summary: {}};
+
+  const s = data.summary || {};
+  const summaryEl = document.getElementById('portfolio-summary');
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div><div class="label">Total stake</div><div class="val gold" data-pct="${s.total_stake_pct||0}"></div></div>
+      <div><div class="label">Expected profit</div><div class="val pos" data-pct="${s.expected_pnl_pct||0}"></div></div>
+      <div><div class="label">Best case (luckiest)</div><div class="val pos" data-pct="${s.best_case_pct||0}"></div></div>
+      <div><div class="label">Worst case</div><div class="val neg" data-pct="${s.worst_case_pct||0}"></div></div>
+    `;
+  }
+
+  const tbody = document.getElementById('portfolio-tbody');
+  if (tbody) {
+    if (!data.bets || data.bets.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="bp-empty">No bets pass the bankroll caps for this event/strategy.</td></tr>';
+    } else {
+      tbody.innerHTML = data.bets.map(b => {
+        const winPct = (b.stake_pct * b.payout_mult).toFixed(2);
+        return `
+          <tr class="bet-row" style="cursor:pointer" onclick="jumpToFight('${_escapeHtml(b.fight)}', '${_escapeHtml(b.event)}')">
+            <td class="stake" data-pct="${b.stake_pct}"></td>
+            <td style="font-weight:600">${_escapeHtml(b.description)}</td>
+            <td class="fight">↗ ${_escapeHtml(b.fight)}</td>
+            <td style="color:var(--purple);font-size:var(--xs);font-weight:600">${_escapeHtml(b.event || '')}</td>
+            <td class="odds">${(+b.sb_odds).toFixed(2)}</td>
+            <td style="color:var(--muted)">${Math.round((+b.our_prob) * 100)}%</td>
+            <td class="profit" data-pct="${winPct}"></td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+  applyBankroll();
+}
 function _applyBetFilters() {
   document.querySelectorAll('#top-bets-tbody tr').forEach(r => {
     const eventOK = _activeEvent === '__all__' || r.dataset.event === _activeEvent;
@@ -1465,6 +1832,7 @@ function filterBetsByEvent(eventLabel, btn) {
   btn.classList.add('active');
   _activeEvent = eventLabel;
   _applyBetFilters();
+  renderTopPortfolio();
   // Show the jump-to-event banner only when a specific event is selected
   const banner = document.getElementById('jump-to-event-banner');
   if (banner) {
@@ -1585,6 +1953,12 @@ function jumpToFight(fightLabel, eventLabel) {
     }
   }
 }
+
+// Initial render — bankroll input + portfolio table on first load
+document.addEventListener('DOMContentLoaded', () => {
+  applyBankroll();
+  renderTopPortfolio();
+});
 </script>
 </body>
 </html>

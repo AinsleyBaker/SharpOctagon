@@ -21,6 +21,7 @@ def test_all_tables_created(engine):
         "fights",
         "fight_stats_round",
         "upcoming_bouts",
+        "fight_prop_odds",
     }
     actual = set(inspect(engine).get_table_names())
     assert expected == actual

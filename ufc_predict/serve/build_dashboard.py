@@ -45,7 +45,13 @@ def load_predictions() -> list[dict]:
     if not PREDICTIONS_PATH.exists():
         return []
     with open(PREDICTIONS_PATH) as f:
-        return json.load(f)
+        preds = json.load(f)
+    # Re-run bet analysis on every load. predictions.json may be stale w.r.t.
+    # the current bet_analysis logic (e.g. new fields like outcome_keys); the
+    # raw inputs (sportsbet_odds, props, fighter probs) are still authoritative,
+    # so recomputing keeps the dashboard in lockstep with the code.
+    from ufc_predict.eval.bet_analysis import analyze_all_fights
+    return analyze_all_fights(preds)
 
 
 def load_fighter_images() -> dict[str, str]:
@@ -929,6 +935,27 @@ def _enrich_bet_analysis(bout: dict) -> None:
     bout["value_bet_count"] = len(formatted)
 
 
+def _attach_event_portfolios(event: dict) -> None:
+    """Gather every value bet across the event's bouts and build Kelly + flat
+    bankroll allocations. Stored on the event for the template to render.
+    """
+    from ufc_predict.eval.bet_analysis import build_portfolio
+
+    raw_bets: list[dict] = []
+    for bout in event.get("bouts") or []:
+        fight_label = (
+            f"{bout.get('fighter_a_name', '')} vs {bout.get('fighter_b_name', '')}"
+        )
+        for bet in bout.get("bet_analysis") or []:
+            if not bet.get("is_value"):
+                continue
+            raw_bets.append({**bet, "fight": fight_label})
+
+    event["portfolio_kelly"]        = build_portfolio(raw_bets, strategy="kelly")
+    event["portfolio_flat"]         = build_portfolio(raw_bets, strategy="flat")
+    event["portfolio_concentrated"] = build_portfolio(raw_bets, strategy="concentrated")
+
+
 def build(output_dir: Path = OUTPUT_DIR) -> None:
     predictions = load_predictions()
     if not predictions:
@@ -1245,8 +1272,9 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # the template renders a "LIVE EVENT" badge in place of "Next Event".
     for event in events:
         event["is_live"] = any(b.get("is_live") for b in event.get("bouts", []))
+        _attach_event_portfolios(event)
 
-    from ufc_predict.eval.bet_analysis import top_value_bets
+    from ufc_predict.eval.bet_analysis import build_portfolio, top_value_bets
     top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event
 
     # Group top bets by event so the Top Value Bets page can offer an event filter.
@@ -1260,6 +1288,18 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         for k, v in bets_by_event.items() if k != "__all__"
     ]
     event_filter_options.sort(key=lambda x: x["label"])
+
+    # Bankroll-allocation portfolios for the Top Value Bets page.
+    # One pair per event filter (incl. "__all__") so when the user picks an
+    # event the allocation rebalances correctly — Kelly across 30 bets is
+    # very different from Kelly across 4 bets in a single card.
+    portfolios_by_event: dict[str, dict] = {}
+    for ev_key, blist in bets_by_event.items():
+        portfolios_by_event[ev_key] = {
+            "kelly":        build_portfolio(blist, strategy="kelly"),
+            "flat":         build_portfolio(blist, strategy="flat"),
+            "concentrated": build_portfolio(blist, strategy="concentrated"),
+        }
 
     # Build a carousel of all known upcoming events.
     # Merges predicted events (have data) with the full ESPN schedule
@@ -1446,6 +1486,7 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
         top_bets=top_bets,
         bets_by_event=bets_by_event,
         event_filter_options=event_filter_options,
+        portfolios_by_event=portfolios_by_event,
         event_carousel=event_carousel,
         generated_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         n_bouts=len(predictions),

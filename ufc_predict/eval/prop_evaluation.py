@@ -184,24 +184,41 @@ def evaluate(oof_path: Path = OOF_PATH) -> dict:
               f"  base-rate LL={method_summary['base_rate_log_loss']:.4f}"
               f"  lift={method_summary['lift_over_base_rate']:+.4f}")
         print(f"top-prediction accuracy: {100*method_summary['top_pred_accuracy']:.1f}%")
-        print(f"\n  {'class':10s}  {'n+':>5s}  {'base':>6s}  {'pred':>6s}  {'LL':>7s}  {'Brier':>7s}")
+        print(
+            f"\n  {'class':10s}  {'n+':>5s}  {'base':>6s}  {'pred':>6s}  "
+            f"{'LL':>7s}  {'Brier':>7s}"
+        )
         for r in method_summary["per_class"]:
             print(f"  {r['class']:10s}  {r['n_positive']:>5d}  "
                   f"{100*r['base_rate']:>5.1f}%  {100*r['mean_pred']:>5.1f}%  "
                   f"{r['log_loss']:>7.4f}  {r['brier']:>7.4f}")
 
         n3 = method_summary["neutral_3class"]
-        print(f"\n  KO/SUB/DEC neutral (3-class):  LL={n3['log_loss']:.4f}  base={n3['base_rate_log_loss']:.4f}  top-acc={100*n3['top_pred_accuracy']:.1f}%")
+        print(
+            f"\n  KO/SUB/DEC neutral (3-class):  LL={n3['log_loss']:.4f}  "
+            f"base={n3['base_rate_log_loss']:.4f}  "
+            f"top-acc={100*n3['top_pred_accuracy']:.1f}%"
+        )
         d = method_summary["distance_market"]
-        print(f"  Distance (goes-to-decision):  LL={d['log_loss']:.4f}  base-rate={100*d['base_rate']:.1f}%  mean-pred={100*d['mean_pred']:.1f}%  offset={d['calibration_offset']:+.4f}")
+        print(
+            f"  Distance (goes-to-decision):  LL={d['log_loss']:.4f}  "
+            f"base-rate={100*d['base_rate']:.1f}%  mean-pred={100*d['mean_pred']:.1f}%  "
+            f"offset={d['calibration_offset']:+.4f}"
+        )
 
     print("\n=== ROUND MODEL (5-class, finishes only) ===")
     if "skipped" not in round_summary:
-        print(f"n={round_summary['n_finishes']}  multiclass LL={round_summary['multiclass_log_loss']:.4f}"
-              f"  base-rate LL={round_summary['base_rate_log_loss']:.4f}"
-              f"  lift={round_summary['lift_over_base_rate']:+.4f}")
+        print(
+            f"n={round_summary['n_finishes']}  "
+            f"multiclass LL={round_summary['multiclass_log_loss']:.4f}"
+            f"  base-rate LL={round_summary['base_rate_log_loss']:.4f}"
+            f"  lift={round_summary['lift_over_base_rate']:+.4f}"
+        )
         print(f"top-prediction accuracy: {100*round_summary['top_pred_accuracy']:.1f}%")
-        print(f"\n  {'class':6s}  {'n+':>5s}  {'base':>6s}  {'pred':>6s}  {'LL':>7s}  {'Brier':>7s}")
+        print(
+            f"\n  {'class':6s}  {'n+':>5s}  {'base':>6s}  {'pred':>6s}  "
+            f"{'LL':>7s}  {'Brier':>7s}"
+        )
         for r in round_summary["per_class"]:
             print(f"  {r['class']:6s}  {r['n_positive']:>5d}  "
                   f"{100*r['base_rate']:>5.1f}%  {100*r['mean_pred']:>5.1f}%  "

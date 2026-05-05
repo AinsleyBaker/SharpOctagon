@@ -260,8 +260,12 @@ def full_report(
     # SQLAlchemy returns Python None for NULLs which yields object-dtype columns
     # in pandas; coerce to float once here so downstream np.isnan works.
     if "closing_odds_red" in oof_df.columns:
-        odds_red  = pd.to_numeric(oof_df["closing_odds_red"],  errors="coerce").to_numpy(dtype=float)
-        odds_blue = pd.to_numeric(oof_df["closing_odds_blue"], errors="coerce").to_numpy(dtype=float)
+        odds_red = pd.to_numeric(
+            oof_df["closing_odds_red"], errors="coerce"
+        ).to_numpy(dtype=float)
+        odds_blue = pd.to_numeric(
+            oof_df["closing_odds_blue"], errors="coerce"
+        ).to_numpy(dtype=float)
 
         both_present = np.isfinite(odds_red) & np.isfinite(odds_blue)
         n_with_odds = int(both_present.sum())
@@ -273,7 +277,11 @@ def full_report(
             )
             report["vs_closing_line"] = {"skipped": "no closing odds in OOF"}
         else:
-            log.info("Closing-line benchmark: %d/%d rows have both sides of odds", n_with_odds, len(oof_df))
+            log.info(
+                "Closing-line benchmark: %d/%d rows have both sides of odds",
+                n_with_odds,
+                len(oof_df),
+            )
             # Map closing odds to fighter_a direction (corner randomization was applied
             # during feature building; a_is_red tells us which corner is currently "A").
             if "a_is_red" in oof_df.columns:
@@ -294,7 +302,10 @@ def full_report(
                 report["kelly_roi"] = {
                     "n_bets": len(kelly_df),
                     "final_bankroll": float(kelly_df["bankroll"].iloc[-1]),
-                    "roi_pct": float((kelly_df["bankroll"].iloc[-1] - STARTING_BANKROLL) / STARTING_BANKROLL * 100),
+                    "roi_pct": float(
+                        (kelly_df["bankroll"].iloc[-1] - STARTING_BANKROLL)
+                        / STARTING_BANKROLL * 100
+                    ),
                     "win_rate": float((kelly_df["outcome"] == 1).mean()),
                 }
 

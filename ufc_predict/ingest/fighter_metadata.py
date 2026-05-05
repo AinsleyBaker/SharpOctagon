@@ -194,7 +194,11 @@ def fetch_metadata(name: str) -> dict | None:
         return None
 
     hometown = bio.get("Hometown", "")
-    country  = _extract_country(hometown) or country_overrides.get(name) or country_overrides.get(matched_name)
+    country = (
+        _extract_country(hometown)
+        or country_overrides.get(name)
+        or country_overrides.get(matched_name)
+    )
     style    = bio.get("Fighting style", "")
     age      = bio.get("Age", "")
 
@@ -329,7 +333,12 @@ def refresh(force: bool = False) -> dict[str, dict]:
     session = factory() if factory else None
     try:
         for name in sorted(names):
-            if not force and name in cache and cache[name].get("country") and cache[name].get("record"):
+            if (
+                not force
+                and name in cache
+                and cache[name].get("country")
+                and cache[name].get("record")
+            ):
                 img = cache[name].get("image_url", "")
                 if not img.startswith("fighter-images/") or (Path("docs") / img).exists():
                     continue

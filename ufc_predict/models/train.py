@@ -303,7 +303,9 @@ def run_cv(df: pd.DataFrame) -> pd.DataFrame:
 
         ll = log_loss(y_val, preds)
         auc = roc_auc_score(y_val, preds)
-        fold_metrics.append({"fold": fold.val_start, "log_loss": ll, "auc": auc, "n_val": len(val_df)})
+        fold_metrics.append(
+            {"fold": fold.val_start, "log_loss": ll, "auc": auc, "n_val": len(val_df)}
+        )
         log.info("Fold %d: log_loss=%.4f  auc=%.4f  n=%d", fold.val_start, ll, auc, len(val_df))
 
         val_with_preds = val_df.copy()

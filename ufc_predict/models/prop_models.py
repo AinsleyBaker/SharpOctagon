@@ -224,7 +224,10 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     artifacts["method_isos"] = method_isos
     artifacts["method_classes"] = METHOD_CLASSES
 
-    log.info("Method model trained (%d trees)", method_model.best_iteration_ or method_model.n_estimators)
+    log.info(
+        "Method model trained (%d trees)",
+        method_model.best_iteration_ or method_model.n_estimators,
+    )
 
     # -----------------------------------------------------------------------
     # Round model — trained on FINISHES ONLY (decisions excluded).
@@ -288,7 +291,10 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     # v2 = trained on finishes only; output × prob_finish = P(finish in Rx).
     artifacts["prop_schema_v"] = 2
 
-    log.info("Round model trained (%d trees)", round_model.best_iteration_ or round_model.n_estimators)
+    log.info(
+        "Round model trained (%d trees)",
+        round_model.best_iteration_ or round_model.n_estimators,
+    )
     return artifacts
 
 
@@ -414,8 +420,14 @@ def predict_props(
                 base_ko  = (a_ko + b_ko) / 2
                 base_sub = (a_sub + b_sub) / 2 if (a_sub == a_sub and b_sub == b_sub) else 0.12
             else:
-                dko  = _col("diff_ko_rate")  if _col("diff_ko_rate")  == _col("diff_ko_rate")  else 0.0
-                dsub = _col("diff_sub_rate") if _col("diff_sub_rate") == _col("diff_sub_rate") else 0.0
+                dko = (
+                    _col("diff_ko_rate") if _col("diff_ko_rate") == _col("diff_ko_rate") else 0.0
+                )
+                dsub = (
+                    _col("diff_sub_rate")
+                    if _col("diff_sub_rate") == _col("diff_sub_rate")
+                    else 0.0
+                )
                 base_ko  = 0.28 + np.clip(dko * 0.5, -0.12, 0.12)
                 base_sub = 0.12 + np.clip(dsub * 0.5, -0.06, 0.06)
 

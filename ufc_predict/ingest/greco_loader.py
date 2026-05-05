@@ -206,7 +206,11 @@ def _load_fighters(csv_dir: Path, session: Session) -> dict[str, str]:
     if not tott.empty:
         log.info("fighter_tott rows: %d  cols: %s", len(tott), list(tott.columns))
         # Index tott by URL for O(1) lookup
-        tott_by_url = {_id(row["URL"]): row.to_dict() for _, row in tott.iterrows() if not pd.isna(row.get("URL"))}
+        tott_by_url = {
+            _id(row["URL"]): row.to_dict()
+            for _, row in tott.iterrows()
+            if not pd.isna(row.get("URL"))
+        }
     else:
         tott_by_url = {}
 

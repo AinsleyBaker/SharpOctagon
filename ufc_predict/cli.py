@@ -47,7 +47,10 @@ def ingest_sportsbet():
     sb_fights = fetch_ufc_markets()
 
     if not sb_fights:
-        click.echo("No markets returned from SportsBet. The API may be unavailable or no fights listed.", err=True)
+        click.echo(
+            "No markets returned from SportsBet. The API may be unavailable or no fights listed.",
+            err=True,
+        )
         raise SystemExit(1)
 
     click.echo(f"Fetched {len(sb_fights)} fights. Matching to predictions…")

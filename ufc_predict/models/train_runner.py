@@ -22,7 +22,9 @@ MATRIX_PATH = Path("data/feature_matrix.parquet")
 
 def run() -> None:
     if not MATRIX_PATH.exists():
-        raise FileNotFoundError(f"Feature matrix not found at {MATRIX_PATH}. Run build_matrix first.")
+        raise FileNotFoundError(
+            f"Feature matrix not found at {MATRIX_PATH}. Run build_matrix first."
+        )
 
     df = pd.read_parquet(MATRIX_PATH)
     log.info("Loaded feature matrix: %s", df.shape)

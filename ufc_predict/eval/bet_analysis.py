@@ -366,8 +366,12 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
     prob_finish = float(props.get("prob_finish", 1 - prob_dec))
 
     # Neutral method totals (used by method_neutral + method_combo)
-    prob_ko_any  = float(props.get("prob_a_wins_ko_tko", 0)) + float(props.get("prob_b_wins_ko_tko", 0))
-    prob_sub_any = float(props.get("prob_a_wins_sub", 0))    + float(props.get("prob_b_wins_sub", 0))
+    prob_ko_any = (
+        float(props.get("prob_a_wins_ko_tko", 0)) + float(props.get("prob_b_wins_ko_tko", 0))
+    )
+    prob_sub_any = (
+        float(props.get("prob_a_wins_sub", 0)) + float(props.get("prob_b_wins_sub", 0))
+    )
 
     bets: list[dict] = []
 

@@ -145,7 +145,10 @@ def load_manual_corrections(csv_path: Path, session: Session) -> int:
         for row in csv.DictReader(f):
             fighter = session.get(Fighter, row["canonical_fighter_id"])
             if not fighter:
-                log.warning("Manual correction: unknown canonical_id %s", row["canonical_fighter_id"])
+                log.warning(
+                    "Manual correction: unknown canonical_id %s",
+                    row["canonical_fighter_id"],
+                )
                 continue
             for field in ("sherdog_id", "wikidata_qid", "tapology_id"):
                 val = row.get(field, "").strip()

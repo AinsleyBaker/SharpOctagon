@@ -582,7 +582,9 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
                      sum(1 for p in predictions_list if p.get("sportsbet_odds")),
                      len(predictions_list))
         else:
-            log.warning("No SportsBet markets available — run sportsbet_scraper locally to cache odds")
+            log.warning(
+                "No SportsBet markets available — run sportsbet_scraper locally to cache odds"
+            )
     except Exception as exc:
         log.warning("SportsBet odds step failed (continuing without odds): %s", exc)
 
@@ -630,4 +632,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     df = run_predictions()
     if not df.empty:
-        print(df[["fighter_a_name", "fighter_b_name", "prob_a_wins", "prob_b_wins"]].to_string(index=False))
+        print(
+            df[["fighter_a_name", "fighter_b_name", "prob_a_wins", "prob_b_wins"]].to_string(
+                index=False
+            )
+        )

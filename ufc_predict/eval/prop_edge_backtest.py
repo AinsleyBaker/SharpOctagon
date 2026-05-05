@@ -120,7 +120,8 @@ def _model_prob(prop_type: str, side: str, row: dict) -> float | None:
             return None
         # Resolve r/b → a/b via row's a_is_red
         a_is_red = bool(row.get("a_is_red", True))
-        target = "a" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "b"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target = "a" if is_a else "b"
         col = f"prob_{target}_{method_key.lower()}"
         p = float(row.get(col, 0))
         return p if s == "yes" else (1 - p)
@@ -129,7 +130,8 @@ def _model_prob(prop_type: str, side: str, row: dict) -> float | None:
     if pt.endswith("_inside_distance"):
         side_letter = pt[0]
         a_is_red = bool(row.get("a_is_red", True))
-        target = "a" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "b"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target = "a" if is_a else "b"
         # P(target wins by finish) = ko + sub
         p = float(row.get(f"prob_{target}_ko_tko", 0)) + float(row.get(f"prob_{target}_sub", 0))
         return p if s == "yes" else (1 - p)
@@ -142,7 +144,8 @@ def _model_prob(prop_type: str, side: str, row: dict) -> float | None:
         except ValueError:
             return None
         a_is_red = bool(row.get("a_is_red", True))
-        target = "a" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "b"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target = "a" if is_a else "b"
         # P(target wins in round n) = P(target wins) × P(R_n | finish) × P(finish)
         # ≈ P(target_KO_TKO + target_SUB) × P(round_n | finish)
         target_finish = (
@@ -236,14 +239,16 @@ def _outcome(prop_type: str, side: str, row: dict) -> int | None:
         if method_key not in {"KO_TKO", "SUB", "DEC"}:
             return None
         # Resolve r/b → A/B
-        target_ab = "A" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "B"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target_ab = "A" if is_a else "B"
         actual = (method_true == f"{target_ab}_{method_key}")
         return int(actual if side == "yes" else not actual)
 
     # ---- Inside distance per fighter ----
     if prop_type.endswith("_inside_distance"):
         side_letter = prop_type[0]
-        target_ab = "A" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "B"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target_ab = "A" if is_a else "B"
         actual = (method_true == f"{target_ab}_KO_TKO" or method_true == f"{target_ab}_SUB")
         return int(actual if side == "yes" else not actual)
 
@@ -254,7 +259,8 @@ def _outcome(prop_type: str, side: str, row: dict) -> int | None:
             n = int(prop_type.split("_")[-1])
         except ValueError:
             return None
-        target_ab = "A" if (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red) else "B"
+        is_a = (side_letter == "r" and a_is_red) or (side_letter == "b" and not a_is_red)
+        target_ab = "A" if is_a else "B"
         # Bet wins if target_ab finished the fight in round n (decisions don't count)
         try:
             rn = int(round_true[1:]) if round_true.startswith("R") else None
@@ -461,10 +467,16 @@ def run(report_path: Path = REPORT_PATH) -> dict:
 
     # Pretty print
     print("\n=== Prop edge-bucket ROI per market class ===")
-    print(f"{'market':18s}  {'edge bucket':>15s}  {'n':>5s}  {'win%':>6s}  {'avg_odds':>9s}  {'flat ROI%':>10s}")
+    print(
+        f"{'market':18s}  {'edge bucket':>15s}  {'n':>5s}  {'win%':>6s}  "
+        f"{'avg_odds':>9s}  {'flat ROI%':>10s}"
+    )
     for r in agg_rows:
-        print(f"{r['market_class']:18s}  [{r['edge_lo']:+.2f},{r['edge_hi']:+.2f})  "
-              f"{r['n']:>5d}  {100*r['win_rate']:>5.1f}%  {r['avg_odds']:>9.2f}  {r['flat_roi_pct']:>+9.2f}%")
+        print(
+            f"{r['market_class']:18s}  [{r['edge_lo']:+.2f},{r['edge_hi']:+.2f})  "
+            f"{r['n']:>5d}  {100*r['win_rate']:>5.1f}%  {r['avg_odds']:>9.2f}  "
+            f"{r['flat_roi_pct']:>+9.2f}%"
+        )
 
     print("\n=== Kelly curve per market class ===")
     print(f"{'market':18s}  {'min edge':>9s}  {'n_bets':>7s}  {'final $':>12s}  {'ROI%':>9s}")

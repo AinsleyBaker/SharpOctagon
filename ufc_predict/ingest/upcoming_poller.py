@@ -290,7 +290,8 @@ def upsert_bouts(bouts: list[dict], session: Session) -> int:
         red_raw = (bout.get("red_name_raw") or "").lower().strip()
         blue_raw = (bout.get("blue_name_raw") or "").lower().strip()
         # Skip TBA placeholder fights — they all hash to the same ID
-        if red_raw in ("tba", "tbd", "opponent tba", "") or blue_raw in ("tba", "tbd", "opponent tba", ""):
+        _tba = ("tba", "tbd", "opponent tba", "")
+        if red_raw in _tba or blue_raw in _tba:
             continue
 
         bout_id = _bout_id(

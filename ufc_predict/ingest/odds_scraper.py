@@ -242,10 +242,14 @@ _TOTAL_RE = re.compile(r"^(Over|Under)\s+([\d½]+)\s+rounds?$", re.I)
 _STARTS_RE = re.compile(r"^Fight\s+(starts|won't start)\s+round\s+(\d)$", re.I)
 _ENDS_RE = re.compile(r"^Fight\s+(ends|doesn't end)\s+in\s+round\s+(\d)$", re.I)
 _METHOD_RE = re.compile(
-    r"^(.+?)\s+wins\s+by\s+(TKO/KO|submission|decision|unanimous decision|split/majority decision)$",
+    r"^(.+?)\s+wins\s+by\s+"
+    r"(TKO/KO|submission|decision|unanimous decision|split/majority decision)$",
     re.I,
 )
-_INSIDE_RE = re.compile(r"^(?:(.+?)\s+wins\s+inside\s+distance|Not\s+(.+?)\s+inside\s+distance)$", re.I)
+_INSIDE_RE = re.compile(
+    r"^(?:(.+?)\s+wins\s+inside\s+distance|Not\s+(.+?)\s+inside\s+distance)$",
+    re.I,
+)
 _DEC_NEG_RE = re.compile(r"^Not\s+(.+?)\s+by\s+decision$", re.I)
 _ROUND_RE = re.compile(r"^(.+?)\s+wins\s+in\s+round\s+(\d)$", re.I)
 

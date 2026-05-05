@@ -240,7 +240,9 @@ def _resolve_image_url(name: str) -> str | None:
     return fetch_image_url(name) or fetch_wikipedia_image(name)
 
 
-def refresh_from_predictions(predictions_path: Path = Path("data/predictions.json")) -> dict[str, str]:
+def refresh_from_predictions(
+    predictions_path: Path = Path("data/predictions.json"),
+) -> dict[str, str]:
     """Read fighter names from predictions.json and resolve images for each."""
     if not predictions_path.exists():
         log.warning("No predictions found at %s", predictions_path)

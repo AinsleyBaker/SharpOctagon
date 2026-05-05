@@ -713,7 +713,9 @@ def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[
 
         def _initials(n: str) -> str:
             parts = (n or "").split()
-            return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (n[:2].upper() or "?")
+            if len(parts) >= 2:
+                return (parts[0][0] + parts[-1][0]).upper()
+            return n[:2].upper() or "?"
 
         sb = p.get("sportsbet_odds") or {}
         bout = {
@@ -819,7 +821,8 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                 best_score, best_row = 0, None
                 for row in rows:
                     try:
-                        if abs((date.fromisoformat(str(row.date)) - date.fromisoformat(ev_date)).days) > 3:
+                        row_date = date.fromisoformat(str(row.date))
+                        if abs((row_date - date.fromisoformat(ev_date)).days) > 3:
                             continue
                     except ValueError:
                         continue
@@ -1108,7 +1111,9 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             # Initials for avatar fallback
             def _initials(name: str) -> str:
                 parts = (name or "").split()
-                return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (name[:2].upper() or "?")
+                if len(parts) >= 2:
+                    return (parts[0][0] + parts[-1][0]).upper()
+                return name[:2].upper() or "?"
             bout["a_initials"] = _initials(bout.get("fighter_a_name", ""))
             bout["b_initials"] = _initials(bout.get("fighter_b_name", ""))
 
@@ -1128,8 +1133,12 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["b_img"] = b_img
 
             # Stance from DB (factual UFC data)
-            bout["a_stance"] = (bout.get("fighter_a_stance") or "").replace("Switch", "Switch Stance")
-            bout["b_stance"] = (bout.get("fighter_b_stance") or "").replace("Switch", "Switch Stance")
+            bout["a_stance"] = (
+                (bout.get("fighter_a_stance") or "").replace("Switch", "Switch Stance")
+            )
+            bout["b_stance"] = (
+                (bout.get("fighter_b_stance") or "").replace("Switch", "Switch Stance")
+            )
 
             # Fighter style badge — only if data quality is good enough
             n_min = min(bout.get("a_n_fights") or 0, bout.get("b_n_fights") or 0)
@@ -1139,14 +1148,24 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
 
             # Stat color classes for the comparison table (raw values before formatting)
             _raw = lambda k: bout.get(k)  # raw value from JSON (still numeric here)
-            bout["col_streak"]   = _stat_colors(bout.get("a_win_streak"), bout.get("b_win_streak"))
-            bout["col_l3"]       = _stat_colors(bout.get("a_l3_win_rate"), bout.get("b_l3_win_rate"))
-            bout["col_finish"]   = _stat_colors(bout.get("a_finish_rate"), bout.get("b_finish_rate"))
-            bout["col_ko"]       = _stat_colors(bout.get("a_ko_rate"), bout.get("b_ko_rate"))
-            bout["col_sub"]      = _stat_colors(bout.get("a_sub_rate"), bout.get("b_sub_rate"))
-            bout["col_slpm"]     = _stat_colors(bout.get("a_slpm"), bout.get("b_slpm"))
-            bout["col_sapm"]     = _stat_colors(bout.get("a_sapm"), bout.get("b_sapm"), higher_is_better=False)
-            bout["col_td"]       = _stat_colors(bout.get("a_td_per_min"), bout.get("b_td_per_min"))
+            bout["col_streak"] = _stat_colors(
+                bout.get("a_win_streak"), bout.get("b_win_streak")
+            )
+            bout["col_l3"] = _stat_colors(
+                bout.get("a_l3_win_rate"), bout.get("b_l3_win_rate")
+            )
+            bout["col_finish"] = _stat_colors(
+                bout.get("a_finish_rate"), bout.get("b_finish_rate")
+            )
+            bout["col_ko"] = _stat_colors(bout.get("a_ko_rate"), bout.get("b_ko_rate"))
+            bout["col_sub"] = _stat_colors(bout.get("a_sub_rate"), bout.get("b_sub_rate"))
+            bout["col_slpm"] = _stat_colors(bout.get("a_slpm"), bout.get("b_slpm"))
+            bout["col_sapm"] = _stat_colors(
+                bout.get("a_sapm"), bout.get("b_sapm"), higher_is_better=False
+            )
+            bout["col_td"] = _stat_colors(
+                bout.get("a_td_per_min"), bout.get("b_td_per_min")
+            )
 
             # Prop probabilities
             _enrich_props(bout)
@@ -1477,7 +1496,11 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     past_events_today.extend(persisted_past)
 
     # Sort past events by date descending (most recent first)
-    past_events = sorted(past_events_today, key=lambda e: str(e.get("event_date", "")), reverse=True)
+    past_events = sorted(
+        past_events_today,
+        key=lambda e: str(e.get("event_date", "")),
+        reverse=True,
+    )
     # Try to enrich each past event's bouts with actual outcomes from the fights table
     past_events = _enrich_past_events(past_events)
 
@@ -1495,7 +1518,12 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
 
     out_path = output_dir / "index.html"
     out_path.write_text(rendered, encoding="utf-8")
-    log.info("Dashboard written to %s (%d bouts, %d events)", out_path, len(predictions), len(events))
+    log.info(
+        "Dashboard written to %s (%d bouts, %d events)",
+        out_path,
+        len(predictions),
+        len(events),
+    )
 
 
 if __name__ == "__main__":

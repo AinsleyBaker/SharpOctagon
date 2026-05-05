@@ -47,7 +47,9 @@ class FighterSnapshot(Base):
     __table_args__ = (UniqueConstraint("canonical_fighter_id", "as_of_date"),)
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    canonical_fighter_id = Column(String, ForeignKey("fighters.canonical_fighter_id"), nullable=False)
+    canonical_fighter_id = Column(
+        String, ForeignKey("fighters.canonical_fighter_id"), nullable=False
+    )
     as_of_date = Column(Date, nullable=False)
     stance = Column(String)
     weight_class = Column(String)
@@ -81,7 +83,8 @@ class Fight(Base):
     weight_class = Column(String)
     is_title_bout = Column(Boolean, default=False)
     is_five_round = Column(Boolean, default=False)
-    winner_fighter_id = Column(String, ForeignKey("fighters.canonical_fighter_id"))  # NULL = draw/NC
+    # NULL = draw/NC
+    winner_fighter_id = Column(String, ForeignKey("fighters.canonical_fighter_id"))
     method = Column(String)  # KO / TKO / SUB / Decision / DQ / NC
     method_detail = Column(String)
     round_ended = Column(Integer)

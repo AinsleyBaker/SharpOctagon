@@ -14,14 +14,14 @@ from __future__ import annotations
 import json
 import logging
 import pickle
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
 import lightgbm as lgb
 import numpy as np
 import pandas as pd
-from sklearn.calibration import CalibratedClassifierCV, IsotonicRegression
+from sklearn.calibration import IsotonicRegression
 from sklearn.metrics import log_loss, roc_auc_score
 
 log = logging.getLogger(__name__)

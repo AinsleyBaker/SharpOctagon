@@ -1,7 +1,6 @@
 """Tests for Elo and Glicko-2 rating computations."""
 
 import pandas as pd
-import pytest
 
 from ufc_predict.features.ratings import compute_elo, compute_glicko2
 

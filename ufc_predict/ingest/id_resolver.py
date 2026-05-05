@@ -15,7 +15,7 @@ from __future__ import annotations
 import csv
 import logging
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 from rapidfuzz import fuzz, process

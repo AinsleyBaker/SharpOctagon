@@ -120,7 +120,6 @@ def evaluate_past_predictions(db_url: str | None = None) -> dict:
 
     Results are written to data/model_performance.json and returned.
     """
-    from sqlalchemy import text
 
     from ufc_predict.db.session import get_session_factory
 

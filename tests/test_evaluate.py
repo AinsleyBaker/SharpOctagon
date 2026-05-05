@@ -1,11 +1,9 @@
 """Tests for the evaluation harness — metrics, Kelly, conformal."""
 
 import numpy as np
-import pytest
 
 from ufc_predict.eval.evaluate import (
     american_odds_to_implied_prob,
-    closing_line_log_loss,
     compute_metrics,
     kelly_fraction_fn,
     reliability_data,

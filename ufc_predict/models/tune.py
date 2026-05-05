@@ -17,7 +17,6 @@ import json
 import logging
 from pathlib import Path
 
-import numpy as np
 import optuna
 import pandas as pd
 

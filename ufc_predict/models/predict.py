@@ -25,7 +25,6 @@ from sqlalchemy.orm import Session
 
 from ufc_predict.db.models import Fighter, UpcomingBout
 from ufc_predict.eval.bet_analysis import analyze_all_fights
-from ufc_predict.eval.evaluate import american_to_decimal, kelly_fraction_fn
 from ufc_predict.features.aso_features import (
     _fighter_age,
     fighter_aso_stats,
@@ -34,7 +33,6 @@ from ufc_predict.features.aso_features import (
 )
 from ufc_predict.models.prop_models import load_prop_artifacts, predict_props
 from ufc_predict.models.train import (
-    FEATURE_COLS,
     ensemble_predict,
     load_artifacts,
 )
@@ -367,7 +365,6 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     Returns a DataFrame ready for the serving layer.
     """
     from ufc_predict.db.session import get_session_factory
-    from ufc_predict.features.ratings import attach_ratings
 
     factory = get_session_factory(db_url)
 

@@ -43,6 +43,20 @@ PROP_EXTRA_COLS = [
     "a_sapm",       "b_sapm",
     "a_sig_acc",    "b_sig_acc",
     "a_ctrl_ratio", "b_ctrl_ratio",
+    # Defensive + durability (Week 7) — directly relevant to method/round.
+    # Low TDD + high opp wrestling → grappling-finish risk; high finish-loss
+    # rate → KO-by-X likelihood; never_finished is the chin proxy.
+    "a_td_def",          "b_td_def",
+    "a_sig_str_def",     "b_sig_str_def",
+    "a_ko_loss_rate",    "b_ko_loss_rate",
+    "a_sub_loss_rate",   "b_sub_loss_rate",
+    "a_finish_loss_rate","b_finish_loss_rate",
+    "a_never_finished",  "b_never_finished",
+    # Style-mismatch interactions
+    "a_finish_threat",     "b_finish_threat",
+    "a_keep_standing",     "b_keep_standing",
+    "a_wrestled_pressure", "b_wrestled_pressure",
+    "diff_finish_threat",  "diff_keep_standing", "diff_wrestled_pressure",
 ]
 
 # Three-way chronological split: booster / early-stop / calibration.
@@ -172,9 +186,14 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     s_train = int(n * _TRAIN_END)
     s_es    = int(n * _EARLYSTOP_END)
 
-    X_tr  = df[available].iloc[:s_train]
-    X_es  = df[available].iloc[s_train:s_es]
-    X_cal = df[available].iloc[s_es:]
+    X_full = df[available].copy()
+    # Re-cast categoricals — parquet rehydrates weight_class_clean as str,
+    # which LGBM rejects even when listed in `categorical_feature`.
+    if "weight_class_clean" in X_full.columns:
+        X_full["weight_class_clean"] = X_full["weight_class_clean"].astype("category")
+    X_tr  = X_full.iloc[:s_train]
+    X_es  = X_full.iloc[s_train:s_es]
+    X_cal = X_full.iloc[s_es:]
 
     artifacts: dict = {}
 
@@ -255,9 +274,12 @@ def train_prop_models(feature_cols: list[str], db_url: str | None = None) -> dic
     nf = len(df_finish)
     s_train_f = int(nf * _TRAIN_END)
     s_es_f    = int(nf * _EARLYSTOP_END)
-    X_tr_f  = df_finish[available].iloc[:s_train_f]
-    X_es_f  = df_finish[available].iloc[s_train_f:s_es_f]
-    X_cal_f = df_finish[available].iloc[s_es_f:]
+    X_full_f = df_finish[available].copy()
+    if "weight_class_clean" in X_full_f.columns:
+        X_full_f["weight_class_clean"] = X_full_f["weight_class_clean"].astype("category")
+    X_tr_f  = X_full_f.iloc[:s_train_f]
+    X_es_f  = X_full_f.iloc[s_train_f:s_es_f]
+    X_cal_f = X_full_f.iloc[s_es_f:]
 
     round_enc = {cls: i for i, cls in enumerate(ROUND_CLASSES)}
     y_round_f = df_finish["round_class"].map(round_enc).fillna(0).astype(int)
@@ -505,6 +527,8 @@ def run_cv(feature_cols: list[str], db_url: str | None = None,
     if not available:
         raise ValueError("No matching feature columns found in the feature matrix")
     df = df.sort_values("date").reset_index(drop=True)
+    if "weight_class_clean" in df.columns and df["weight_class_clean"].dtype != "category":
+        df["weight_class_clean"] = df["weight_class_clean"].astype("category")
 
     method_enc = {cls: i for i, cls in enumerate(METHOD_CLASSES)}
     df["_method_idx"] = df["method_class"].map(method_enc).fillna(2).astype(int)

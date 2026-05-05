@@ -475,12 +475,15 @@ def _build_preview_bout(
     def _f(v, fmt=".1f"):
         return format(float(v), fmt) if v is not None else "—"
 
+    _is_five = bool(sb.get("is_five_round") or sb.get("is_title_bout"))
     bout = {
         "is_preview":     True,
         "fighter_a_name": fa,
         "fighter_b_name": fb,
         "weight_class":   sb.get("weight_class") or "",
         "is_title_bout":  sb.get("is_title_bout", False),
+        "is_five_round":  _is_five,
+        "scheduled_rounds": 5 if _is_five else 3,
         "favourite":      "toss-up",
         "prob_a_pct":     "—",
         "prob_b_pct":     "—",
@@ -960,6 +963,11 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # generated from the DB's upcoming_bouts table). Backfill so the dashboard
     # picks it up on rebuild without a full re-predict cycle.
     schedule_wc_lookup: dict[tuple, str] = {}
+    # is_five_round / is_title_bout from the schedule, used to derive
+    # scheduled_rounds for the dashboard chip even when the prediction
+    # row was generated before the upcoming_poller learned the flag.
+    schedule_5r_lookup: dict[tuple, bool] = {}
+    schedule_title_lookup: dict[tuple, bool] = {}
     for _ev in schedule_for_lookup:
         ev_date = str(_ev.get("event_date", ""))
         for _b in _ev.get("bouts") or []:
@@ -975,6 +983,12 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             if wc:
                 schedule_wc_lookup[(ev_date, fa, fb)] = wc
                 schedule_wc_lookup[(ev_date, fb, fa)] = wc
+            if _b.get("is_five_round"):
+                schedule_5r_lookup[(ev_date, fa, fb)] = True
+                schedule_5r_lookup[(ev_date, fb, fa)] = True
+            if _b.get("is_title_bout"):
+                schedule_title_lookup[(ev_date, fa, fb)] = True
+                schedule_title_lookup[(ev_date, fb, fa)] = True
             status_payload = {
                 "status":  _b.get("espn_status") or "",
                 "winner":  _b.get("espn_winner_name") or "",
@@ -1181,6 +1195,17 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 wc_from_sched = schedule_wc_lookup.get((ev_date_str, fa_key, fb_key))
                 if wc_from_sched:
                     bout["weight_class"] = wc_from_sched
+
+            # Scheduled rounds chip. Trust the prediction's flag first, then
+            # fall back to the schedule (lets a freshly-polled main-event
+            # 5R flag show on the dashboard even before re-prediction).
+            is_five = bool(
+                bout.get("is_five_round")
+                or bout.get("is_title_bout")
+                or schedule_5r_lookup.get((ev_date_str, fa_key, fb_key))
+                or schedule_title_lookup.get((ev_date_str, fa_key, fb_key))
+            )
+            bout["scheduled_rounds"] = 5 if is_five else 3
 
             # Live status — drives LIVE / RESULT pills on the bout row and the
             # event-level LIVE EVENT header. Status is empty for everything

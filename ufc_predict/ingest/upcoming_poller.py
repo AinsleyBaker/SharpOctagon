@@ -131,6 +131,8 @@ def fetch_espn_upcoming() -> list[dict]:
             is_title = "title" in ev_name_l or "championship" in ev_name_l
             # 5-round bouts are signalled by format.regulation.periods on the
             # competition (3 = standard prelim/main, 5 = main event / title).
+            # ESPN often omits this field, in which case the main-event
+            # post-pass below will still flag the headline bout as 5-round.
             periods = (
                 ((comp.get("format") or {}).get("regulation") or {}).get("periods")
             )
@@ -158,6 +160,25 @@ def fetch_espn_upcoming() -> list[dict]:
                 "espn_method":      method,
                 "espn_round":       int(round_ended) if round_ended else 0,
             })
+
+    # Main-event 5-round backfill: every UFC card since UFC Fight Night 50
+    # (Sept 2014) has had a 5-round main event, but ESPN's
+    # format.regulation.periods field is unreliable. Identify the headline
+    # bout per event by latest start_time_iso (or last in array if all start
+    # times tie) and flag it as 5-round if not already.
+    by_event: dict[tuple, list[int]] = {}
+    for idx, b in enumerate(bouts):
+        key = (str(b.get("event_date")), b.get("event_name") or "")
+        by_event.setdefault(key, []).append(idx)
+    for idx_list in by_event.values():
+        # Sort indices by start_time_iso desc, breaking ties on original
+        # ESPN order (later index = later position on card per ESPN).
+        idx_list.sort(
+            key=lambda i: (bouts[i].get("start_time_iso") or "", i),
+            reverse=True,
+        )
+        main_idx = idx_list[0]
+        bouts[main_idx]["is_five_round"] = True
 
     log.info("ESPN: %d upcoming bouts fetched", len(bouts))
     return bouts
@@ -321,6 +342,13 @@ def upsert_bouts(bouts: list[dict], session: Session) -> int:
         if existing:
             existing.last_updated_at = now
             existing.is_cancelled = bout.get("is_cancelled", False)
+            # Refresh round/title flags if the source learned new info
+            # (e.g. main-event detection added a 5-round flag that wasn't
+            # set when the bout was first inserted).
+            if bout.get("is_five_round") and not existing.is_five_round:
+                existing.is_five_round = True
+            if bout.get("is_title_bout") and not existing.is_title_bout:
+                existing.is_title_bout = True
             continue
 
         wc = bout.get("weight_class") or None
@@ -373,6 +401,7 @@ def export_schedule(bouts: list[dict]) -> None:
                 "fighter_b": bout.get("blue_name_raw", ""),
                 "weight_class": bout.get("weight_class", ""),
                 "is_title_bout": bout.get("is_title_bout", False),
+                "is_five_round": bout.get("is_five_round", False),
                 "start_time_iso": bout.get("start_time_iso", ""),
                 # Live state from ESPN (only meaningful on/near fight day).
                 "espn_status":      bout.get("espn_status", ""),

@@ -25,7 +25,15 @@
       "Bash(ruff check *)",
       "Bash(awk 'NR==17905 || NR==17906 || NR==17907' docs/index.html)",
       "PowerShell(if \\(Test-Path data\\\\sportsbet_odds.json\\) { \"{0:N1} KB\" -f \\(\\(Get-Item data\\\\sportsbet_odds.json\\).Length / 1KB\\) } else { \"missing\" })",
-      "PowerShell($d = Get-Content data\\\\sportsbet_odds.json -Raw | ConvertFrom-Json; $d.fetched_at; \"fights:\" + $d.fights.Count; foreach \\($f in $d.fights\\) { $f.fight_name + \" :: \" + \\(\\($f.markets.PSObject.Properties | ForEach-Object { $_.Name }\\) -join \", \"\\) })"
+      "PowerShell($d = Get-Content data\\\\sportsbet_odds.json -Raw | ConvertFrom-Json; $d.fetched_at; \"fights:\" + $d.fights.Count; foreach \\($f in $d.fights\\) { $f.fight_name + \" :: \" + \\(\\($f.markets.PSObject.Properties | ForEach-Object { $_.Name }\\) -join \", \"\\) })",
+      "Bash(git rebase *)",
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(ufc-predict)",
+      "Bash(tasklist /FI \"IMAGENAME eq python.exe\" /FO CSV)",
+      "Bash(cmd //c 'tasklist /FI \"IMAGENAME eq python.exe\"')",
+      "PowerShell(Get-Process *)",
+      "Bash(ufc-train props *)",
+      "Bash(git *)"
     ]
   }
 }

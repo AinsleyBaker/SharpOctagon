@@ -190,6 +190,13 @@
     background: rgba(120, 120, 130, 0.18); color: var(--muted);
     font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
   }
+  .rounds-pill {
+    display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 3px;
+    background: rgba(0, 255, 153, 0.10); color: var(--matrix);
+    border: 1px solid rgba(0, 255, 153, 0.28);
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em;
+    vertical-align: middle;
+  }
   .result-text {
     display: block; margin-top: 4px;
     color: var(--matrix); font-weight: 600; font-size: 0.7rem;
@@ -947,6 +954,7 @@
               <div class="wc-txt">
                 {% set _wc = bout.weight_class %}
                 {% if _wc %}{{ _wc }}{% endif %}
+                {% if bout.scheduled_rounds %}<span class="rounds-pill" title="Scheduled rounds">{{ bout.scheduled_rounds }} rds</span>{% endif %}
                 {% if bout.is_live %}
                   {% if _wc %}<br>{% endif %}<span class="live-pill">● Live</span>
                 {% elif bout.is_completed %}

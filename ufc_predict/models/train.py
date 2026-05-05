@@ -51,6 +51,14 @@ FEATURE_COLS = [
     # diff_ewma_kd_per_fight tested but had 0 gain in feature importance —
     # dropped. The other three are doing real work alongside l3/l5.
     "diff_ewma_win_rate", "diff_ewma_finish_rate", "diff_ewma_slpm",
+    # Defensive + durability (Week 7) — fills the striker-vs-grappler blind
+    # spot. td_def and sig_str_def measure how often opponents land on this
+    # fighter; finish_loss_rate is a chin/grappling-defence proxy.
+    "diff_td_def", "diff_sig_str_def",
+    "diff_ko_loss_rate", "diff_sub_loss_rate", "diff_finish_loss_rate",
+    # Style-mismatch interactions — explicit cross-features so the gradient
+    # on small samples isn't forced to discover the interaction unaided.
+    "diff_finish_threat", "diff_keep_standing", "diff_wrestled_pressure",
     # Physicals (Week 3) — UFC.com bio fills active-roster gaps
     "diff_reach_cm", "diff_height_cm",
     # Stance interaction (Loffing 2017): southpaw vs orthodox edge
@@ -132,6 +140,16 @@ MONOTONE_BY_FEATURE: dict[str, int] = {
     "diff_sos_avg_opp_elo":        +1,
     "diff_sos_quality_wins":       +1,
     "diff_sos_quality_losses":     -1,   # losing to weak opponents = bad sign
+    # Defensive + durability — A defends better / gets finished less → A wins
+    "diff_td_def":                 +1,   # A stuffs more TDs = good for A
+    "diff_sig_str_def":            +1,   # A absorbs less = good for A
+    "diff_ko_loss_rate":           -1,   # A gets KO'd more = bad for A
+    "diff_sub_loss_rate":          -1,   # A gets subbed more = bad for A
+    "diff_finish_loss_rate":       -1,   # A gets finished more = bad for A
+    # Style-mismatch interactions
+    "diff_finish_threat":          +1,   # A more likely to finish B
+    "diff_keep_standing":          +1,   # A dictates range better
+    "diff_wrestled_pressure":      -1,   # A faces more wrestling threat = bad for A
     # Per-side context flags
     "a_short_notice":              -1,
     "b_short_notice":              +1,
@@ -208,6 +226,12 @@ def _X_y(df: pd.DataFrame):
     if missing:
         log.debug("Missing feature cols (will be NaN): %s", missing)
     X = df[available].copy()
+    # LGBM's internal dtype check rejects raw str columns even when they're
+    # passed as categorical_feature; pyarrow/parquet rehydrates the column
+    # as str rather than the in-memory category dtype, so we re-cast here.
+    for cat in CATEGORICAL_COLS:
+        if cat in X.columns and X[cat].dtype != "category":
+            X[cat] = X[cat].astype("category")
     y = df["label"].values
     return X, y
 

@@ -297,6 +297,9 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             "l3_kd", "l3_td_rate", "l3_slpm", "l5_slpm",
             "win_streak", "loss_streak", "fight_frequency_24m",
             "ewma_win_rate", "ewma_finish_rate", "ewma_slpm", "ewma_kd_per_fight",
+            # Defensive + durability + style-mismatch (must mirror training)
+            "td_def", "sig_str_def",
+            "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
         ]
         for k in diff_keys:
             av = a_feat.get(k, np.nan)
@@ -351,9 +354,54 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
 
         # Absolute per-fighter rates (prop model features + dashboard display)
         for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
-                  "slpm", "sapm", "sig_acc", "ctrl_ratio"):
+                  "slpm", "sapm", "sig_acc", "ctrl_ratio",
+                  "td_def", "sig_str_def",
+                  "ko_loss_rate", "sub_loss_rate", "finish_loss_rate", "never_finished"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
+
+        # Style-mismatch interactions (mirror build_fight_feature_rows)
+        def _mul(x, y):
+            if x is None or y is None or pd.isna(x) or pd.isna(y):
+                return np.nan
+            return float(x) * float(y)
+
+        a_finish_threat = _mul(a_feat.get("finish_rate"), b_feat.get("finish_loss_rate"))
+        b_finish_threat = _mul(b_feat.get("finish_rate"), a_feat.get("finish_loss_rate"))
+        row["a_finish_threat"] = a_finish_threat
+        row["b_finish_threat"] = b_finish_threat
+        row["diff_finish_threat"] = (
+            (a_finish_threat - b_finish_threat)
+            if not (pd.isna(a_finish_threat) or pd.isna(b_finish_threat))
+            else np.nan
+        )
+
+        a_keep_standing = _mul(a_feat.get("slpm"), a_feat.get("td_def"))
+        b_keep_standing = _mul(b_feat.get("slpm"), b_feat.get("td_def"))
+        row["a_keep_standing"] = a_keep_standing
+        row["b_keep_standing"] = b_keep_standing
+        row["diff_keep_standing"] = (
+            (a_keep_standing - b_keep_standing)
+            if not (pd.isna(a_keep_standing) or pd.isna(b_keep_standing))
+            else np.nan
+        )
+
+        def _gated_td_pressure(opp_tdpm, my_tddef):
+            if opp_tdpm is None or my_tddef is None:
+                return np.nan
+            if pd.isna(opp_tdpm) or pd.isna(my_tddef):
+                return np.nan
+            return float(opp_tdpm) * (1.0 - float(my_tddef))
+
+        a_wrestled_pressure = _gated_td_pressure(b_feat.get("td_per_min"), a_feat.get("td_def"))
+        b_wrestled_pressure = _gated_td_pressure(a_feat.get("td_per_min"), b_feat.get("td_def"))
+        row["a_wrestled_pressure"] = a_wrestled_pressure
+        row["b_wrestled_pressure"] = b_wrestled_pressure
+        row["diff_wrestled_pressure"] = (
+            (a_wrestled_pressure - b_wrestled_pressure)
+            if not (pd.isna(a_wrestled_pressure) or pd.isna(b_wrestled_pressure))
+            else np.nan
+        )
 
         rows.append(row)
 
@@ -527,7 +575,10 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         f"{side}_{stat}"
         for side in ("a", "b")
         for stat in ("ko_rate", "sub_rate", "finish_rate", "slpm", "sapm",
-                     "sig_acc", "td_per_min", "sub_per_min", "ctrl_ratio")
+                     "sig_acc", "td_per_min", "sub_per_min", "ctrl_ratio",
+                     "td_def", "sig_str_def",
+                     "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
+                     "never_finished")
         if f"{side}_{stat}" in upcoming_df.columns
     ]
     output = upcoming_df[[

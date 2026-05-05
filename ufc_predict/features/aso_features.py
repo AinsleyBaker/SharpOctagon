@@ -84,6 +84,9 @@ def fighter_aso_stats(
     Compute all per-fighter features as of `as_of` date.
     Uses only fights strictly before as_of.
     """
+    # LEFT JOIN to opponent stats — a small fraction of historical fights only
+    # have one fighter recorded in fight_stats_round; we still want the self
+    # row to count for n_fights / win_rate even when defensive stats are NaN.
     sql = text("""
         SELECT
             f.fight_id,
@@ -102,11 +105,17 @@ def fighter_aso_stats(
             s.submission_attempts,
             s.control_time_sec,
             s.ground_landed,        s.ground_attempted,
+            opp.takedowns_landed       AS opp_td_landed,
+            opp.takedowns_attempted    AS opp_td_attempted,
+            opp.sig_strikes_landed     AS opp_sig_landed,
+            opp.sig_strikes_attempted  AS opp_sig_attempted,
             f.time_ended_sec,
             f.round_ended
         FROM fights f
         JOIN fight_stats_round s
           ON s.fight_id = f.fight_id AND s.fighter_id = :fid AND s.round = 0
+        LEFT JOIN fight_stats_round opp
+          ON opp.fight_id = f.fight_id AND opp.fighter_id != :fid AND opp.round = 0
         WHERE (f.red_fighter_id = :fid OR f.blue_fighter_id = :fid)
           AND f.date < :as_of
           AND f.method NOT IN ('NC', 'DQ', 'CANCELLED')
@@ -127,6 +136,8 @@ def fighter_aso_stats(
         "head_landed", "head_attempted",
         "td_landed", "td_attempted",
         "sub_attempts", "ctrl_sec", "ground_landed", "ground_attempted",
+        "opp_td_landed", "opp_td_attempted",
+        "opp_sig_landed", "opp_sig_attempted",
         "time_ended_sec", "round_ended",
     ])
 
@@ -140,6 +151,12 @@ def fighter_aso_stats(
     df["sub_win"] = (
         _m.str.contains("SUB", na=False) & (df["winner_fighter_id"] == fighter_id)
     ).astype(int)
+    # Durability: did THIS fighter get finished?
+    df["ko_loss"] = (df["ko_tko"] & (df["won"] == 0)).astype(int)
+    df["sub_loss"] = (
+        _m.str.contains("SUB", na=False) & (df["won"] == 0)
+    ).astype(int)
+    df["finish_loss"] = (df["ko_loss"] | df["sub_loss"]).astype(int)
 
     # Total fight time in minutes (for per-minute rates)
     df["total_time_min"] = df["time_ended_sec"].fillna(0) / 60.0
@@ -161,6 +178,28 @@ def fighter_aso_stats(
 
     sig_acc = _safe_ratio(df["sig_landed"].sum(), df["sig_attempted"].sum())
     td_acc = _safe_ratio(df["td_landed"].sum(), df["td_attempted"].sum())
+
+    # Defensive rates — the missing piece for stylistic mismatches like
+    # striker-vs-grappler. td_def captures e.g. Strickland's career-best
+    # TDD that the offensive features alone could never see.
+    opp_td_att_total = df["opp_td_attempted"].fillna(0).sum()
+    opp_td_def = (
+        1.0 - df["opp_td_landed"].fillna(0).sum() / opp_td_att_total
+        if opp_td_att_total > 0 else float("nan")
+    )
+    opp_sig_att_total = df["opp_sig_attempted"].fillna(0).sum()
+    sig_str_def = (
+        1.0 - df["opp_sig_landed"].fillna(0).sum() / opp_sig_att_total
+        if opp_sig_att_total > 0 else float("nan")
+    )
+
+    # Durability — chin/grappling-defence proxy. Career rates of being
+    # finished. never_finished is a hard 0/1 flag; rate features let the
+    # model see "got KO'd 1/20 vs 5/20".
+    ko_loss_rate = df["ko_loss"].mean() if n > 0 else float("nan")
+    sub_loss_rate = df["sub_loss"].mean() if n > 0 else float("nan")
+    finish_loss_rate = df["finish_loss"].mean() if n > 0 else float("nan")
+    never_finished = int(df["finish_loss"].sum() == 0) if n > 0 else 0
 
     # --- Rolling last-3 and last-5 form ---
     l3 = df.tail(3)
@@ -222,6 +261,14 @@ def fighter_aso_stats(
         "ewma_finish_rate": ewma_finish_rate,
         "ewma_slpm": ewma_slpm,
         "ewma_kd_per_fight": ewma_kd_per_fight,
+        # Defensive + durability (added to capture striker-vs-grappler
+        # asymmetries the offence-only feature set was blind to)
+        "td_def": opp_td_def,
+        "sig_str_def": sig_str_def,
+        "ko_loss_rate": ko_loss_rate,
+        "sub_loss_rate": sub_loss_rate,
+        "finish_loss_rate": finish_loss_rate,
+        "never_finished": never_finished,
     }
 
     # Apply Bayesian shrinkage for fighters with few fights
@@ -283,6 +330,9 @@ def _empty_features(fighter_id: str, as_of: date) -> dict:
         "days_since_last_fight": np.nan, "fight_frequency_24m": 0.0,
         "ewma_win_rate": np.nan, "ewma_finish_rate": np.nan,
         "ewma_slpm": np.nan, "ewma_kd_per_fight": np.nan,
+        "td_def": np.nan, "sig_str_def": np.nan,
+        "ko_loss_rate": np.nan, "sub_loss_rate": np.nan,
+        "finish_loss_rate": np.nan, "never_finished": 0,
     }
     return feat
 
@@ -469,6 +519,11 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             "win_streak", "loss_streak", "fight_frequency_24m",
             # EWMA versions — recency-weighted (halflife 3 fights)
             "ewma_win_rate", "ewma_finish_rate", "ewma_slpm", "ewma_kd_per_fight",
+            # Defensive + durability — added so the model can see e.g. high
+            # TDD vs high TD output (striker-vs-grappler asymmetry) and
+            # finish history (chin / submission defence).
+            "td_def", "sig_str_def",
+            "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
         ]
 
         for k in diff_keys:
@@ -530,9 +585,73 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
         # Diff features cancel out when both fighters have similar styles;
         # absolute rates retain the signal that "both fighters are KO artists".
         for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
-                  "slpm", "sapm", "sig_acc", "ctrl_ratio"):
+                  "slpm", "sapm", "sig_acc", "ctrl_ratio",
+                  "td_def", "sig_str_def",
+                  "ko_loss_rate", "sub_loss_rate", "finish_loss_rate", "never_finished"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
+
+        # Style-mismatch interaction features. Trees handle interactions
+        # natively, but explicit cross-features give the gradient a stronger
+        # signal on small samples — and they're the cleanest way to encode
+        # "A is a striker, B can't take A down" → high A-by-KO probability.
+        a_finish = a_feat.get("finish_rate")
+        b_finish = b_feat.get("finish_rate")
+        a_floss  = a_feat.get("finish_loss_rate")
+        b_floss  = b_feat.get("finish_loss_rate")
+        a_tddef  = a_feat.get("td_def")
+        b_tddef  = b_feat.get("td_def")
+        a_tdpm   = a_feat.get("td_per_min")
+        b_tdpm   = b_feat.get("td_per_min")
+        a_slpm_v = a_feat.get("slpm")
+        b_slpm_v = b_feat.get("slpm")
+
+        def _mul(x, y):
+            if x is None or y is None or pd.isna(x) or pd.isna(y):
+                return np.nan
+            return float(x) * float(y)
+
+        # Finish threat = my finish rate × opp's tendency to be finished
+        a_finish_threat = _mul(a_finish, b_floss)
+        b_finish_threat = _mul(b_finish, a_floss)
+        row["a_finish_threat"] = a_finish_threat
+        row["b_finish_threat"] = b_finish_threat
+        row["diff_finish_threat"] = (
+            (a_finish_threat - b_finish_threat)
+            if not (pd.isna(a_finish_threat) or pd.isna(b_finish_threat))
+            else np.nan
+        )
+
+        # Keep-it-standing edge = my striking volume × my TDD (so I land
+        # strikes AND can stay on the feet). Higher value → I dictate the
+        # range. Diff captures the asymmetric matchup.
+        a_keep_standing = _mul(a_slpm_v, a_tddef)
+        b_keep_standing = _mul(b_slpm_v, b_tddef)
+        row["a_keep_standing"] = a_keep_standing
+        row["b_keep_standing"] = b_keep_standing
+        row["diff_keep_standing"] = (
+            (a_keep_standing - b_keep_standing)
+            if not (pd.isna(a_keep_standing) or pd.isna(b_keep_standing))
+            else np.nan
+        )
+
+        # Wrestling pressure on me = opp's TD output gated by my TDD. If I
+        # have high TDD, opp's high TD-per-min hurts me less. Diff measures
+        # which fighter is more vulnerable to the other's wrestling.
+        def _gated_td_pressure(opp_tdpm, my_tddef):
+            if any(v is None or pd.isna(v) for v in (opp_tdpm, my_tddef)):
+                return np.nan
+            return float(opp_tdpm) * (1.0 - float(my_tddef))
+
+        a_wrestled_pressure = _gated_td_pressure(b_tdpm, a_tddef)
+        b_wrestled_pressure = _gated_td_pressure(a_tdpm, b_tddef)
+        row["a_wrestled_pressure"] = a_wrestled_pressure
+        row["b_wrestled_pressure"] = b_wrestled_pressure
+        row["diff_wrestled_pressure"] = (
+            (a_wrestled_pressure - b_wrestled_pressure)
+            if not (pd.isna(a_wrestled_pressure) or pd.isna(b_wrestled_pressure))
+            else np.nan
+        )
 
         rows.append(row)
 
@@ -575,6 +694,17 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         ("a_sapm",        "b_sapm"),
         ("a_sig_acc",     "b_sig_acc"),
         ("a_ctrl_ratio",  "b_ctrl_ratio"),
+        # Defensive + durability (Week 7)
+        ("a_td_def",          "b_td_def"),
+        ("a_sig_str_def",     "b_sig_str_def"),
+        ("a_ko_loss_rate",    "b_ko_loss_rate"),
+        ("a_sub_loss_rate",   "b_sub_loss_rate"),
+        ("a_finish_loss_rate","b_finish_loss_rate"),
+        ("a_never_finished",  "b_never_finished"),
+        # Style-mismatch interactions
+        ("a_finish_threat",   "b_finish_threat"),
+        ("a_keep_standing",   "b_keep_standing"),
+        ("a_wrestled_pressure","b_wrestled_pressure"),
         # Post-peak (Week 2)
         ("a_post_peak", "b_post_peak"),
         # Physicals (week 3)

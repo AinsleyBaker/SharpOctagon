@@ -1000,20 +1000,20 @@ def _attach_graded_bets(bout: dict) -> None:
             "result":       result,  # 'won' | 'lost' | None
         })
 
-    # Top picks = top-EV value bets only, capped to 5. Mirrors the
-    # "Top picks" portfolio mode used elsewhere in the dashboard.
-    value_only = [g for g in graded if g["is_value"]]
-    value_only.sort(key=lambda g: g["ev_pct"], reverse=True)
-    bout["graded_top_bets"] = value_only[:5]
-
-    # All bets = every analysed bet (value or not), sorted by EV desc.
+    # All bets = every analysed bet, sorted by EV desc.
     graded_sorted = sorted(graded, key=lambda g: g["ev_pct"], reverse=True)
     bout["graded_all_bets"] = graded_sorted
 
-    # Counts for the toggle labels
-    won_count = sum(1 for g in value_only if g["result"] == "won")
-    bout["graded_top_won"]   = won_count
-    bout["graded_top_total"] = len(value_only)
+    # Top picks = always 5 highest-EV bets (value-first, then top-EV
+    # non-value to fill the slate). The previous "value-only" cap meant
+    # a fight with only 2 value bets showed only 2 rows, which made the
+    # past-events scorecards look sparse and inconsistent.
+    value_first = sorted(
+        graded,
+        key=lambda g: (g["is_value"], g["ev_pct"]),
+        reverse=True,
+    )
+    bout["graded_top_bets"] = value_first[:5]
 
 
 def _enrich_bet_analysis(bout: dict) -> None:

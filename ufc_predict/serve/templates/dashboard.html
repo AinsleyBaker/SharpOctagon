@@ -1517,117 +1517,19 @@
         </div>
         <div class="fight-details" id="details-{{ ev_idx }}-{{ loop.index }}">
           <div class="details-inner">
-            <div class="details-grid">
-              <!-- Predicted vs Actual -->
-              <div class="detail-box">
-                <h4>Model Prediction vs Actual Result</h4>
-                {# Bucket actual method into the same KO/SUB/DEC categories
-                   used by the prop probabilities so the "actual method"
-                   row alongside each predicted % is decisive, not just a
-                   checkmark in space. #}
-                {% set act_m = (bout.actual_method or '').upper() %}
-                {% set act_is_ko  = 'KO' in act_m or 'TKO' in act_m %}
-                {% set act_is_sub = 'SUB' in act_m %}
-                {% set act_is_dec = ('DEC' in act_m) or ('POINT' in act_m) %}
-                {% set act_side = bout.actual_winner_side %}
-                {# "Final" is ESPN's status string, not a method — drop it so we
-                   don't render the misleading "won by Final" until the DB
-                   ingest fills in the real KO/Sub/Decision. #}
-                {% set act_method_clean = (bout.actual_method or '') if act_is_ko or act_is_sub or act_is_dec else '' %}
-                {% set act_method_short = 'KO/TKO' if act_is_ko else 'Submission' if act_is_sub else 'Decision' if act_is_dec else '' %}
-                {% if bout.actual_winner_name %}
-                <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.6rem;font-size:var(--sm)">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Actual outcome</div>
-                  <div style="margin-top:2px"><strong style="color:var(--matrix)">{{ bout.actual_winner_name }}</strong>{% if act_method_short %} by <strong>{{ act_method_short }}</strong>{% endif %}{% if bout.actual_round %} in <strong>R{{ bout.actual_round }}</strong>{% endif %}{% if not act_method_short %} <span style="color:var(--muted);font-size:var(--xs)">(method pending DB ingest)</span>{% endif %}</div>
-                </div>
-                {% endif %}
-                {# Compact predicted-vs-actual: just two rows — model's
-                   probability that the *actual* winner won, and that the
-                   *actual* winner won by the *actual* method. Skips the
-                   dense 6-method-by-fighter grid the old layout had. #}
-                {% set pa = (bout.prob_a_wins or 0.5)|float %}
-                {% set winner_name = bout.actual_winner_name or '' %}
-                {% set winner_prob = pa if act_side == 'a' else (1 - pa) if act_side == 'b' else None %}
-                {% set methods = bout.props or {} %}
-                {% if act_is_ko %}
-                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_ko_tko' %}
-                {% elif act_is_sub %}
-                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_sub' %}
-                {% elif act_is_dec %}
-                  {% set method_prob_key = 'prob_' + (act_side or 'a') + '_wins_dec' %}
-                {% else %}
-                  {% set method_prob_key = '' %}
-                {% endif %}
-                {% set method_prob = methods.get(method_prob_key) if method_prob_key else None %}
-                <table class="stat-table">
-                  <thead>
-                    <tr>
-                      <th>Outcome</th>
-                      <th>Model said</th>
-                      <th>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if winner_name and winner_prob is not none %}
-                    <tr>
-                      <td>{{ winner_name }} wins</td>
-                      <td>{{ (winner_prob * 100)|round(0)|int }}%</td>
-                      <td style="color:{{ 'var(--green)' if bout.pred_correct else 'var(--red)' if bout.pred_correct == False else 'var(--muted)' }}">
-                        ✓ won{% if bout.pred_correct is not none %} {{ '· model right' if bout.pred_correct else '· model wrong' }}{% endif %}
-                      </td>
-                    </tr>
-                    {% endif %}
-                    {% if winner_name and act_method_short and method_prob is not none %}
-                    <tr>
-                      <td>{{ winner_name }} by {{ act_method_short }}</td>
-                      <td>{{ (method_prob * 100)|round(0)|int }}%</td>
-                      <td style="color:var(--green)">
-                        ✓ {{ act_method_short }}{% if bout.actual_round %} · R{{ bout.actual_round }}{% endif %}
-                      </td>
-                    </tr>
-                    {% elif winner_name %}
-                    <tr>
-                      <td>Method</td>
-                      <td style="color:var(--muted)">—</td>
-                      <td style="color:var(--muted)">awaiting result data</td>
-                    </tr>
-                    {% endif %}
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Model confidence at the time -->
-              <div class="detail-box">
-                <h4>Pre-fight Model Confidence</h4>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability ({{ bout.fighter_a_name }})</span>
-                  <span class="outcome-prob" style="color:var(--red)">{{ ((bout.prob_a_wins or 0.5)*100)|round(0)|int }}%</span>
-                </div>
-                <div class="outcome-row">
-                  <span class="outcome-label">Win probability ({{ bout.fighter_b_name }})</span>
-                  <span class="outcome-prob" style="color:var(--blue)">{{ ((1-(bout.prob_a_wins or 0.5))*100)|round(0)|int }}%</span>
-                </div>
-                {% if bout.uncertainty_std is not none %}
-                <div class="outcome-row">
-                  <span class="outcome-label">Uncertainty (±)</span>
-                  <span class="outcome-prob" style="color:var(--muted)">{{ ((bout.uncertainty_std or 0)*100)|round(1) }}%</span>
-                </div>
-                {% endif %}
-                {% if bout.props and bout.props.get('prob_rounds') %}
-                <div style="margin-top:0.6rem;border-top:1px solid #1e1e22;padding-top:0.6rem">
-                  <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">Predicted Round Distribution</div>
-                  {% for rk, rv in bout.props.prob_rounds.items() %}
-                  {% if rv > 0.005 %}
-                  <div class="outcome-row">
-                    <span class="outcome-label">Finish in {{ rk }}</span>
-                    <span class="outcome-prob" style="color:{{ 'var(--green)' if bout.actual_round and rk == 'R' + bout.actual_round|string else 'var(--muted)' }}">{{ (rv*100)|round(1) }}%</span>
-                  </div>
-                  {% endif %}
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
+            {# Actual outcome callout — kept above the bet scorecard so the
+               reader sees the headline result before the bet-by-bet grading. #}
+            {% set act_m = (bout.actual_method or '').upper() %}
+            {% set act_is_ko  = 'KO' in act_m or 'TKO' in act_m %}
+            {% set act_is_sub = 'SUB' in act_m %}
+            {% set act_is_dec = ('DEC' in act_m) or ('POINT' in act_m) %}
+            {% set act_method_short = 'KO/TKO' if act_is_ko else 'Submission' if act_is_sub else 'Decision' if act_is_dec else '' %}
+            {% if bout.actual_winner_name %}
+            <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.75rem;font-size:var(--sm)">
+              <div style="font-size:var(--xs);color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">Actual outcome</div>
+              <div style="margin-top:2px"><strong style="color:var(--matrix)">{{ bout.actual_winner_name }}</strong>{% if act_method_short %} by <strong>{{ act_method_short }}</strong>{% endif %}{% if bout.actual_round %} in <strong>R{{ bout.actual_round }}</strong>{% endif %}{% if not act_method_short %} <span style="color:var(--muted);font-size:var(--xs)">(method pending DB ingest)</span>{% endif %}</div>
             </div>
+            {% endif %}
 
             {% if bout.actual_stats_a or bout.actual_stats_b %}
             {% set sa = bout.actual_stats_a or {} %}
@@ -1681,12 +1583,24 @@
                "Top picks" = the 5 highest-EV value bets; "All bets" = every
                analysed bet sorted by EV. No stake column, no card chrome —
                this is a retrospective scorecard, not a wager planner. #}
-            {% if bout.graded_top_bets %}
+            {% if bout.graded_top_bets or bout.graded_all_bets %}
             {% set bid = ev_idx ~ '-' ~ loop.index %}
+            {% macro grade_row(g) -%}
+            <tr>
+              <td>
+                {{ g.description }}
+                {% if g.is_value %}<span class="past-bets-value-tag">value</span>{% endif %}
+              </td>
+              <td>{{ (g.our_prob * 100)|round(0)|int }}%</td>
+              <td style="color:var(--gold)">{{ "%.2f"|format(g.sb_odds) }}</td>
+              <td style="color:{{ 'var(--matrix)' if g.result == 'won' else 'var(--red)' if g.result == 'lost' else 'var(--muted)' }}">
+                {% if g.result == 'won' %}✓ won{% elif g.result == 'lost' %}✗ lost{% else %}—{% endif %}
+              </td>
+            </tr>
+            {%- endmacro %}
             <div class="past-bets" style="margin-top:0.75rem">
               <div class="past-bets-header">
-                <span>SportsBet bets &mdash; how the model did</span>
-                <span class="past-bets-tally">{{ bout.graded_top_won }}/{{ bout.graded_top_total }} value bets cashed</span>
+                <span>Model Prediction vs Actual Result</span>
                 <div class="past-bets-toggle">
                   <button type="button" class="active" data-mode="top"
                           onclick="setPastBetMode('{{ bid }}', 'top', this)">
@@ -1708,16 +1622,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for g in bout.graded_top_bets %}
-                  <tr>
-                    <td>{{ g.description }}</td>
-                    <td>{{ (g.our_prob * 100)|round(0)|int }}%</td>
-                    <td style="color:var(--gold)">{{ "%.2f"|format(g.sb_odds) }}</td>
-                    <td style="color:{{ 'var(--matrix)' if g.result == 'won' else 'var(--red)' if g.result == 'lost' else 'var(--muted)' }}">
-                      {% if g.result == 'won' %}✓ won{% elif g.result == 'lost' %}✗ lost{% else %}—{% endif %}
-                    </td>
-                  </tr>
-                  {% endfor %}
+                  {% for g in bout.graded_top_bets %}{{ grade_row(g) }}{% endfor %}
                 </tbody>
               </table>
               <table class="past-bets-table hidden" id="past-bets-all-{{ bid }}">
@@ -1730,19 +1635,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for g in bout.graded_all_bets %}
-                  <tr>
-                    <td>
-                      {{ g.description }}
-                      {% if g.is_value %}<span class="past-bets-value-tag">value</span>{% endif %}
-                    </td>
-                    <td>{{ (g.our_prob * 100)|round(0)|int }}%</td>
-                    <td style="color:var(--gold)">{{ "%.2f"|format(g.sb_odds) }}</td>
-                    <td style="color:{{ 'var(--matrix)' if g.result == 'won' else 'var(--red)' if g.result == 'lost' else 'var(--muted)' }}">
-                      {% if g.result == 'won' %}✓ won{% elif g.result == 'lost' %}✗ lost{% else %}—{% endif %}
-                    </td>
-                  </tr>
-                  {% endfor %}
+                  {% for g in bout.graded_all_bets %}{{ grade_row(g) }}{% endfor %}
                 </tbody>
               </table>
             </div>

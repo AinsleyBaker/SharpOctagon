@@ -15,7 +15,7 @@ import hashlib
 import json
 import logging
 import time
-from datetime import date, datetime, timedelta, timezone, UTC
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
 import requests

@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import unicodedata
-from datetime import date, datetime, timezone, UTC
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 
@@ -211,7 +211,7 @@ def _format_fight_time_aest(start_time, event_date: str) -> str:
     if not start_time:
         return ""
     try:
-        from datetime import datetime, timedelta, timezone
+        from datetime import datetime, timedelta
         # Parse: int (Unix sec/ms) or ISO string
         if isinstance(start_time, (int, float)):
             ts = int(start_time)

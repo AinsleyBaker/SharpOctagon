@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-
 from ufc_predict.db.session import get_session_factory
 from ufc_predict.features.aso_features import build_fight_feature_rows, symmetrize_rows
 from ufc_predict.features.ratings import attach_ratings, save_latest_ratings

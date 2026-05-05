@@ -956,6 +956,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     schedule_for_lookup = load_schedule()
     schedule_time_lookup: dict[tuple, str] = {}
     schedule_status_lookup: dict[tuple, dict] = {}
+    # ESPN's weight_class lives on the schedule, not the prediction (which is
+    # generated from the DB's upcoming_bouts table). Backfill so the dashboard
+    # picks it up on rebuild without a full re-predict cycle.
+    schedule_wc_lookup: dict[tuple, str] = {}
     for _ev in schedule_for_lookup:
         ev_date = str(_ev.get("event_date", ""))
         for _b in _ev.get("bouts") or []:
@@ -967,6 +971,10 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             if t:
                 schedule_time_lookup[(ev_date, fa, fb)] = t
                 schedule_time_lookup[(ev_date, fb, fa)] = t
+            wc = (_b.get("weight_class") or "").strip()
+            if wc:
+                schedule_wc_lookup[(ev_date, fa, fb)] = wc
+                schedule_wc_lookup[(ev_date, fb, fa)] = wc
             status_payload = {
                 "status":  _b.get("espn_status") or "",
                 "winner":  _b.get("espn_winner_name") or "",
@@ -1165,6 +1173,14 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
                 (ev_date_str, fa_key, fb_key)
             )
             bout["fight_time_aest"] = _format_fight_time_aest(start_time, ev_date_str)
+
+            # Backfill weight class from the schedule when the prediction's
+            # field is empty (predictions.json may have been generated before
+            # the poller started capturing this).
+            if not (bout.get("weight_class") or "").strip():
+                wc_from_sched = schedule_wc_lookup.get((ev_date_str, fa_key, fb_key))
+                if wc_from_sched:
+                    bout["weight_class"] = wc_from_sched
 
             # Live status — drives LIVE / RESULT pills on the bout row and the
             # event-level LIVE EVENT header. Status is empty for everything

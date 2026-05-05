@@ -4,7 +4,7 @@
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Junior Tafa",
     "fighter_b_name": "Kevin Christian",
-    "weight_class": "",
+    "weight_class": "Light Heavyweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.5524794243820418,
@@ -547,14 +547,14 @@
     "live_round": 1,
     "result_text": "Junior Tafa R1",
     "pred_correct": false,
-    "upcoming_bout_id": "live-5811473784262258"
+    "upcoming_bout_id": "live-6473633381682696"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Robert Bryczek",
     "fighter_b_name": "Cam Rowston",
-    "weight_class": "",
+    "weight_class": "Middleweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.7152520093691108,
@@ -1097,14 +1097,14 @@
     "live_round": 3,
     "result_text": "Cam Rowston R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-5770772287778214"
+    "upcoming_bout_id": "live-8103276108352671"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Tai Tuivasa",
     "fighter_b_name": "Louie Sutherland",
-    "weight_class": "",
+    "weight_class": "Heavyweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.519006771072233,
@@ -1647,14 +1647,14 @@
     "live_round": 3,
     "result_text": "Louie Sutherland R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-6929984360892256"
+    "upcoming_bout_id": "live-4492728086437314"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Marwan Rahiki",
     "fighter_b_name": "Ollie Schmid",
-    "weight_class": "",
+    "weight_class": "Featherweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.26107957835020623,
@@ -2142,14 +2142,14 @@
     "live_round": 1,
     "result_text": "Marwan Rahiki R1",
     "pred_correct": true,
-    "upcoming_bout_id": "live-6791835411589250"
+    "upcoming_bout_id": "live-6708087329911940"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Tim Elliott",
     "fighter_b_name": "Steve Erceg",
-    "weight_class": "",
+    "weight_class": "Flyweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.673050239669179,
@@ -2692,14 +2692,14 @@
     "live_round": 3,
     "result_text": "Steve Erceg R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-2817486861878906"
+    "upcoming_bout_id": "live-8889687099116397"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Beneil Dariush",
     "fighter_b_name": "Quillan Salkilld",
-    "weight_class": "",
+    "weight_class": "Lightweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.830881986524237,
@@ -3242,14 +3242,14 @@
     "live_round": 1,
     "result_text": "Quillan Salkilld R1",
     "pred_correct": true,
-    "upcoming_bout_id": "live-5833467433893327"
+    "upcoming_bout_id": "live-1177514557164593"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Carlos Prates",
     "fighter_b_name": "Jack Della Maddalena",
-    "weight_class": "",
+    "weight_class": "Welterweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "prob_b_wins": 0.49058075064610984,
@@ -3802,14 +3802,14 @@
     "live_round": 3,
     "result_text": "Carlos Prates R3",
     "pred_correct": true,
-    "upcoming_bout_id": "live-7352796528563790"
+    "upcoming_bout_id": "live-6247617022471263"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Dom Mar Fan",
     "fighter_b_name": "Kody Steele",
-    "weight_class": "",
+    "weight_class": "Lightweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3818,14 +3818,14 @@
     "live_method": "Final",
     "live_round": 1,
     "result_text": "Kody Steele R1",
-    "upcoming_bout_id": "live-2618036648235436"
+    "upcoming_bout_id": "live-7894904332806714"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Themba Gorimbo",
     "fighter_b_name": "Jonathan Micallef",
-    "weight_class": "",
+    "weight_class": "Welterweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3834,14 +3834,14 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Jonathan Micallef R3",
-    "upcoming_bout_id": "live-5633439037705759"
+    "upcoming_bout_id": "live-1165665161169442"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Wes Schultz",
     "fighter_b_name": "Ben Johnston",
-    "weight_class": "",
+    "weight_class": "Middleweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3850,14 +3850,14 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Wes Schultz R3",
-    "upcoming_bout_id": "live-3204635912096978"
+    "upcoming_bout_id": "live-8044214599091026"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Vince Morales",
     "fighter_b_name": "Colby Thicknesse",
-    "weight_class": "",
+    "weight_class": "Bantamweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3866,14 +3866,14 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Colby Thicknesse R3",
-    "upcoming_bout_id": "live-2303165932608345"
+    "upcoming_bout_id": "live-6956739450578240"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Gerald Meerschaert",
     "fighter_b_name": "Jacob Malkoun",
-    "weight_class": "",
+    "weight_class": "Middleweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3882,14 +3882,14 @@
     "live_method": "Final",
     "live_round": 3,
     "result_text": "Jacob Malkoun R3",
-    "upcoming_bout_id": "live-1841196016090898"
+    "upcoming_bout_id": "live-7941587919555053"
   },
   {
     "event_date": "2026-05-02",
     "event_name": "UFC Fight Night: Della Maddalena vs. Prates",
     "fighter_a_name": "Shamil Gaziev",
     "fighter_b_name": "Brando Peri\u010di\u0107",
-    "weight_class": "",
+    "weight_class": "Heavyweight",
     "is_title_bout": false,
     "prob_a_wins": 0.5,
     "is_completed": true,
@@ -3898,15 +3898,15 @@
     "live_method": "Final",
     "live_round": 2,
     "result_text": "Brando Peri\u010di\u0107 R2",
-    "upcoming_bout_id": "live-9102147527404322"
+    "upcoming_bout_id": "live-2639247415799062"
   },
   {
-    "upcoming_bout_id": "live-5966239147943065",
+    "upcoming_bout_id": "live-3536626925929673",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Julia Polastri",
     "fighter_b_name": "Talita Alencar",
-    "weight_class": "",
+    "weight_class": "W Strawweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -4483,12 +4483,12 @@
     "result_text": "Talita Alencar R3"
   },
   {
-    "upcoming_bout_id": "live-6968214716289234",
+    "upcoming_bout_id": "live-4974855729663313",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Max Griffin",
     "fighter_b_name": "Victor Valenzuela",
-    "weight_class": "",
+    "weight_class": "Welterweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -5032,12 +5032,12 @@
     "result_text": "Victor Valenzuela R3"
   },
   {
-    "upcoming_bout_id": "live-3207458435012079",
+    "upcoming_bout_id": "live-3863547866545004",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Lucas Brennan",
     "fighter_b_name": "Francis Marshall",
-    "weight_class": "",
+    "weight_class": "Lightweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Southpaw",
@@ -5589,12 +5589,12 @@
     "result_text": "Francis Marshall R3"
   },
   {
-    "upcoming_bout_id": "live-6264635721749870",
+    "upcoming_bout_id": "live-5924581848358117",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Jafel Filho",
     "fighter_b_name": "Cody Durden",
-    "weight_class": "",
+    "weight_class": "Bantamweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -5700,12 +5700,12 @@
     "result_text": "Cody Durden R3"
   },
   {
-    "upcoming_bout_id": "live-5823545655856956",
+    "upcoming_bout_id": "live-2842958349498387",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Mayra Bueno Silva",
     "fighter_b_name": "Michelle Montague",
-    "weight_class": "",
+    "weight_class": "W Bantamweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -6282,12 +6282,12 @@
     "result_text": "Michelle Montague R3"
   },
   {
-    "upcoming_bout_id": "live-8551159892507192",
+    "upcoming_bout_id": "live-2155785100425043",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Sedriques Dumas",
     "fighter_b_name": "Jackson McVey",
-    "weight_class": "",
+    "weight_class": "Middleweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -6864,12 +6864,12 @@
     "result_text": "Jackson McVey R1"
   },
   {
-    "upcoming_bout_id": "live-9145255706767730",
+    "upcoming_bout_id": "live-5025682171682335",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Eric McConico",
     "fighter_b_name": "Rodolfo Vieira",
-    "weight_class": "",
+    "weight_class": "Middleweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Southpaw",
@@ -7446,12 +7446,12 @@
     "result_text": "Eric McConico R3"
   },
   {
-    "upcoming_bout_id": "live-8187508289774997",
+    "upcoming_bout_id": "live-8553522088934230",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Ryan Spann",
     "fighter_b_name": "Marcus Buchecha",
-    "weight_class": "",
+    "weight_class": "Heavyweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -8028,12 +8028,12 @@
     "result_text": "Ryan Spann R2"
   },
   {
-    "upcoming_bout_id": "live-7082896243588430",
+    "upcoming_bout_id": "live-8162973411107969",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Raoni Barcelos",
     "fighter_b_name": "Montel Jackson",
-    "weight_class": "",
+    "weight_class": "Bantamweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -8610,12 +8610,12 @@
     "result_text": "Raoni Barcelos R3"
   },
   {
-    "upcoming_bout_id": "live-1184265022954268",
+    "upcoming_bout_id": "live-1565564790354987",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Davey Grant",
     "fighter_b_name": "Adrian Luna Martinetti",
-    "weight_class": "",
+    "weight_class": "Bantamweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -9192,12 +9192,12 @@
     "result_text": "Davey Grant R3"
   },
   {
-    "upcoming_bout_id": "live-7419335524355037",
+    "upcoming_bout_id": "live-7611330870899823",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Alexander Hernandez",
     "fighter_b_name": "Rafa Garcia",
-    "weight_class": "",
+    "weight_class": "Lightweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -9774,12 +9774,12 @@
     "result_text": "Rafa Garcia R3"
   },
   {
-    "upcoming_bout_id": "live-1048250141757384",
+    "upcoming_bout_id": "live-6840557442507122",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Joselyne Edwards",
     "fighter_b_name": "Norma Dumont",
-    "weight_class": "",
+    "weight_class": "W Bantamweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",
@@ -10356,12 +10356,12 @@
     "result_text": "Joselyne Edwards R3"
   },
   {
-    "upcoming_bout_id": "live-1419101915584183",
+    "upcoming_bout_id": "live-3070804186916005",
     "event_date": "2026-04-25",
     "event_name": "UFC Fight Night: Sterling vs. Zalal",
     "fighter_a_name": "Aljamain Sterling",
     "fighter_b_name": "Youssef Zalal",
-    "weight_class": "",
+    "weight_class": "Featherweight",
     "fighter_a_nationality": null,
     "fighter_b_nationality": null,
     "fighter_a_stance": "Orthodox",

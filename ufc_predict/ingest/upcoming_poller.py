@@ -120,9 +120,21 @@ def fetch_espn_upcoming() -> list[dict]:
                     method = _rest
             round_ended = status_obj.get("period") or 0
 
-            notes = comp.get("notes", [{}])
-            weight_class = notes[0].get("headline", "") if notes else ""
-            is_title = "title" in weight_class.lower() or "championship" in weight_class.lower()
+            # ESPN puts the weight class in `competition.type.abbreviation`
+            # ("Flyweight", "Heavyweight", "Welterweight", …).  The previous
+            # implementation read `notes[0].headline` which the API no longer
+            # populates, so weight_class came back empty for every bout.
+            weight_class = (comp.get("type") or {}).get("abbreviation", "") or ""
+            # ESPN doesn't expose a clean title-bout flag — fall back to the
+            # event name (cards usually advertise titles in the headline).
+            ev_name_l = (event_name or "").lower()
+            is_title = "title" in ev_name_l or "championship" in ev_name_l
+            # 5-round bouts are signalled by format.regulation.periods on the
+            # competition (3 = standard prelim/main, 5 = main event / title).
+            periods = (
+                ((comp.get("format") or {}).get("regulation") or {}).get("periods")
+            )
+            is_five_round = periods == 5 or is_title
 
             # Per-bout start time. ESPN often returns the same value as the
             # event's date, but for cards with staggered prelims it's per-fight.
@@ -136,7 +148,7 @@ def fetch_espn_upcoming() -> list[dict]:
                 "blue_name_raw": blue,
                 "weight_class": weight_class,
                 "is_title_bout": is_title,
-                "is_five_round": is_title or "main event" in weight_class.lower(),
+                "is_five_round": is_five_round,
                 "source": "espn",
                 "is_confirmed": True,
                 # Live status — surfaced through to the schedule JSON so the

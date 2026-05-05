@@ -290,6 +290,7 @@
   .fight-block:last-child { border-radius: 0 0 var(--radius) var(--radius); }
 
   .fight-main {
+    position: relative;
     display: flex; align-items: center;
     padding: 1rem 1.2rem; gap: 1rem; cursor: pointer;
     border-bottom: 1px solid var(--border);
@@ -413,11 +414,17 @@
     color: #000; font-size: var(--xs); font-weight: 800;
     padding: 2px 7px; border-radius: 4px; text-transform: uppercase;
   }
+  /* Floats in the top-left corner of the fight row so it doesn't sit in the
+     flex flow and squeeze the central prediction column. */
   .value-badge-main {
+    position: absolute;
+    top: 6px; left: 8px;
     background: linear-gradient(135deg, var(--matrix), var(--matrix-dim));
-    color: #000; font-size: var(--xs); font-weight: 800;
-    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
-    box-shadow: 0 0 10px rgba(0,255,136,0.4);
+    color: #000; font-size: 0.58rem; font-weight: 800;
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+    box-shadow: 0 0 8px rgba(0,255,136,0.35);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    z-index: 2;
   }
   /* Per-fighter sportsbet odds — sits under the meta row so a missing
      odds value on one fight doesn't shift the rest of the row layout. */
@@ -584,13 +591,20 @@
     text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700;
   }
   .bankroll-input-wrap span.dollar { color: var(--gold); font-weight: 700; font-size: var(--sm); }
-  .bankroll-input-wrap input {
-    width: 75px; background: transparent; border: none; outline: none;
+  .bankroll-input-wrap select.bankroll-select {
+    background: transparent; border: none; outline: none;
+    color: var(--matrix); font-weight: 800; font-size: var(--sm); font-family: inherit;
+    cursor: pointer; padding-right: 2px;
+  }
+  .bankroll-input-wrap select.bankroll-select option { background: var(--card); color: var(--light); }
+  .bankroll-input-wrap input.bankroll-input {
+    width: 90px; background: transparent; border: none; outline: none;
     color: var(--matrix); font-weight: 800; font-size: var(--sm); font-family: inherit;
     font-variant-numeric: tabular-nums;
+    border-left: 1px solid var(--border); padding-left: 0.5rem; margin-left: 0.2rem;
   }
-  .bankroll-input-wrap input::-webkit-outer-spin-button,
-  .bankroll-input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .bankroll-input-wrap input.bankroll-input::-webkit-outer-spin-button,
+  .bankroll-input-wrap input.bankroll-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
   .top-bets-controls {
     display: flex; flex-wrap: wrap; gap: 0.8rem;
@@ -940,8 +954,8 @@
 
           </div>
 
+          {% if bout.value_bet_count %}<span class="value-badge-main">{{ bout.value_bet_count }} value bets</span>{% endif %}
           <div class="fight-right">
-            {% if bout.value_bet_count %}<span class="value-badge-main">{{ bout.value_bet_count }} value bets</span>{% endif %}
             <span class="expand-icon" id="icon-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">▼</span>
           </div>
 
@@ -1161,9 +1175,18 @@
     <!-- Bankroll + strategy controls -->
     <div class="top-bets-controls">
       <div class="bankroll-input-wrap">
-        <label for="global-bankroll-input">Bankroll</label>
+        <label for="bankroll-select">Bankroll</label>
         <span class="dollar">$</span>
-        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="1000"
+        <select id="bankroll-select" class="bankroll-select"
+                onchange="onBankrollSelect(this.value)">
+          {% for v in [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500] %}
+          <option value="{{ v }}">${{ v }}</option>
+          {% endfor %}
+          <option value="custom">Custom…</option>
+        </select>
+        <input id="global-bankroll-input" class="bankroll-input" type="number"
+               min="1" max="100000" step="1" value="1000"
+               style="display:none"
                oninput="setBankroll(this.value)">
       </div>
       <div class="bp-strategy-toggle" id="top-strategy-toggle">
@@ -1657,11 +1680,36 @@ function applyBankroll() {
   document.querySelectorAll('.bp-bankroll-display').forEach(el => {
     el.textContent = '$' + Math.round(bk).toLocaleString();
   });
-  // Sync every bankroll input on the page (Top Bets controls + per-event cards)
-  // so changing one updates the others without each maintaining its own state.
+  // Sync the dropdown + custom-input pair: if the bankroll matches one of the
+  // dropdown options, select it and hide the custom input. Otherwise mark the
+  // dropdown as "Custom" and show the input pre-filled with the current value.
+  document.querySelectorAll('select.bankroll-select').forEach(sel => {
+    const matchVal = String(Math.round(bk));
+    const opt = Array.from(sel.options).find(o => o.value === matchVal);
+    if (opt) {
+      sel.value = matchVal;
+    } else {
+      sel.value = 'custom';
+    }
+  });
   document.querySelectorAll('input.bankroll-input').forEach(inp => {
     if (parseFloat(inp.value) !== bk) inp.value = Math.round(bk);
+    const sel = inp.parentElement && inp.parentElement.querySelector('select.bankroll-select');
+    if (sel) inp.style.display = (sel.value === 'custom') ? '' : 'none';
   });
+}
+function onBankrollSelect(value) {
+  // "Custom…" reveals the number input but doesn't change the bankroll until
+  // the user types. Numeric options apply immediately.
+  if (value === 'custom') {
+    document.querySelectorAll('input.bankroll-input').forEach(inp => {
+      inp.style.display = '';
+      inp.focus();
+      inp.select();
+    });
+    return;
+  }
+  setBankroll(value);
 }
 function setTopStrategy(btn, strategy) {
   document.querySelectorAll('#top-strategy-toggle button').forEach(b => b.classList.remove('active'));

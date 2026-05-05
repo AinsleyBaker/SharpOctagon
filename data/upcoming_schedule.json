@@ -749,8 +749,8 @@
         "espn_round": 0
       },
       {
-        "fighter_a": "Ariane Carnelossi",
-        "fighter_b": "Ketlen Souza",
+        "fighter_a": "Joanderson Brito",
+        "fighter_b": "Jordan Leavitt",
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-06-06T21:00Z",
@@ -760,8 +760,8 @@
         "espn_round": 0
       },
       {
-        "fighter_a": "Joanderson Brito",
-        "fighter_b": "Jordan Leavitt",
+        "fighter_a": "Ariane Carnelossi",
+        "fighter_b": "Ketlen Souza",
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-06-06T21:00Z",
@@ -782,39 +782,6 @@
         "espn_round": 0
       },
       {
-        "fighter_a": "Jakub Wik\u0142acz",
-        "fighter_b": "Marcus McGhee",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-06-06T21:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 5:00 PM EDT",
-        "espn_round": 0
-      },
-      {
-        "fighter_a": "Victor Henry",
-        "fighter_b": "Bryce Mitchell",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
-        "espn_round": 0
-      },
-      {
-        "fighter_a": "Brendan Allen",
-        "fighter_b": "Edmen Shahbazyan",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
-        "espn_round": 0
-      },
-      {
         "fighter_a": "Yuneisy Duben",
         "fighter_b": "Jeisla Chaves",
         "weight_class": "",
@@ -830,10 +797,21 @@
         "fighter_b": "\u00c9dgar Ch\u00e1irez",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
+        "start_time_iso": "2026-06-06T21:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
+        "espn_method": "Sat, June 6th at 5:00 PM EDT",
+        "espn_round": 0
+      },
+      {
+        "fighter_a": "Jakub Wik\u0142acz",
+        "fighter_b": "Marcus McGhee",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-06-07T00:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
         "espn_round": 0
       },
       {
@@ -841,10 +819,10 @@
         "fighter_b": "Imanol Rodriguez",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
+        "start_time_iso": "2026-06-07T00:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
         "espn_round": 0
       },
       {
@@ -852,10 +830,32 @@
         "fighter_b": "Iwo Baraniewski",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
+        "start_time_iso": "2026-06-07T00:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
+        "espn_round": 0
+      },
+      {
+        "fighter_a": "Victor Henry",
+        "fighter_b": "Bryce Mitchell",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-06-07T00:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
+        "espn_round": 0
+      },
+      {
+        "fighter_a": "Brendan Allen",
+        "fighter_b": "Edmen Shahbazyan",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-06-07T00:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
         "espn_round": 0
       },
       {
@@ -863,10 +863,10 @@
         "fighter_b": "Gabriel Bonfim",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-07T01:00Z",
+        "start_time_iso": "2026-06-07T00:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 6th at 9:00 PM EDT",
+        "espn_method": "Sat, June 6th at 8:00 PM EDT",
         "espn_round": 0
       }
     ]
@@ -875,17 +875,6 @@
     "event_name": "UFC Freedom 250: Topuria vs. Gaethje",
     "event_date": "2026-06-15",
     "bouts": [
-      {
-        "fighter_a": "Derrick Lewis",
-        "fighter_b": "Josh Hokit",
-        "weight_class": "",
-        "is_title_bout": false,
-        "start_time_iso": "2026-06-15T00:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sun, June 14th at 8:00 PM EDT",
-        "espn_round": 0
-      },
       {
         "fighter_a": "Steve Garcia",
         "fighter_b": "Diego Lopes",
@@ -911,6 +900,17 @@
       {
         "fighter_a": "Michael Chandler",
         "fighter_b": "Mauricio Ruffy",
+        "weight_class": "",
+        "is_title_bout": false,
+        "start_time_iso": "2026-06-15T00:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sun, June 14th at 8:00 PM EDT",
+        "espn_round": 0
+      },
+      {
+        "fighter_a": "Derrick Lewis",
+        "fighter_b": "Josh Hokit",
         "weight_class": "",
         "is_title_bout": false,
         "start_time_iso": "2026-06-15T00:00Z",
@@ -1035,10 +1035,10 @@
         "fighter_b": "Opponent TBA",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-27T16:00Z",
+        "start_time_iso": "2026-06-27T13:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 27th at 12:00 PM EDT",
+        "espn_method": "Sat, June 27th at 9:00 AM EDT",
         "espn_round": 0
       },
       {
@@ -1046,10 +1046,10 @@
         "fighter_b": "Opponent TBA",
         "weight_class": "",
         "is_title_bout": false,
-        "start_time_iso": "2026-06-27T19:00Z",
+        "start_time_iso": "2026-06-27T16:00Z",
         "espn_status": "STATUS_SCHEDULED",
         "espn_winner_name": "",
-        "espn_method": "Sat, June 27th at 3:00 PM EDT",
+        "espn_method": "Sat, June 27th at 12:00 PM EDT",
         "espn_round": 0
       }
     ]

@@ -3882,5 +3882,116 @@
     "age": "33",
     "record": "1-0-0",
     "image_url": "fighter-images/tommy-gantt.png"
+  },
+  "Jakub Wik\u0142acz": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {}
+  },
+  "Luis Felipe Dias": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
+  },
+  "Opponent TBA": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {}
+  },
+  "TBA": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {}
+  },
+  "Xiong Jingnan": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "nan"
+    }
+  },
+  "nan Aoriqileng": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Orthodox"
+    }
+  },
+  "nan Sumudaerji": {
+    "country": "",
+    "hometown": "",
+    "style": "",
+    "age": "",
+    "record": "",
+    "image_url": "",
+    "stats": {
+      "n_fights": 0,
+      "win_streak": 0,
+      "loss_streak": 0,
+      "l3_win_rate": null,
+      "finish_rate": null,
+      "ko_rate": null,
+      "sub_rate": null,
+      "slpm": null,
+      "sapm": null,
+      "td_per_min": null,
+      "stance": "Southpaw"
+    }
   }
 }

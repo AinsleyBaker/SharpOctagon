@@ -43,8 +43,8 @@
     "uncertainty_std": 0.041172942904398664,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0293,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0975,
       "prob_a_wins_sub": 0.1699,
@@ -108,7 +108,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.3922
   },
   {
     "upcoming_bout_id": "fc8f6e33bb092865",
@@ -154,8 +155,8 @@
     "uncertainty_std": 0.07397304474601075,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.836245221795608,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0253,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0762,
       "prob_a_wins_sub": 0.0188,
@@ -219,7 +220,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.1724
   },
   {
     "upcoming_bout_id": "eb40356a9af9f0da",
@@ -265,7 +267,7 @@
     "uncertainty_std": 0.05413245001032002,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.0527,
@@ -330,7 +332,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.6721
   },
   {
     "upcoming_bout_id": "60eaae0a5404bac5",
@@ -376,8 +379,8 @@
     "uncertainty_std": 0.04215684852264629,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0352,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.1314,
       "prob_a_wins_sub": 0.0769,
@@ -441,7 +444,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.3802
   },
   {
     "upcoming_bout_id": "1ab501c3f6e7b208",
@@ -487,8 +491,8 @@
     "uncertainty_std": 0.08505169146848285,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.9629037717311193,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0175,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0878,
       "prob_a_wins_sub": 0.0974,
@@ -552,7 +556,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.2857
   },
   {
     "upcoming_bout_id": "e9fc0edea963cb3e",
@@ -598,7 +603,7 @@
     "uncertainty_std": 0.08526306112159025,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.1174,
@@ -663,7 +668,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.6364
   },
   {
     "upcoming_bout_id": "c54216aa60cc2721",
@@ -709,7 +715,7 @@
     "uncertainty_std": 0.0990415954488061,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.0957,
@@ -774,7 +780,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.6364
   },
   {
     "upcoming_bout_id": "04097592f76426d6",
@@ -820,8 +827,8 @@
     "uncertainty_std": 0.0977519213829201,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.9286413980901334,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0536,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0964,
       "prob_a_wins_sub": 0.0192,
@@ -885,7 +892,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.125
   },
   {
     "upcoming_bout_id": "d87b648d21c4d243",
@@ -931,8 +939,8 @@
     "uncertainty_std": 0.08617554880676914,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.923627261801796,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0083,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0831,
       "prob_a_wins_sub": 0.0486,
@@ -996,7 +1004,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.2857
   },
   {
     "upcoming_bout_id": "451b75ac6daba220",
@@ -1042,7 +1051,7 @@
     "uncertainty_std": 0.06541355918286969,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.1685,
@@ -1107,7 +1116,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.4348
   },
   {
     "upcoming_bout_id": "0113a88a68c08bd8",
@@ -1153,7 +1163,7 @@
     "uncertainty_std": 0.0851062274929194,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.1366,
@@ -1218,7 +1228,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.6364
   },
   {
     "upcoming_bout_id": "610f985e5878d3f6",
@@ -1264,7 +1275,7 @@
     "uncertainty_std": 0.04956039868236216,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.1223,
@@ -1935,7 +1946,8 @@
         "historical_n_bets": 3207,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.6364
   },
   {
     "upcoming_bout_id": "99e2fdeebb7ae81c",
@@ -1981,7 +1993,7 @@
     "uncertainty_std": 0.07594014408486836,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.6675802490681634,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.0,
@@ -2669,7 +2681,8 @@
         "historical_n_bets": 3207,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.1942
   },
   {
     "upcoming_bout_id": "1e419eeb5630271d",
@@ -5202,7 +5215,7 @@
     "uncertainty_std": 0.0873923280854461,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.7315564102523897,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.0809,
@@ -5267,7 +5280,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.2941
   },
   {
     "upcoming_bout_id": "196b0f3cea4cd396",
@@ -5313,8 +5327,8 @@
     "uncertainty_std": 0.08044115663052961,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0262,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.1303,
       "prob_a_wins_sub": 0.0758,
@@ -5378,7 +5392,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.4
   },
   {
     "upcoming_bout_id": "dc4ddeec4092e7de",
@@ -5424,7 +5439,7 @@
     "uncertainty_std": 0.07359789762771841,
     "ci_90_lo": 0.0,
     "ci_90_hi": 0.8964050625417941,
-    "kelly_fraction": NaN,
+    "kelly_fraction": 0.0,
     "has_edge": false,
     "props": {
       "prob_a_wins_ko_tko": 0.0576,
@@ -5489,7 +5504,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.2941
   },
   {
     "upcoming_bout_id": "0f921e77b6a66be5",
@@ -5535,8 +5551,8 @@
     "uncertainty_std": 0.08966867015262987,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0569,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.0917,
       "prob_a_wins_sub": 0.0328,
@@ -5600,7 +5616,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.1923
   },
   {
     "upcoming_bout_id": "e7f589fd929ba472",
@@ -5646,8 +5663,8 @@
     "uncertainty_std": 0.0800092516636933,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0415,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.1123,
       "prob_a_wins_sub": 0.0325,
@@ -5711,7 +5728,8 @@
         "historical_n_bets": 0,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.25
   },
   {
     "upcoming_bout_id": "7267c6024feab42d",
@@ -5757,8 +5775,8 @@
     "uncertainty_std": 0.07772135615274482,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0308,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.216,
       "prob_a_wins_sub": 0.1126,
@@ -6459,7 +6477,8 @@
         "historical_n_bets": 3207,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.5238
   },
   {
     "upcoming_bout_id": "2e9278940babbcaf",
@@ -6505,8 +6524,8 @@
     "uncertainty_std": 0.07784753220768542,
     "ci_90_lo": 0.0,
     "ci_90_hi": 1.0,
-    "kelly_fraction": NaN,
-    "has_edge": false,
+    "kelly_fraction": 0.0636,
+    "has_edge": true,
     "props": {
       "prob_a_wins_ko_tko": 0.1165,
       "prob_a_wins_sub": 0.0325,
@@ -7249,7 +7268,8 @@
         "historical_n_bets": 4280,
         "market_backtested": true
       }
-    ]
+    ],
+    "implied_prob_a": 0.1667
   },
   {
     "upcoming_bout_id": "dc72da4a81571563",

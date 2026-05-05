@@ -68,7 +68,7 @@ def compute_elo(
     latest ratings for inference.
     """
     df = fights_df.sort_values("date").copy()
-    states: DefaultDict[tuple, EloState] = defaultdict(EloState)
+    states: defaultdict[tuple, EloState] = defaultdict(EloState)
 
     elo_a_list, elo_b_list = [], []
 
@@ -233,7 +233,7 @@ def compute_glicko2(fights_df: pd.DataFrame, return_states: bool = False):
     When return_states=True, also returns the final post-fight states dict.
     """
     df = fights_df.sort_values("date").copy()
-    states: DefaultDict[tuple, GlickoState] = defaultdict(GlickoState)
+    states: defaultdict[tuple, GlickoState] = defaultdict(GlickoState)
 
     g_a, g_b, rd_a, rd_b = [], [], [], []
 

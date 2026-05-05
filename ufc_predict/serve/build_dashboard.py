@@ -700,6 +700,15 @@ def _load_persisted_past_events(fighter_meta: dict, fighter_imgs: dict) -> list[
     if not isinstance(flat, list) or not flat:
         return []
 
+    # Re-run bet analysis so past entries pick up the current bet schema —
+    # in particular `outcome_keys`, which earlier persists predate. Keeps
+    # historical bet grading working without a manual backfill.
+    try:
+        from ufc_predict.eval.bet_analysis import analyze_all_fights
+        flat = analyze_all_fights(flat)
+    except Exception as exc:  # pragma: no cover — defensive
+        log.warning("Re-running bet_analysis on past events failed: %s", exc)
+
     by_event: dict[tuple, dict] = {}
     for p in flat:
         key = (str(p.get("event_date", "")), p.get("event_name", "Unknown Event"))
@@ -908,7 +917,103 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
                 round(100 * n_correct / n_resolved) if n_resolved > 0 else None
             )
 
+            # After the actual outcome is resolved, grade every value bet
+            # we'd have placed and attach it to the bout so the past-events
+            # template can render a "what we said vs what happened" table.
+            for bout in ev.get("bouts", []):
+                _attach_graded_bets(bout)
+
     return past_events
+
+
+# ---------------------------------------------------------------------------
+# Bet grading for past events
+# ---------------------------------------------------------------------------
+
+def _canonical_method(method: str) -> str | None:
+    """Reduce a free-text method string to KO / SUB / DEC, or None if unknown."""
+    m = (method or "").upper()
+    if not m or "FINAL" == m.strip():
+        return None
+    if "KO" in m or "TKO" in m:
+        return "KO"
+    if "SUB" in m:
+        return "SUB"
+    if "DEC" in m or "POINT" in m or "DRAW" in m:
+        return "DEC"
+    return None
+
+
+def _actual_outcome_key(bout: dict) -> str | None:
+    """
+    Build the atomic outcome key ("A|KO|2", "B|DEC|DEC", …) that bet_analysis
+    emits in `outcome_keys`. Returns None when we don't have enough data to
+    grade (no winner yet, or method not classifiable).
+    """
+    side = (bout.get("actual_winner_side") or "").upper()
+    if side not in {"A", "B"}:
+        return None
+    method = _canonical_method(bout.get("actual_method") or "")
+    if method is None:
+        return None
+    if method == "DEC":
+        return f"{side}|DEC|DEC"
+    rnd = bout.get("actual_round")
+    try:
+        rnd_int = int(rnd) if rnd else 0
+    except (TypeError, ValueError):
+        rnd_int = 0
+    if rnd_int < 1 or rnd_int > 5:
+        return None
+    return f"{side}|{method}|{rnd_int}"
+
+
+def _grade_bet(bet: dict, actual_key: str | None) -> str | None:
+    """Return 'won' / 'lost' / None for a single bet given the actual outcome key."""
+    if not actual_key:
+        return None
+    keys = bet.get("outcome_keys") or []
+    if not keys:
+        return None
+    return "won" if actual_key in keys else "lost"
+
+
+def _attach_graded_bets(bout: dict) -> None:
+    """Attach graded bet lists (top picks + all bets) to a past-event bout."""
+    bets = bout.get("bet_analysis") or []
+    if not bets:
+        bout["graded_top_bets"] = []
+        bout["graded_all_bets"] = []
+        return
+
+    actual_key = _actual_outcome_key(bout)
+    graded: list[dict] = []
+    for bet in bets:
+        result = _grade_bet(bet, actual_key)
+        graded.append({
+            "description":  bet.get("description") or "",
+            "bet_type":     bet.get("bet_type") or "",
+            "our_prob":     bet.get("our_prob") or 0.0,
+            "sb_odds":      bet.get("sb_odds") or 0.0,
+            "ev_pct":       bet.get("ev_pct") or 0.0,
+            "is_value":     bool(bet.get("is_value")),
+            "result":       result,  # 'won' | 'lost' | None
+        })
+
+    # Top picks = top-EV value bets only, capped to 5. Mirrors the
+    # "Top picks" portfolio mode used elsewhere in the dashboard.
+    value_only = [g for g in graded if g["is_value"]]
+    value_only.sort(key=lambda g: g["ev_pct"], reverse=True)
+    bout["graded_top_bets"] = value_only[:5]
+
+    # All bets = every analysed bet (value or not), sorted by EV desc.
+    graded_sorted = sorted(graded, key=lambda g: g["ev_pct"], reverse=True)
+    bout["graded_all_bets"] = graded_sorted
+
+    # Counts for the toggle labels
+    won_count = sum(1 for g in value_only if g["result"] == "won")
+    bout["graded_top_won"]   = won_count
+    bout["graded_top_total"] = len(value_only)
 
 
 def _enrich_bet_analysis(bout: dict) -> None:

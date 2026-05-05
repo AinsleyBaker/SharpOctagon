@@ -191,10 +191,9 @@
     font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
   }
   .rounds-pill {
-    display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 3px;
-    background: rgba(0, 255, 153, 0.10); color: var(--matrix);
-    border: 1px solid rgba(0, 255, 153, 0.28);
-    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em;
+    display: inline-block; margin-left: 6px;
+    color: var(--muted);
+    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em;
     vertical-align: middle;
   }
   .result-text {
@@ -421,17 +420,21 @@
     color: #000; font-size: var(--xs); font-weight: 800;
     padding: 2px 7px; border-radius: 4px; text-transform: uppercase;
   }
-  /* Floats in the top-left corner of the fight row so it doesn't sit in the
-     flex flow and squeeze the central prediction column. */
-  .value-badge-main {
-    position: absolute;
-    top: 6px; left: 8px;
-    background: linear-gradient(135deg, var(--matrix), var(--matrix-dim));
-    color: #000; font-size: 0.58rem; font-weight: 800;
-    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
-    box-shadow: 0 0 8px rgba(0,255,136,0.35);
-    letter-spacing: 0.04em; text-transform: uppercase;
-    z-index: 2;
+  /* Banner above the prediction stats inside the expanded details — calls
+     out how many SportsBet value bets the bet table below contains. */
+  .value-bets-banner {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: linear-gradient(90deg, rgba(0,255,136,0.10), rgba(0,255,136,0));
+    border-left: 3px solid var(--matrix);
+    padding: 0.45rem 0.75rem; margin-bottom: 0.75rem;
+    border-radius: 4px;
+  }
+  .value-bets-banner .vbb-count {
+    color: var(--matrix); font-weight: 800; font-size: 0.95rem;
+  }
+  .value-bets-banner .vbb-label {
+    color: var(--light); font-weight: 600; font-size: var(--sm);
+    letter-spacing: 0.02em;
   }
   /* Per-fighter sportsbet odds — sits under the meta row so a missing
      odds value on one fight doesn't shift the rest of the row layout. */
@@ -743,6 +746,9 @@
     border-bottom: 1px solid var(--border);
   }
   .top-table { width: 100%; border-collapse: collapse; font-size: var(--sm); }
+  /* Bare variant — used by the All Bets view, no card chrome / box */
+  .top-table--bare { background: transparent; border: 0; }
+  .top-table--bare td { border-bottom: 1px solid rgba(255,255,255,0.05); }
   .top-table th {
     background: var(--mid); color: var(--muted); text-transform: uppercase;
     font-size: 0.6rem; letter-spacing: 0.07em; padding: 0.5rem 0.8rem; text-align: left;
@@ -757,6 +763,54 @@
     border-top: 1px solid var(--border); margin-top: 2rem;
   }
   .hidden { display: none !important; }
+
+  /* Past-events bet grading — flat layout, no card chrome (per spec).
+     Header sits above the table; toggle swaps between top picks + all. */
+  .past-bets { font-size: var(--sm); }
+  .past-bets-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 0.5rem; flex-wrap: wrap;
+    color: var(--light); font-weight: 700;
+    font-size: var(--sm); letter-spacing: 0.02em;
+  }
+  .past-bets-tally {
+    color: var(--matrix); font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .past-bets-toggle { display: inline-flex; gap: 0.3rem; margin-left: auto; }
+  .past-bets-toggle button {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 0.25rem 0.7rem; font-size: var(--xs); font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .past-bets-toggle button:hover { color: var(--light); }
+  .past-bets-toggle button.active {
+    background: var(--matrix-dim); color: #000; border-color: var(--matrix);
+  }
+  .past-bets-table {
+    width: 100%; border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .past-bets-table th {
+    text-align: left; padding: 0.4rem 0.6rem;
+    color: var(--muted); font-weight: 600; font-size: var(--xs);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+  }
+  .past-bets-table td {
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .past-bets-table tr:last-child td { border-bottom: none; }
+  .past-bets-value-tag {
+    display: inline-block; margin-left: 0.4rem;
+    padding: 1px 6px; border-radius: 3px;
+    background: rgba(0,255,136,0.10); color: var(--matrix);
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    vertical-align: middle;
+  }
 </style>
 </head>
 <body>
@@ -995,7 +1049,6 @@
 
           </div>
 
-          {% if bout.value_bet_count %}<span class="value-badge-main">{{ bout.value_bet_count }} value bets</span>{% endif %}
           <div class="fight-right">
             <span class="expand-icon" id="icon-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">▼</span>
           </div>
@@ -1005,6 +1058,12 @@
         <!-- Details -->
         <div class="fight-details" id="details-{{ ev_idx }}-{{ loop.index }}-{{ loop.index0 }}">
           <div class="details-inner">
+            {% if bout.value_bet_count and not bout.is_preview %}
+            <div class="value-bets-banner">
+              <span class="vbb-count">{{ bout.value_bet_count }}</span>
+              <span class="vbb-label">value {{ 'bet' if bout.value_bet_count == 1 else 'bets' }} on SportsBet</span>
+            </div>
+            {% endif %}
             {% if bout.is_preview %}
             {% if bout.has_stats %}
             <div class="preview-notice" style="margin-bottom:0.75rem">
@@ -1244,16 +1303,6 @@
                 title="Top picks only — fewer, larger stakes. Best for small bankrolls.">
           Top picks
         </button>
-        <button type="button" data-strategy="kelly"
-                onclick="setTopStrategy(this, 'kelly')"
-                title="Spread your bankroll across every qualifying bet, with bigger stakes where the model has more edge.">
-          Spread bets
-        </button>
-        <button type="button" data-strategy="flat"
-                onclick="setTopStrategy(this, 'flat')"
-                title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-          Equal stake
-        </button>
         <button type="button" data-strategy="all"
                 onclick="setTopStrategy(this, 'all')"
                 title="Show every value bet sorted by EV — no portfolio caps applied.">
@@ -1298,7 +1347,7 @@
       <button type="button" class="type-pill" data-type="total_rounds" onclick="filterBetsByType('total_rounds', this)">Total Rounds</button>
     </div>
 
-    <!-- Portfolio mode (Spread / Equal stake / Top picks) — driven by JS from PORTFOLIOS_BY_EVENT -->
+    <!-- Portfolio mode (Top picks) — driven by JS from PORTFOLIOS_BY_EVENT -->
     <div id="top-portfolio-wrap">
       <div id="portfolio-summary" class="bp-summary" style="margin-bottom:1rem"></div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
@@ -1325,48 +1374,41 @@
       </p>
     </div>
 
-    <!-- All Value Bets mode — original table, hidden by default -->
+    <!-- All Value Bets mode — flat table, hidden by default -->
     <div id="top-all-wrap" style="display:none">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
-        <table class="top-table">
-          <thead>
-            <tr>
-              <th>Fight</th>
-              <th>Event</th>
-              <th>Bet</th>
-              <th>Model %</th>
-              <th>SB Odds</th>
-              <th>Win Payout / $100</th>
-              <th>Expected Profit / $100</th>
-              <th>Suggested Stake</th>
-            </tr>
-          </thead>
-          <tbody id="top-bets-tbody">
-            {% for bet in top_bets %}
-            {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
-            <tr data-event="{{ bet.event|escape }}" data-type="{{ bet.bet_type }}"
-                class="bet-row" onclick="jumpToFight('{{ bet.fight|escape }}', '{{ bet.event|escape }}')"
-                style="cursor:pointer">
-              <td style="color:var(--muted);font-size:var(--xs)">↗ {{ bet.fight }}</td>
-              <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
-              <td style="font-weight:600">{{ bet.description }}</td>
-              <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
-              <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
-              <td style="color:#aaa">+${{ ((bet.sb_odds - 1) * 100)|round(0)|int }}</td>
-              <td style="color:{{ 'var(--matrix)' if ep > 0 else '#888' }};font-weight:700">
-                {{ '+' if ep > 0 else '' }}${{ ep }}
-              </td>
-              <td style="color:var(--blue)">
-                {% if bet.kelly_pct > 0 %}{{ "%.1f"|format(bet.kelly_pct) }}% of bank{% else %}&lt;1%{% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+      <table class="top-table top-table--bare">
+        <thead>
+          <tr>
+            <th>Fight</th>
+            <th>Event</th>
+            <th>Bet</th>
+            <th>Model %</th>
+            <th>SB Odds</th>
+            <th>Win Payout / $100</th>
+            <th>Expected Profit / $100</th>
+          </tr>
+        </thead>
+        <tbody id="top-bets-tbody">
+          {% for bet in top_bets %}
+          {% set ep = ((bet.our_prob * bet.sb_odds - 1) * 100)|round(0)|int %}
+          <tr data-event="{{ bet.event|escape }}" data-type="{{ bet.bet_type }}"
+              class="bet-row" onclick="jumpToFight('{{ bet.fight|escape }}', '{{ bet.event|escape }}')"
+              style="cursor:pointer">
+            <td style="color:var(--muted);font-size:var(--xs)">↗ {{ bet.fight }}</td>
+            <td style="color:var(--purple);font-size:var(--xs);font-weight:600">{{ bet.event }}</td>
+            <td style="font-weight:600">{{ bet.description }}</td>
+            <td style="color:var(--muted)">{{ (bet.our_prob * 100)|round(0)|int }}%</td>
+            <td style="font-weight:700;color:var(--gold)">{{ "%.2f"|format(bet.sb_odds) }}</td>
+            <td style="color:#aaa">+${{ ((bet.sb_odds - 1) * 100)|round(0)|int }}</td>
+            <td style="color:{{ 'var(--matrix)' if ep > 0 else '#888' }};font-weight:700">
+              {{ '+' if ep > 0 else '' }}${{ ep }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#444;padding:0 0.2rem">
-        Every bet where our model's probability exceeds the bookmaker's implied probability by ≥ 3%.
-        Suggested Stake is sized by each bet's edge — the Spread bets view applies portfolio caps on top.
+        Every bet where our model's probability exceeds the bookmaker's implied probability by ≥ 3%, sorted by EV.
       </p>
     </div>
 
@@ -1634,6 +1676,77 @@
               </table>
             </div>
             {% endif %}
+
+            {# SportsBet bets we identified, graded against the actual result.
+               "Top picks" = the 5 highest-EV value bets; "All bets" = every
+               analysed bet sorted by EV. No stake column, no card chrome —
+               this is a retrospective scorecard, not a wager planner. #}
+            {% if bout.graded_top_bets %}
+            {% set bid = ev_idx ~ '-' ~ loop.index %}
+            <div class="past-bets" style="margin-top:0.75rem">
+              <div class="past-bets-header">
+                <span>SportsBet bets &mdash; how the model did</span>
+                <span class="past-bets-tally">{{ bout.graded_top_won }}/{{ bout.graded_top_total }} value bets cashed</span>
+                <div class="past-bets-toggle">
+                  <button type="button" class="active" data-mode="top"
+                          onclick="setPastBetMode('{{ bid }}', 'top', this)">
+                    Top picks
+                  </button>
+                  <button type="button" data-mode="all"
+                          onclick="setPastBetMode('{{ bid }}', 'all', this)">
+                    All bets
+                  </button>
+                </div>
+              </div>
+              <table class="past-bets-table" id="past-bets-top-{{ bid }}">
+                <thead>
+                  <tr>
+                    <th>Outcome</th>
+                    <th>Model said</th>
+                    <th>Odds</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for g in bout.graded_top_bets %}
+                  <tr>
+                    <td>{{ g.description }}</td>
+                    <td>{{ (g.our_prob * 100)|round(0)|int }}%</td>
+                    <td style="color:var(--gold)">{{ "%.2f"|format(g.sb_odds) }}</td>
+                    <td style="color:{{ 'var(--matrix)' if g.result == 'won' else 'var(--red)' if g.result == 'lost' else 'var(--muted)' }}">
+                      {% if g.result == 'won' %}✓ won{% elif g.result == 'lost' %}✗ lost{% else %}—{% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <table class="past-bets-table hidden" id="past-bets-all-{{ bid }}">
+                <thead>
+                  <tr>
+                    <th>Outcome</th>
+                    <th>Model said</th>
+                    <th>Odds</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for g in bout.graded_all_bets %}
+                  <tr>
+                    <td>
+                      {{ g.description }}
+                      {% if g.is_value %}<span class="past-bets-value-tag">value</span>{% endif %}
+                    </td>
+                    <td>{{ (g.our_prob * 100)|round(0)|int }}%</td>
+                    <td style="color:var(--gold)">{{ "%.2f"|format(g.sb_odds) }}</td>
+                    <td style="color:{{ 'var(--matrix)' if g.result == 'won' else 'var(--red)' if g.result == 'lost' else 'var(--muted)' }}">
+                      {% if g.result == 'won' %}✓ won{% elif g.result == 'lost' %}✗ lost{% else %}—{% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -1661,6 +1774,16 @@ function toggleDetails(id) {
   // Add 'expanded' class to the parent fight-block so avatars resize
   const block = d.closest('.fight-block');
   if (block) block.classList.toggle('expanded', open);
+}
+function setPastBetMode(bid, mode, btn) {
+  const wrap = btn.closest('.past-bets');
+  if (!wrap) return;
+  wrap.querySelectorAll('.past-bets-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const top = document.getElementById('past-bets-top-' + bid);
+  const all = document.getElementById('past-bets-all-' + bid);
+  if (top) top.classList.toggle('hidden', mode !== 'top');
+  if (all) all.classList.toggle('hidden', mode !== 'all');
 }
 function showTab(tab, el) {
   document.getElementById('fights-panel').classList.toggle('hidden', tab !== 'fights');

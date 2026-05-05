@@ -850,91 +850,6 @@
         <span class="date">{{ event.event_date }}</span>
       </div>
 
-      {# Bankroll Plan card — render only when at least one strategy yields bets #}
-      {% if (event.portfolio_kelly and event.portfolio_kelly.bets) or (event.portfolio_flat and event.portfolio_flat.bets) or (event.portfolio_concentrated and event.portfolio_concentrated.bets) %}
-      <div class="bankroll-plan">
-        <div class="bp-title-row">
-          <span class="bp-title">⟁ Bankroll Plan</span>
-          <div class="bankroll-input-wrap">
-            <label>Bankroll</label>
-            <span class="dollar">$</span>
-            <input class="bankroll-input" type="number" min="1" step="1" value="100"
-                   oninput="setBankroll(this.value)">
-          </div>
-          <div class="bp-strategy-toggle">
-            <button type="button" class="active" data-strategy="concentrated"
-                    onclick="setEventStrategy(this, 'concentrated')"
-                    title="Top picks only — fewer, larger stakes. Best for small bankrolls where 30 tiny bets aren't practical.">
-              Top picks
-            </button>
-            <button type="button" data-strategy="kelly"
-                    onclick="setEventStrategy(this, 'kelly')"
-                    title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
-              Kelly · all bets
-            </button>
-            <button type="button" data-strategy="flat"
-                    onclick="setEventStrategy(this, 'flat')"
-                    title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-              Flat · low variance
-            </button>
-          </div>
-        </div>
-
-        {% for strat_name, strat in [('concentrated', event.portfolio_concentrated), ('kelly', event.portfolio_kelly), ('flat', event.portfolio_flat)] %}
-        <div class="bp-strategy-block" data-strategy="{{ strat_name }}"{% if strat_name != 'concentrated' %} style="display:none"{% endif %}>
-          {% if strat and strat.bets %}
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="{{ strat.summary.total_stake_pct }}">${{ strat.summary.total_stake_pct|round|int }}</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="{{ strat.summary.expected_pnl_pct }}">${{ strat.summary.expected_pnl_pct|round|int }}</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="{{ strat.summary.best_case_pct }}">${{ strat.summary.best_case_pct|round|int }}</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="{{ strat.summary.worst_case_pct }}">-${{ (strat.summary.worst_case_pct|abs)|round|int }}</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for bet in strat.bets %}
-                <tr>
-                  <td class="stake" data-pct="{{ bet.stake_pct }}">${{ bet.stake_pct|round|int }}</td>
-                  <td>{{ bet.description }}</td>
-                  <td class="fight">{{ bet.fight }}</td>
-                  <td class="odds">{{ "%.2f"|format(bet.sb_odds) }}</td>
-                  <td class="bet-prob">{{ (bet.our_prob * 100)|round|int }}%</td>
-                  <td class="profit" data-pct="{{ (bet.stake_pct * bet.payout_mult)|round(2) }}">+${{ (bet.stake_pct * bet.payout_mult)|round|int }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          {% else %}
-          <div class="bp-empty">No bets pass the bankroll caps for this strategy.</div>
-          {% endif %}
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-
       {% for bout in event.bouts %}
       <div class="fight-block">
 
@@ -1195,7 +1110,7 @@
                     <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
                     <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
                     <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
-                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
+                    <th><span data-tt="Recommended fraction of your bankroll to wager on this bet. Sized by edge and capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1217,7 +1132,7 @@
                 <strong>Win Payout</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
                 <strong>Expected Profit</strong> = the long-run average profit per $100 staked, weighted by our model's probability —
                 this is the number that actually matters &nbsp;·&nbsp;
-                <strong>Suggested Stake</strong> = quarter-Kelly bankroll fraction. Start small.
+                <strong>Suggested Stake</strong> = recommended fraction of your bankroll, sized by edge. Start small.
               </div>
             </div>
             {% elif bout.has_props %}
@@ -1248,7 +1163,7 @@
       <div class="bankroll-input-wrap">
         <label for="global-bankroll-input">Bankroll</label>
         <span class="dollar">$</span>
-        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="100"
+        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="1000"
                oninput="setBankroll(this.value)">
       </div>
       <div class="bp-strategy-toggle" id="top-strategy-toggle">
@@ -1259,13 +1174,13 @@
         </button>
         <button type="button" data-strategy="kelly"
                 onclick="setTopStrategy(this, 'kelly')"
-                title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
-          Kelly · all bets
+                title="Spread your bankroll across every qualifying bet, with bigger stakes where the model has more edge.">
+          Spread bets
         </button>
         <button type="button" data-strategy="flat"
                 onclick="setTopStrategy(this, 'flat')"
                 title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-          Flat · low variance
+          Equal stake
         </button>
         <button type="button" data-strategy="all"
                 onclick="setTopStrategy(this, 'all')"
@@ -1311,7 +1226,7 @@
       <button type="button" class="type-pill" data-type="total_rounds" onclick="filterBetsByType('total_rounds', this)">Total Rounds</button>
     </div>
 
-    <!-- Portfolio mode (Kelly / Flat) — driven by JS from PORTFOLIOS_BY_EVENT -->
+    <!-- Portfolio mode (Spread / Equal stake / Top picks) — driven by JS from PORTFOLIOS_BY_EVENT -->
     <div id="top-portfolio-wrap">
       <div id="portfolio-summary" class="bp-summary" style="margin-bottom:1rem"></div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
@@ -1331,9 +1246,10 @@
         </table>
       </div>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#666;padding:0 0.2rem">
-        Caps: max 5% of bankroll per bet, 15% per fight (handles correlated legs), 50% across the whole plan.
-        <strong>Best case</strong> = the single luckiest outcome per fight (KO and Submission for the same fighter
-        can't both hit, so they don't both pay). <strong>Worst case</strong> = every bet loses.
+        Caps: max 5% of bankroll per bet, max 5 bets per fight, 15% per fight total, 50% across the whole plan.
+        Bets that can't all win in the same outcome (e.g. "KO round 1" + "fight goes to decision") are filtered.
+        <strong>Best case</strong> = the single luckiest outcome per fight.
+        <strong>Worst case</strong> = every bet loses.
       </p>
     </div>
 
@@ -1378,7 +1294,7 @@
       </div>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#444;padding:0 0.2rem">
         Every bet where our model's probability exceeds the bookmaker's implied probability by ≥ 3%.
-        Suggested Stake is per-bet quarter-Kelly — the Kelly tab applies portfolio caps on top.
+        Suggested Stake is sized by each bet's edge — the Spread bets view applies portfolio caps on top.
       </p>
     </div>
 
@@ -1716,7 +1632,7 @@ function _escapeHtml(s) {
 }
 function getBankroll() {
   const v = parseFloat(localStorage.getItem('apex_bankroll'));
-  return (Number.isFinite(v) && v > 0) ? v : 100;
+  return (Number.isFinite(v) && v > 0) ? v : 1000;
 }
 function setBankroll(value) {
   const num = parseFloat(value);
@@ -1745,15 +1661,6 @@ function applyBankroll() {
   // so changing one updates the others without each maintaining its own state.
   document.querySelectorAll('input.bankroll-input').forEach(inp => {
     if (parseFloat(inp.value) !== bk) inp.value = Math.round(bk);
-  });
-}
-function setEventStrategy(btn, strategy) {
-  const card = btn.closest('.bankroll-plan');
-  if (!card) return;
-  card.querySelectorAll('.bp-strategy-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  card.querySelectorAll('.bp-strategy-block').forEach(blk => {
-    blk.style.display = (blk.dataset.strategy === strategy) ? '' : 'none';
   });
 }
 function setTopStrategy(btn, strategy) {

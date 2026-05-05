@@ -764,7 +764,7 @@
     
   </div>
 
-  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-05-05 05:48 UTC</div>
+  <div class="meta" style="margin-left:1.5rem">Updated<br>2026-05-05 06:08 UTC</div>
 </header>
 
 <nav>
@@ -961,529 +961,6 @@
         </h2>
         <span class="date">2026-05-09</span>
       </div>
-
-      
-      
-      <div class="bankroll-plan">
-        <div class="bp-title-row">
-          <span class="bp-title">⟁ Bankroll Plan</span>
-          <div class="bankroll-input-wrap">
-            <label>Bankroll</label>
-            <span class="dollar">$</span>
-            <input class="bankroll-input" type="number" min="1" step="1" value="100"
-                   oninput="setBankroll(this.value)">
-          </div>
-          <div class="bp-strategy-toggle">
-            <button type="button" class="active" data-strategy="concentrated"
-                    onclick="setEventStrategy(this, 'concentrated')"
-                    title="Top picks only — fewer, larger stakes. Best for small bankrolls where 30 tiny bets aren't practical.">
-              Top picks
-            </button>
-            <button type="button" data-strategy="kelly"
-                    onclick="setEventStrategy(this, 'kelly')"
-                    title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
-              Kelly · all bets
-            </button>
-            <button type="button" data-strategy="flat"
-                    onclick="setEventStrategy(this, 'flat')"
-                    title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-              Flat · low variance
-            </button>
-          </div>
-        </div>
-
-        
-        <div class="bp-strategy-block" data-strategy="concentrated">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="27.0">$27</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="13.78">$14</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="56.3">$56</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-27.0">-$27</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="5.0">$5</td>
-                  <td>Khamzat Chimaev wins by finish in Round 1</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.00</td>
-                  <td class="bet-prob">42%</td>
-                  <td class="profit" data-pct="15.0">+$15</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="3.8">$4</td>
-                  <td>Finish before Round 4</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.04</td>
-                  <td class="bet-prob">60%</td>
-                  <td class="profit" data-pct="3.95">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="3.53">$4</td>
-                  <td>Finish before Round 3</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.69</td>
-                  <td class="bet-prob">49%</td>
-                  <td class="profit" data-pct="5.97">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="3.49">$3</td>
-                  <td>Khamzat Chimaev wins by KO or Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.40</td>
-                  <td class="bet-prob">50%</td>
-                  <td class="profit" data-pct="4.89">+$5</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="3.47">$3</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.70</td>
-                  <td class="bet-prob">46%</td>
-                  <td class="profit" data-pct="5.9">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.98">$3</td>
-                  <td>Joshua Van wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">9.75</td>
-                  <td class="bet-prob">24%</td>
-                  <td class="profit" data-pct="26.07">+$26</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.7">$3</td>
-                  <td>Tatsuro Taira wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">6.50</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="14.85">+$15</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.99">$2</td>
-                  <td>Fight ends by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">4.30</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="6.57">+$7</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-        <div class="bp-strategy-block" data-strategy="kelly" style="display:none">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="26.8">$27</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="14.28">$14</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="63.5">$64</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-26.8">-$27</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="3.53">$4</td>
-                  <td>Khamzat Chimaev wins by finish in Round 1</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.00</td>
-                  <td class="bet-prob">42%</td>
-                  <td class="profit" data-pct="10.59">+$11</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.51">$3</td>
-                  <td>Finish before Round 4</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.04</td>
-                  <td class="bet-prob">60%</td>
-                  <td class="profit" data-pct="2.61">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.46">$2</td>
-                  <td>Khamzat Chimaev wins by KO or Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.40</td>
-                  <td class="bet-prob">50%</td>
-                  <td class="profit" data-pct="3.44">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.45">$2</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.70</td>
-                  <td class="bet-prob">46%</td>
-                  <td class="profit" data-pct="4.17">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.33">$2</td>
-                  <td>Finish before Round 3</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.69</td>
-                  <td class="bet-prob">49%</td>
-                  <td class="profit" data-pct="3.94">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.97">$2</td>
-                  <td>Joshua Van wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">9.75</td>
-                  <td class="bet-prob">24%</td>
-                  <td class="profit" data-pct="17.24">+$17</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.78">$2</td>
-                  <td>Tatsuro Taira wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">6.50</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="9.79">+$10</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.72">$2</td>
-                  <td>Khamzat Chimaev wins by finish in Round 2</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">5.00</td>
-                  <td class="bet-prob">28%</td>
-                  <td class="profit" data-pct="6.88">+$7</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.57">$2</td>
-                  <td>Khamzat Chimaev wins by DEC</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.20</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="5.02">+$5</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.57">$2</td>
-                  <td>Khamzat Chimaev wins by Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.20</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="5.02">+$5</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.31">$1</td>
-                  <td>Fight ends by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">4.30</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="4.32">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.27">$1</td>
-                  <td>Finish before Round 2</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">4.25</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="4.13">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.21">$1</td>
-                  <td>Joshua Van wins by KO or Decision</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.60</td>
-                  <td class="bet-prob">44%</td>
-                  <td class="profit" data-pct="1.94">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.11">$1</td>
-                  <td>Sean Strickland wins by finish in Round 1</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">41.00</td>
-                  <td class="bet-prob">9%</td>
-                  <td class="profit" data-pct="44.4">+$44</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-        <div class="bp-strategy-block" data-strategy="flat" style="display:none">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="30.0">$30</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="18.43">$18</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="86.0">$86</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-30.0">-$30</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Sean Strickland wins by finish in Round 1</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">41.00</td>
-                  <td class="bet-prob">9%</td>
-                  <td class="profit" data-pct="75.2">+$75</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Sean Strickland wins by finish in Round 2</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">41.00</td>
-                  <td class="bet-prob">6%</td>
-                  <td class="profit" data-pct="75.2">+$75</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Khamzat Chimaev wins by finish in Round 1</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.00</td>
-                  <td class="bet-prob">42%</td>
-                  <td class="profit" data-pct="5.64">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Khamzat Chimaev wins by finish in Round 2</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">5.00</td>
-                  <td class="bet-prob">28%</td>
-                  <td class="profit" data-pct="7.52">+$8</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Khamzat Chimaev wins by DEC</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.20</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="6.02">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Khamzat Chimaev wins by Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">4.20</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="6.02">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.70</td>
-                  <td class="bet-prob">46%</td>
-                  <td class="profit" data-pct="3.2">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.88">$2</td>
-                  <td>Khamzat Chimaev wins by KO or Decision</td>
-                  <td class="fight">Sean Strickland vs Khamzat Chimaev</td>
-                  <td class="odds">2.40</td>
-                  <td class="bet-prob">50%</td>
-                  <td class="profit" data-pct="2.63">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Joshua Van wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">9.75</td>
-                  <td class="bet-prob">24%</td>
-                  <td class="profit" data-pct="11.9">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Tatsuro Taira wins by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">6.50</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="7.48">+$7</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Joshua Van wins by finish in Round 2</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">13.00</td>
-                  <td class="bet-prob">14%</td>
-                  <td class="profit" data-pct="16.32">+$16</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Joshua Van wins by finish in Round 3</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">17.00</td>
-                  <td class="bet-prob">9%</td>
-                  <td class="profit" data-pct="21.76">+$22</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Tatsuro Taira wins by finish in Round 2</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">9.25</td>
-                  <td class="bet-prob">15%</td>
-                  <td class="profit" data-pct="11.22">+$11</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Fight ends by finish in Round 1</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">4.30</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="4.49">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Finish before Round 2</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">4.25</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="4.42">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Finish before Round 3</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.69</td>
-                  <td class="bet-prob">49%</td>
-                  <td class="profit" data-pct="2.3">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Finish before Round 4</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.04</td>
-                  <td class="bet-prob">60%</td>
-                  <td class="profit" data-pct="1.41">+$1</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Joshua Van wins by KO or Decision</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">2.60</td>
-                  <td class="bet-prob">44%</td>
-                  <td class="profit" data-pct="2.18">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Fight ends by KO/TKO</td>
-                  <td class="fight">Tatsuro Taira vs Joshua Van</td>
-                  <td class="odds">3.00</td>
-                  <td class="bet-prob">37%</td>
-                  <td class="profit" data-pct="2.72">+$3</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-      </div>
-      
 
       
       <div class="fight-block">
@@ -4224,7 +3701,7 @@
                     <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
                     <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
                     <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
-                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
+                    <th><span data-tt="Recommended fraction of your bankroll to wager on this bet. Sized by edge and capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4327,7 +3804,7 @@
                 <strong>Win Payout</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
                 <strong>Expected Profit</strong> = the long-run average profit per $100 staked, weighted by our model's probability —
                 this is the number that actually matters &nbsp;·&nbsp;
-                <strong>Suggested Stake</strong> = quarter-Kelly bankroll fraction. Start small.
+                <strong>Suggested Stake</strong> = recommended fraction of your bankroll, sized by edge. Start small.
               </div>
             </div>
             
@@ -4568,7 +4045,7 @@
                     <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
                     <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
                     <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
-                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
+                    <th><span data-tt="Recommended fraction of your bankroll to wager on this bet. Sized by edge and capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4653,7 +4130,7 @@
                 <strong>Win Payout</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
                 <strong>Expected Profit</strong> = the long-run average profit per $100 staked, weighted by our model's probability —
                 this is the number that actually matters &nbsp;·&nbsp;
-                <strong>Suggested Stake</strong> = quarter-Kelly bankroll fraction. Start small.
+                <strong>Suggested Stake</strong> = recommended fraction of your bankroll, sized by edge. Start small.
               </div>
             </div>
             
@@ -4678,9 +4155,6 @@
         </h2>
         <span class="date">2026-05-16</span>
       </div>
-
-      
-      
 
       
       <div class="fight-block">
@@ -7617,9 +7091,6 @@
         </h2>
         <span class="date">2026-05-30</span>
       </div>
-
-      
-      
 
       
       <div class="fight-block">
@@ -10779,9 +10250,6 @@
       </div>
 
       
-      
-
-      
       <div class="fight-block">
 
         <!-- Main row -->
@@ -13489,493 +12957,6 @@
       </div>
 
       
-      
-      <div class="bankroll-plan">
-        <div class="bp-title-row">
-          <span class="bp-title">⟁ Bankroll Plan</span>
-          <div class="bankroll-input-wrap">
-            <label>Bankroll</label>
-            <span class="dollar">$</span>
-            <input class="bankroll-input" type="number" min="1" step="1" value="100"
-                   oninput="setBankroll(this.value)">
-          </div>
-          <div class="bp-strategy-toggle">
-            <button type="button" class="active" data-strategy="concentrated"
-                    onclick="setEventStrategy(this, 'concentrated')"
-                    title="Top picks only — fewer, larger stakes. Best for small bankrolls where 30 tiny bets aren't practical.">
-              Top picks
-            </button>
-            <button type="button" data-strategy="kelly"
-                    onclick="setEventStrategy(this, 'kelly')"
-                    title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
-              Kelly · all bets
-            </button>
-            <button type="button" data-strategy="flat"
-                    onclick="setEventStrategy(this, 'flat')"
-                    title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-              Flat · low variance
-            </button>
-          </div>
-        </div>
-
-        
-        <div class="bp-strategy-block" data-strategy="concentrated">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="20.0">$20</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="27.05">$27</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="75.7">$76</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-20.0">-$20</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="5.0">$5</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">2.95</td>
-                  <td class="bet-prob">52%</td>
-                  <td class="profit" data-pct="9.75">+$10</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Ilia Topuria wins by DEC</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">13.00</td>
-                  <td class="bet-prob">32%</td>
-                  <td class="profit" data-pct="25.68">+$26</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">7.25</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="13.38">+$13</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight goes to decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">6.50</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="11.77">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight reaches Round 5</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">4.60</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="7.7">+$8</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight reaches Round 4</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">3.07</td>
-                  <td class="bet-prob">56%</td>
-                  <td class="profit" data-pct="4.43">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight reaches Round 3</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">2.03</td>
-                  <td class="bet-prob">65%</td>
-                  <td class="profit" data-pct="2.2">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.14">$2</td>
-                  <td>Fight reaches Round 2</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">1.37</td>
-                  <td class="bet-prob">79%</td>
-                  <td class="profit" data-pct="0.79">+$1</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-        <div class="bp-strategy-block" data-strategy="kelly" style="display:none">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="24.1">$24</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="27.75">$28</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="71.2">$71</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-24.1">-$24</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="2.1">$2</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">2.95</td>
-                  <td class="bet-prob">52%</td>
-                  <td class="profit" data-pct="4.1">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="2.1">$2</td>
-                  <td>Fight reaches Round 5</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">2.53</td>
-                  <td class="bet-prob">52%</td>
-                  <td class="profit" data-pct="3.21">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.89">$2</td>
-                  <td>Ciryl Gane wins by finish in Round 1</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.75</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="14.65">+$15</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.86">$2</td>
-                  <td>Alex Pereira wins by Sub or Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">6.25</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="9.77">+$10</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.7">$2</td>
-                  <td>Alex Pereira wins by DEC</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.00</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="11.9">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.7">$2</td>
-                  <td>Alex Pereira wins by Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.00</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="11.9">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.33">$1</td>
-                  <td>Ciryl Gane wins by finish in Round 2</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">9.75</td>
-                  <td class="bet-prob">22%</td>
-                  <td class="profit" data-pct="11.64">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Ilia Topuria wins by DEC</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">13.00</td>
-                  <td class="bet-prob">32%</td>
-                  <td class="profit" data-pct="12.48">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">7.25</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="6.5">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight goes to decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">6.50</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="5.72">+$6</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight reaches Round 5</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">4.60</td>
-                  <td class="bet-prob">55%</td>
-                  <td class="profit" data-pct="3.74">+$4</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Justin Gaethje wins by KO or Decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">6.00</td>
-                  <td class="bet-prob">35%</td>
-                  <td class="profit" data-pct="5.2">+$5</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight reaches Round 4</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">3.07</td>
-                  <td class="bet-prob">56%</td>
-                  <td class="profit" data-pct="2.15">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Ilia Topuria wins by Sub or Decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">4.20</td>
-                  <td class="bet-prob">40%</td>
-                  <td class="profit" data-pct="3.33">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight reaches Round 3</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">2.03</td>
-                  <td class="bet-prob">65%</td>
-                  <td class="profit" data-pct="1.07">+$1</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.04">$1</td>
-                  <td>Fight reaches Round 2</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">1.37</td>
-                  <td class="bet-prob">79%</td>
-                  <td class="profit" data-pct="0.38">+$0</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.03">$1</td>
-                  <td>Justin Gaethje wins by Sub or Decision</td>
-                  <td class="fight">Justin Gaethje vs Ilia Topuria</td>
-                  <td class="odds">12.50</td>
-                  <td class="bet-prob">26%</td>
-                  <td class="profit" data-pct="11.85">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.02">$1</td>
-                  <td>Ciryl Gane wins by Sub or Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">3.35</td>
-                  <td class="bet-prob">37%</td>
-                  <td class="profit" data-pct="2.4">+$2</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-        <div class="bp-strategy-block" data-strategy="flat" style="display:none">
-          
-          <div class="bp-summary">
-            <div>
-              <div class="label">Total stake</div>
-              <div class="val gold" data-pct="15.0">$15</div>
-            </div>
-            <div>
-              <div class="label">Expected profit</div>
-              <div class="val pos" data-pct="9.91">$10</div>
-            </div>
-            <div>
-              <div class="label">Best case (luckiest)</div>
-              <div class="val pos" data-pct="22.8">$23</div>
-            </div>
-            <div>
-              <div class="label">Worst case</div>
-              <div class="val neg" data-pct="-15.0">-$15</div>
-            </div>
-          </div>
-          <div class="bp-list">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px">Stake</th>
-                  <th>Bet</th>
-                  <th>Fight</th>
-                  <th style="width:60px">Odds</th>
-                  <th style="width:60px">Model</th>
-                  <th style="width:90px">If wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Ciryl Gane wins by finish in Round 1</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.75</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="10.54">+$11</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Alex Pereira wins by DEC</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.00</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="9.52">+$10</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Alex Pereira wins by Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">8.00</td>
-                  <td class="bet-prob">27%</td>
-                  <td class="profit" data-pct="9.52">+$10</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Ciryl Gane wins by finish in Round 2</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">9.75</td>
-                  <td class="bet-prob">22%</td>
-                  <td class="profit" data-pct="11.9">+$12</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Alex Pereira wins by Sub or Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">6.25</td>
-                  <td class="bet-prob">31%</td>
-                  <td class="profit" data-pct="7.14">+$7</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Fight goes to Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">2.95</td>
-                  <td class="bet-prob">52%</td>
-                  <td class="profit" data-pct="2.65">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Fight reaches Round 5</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">2.53</td>
-                  <td class="bet-prob">52%</td>
-                  <td class="profit" data-pct="2.08">+$2</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Ciryl Gane wins by Sub or Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">3.35</td>
-                  <td class="bet-prob">37%</td>
-                  <td class="profit" data-pct="3.2">+$3</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Alex Pereira wins by finish in Round 1</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">6.25</td>
-                  <td class="bet-prob">20%</td>
-                  <td class="profit" data-pct="7.14">+$7</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Ciryl Gane wins by DEC</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">4.50</td>
-                  <td class="bet-prob">25%</td>
-                  <td class="profit" data-pct="4.76">+$5</td>
-                </tr>
-                
-                <tr>
-                  <td class="stake" data-pct="1.36">$1</td>
-                  <td>Ciryl Gane wins by Decision</td>
-                  <td class="fight">Ciryl Gane vs Alex Pereira</td>
-                  <td class="odds">4.50</td>
-                  <td class="bet-prob">25%</td>
-                  <td class="profit" data-pct="4.76">+$5</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-          
-        </div>
-        
-      </div>
-      
-
-      
       <div class="fight-block">
 
         <!-- Main row -->
@@ -15351,7 +14332,7 @@
                     <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
                     <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
                     <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
-                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
+                    <th><span data-tt="Recommended fraction of your bankroll to wager on this bet. Sized by edge and capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -15454,7 +14435,7 @@
                 <strong>Win Payout</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
                 <strong>Expected Profit</strong> = the long-run average profit per $100 staked, weighted by our model's probability —
                 this is the number that actually matters &nbsp;·&nbsp;
-                <strong>Suggested Stake</strong> = quarter-Kelly bankroll fraction. Start small.
+                <strong>Suggested Stake</strong> = recommended fraction of your bankroll, sized by edge. Start small.
               </div>
             </div>
             
@@ -15700,7 +14681,7 @@
                     <th><span data-tt="SportsBet's decimal odds. e.g. 3.50 means a $100 bet returns $350 in total if it wins.">SB Odds</span></th>
                     <th><span data-tt="The net profit you'd get on a winning $100 bet (odds minus 1, times stake).">Win Payout / $100</span></th>
                     <th><span data-tt="The long-run average profit per bet at this edge — what you'd expect to make over many similar bets. This is the value-betting number that matters.">Expected Profit / $100</span></th>
-                    <th><span data-tt="Quarter-Kelly: the recommended fraction of your total bankroll to wager. Capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
+                    <th><span data-tt="Recommended fraction of your bankroll to wager on this bet. Sized by edge and capped to keep losses small if our model is wrong.">Suggested Stake</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -15803,7 +14784,7 @@
                 <strong>Win Payout</strong> = net profit on a winning $100 bet &nbsp;·&nbsp;
                 <strong>Expected Profit</strong> = the long-run average profit per $100 staked, weighted by our model's probability —
                 this is the number that actually matters &nbsp;·&nbsp;
-                <strong>Suggested Stake</strong> = quarter-Kelly bankroll fraction. Start small.
+                <strong>Suggested Stake</strong> = recommended fraction of your bankroll, sized by edge. Start small.
               </div>
             </div>
             
@@ -15828,9 +14809,6 @@
         </h2>
         <span class="date">2026-06-20</span>
       </div>
-
-      
-      
 
       
       <div class="fight-block">
@@ -17193,9 +16171,6 @@
       </div>
 
       
-      
-
-      
       <div class="fight-block">
 
         <!-- Main row -->
@@ -17398,9 +16373,6 @@
         </h2>
         <span class="date">2026-07-11</span>
       </div>
-
-      
-      
 
       
       <div class="fight-block">
@@ -17758,9 +16730,6 @@
       </div>
 
       
-      
-
-      
       <div class="fight-block">
 
         <!-- Main row -->
@@ -17965,7 +16934,7 @@
       <div class="bankroll-input-wrap">
         <label for="global-bankroll-input">Bankroll</label>
         <span class="dollar">$</span>
-        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="100"
+        <input id="global-bankroll-input" class="bankroll-input" type="number" min="1" step="1" value="1000"
                oninput="setBankroll(this.value)">
       </div>
       <div class="bp-strategy-toggle" id="top-strategy-toggle">
@@ -17976,13 +16945,13 @@
         </button>
         <button type="button" data-strategy="kelly"
                 onclick="setTopStrategy(this, 'kelly')"
-                title="Fractional Kelly across every qualifying bet. Maximises long-run growth, higher variance.">
-          Kelly · all bets
+                title="Spread your bankroll across every qualifying bet, with bigger stakes where the model has more edge.">
+          Spread bets
         </button>
         <button type="button" data-strategy="flat"
                 onclick="setTopStrategy(this, 'flat')"
                 title="Equal stake on every qualifying bet. Lower variance, lower expected profit.">
-          Flat · low variance
+          Equal stake
         </button>
         <button type="button" data-strategy="all"
                 onclick="setTopStrategy(this, 'all')"
@@ -18033,7 +17002,7 @@
       <button type="button" class="type-pill" data-type="total_rounds" onclick="filterBetsByType('total_rounds', this)">Total Rounds</button>
     </div>
 
-    <!-- Portfolio mode (Kelly / Flat) — driven by JS from PORTFOLIOS_BY_EVENT -->
+    <!-- Portfolio mode (Spread / Equal stake / Top picks) — driven by JS from PORTFOLIOS_BY_EVENT -->
     <div id="top-portfolio-wrap">
       <div id="portfolio-summary" class="bp-summary" style="margin-bottom:1rem"></div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
@@ -18053,9 +17022,10 @@
         </table>
       </div>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#666;padding:0 0.2rem">
-        Caps: max 5% of bankroll per bet, 15% per fight (handles correlated legs), 50% across the whole plan.
-        <strong>Best case</strong> = the single luckiest outcome per fight (KO and Submission for the same fighter
-        can't both hit, so they don't both pay). <strong>Worst case</strong> = every bet loses.
+        Caps: max 5% of bankroll per bet, max 5 bets per fight, 15% per fight total, 50% across the whole plan.
+        Bets that can't all win in the same outcome (e.g. "KO round 1" + "fight goes to decision") are filtered.
+        <strong>Best case</strong> = the single luckiest outcome per fight.
+        <strong>Worst case</strong> = every bet loses.
       </p>
     </div>
 
@@ -18928,12 +17898,12 @@
       </div>
       <p style="margin-top:0.6rem;font-size:var(--xs);color:#444;padding:0 0.2rem">
         Every bet where our model's probability exceeds the bookmaker's implied probability by ≥ 3%.
-        Suggested Stake is per-bet quarter-Kelly — the Kelly tab applies portfolio caps on top.
+        Suggested Stake is sized by each bet's edge — the Spread bets view applies portfolio caps on top.
       </p>
     </div>
 
     <!-- JSON payload for portfolio rendering -->
-    <script type="application/json" id="portfolios-data">{"UFC 328: Chimaev vs. Strickland": {"concentrated": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 5.0}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["B|KO|1", "B|KO|3", "B|SUB|1", "A|KO|3", "B|KO|2", "A|KO|2", "B|SUB|3", "A|SUB|3", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 3.8}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|KO|1", "B|SUB|1", "B|KO|2", "A|KO|2", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 3.53}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 3.49}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.0874, "ev_pct": 23.61, "ev_per_unit": 0.23605999999999994, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3704, "is_value": true, "kelly_pct": 3.47, "market_backtested": true, "our_prob": 0.4578, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.7000000000000002, "sb_odds": 2.7, "stake_pct": 3.47}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 2.98}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 1", "edge": 0.1201, "ev_pct": 78.04, "ev_per_unit": 0.7803499999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 3.55, "market_backtested": true, "our_prob": 0.2739, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 2.7}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.99}], "strategy": "concentrated", "summary": {"best_case_pct": 56.3, "expected_pnl_pct": 13.78, "n_bets": 8, "n_fights": 2, "total_stake_pct": 27.0, "worst_case_pct": -27.0}}, "flat": {"bets": [{"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 1", "edge": 0.0613, "ev_pct": 251.28, "ev_per_unit": 2.5137, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 1.57, "market_backtested": true, "our_prob": 0.0857, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.88}, {"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 2", "edge": 0.0322, "ev_pct": 132.09, "ev_per_unit": 1.3205999999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 0.83, "market_backtested": true, "our_prob": 0.0566, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.88}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 1.88}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 2", "edge": 0.0777, "ev_pct": 38.85, "ev_per_unit": 0.38850000000000007, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2, "is_value": true, "kelly_pct": 2.43, "market_backtested": true, "our_prob": 0.2777, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 4.0, "sb_odds": 5.0, "stake_pct": 1.88}, {"bet_type": "method", "description": "Khamzat Chimaev wins by DEC", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.88}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by Decision", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.88}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.0874, "ev_pct": 23.61, "ev_per_unit": 0.23605999999999994, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3704, "is_value": true, "kelly_pct": 3.47, "market_backtested": true, "our_prob": 0.4578, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.7000000000000002, "sb_odds": 2.7, "stake_pct": 1.88}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 1.88}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 1", "edge": 0.1201, "ev_pct": 78.04, "ev_per_unit": 0.7803499999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 3.55, "market_backtested": true, "our_prob": 0.2739, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 2", "edge": 0.0598, "ev_pct": 77.71, "ev_per_unit": 0.7770999999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 1.62, "market_backtested": true, "our_prob": 0.1367, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 3", "edge": 0.0316, "ev_pct": 53.69, "ev_per_unit": 0.5367999999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.0588, "is_value": true, "kelly_pct": 0.84, "market_backtested": true, "our_prob": 0.0904, "outcome_keys": ["B|KO|3", "B|SUB|3"], "payout_mult": 16.0, "sb_odds": 17.0, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 2", "edge": 0.0458, "ev_pct": 42.36, "ev_per_unit": 0.42357500000000003, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.1081, "is_value": true, "kelly_pct": 1.28, "market_backtested": true, "our_prob": 0.1539, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.25, "sb_odds": 9.25, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.36}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.36}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|KO|1", "B|SUB|1", "B|KO|2", "A|KO|2", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 1.36}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["B|KO|1", "B|KO|3", "B|SUB|1", "A|KO|3", "B|KO|2", "A|KO|2", "B|SUB|3", "A|SUB|3", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 1.36}, {"bet_type": "method_combo", "description": "Joshua Van wins by KO or Decision", "edge": 0.0593, "ev_pct": 15.41, "ev_per_unit": 0.15414000000000017, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3846, "is_value": true, "kelly_pct": 2.41, "market_backtested": true, "our_prob": 0.4439, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.6, "sb_odds": 2.6, "stake_pct": 1.36}, {"bet_type": "method_neutral", "description": "Fight ends by KO/TKO", "edge": 0.0394, "ev_pct": 11.81, "ev_per_unit": 0.11809999999999987, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 633, "historical_roi_pct": 34.34, "implied_prob": 0.3333, "is_value": true, "kelly_pct": 1.48, "market_backtested": true, "our_prob": 0.3727, "outcome_keys": ["A|KO|4", "B|KO|1", "B|KO|4", "B|KO|3", "A|KO|3", "B|KO|2", "A|KO|2", "B|KO|5", "A|KO|5", "A|KO|1"], "payout_mult": 2.0, "sb_odds": 3.0, "stake_pct": 1.36}], "strategy": "flat", "summary": {"best_case_pct": 86.0, "expected_pnl_pct": 18.43, "n_bets": 19, "n_fights": 2, "total_stake_pct": 30.0, "worst_case_pct": -30.0}}, "kelly": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 3.53}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["B|KO|1", "B|KO|3", "B|SUB|1", "A|KO|3", "B|KO|2", "A|KO|2", "B|SUB|3", "A|SUB|3", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 2.51}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 2.46}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.0874, "ev_pct": 23.61, "ev_per_unit": 0.23605999999999994, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3704, "is_value": true, "kelly_pct": 3.47, "market_backtested": true, "our_prob": 0.4578, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.7000000000000002, "sb_odds": 2.7, "stake_pct": 2.45}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|KO|1", "B|SUB|1", "B|KO|2", "A|KO|2", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 2.33}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.97}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 1", "edge": 0.1201, "ev_pct": 78.04, "ev_per_unit": 0.7803499999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 3.55, "market_backtested": true, "our_prob": 0.2739, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.78}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 2", "edge": 0.0777, "ev_pct": 38.85, "ev_per_unit": 0.38850000000000007, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2, "is_value": true, "kelly_pct": 2.43, "market_backtested": true, "our_prob": 0.2777, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 4.0, "sb_odds": 5.0, "stake_pct": 1.72}, {"bet_type": "method", "description": "Khamzat Chimaev wins by DEC", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.57}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by Decision", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.57}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.31}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.27}, {"bet_type": "method_combo", "description": "Joshua Van wins by KO or Decision", "edge": 0.0593, "ev_pct": 15.41, "ev_per_unit": 0.15414000000000017, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3846, "is_value": true, "kelly_pct": 2.41, "market_backtested": true, "our_prob": 0.4439, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.6, "sb_odds": 2.6, "stake_pct": 1.21}, {"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 1", "edge": 0.0613, "ev_pct": 251.28, "ev_per_unit": 2.5137, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 1.57, "market_backtested": true, "our_prob": 0.0857, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.11}], "strategy": "kelly", "summary": {"best_case_pct": 63.5, "expected_pnl_pct": 14.28, "n_bets": 14, "n_fights": 2, "total_stake_pct": 26.8, "worst_case_pct": -26.8}}}, "UFC Freedom 250: Topuria vs. Gaethje": {"concentrated": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 5.0}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 2.14}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 2.14}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["B|DEC|DEC", "B|KO|4", "A|KO|4", "B|SUB|5", "A|SUB|5", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 3", "edge": 0.1528, "ev_pct": 31.02, "ev_per_unit": 0.3101619999999998, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4926, "is_value": true, "kelly_pct": 7.53, "market_backtested": true, "our_prob": 0.6454, "outcome_keys": ["B|DEC|DEC", "A|KO|4", "B|KO|4", "B|KO|3", "B|SUB|5", "A|KO|3", "A|SUB|5", "B|SUB|3", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4", "A|SUB|3"], "payout_mult": 1.0299999999999998, "sb_odds": 2.03, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 2", "edge": 0.0632, "ev_pct": 8.65, "ev_per_unit": 0.08654700000000015, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.7299, "is_value": true, "kelly_pct": 5.85, "market_backtested": true, "our_prob": 0.7931, "outcome_keys": ["B|KO|4", "B|KO|3", "A|KO|3", "B|KO|2", "A|SUB|5", "A|KO|2", "B|SUB|3", "A|SUB|4", "B|SUB|4", "B|DEC|DEC", "A|KO|4", "B|SUB|5", "A|DEC|DEC", "B|KO|5", "A|KO|5", "A|SUB|3", "B|SUB|2", "A|SUB|2"], "payout_mult": 0.3700000000000001, "sb_odds": 1.37, "stake_pct": 2.14}], "strategy": "concentrated", "summary": {"best_case_pct": 75.7, "expected_pnl_pct": 27.05, "n_bets": 8, "n_fights": 2, "total_stake_pct": 20.0, "worst_case_pct": -20.0}}, "flat": {"bets": [{"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.36}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 2", "edge": 0.1136, "ev_pct": 110.81, "ev_per_unit": 1.1079500000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.17, "market_backtested": true, "our_prob": 0.2162, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.36}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|DEC|DEC", "B|SUB|4", "B|SUB|5", "B|SUB|1", "B|SUB|2", "B|SUB|3"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.36}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 1.36}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 1.36}, {"bet_type": "method_combo", "description": "Ciryl Gane wins by Sub or Decision", "edge": 0.068, "ev_pct": 22.78, "ev_per_unit": 0.22777500000000006, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2985, "is_value": true, "kelly_pct": 2.42, "market_backtested": true, "our_prob": 0.3665, "outcome_keys": ["A|DEC|DEC", "A|SUB|4", "A|SUB|3", "A|SUB|5", "A|SUB|1", "A|SUB|2"], "payout_mult": 2.35, "sb_odds": 3.35, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Alex Pereira wins by finish in Round 1", "edge": 0.0359, "ev_pct": 22.43, "ev_per_unit": 0.224375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.16, "is_value": true, "kelly_pct": 1.07, "market_backtested": true, "our_prob": 0.1959, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.36}, {"bet_type": "method", "description": "Ciryl Gane wins by DEC", "edge": 0.0317, "ev_pct": 14.25, "ev_per_unit": 0.14254999999999995, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 633, "historical_roi_pct": 34.34, "implied_prob": 0.2222, "is_value": true, "kelly_pct": 1.02, "market_backtested": true, "our_prob": 0.2539, "outcome_keys": ["A|DEC|DEC"], "payout_mult": 3.5, "sb_odds": 4.5, "stake_pct": 1.36}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by Decision", "edge": 0.0317, "ev_pct": 14.25, "ev_per_unit": 0.14254999999999995, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.2222, "is_value": true, "kelly_pct": 1.02, "market_backtested": true, "our_prob": 0.2539, "outcome_keys": ["A|DEC|DEC"], "payout_mult": 3.5, "sb_odds": 4.5, "stake_pct": 1.36}], "strategy": "flat", "summary": {"best_case_pct": 22.8, "expected_pnl_pct": 9.91, "n_bets": 11, "n_fights": 1, "total_stake_pct": 15.0, "worst_case_pct": -15.0}}, "kelly": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 2.1}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 2.1}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.89}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|DEC|DEC", "B|SUB|4", "B|SUB|5", "B|SUB|1", "B|SUB|2", "B|SUB|3"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.86}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.7}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.7}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 2", "edge": 0.1136, "ev_pct": 110.81, "ev_per_unit": 1.1079500000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.17, "market_backtested": true, "our_prob": 0.2162, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.33}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 1.04}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 1.04}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.04}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 1.04}, {"bet_type": "method_combo", "description": "Justin Gaethje wins by KO or Decision", "edge": 0.1796, "ev_pct": 107.78, "ev_per_unit": 1.0777999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.1667, "is_value": true, "kelly_pct": 5.39, "market_backtested": true, "our_prob": 0.3463, "outcome_keys": ["A|KO|4", "A|KO|5", "A|KO|3", "A|KO|1", "A|KO|2", "A|DEC|DEC"], "payout_mult": 5.0, "sb_odds": 6.0, "stake_pct": 1.04}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["B|DEC|DEC", "B|KO|4", "A|KO|4", "B|SUB|5", "A|SUB|5", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 1.04}, {"bet_type": "method_combo", "description": "Ilia Topuria wins by Sub or Decision", "edge": 0.1654, "ev_pct": 69.47, "ev_per_unit": 0.6947000000000001, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 5.43, "market_backtested": true, "our_prob": 0.4035, "outcome_keys": ["B|DEC|DEC", "B|SUB|4", "B|SUB|5", "B|SUB|1", "B|SUB|2", "B|SUB|3"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.04}, {"bet_type": "round_survival", "description": "Fight reaches Round 3", "edge": 0.1528, "ev_pct": 31.02, "ev_per_unit": 0.3101619999999998, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4926, "is_value": true, "kelly_pct": 7.53, "market_backtested": true, "our_prob": 0.6454, "outcome_keys": ["B|DEC|DEC", "A|KO|4", "B|KO|4", "B|KO|3", "B|SUB|5", "A|KO|3", "A|SUB|5", "B|SUB|3", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4", "A|SUB|3"], "payout_mult": 1.0299999999999998, "sb_odds": 2.03, "stake_pct": 1.04}, {"bet_type": "round_survival", "description": "Fight reaches Round 2", "edge": 0.0632, "ev_pct": 8.65, "ev_per_unit": 0.08654700000000015, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.7299, "is_value": true, "kelly_pct": 5.85, "market_backtested": true, "our_prob": 0.7931, "outcome_keys": ["B|KO|4", "B|KO|3", "A|KO|3", "B|KO|2", "A|SUB|5", "A|KO|2", "B|SUB|3", "A|SUB|4", "B|SUB|4", "B|DEC|DEC", "A|KO|4", "B|SUB|5", "A|DEC|DEC", "B|KO|5", "A|KO|5", "A|SUB|3", "B|SUB|2", "A|SUB|2"], "payout_mult": 0.3700000000000001, "sb_odds": 1.37, "stake_pct": 1.04}, {"bet_type": "method_combo", "description": "Justin Gaethje wins by Sub or Decision", "edge": 0.1823, "ev_pct": 227.87, "ev_per_unit": 2.2787499999999996, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.08, "is_value": true, "kelly_pct": 4.95, "market_backtested": true, "our_prob": 0.2623, "outcome_keys": ["A|DEC|DEC", "A|SUB|4", "A|SUB|3", "A|SUB|5", "A|SUB|1", "A|SUB|2"], "payout_mult": 11.5, "sb_odds": 12.5, "stake_pct": 1.03}, {"bet_type": "method_combo", "description": "Ciryl Gane wins by Sub or Decision", "edge": 0.068, "ev_pct": 22.78, "ev_per_unit": 0.22777500000000006, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2985, "is_value": true, "kelly_pct": 2.42, "market_backtested": true, "our_prob": 0.3665, "outcome_keys": ["A|DEC|DEC", "A|SUB|4", "A|SUB|3", "A|SUB|5", "A|SUB|1", "A|SUB|2"], "payout_mult": 2.35, "sb_odds": 3.35, "stake_pct": 1.02}], "strategy": "kelly", "summary": {"best_case_pct": 71.2, "expected_pnl_pct": 27.75, "n_bets": 18, "n_fights": 2, "total_stake_pct": 24.1, "worst_case_pct": -24.1}}}, "__all__": {"concentrated": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 5.0}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 2.14}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 2.14}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["B|DEC|DEC", "B|KO|4", "A|KO|4", "B|SUB|5", "A|SUB|5", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 3", "edge": 0.1528, "ev_pct": 31.02, "ev_per_unit": 0.3101619999999998, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4926, "is_value": true, "kelly_pct": 7.53, "market_backtested": true, "our_prob": 0.6454, "outcome_keys": ["B|DEC|DEC", "A|KO|4", "B|KO|4", "B|KO|3", "B|SUB|5", "A|KO|3", "A|SUB|5", "B|SUB|3", "A|DEC|DEC", "A|SUB|4", "B|KO|5", "A|KO|5", "B|SUB|4", "A|SUB|3"], "payout_mult": 1.0299999999999998, "sb_odds": 2.03, "stake_pct": 2.14}, {"bet_type": "round_survival", "description": "Fight reaches Round 2", "edge": 0.0632, "ev_pct": 8.65, "ev_per_unit": 0.08654700000000015, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.7299, "is_value": true, "kelly_pct": 5.85, "market_backtested": true, "our_prob": 0.7931, "outcome_keys": ["B|KO|4", "B|KO|3", "A|KO|3", "B|KO|2", "A|SUB|5", "A|KO|2", "B|SUB|3", "A|SUB|4", "B|SUB|4", "B|DEC|DEC", "A|KO|4", "B|SUB|5", "A|DEC|DEC", "B|KO|5", "A|KO|5", "A|SUB|3", "B|SUB|2", "A|SUB|2"], "payout_mult": 0.3700000000000001, "sb_odds": 1.37, "stake_pct": 2.14}], "strategy": "concentrated", "summary": {"best_case_pct": 75.7, "expected_pnl_pct": 27.05, "n_bets": 8, "n_fights": 2, "total_stake_pct": 20.0, "worst_case_pct": -20.0}}, "flat": {"bets": [{"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 1", "edge": 0.0613, "ev_pct": 251.28, "ev_per_unit": 2.5137, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 1.57, "market_backtested": true, "our_prob": 0.0857, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 2", "edge": 0.0322, "ev_pct": 132.09, "ev_per_unit": 1.3205999999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 0.83, "market_backtested": true, "our_prob": 0.0566, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.06}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 2", "edge": 0.1136, "ev_pct": 110.81, "ev_per_unit": 1.1079500000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.17, "market_backtested": true, "our_prob": 0.2162, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|DEC|DEC", "B|SUB|4", "B|SUB|5", "B|SUB|1", "B|SUB|2", "B|SUB|3"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 1", "edge": 0.1201, "ev_pct": 78.04, "ev_per_unit": 0.7803499999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 3.55, "market_backtested": true, "our_prob": 0.2739, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 2", "edge": 0.0598, "ev_pct": 77.71, "ev_per_unit": 0.7770999999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 1.62, "market_backtested": true, "our_prob": 0.1367, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 3", "edge": 0.0316, "ev_pct": 53.69, "ev_per_unit": 0.5367999999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.0588, "is_value": true, "kelly_pct": 0.84, "market_backtested": true, "our_prob": 0.0904, "outcome_keys": ["B|KO|3", "B|SUB|3"], "payout_mult": 16.0, "sb_odds": 17.0, "stake_pct": 1.06}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 2", "edge": 0.0458, "ev_pct": 42.36, "ev_per_unit": 0.42357500000000003, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.1081, "is_value": true, "kelly_pct": 1.28, "market_backtested": true, "our_prob": 0.1539, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.25, "sb_odds": 9.25, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 2", "edge": 0.0777, "ev_pct": 38.85, "ev_per_unit": 0.38850000000000007, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2, "is_value": true, "kelly_pct": 2.43, "market_backtested": true, "our_prob": 0.2777, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 4.0, "sb_odds": 5.0, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|KO|1", "B|SUB|1", "B|KO|2", "A|KO|2", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 1.06}, {"bet_type": "method", "description": "Khamzat Chimaev wins by DEC", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by Decision", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.06}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.0874, "ev_pct": 23.61, "ev_per_unit": 0.23605999999999994, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3704, "is_value": true, "kelly_pct": 3.47, "market_backtested": true, "our_prob": 0.4578, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.7000000000000002, "sb_odds": 2.7, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["B|KO|1", "B|KO|3", "B|SUB|1", "A|KO|3", "B|KO|2", "A|KO|2", "B|SUB|3", "A|SUB|3", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Ciryl Gane wins by Sub or Decision", "edge": 0.068, "ev_pct": 22.78, "ev_per_unit": 0.22777500000000006, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2985, "is_value": true, "kelly_pct": 2.42, "market_backtested": true, "our_prob": 0.3665, "outcome_keys": ["A|DEC|DEC", "A|SUB|4", "A|SUB|3", "A|SUB|5", "A|SUB|1", "A|SUB|2"], "payout_mult": 2.35, "sb_odds": 3.35, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Alex Pereira wins by finish in Round 1", "edge": 0.0359, "ev_pct": 22.43, "ev_per_unit": 0.224375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.16, "is_value": true, "kelly_pct": 1.07, "market_backtested": true, "our_prob": 0.1959, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Joshua Van wins by KO or Decision", "edge": 0.0593, "ev_pct": 15.41, "ev_per_unit": 0.15414000000000017, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3846, "is_value": true, "kelly_pct": 2.41, "market_backtested": true, "our_prob": 0.4439, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.6, "sb_odds": 2.6, "stake_pct": 1.06}, {"bet_type": "method", "description": "Ciryl Gane wins by DEC", "edge": 0.0317, "ev_pct": 14.25, "ev_per_unit": 0.14254999999999995, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 633, "historical_roi_pct": 34.34, "implied_prob": 0.2222, "is_value": true, "kelly_pct": 1.02, "market_backtested": true, "our_prob": 0.2539, "outcome_keys": ["A|DEC|DEC"], "payout_mult": 3.5, "sb_odds": 4.5, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by Decision", "edge": 0.0317, "ev_pct": 14.25, "ev_per_unit": 0.14254999999999995, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 504, "historical_roi_pct": 30.4, "implied_prob": 0.2222, "is_value": true, "kelly_pct": 1.02, "market_backtested": true, "our_prob": 0.2539, "outcome_keys": ["A|DEC|DEC"], "payout_mult": 3.5, "sb_odds": 4.5, "stake_pct": 1.06}, {"bet_type": "method_neutral", "description": "Fight ends by KO/TKO", "edge": 0.0394, "ev_pct": 11.81, "ev_per_unit": 0.11809999999999987, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 633, "historical_roi_pct": 34.34, "implied_prob": 0.3333, "is_value": true, "kelly_pct": 1.48, "market_backtested": true, "our_prob": 0.3727, "outcome_keys": ["A|KO|4", "B|KO|1", "B|KO|4", "B|KO|3", "A|KO|3", "B|KO|2", "A|KO|2", "B|KO|5", "A|KO|5", "A|KO|1"], "payout_mult": 2.0, "sb_odds": 3.0, "stake_pct": 1.06}], "strategy": "flat", "summary": {"best_case_pct": 71.4, "expected_pnl_pct": 19.69, "n_bets": 30, "n_fights": 3, "total_stake_pct": 31.8, "worst_case_pct": -31.8}}, "kelly": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 2.94}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["B|KO|1", "B|KO|3", "B|SUB|1", "A|KO|3", "B|KO|2", "A|KO|2", "B|SUB|3", "A|SUB|3", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 2.09}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 2.05}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.0874, "ev_pct": 23.61, "ev_per_unit": 0.23605999999999994, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3704, "is_value": true, "kelly_pct": 3.47, "market_backtested": true, "our_prob": 0.4578, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.7000000000000002, "sb_odds": 2.7, "stake_pct": 2.04}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|KO|1", "B|SUB|1", "B|KO|2", "A|KO|2", "B|SUB|2", "A|KO|1", "A|SUB|1", "A|SUB|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 1.94}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "A|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 1.75}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["B|DEC|DEC", "B|KO|5", "A|KO|5", "B|SUB|5", "A|SUB|5", "A|DEC|DEC"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 1.75}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|KO|1", "B|SUB|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.64}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.57}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|DEC|DEC", "B|SUB|4", "B|SUB|5", "B|SUB|1", "B|SUB|2", "B|SUB|3"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 1.55}, {"bet_type": "winning_round", "description": "Tatsuro Taira wins by finish in Round 1", "edge": 0.1201, "ev_pct": 78.04, "ev_per_unit": 0.7803499999999999, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 3.55, "market_backtested": true, "our_prob": 0.2739, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.49}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 2", "edge": 0.0777, "ev_pct": 38.85, "ev_per_unit": 0.38850000000000007, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2, "is_value": true, "kelly_pct": 2.43, "market_backtested": true, "our_prob": 0.2777, "outcome_keys": ["B|KO|2", "B|SUB|2"], "payout_mult": 4.0, "sb_odds": 5.0, "stake_pct": 1.43}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.42}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 1.42}, {"bet_type": "method", "description": "Khamzat Chimaev wins by DEC", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.31}, {"bet_type": "winning_round", "description": "Khamzat Chimaev wins by Decision", "edge": 0.068, "ev_pct": 28.56, "ev_per_unit": 0.28562, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2381, "is_value": true, "kelly_pct": 2.23, "market_backtested": true, "our_prob": 0.3061, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 3.2, "sb_odds": 4.2, "stake_pct": 1.31}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 2", "edge": 0.1136, "ev_pct": 110.81, "ev_per_unit": 1.1079500000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.17, "market_backtested": true, "our_prob": 0.2162, "outcome_keys": ["A|KO|2", "A|SUB|2"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.11}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.09}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|KO|1", "A|KO|1", "A|SUB|1", "B|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Joshua Van wins by KO or Decision", "edge": 0.0593, "ev_pct": 15.41, "ev_per_unit": 0.15414000000000017, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.3846, "is_value": true, "kelly_pct": 2.41, "market_backtested": true, "our_prob": 0.4439, "outcome_keys": ["B|DEC|DEC", "B|KO|1", "B|KO|4", "B|KO|3", "B|KO|5", "B|KO|2"], "payout_mult": 1.6, "sb_odds": 2.6, "stake_pct": 1.01}], "strategy": "kelly", "summary": {"best_case_pct": 68.7, "expected_pnl_pct": 19.15, "n_bets": 20, "n_fights": 3, "total_stake_pct": 32.0, "worst_case_pct": -32.0}}}}</script>
+    <script type="application/json" id="portfolios-data">{"UFC 328: Chimaev vs. Strickland": {"concentrated": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 5.0}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["A|SUB|3", "B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "A|KO|3", "B|SUB|3", "B|KO|3", "B|KO|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 4.64}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "B|KO|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 4.3}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 3.64}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|KO|2", "B|DEC|DEC", "B|KO|3", "B|KO|5", "B|KO|4", "B|KO|1"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 3.49}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 2.42}], "strategy": "concentrated", "summary": {"best_case_pct": 71.8, "expected_pnl_pct": 12.35, "n_bets": 6, "n_fights": 2, "total_stake_pct": 23.5, "worst_case_pct": -23.5}}, "flat": {"bets": [{"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 1", "edge": 0.0613, "ev_pct": 251.28, "ev_per_unit": 2.5137, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 1.57, "market_backtested": true, "our_prob": 0.0857, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 2.63}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 2.63}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 2.63}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 2.63}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "B|KO|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 2.63}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["A|SUB|3", "B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "A|KO|3", "B|SUB|3", "B|KO|3", "B|KO|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 2.63}], "strategy": "flat", "summary": {"best_case_pct": 152.6, "expected_pnl_pct": 13.43, "n_bets": 6, "n_fights": 2, "total_stake_pct": 15.8, "worst_case_pct": -15.8}}, "kelly": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 5.0}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["A|SUB|3", "B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "A|KO|3", "B|SUB|3", "B|KO|3", "B|KO|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 4.01}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "B|KO|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 3.72}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|KO|2", "B|DEC|DEC", "B|KO|3", "B|KO|5", "B|KO|4", "B|KO|1"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 3.49}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 3.14}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 2.09}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 2.03}], "strategy": "kelly", "summary": {"best_case_pct": 71.3, "expected_pnl_pct": 11.89, "n_bets": 7, "n_fights": 2, "total_stake_pct": 23.5, "worst_case_pct": -23.5}}}, "UFC Freedom 250: Topuria vs. Gaethje": {"concentrated": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 5.0}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 3.0}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 3.0}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 3.0}], "strategy": "concentrated", "summary": {"best_case_pct": 98.0, "expected_pnl_pct": 35.65, "n_bets": 6, "n_fights": 2, "total_stake_pct": 20.0, "worst_case_pct": -20.0}}, "flat": {"bets": [{"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 1.79}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 1.79}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.79}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 1.79}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.79}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 1.79}, {"bet_type": "method_combo", "description": "Ciryl Gane wins by Sub or Decision", "edge": 0.068, "ev_pct": 22.78, "ev_per_unit": 0.22777500000000006, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2985, "is_value": true, "kelly_pct": 2.42, "market_backtested": true, "our_prob": 0.3665, "outcome_keys": ["A|SUB|3", "A|SUB|4", "A|DEC|DEC", "A|SUB|1", "A|SUB|5", "A|SUB|2"], "payout_mult": 2.35, "sb_odds": 3.35, "stake_pct": 1.79}], "strategy": "flat", "summary": {"best_case_pct": 70.7, "expected_pnl_pct": 22.57, "n_bets": 7, "n_fights": 2, "total_stake_pct": 12.5, "worst_case_pct": -12.5}}, "kelly": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 3.33}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 3.33}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 3.0}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 3.0}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 3.0}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|SUB|2", "B|SUB|4", "B|SUB|1", "B|SUB|3", "B|DEC|DEC", "B|SUB|5"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 2.95}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 2.7}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 2.7}], "strategy": "kelly", "summary": {"best_case_pct": 153.1, "expected_pnl_pct": 44.69, "n_bets": 10, "n_fights": 2, "total_stake_pct": 30.0, "worst_case_pct": -30.0}}}, "__all__": {"concentrated": {"bets": [{"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 5.0}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 3.0}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 3.0}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 3.0}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 3.0}], "strategy": "concentrated", "summary": {"best_case_pct": 98.0, "expected_pnl_pct": 35.65, "n_bets": 6, "n_fights": 2, "total_stake_pct": 20.0, "worst_case_pct": -20.0}}, "flat": {"bets": [{"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 1.06}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 1.06}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Sean Strickland wins by finish in Round 1", "edge": 0.0613, "ev_pct": 251.28, "ev_per_unit": 2.5137, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.0244, "is_value": true, "kelly_pct": 1.57, "market_backtested": true, "our_prob": 0.0857, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 40.0, "sb_odds": 41.0, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Ciryl Gane wins by finish in Round 1", "edge": 0.159, "ev_pct": 139.17, "ev_per_unit": 1.391375, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1143, "is_value": true, "kelly_pct": 4.49, "market_backtested": true, "our_prob": 0.2733, "outcome_keys": ["A|KO|1", "A|SUB|1"], "payout_mult": 7.75, "sb_odds": 8.75, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 1.06}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "B|KO|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 1.06}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["A|SUB|3", "B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "A|KO|3", "B|SUB|3", "B|KO|3", "B|KO|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 1.06}, {"bet_type": "method_combo", "description": "Ciryl Gane wins by Sub or Decision", "edge": 0.068, "ev_pct": 22.78, "ev_per_unit": 0.22777500000000006, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.2985, "is_value": true, "kelly_pct": 2.42, "market_backtested": true, "our_prob": 0.3665, "outcome_keys": ["A|SUB|3", "A|SUB|4", "A|DEC|DEC", "A|SUB|1", "A|SUB|5", "A|SUB|2"], "payout_mult": 2.35, "sb_odds": 3.35, "stake_pct": 1.06}], "strategy": "flat", "summary": {"best_case_pct": 103.4, "expected_pnl_pct": 18.78, "n_bets": 13, "n_fights": 4, "total_stake_pct": 13.8, "worst_case_pct": -13.8}}, "kelly": {"bets": [{"bet_type": "winning_round", "description": "Khamzat Chimaev wins by finish in Round 1", "edge": 0.1703, "ev_pct": 68.13, "ev_per_unit": 0.6812, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.25, "is_value": true, "kelly_pct": 5.68, "market_backtested": true, "our_prob": 0.4203, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 3.0, "sb_odds": 4.0, "stake_pct": 4.67}, {"bet_type": "round_survival", "description": "Finish before Round 4", "edge": 0.1144, "ev_pct": 23.34, "ev_per_unit": 0.23338400000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.4902, "is_value": true, "kelly_pct": 5.61, "market_backtested": true, "our_prob": 0.6046, "outcome_keys": ["A|SUB|3", "B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "A|KO|3", "B|SUB|3", "B|KO|3", "B|KO|2"], "payout_mult": 1.04, "sb_odds": 2.04, "stake_pct": 3.75}, {"bet_type": "round_survival", "description": "Finish before Round 3", "edge": 0.1167, "ev_pct": 31.38, "ev_per_unit": 0.31379599999999996, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3717, "is_value": true, "kelly_pct": 4.64, "market_backtested": true, "our_prob": 0.4884, "outcome_keys": ["B|SUB|2", "A|SUB|1", "A|SUB|2", "A|KO|2", "B|KO|1", "A|KO|1", "B|SUB|1", "B|KO|2"], "payout_mult": 1.69, "sb_odds": 2.69, "stake_pct": 3.48}, {"bet_type": "method_combo", "description": "Khamzat Chimaev wins by KO or Decision", "edge": 0.0813, "ev_pct": 19.52, "ev_per_unit": 0.19520000000000004, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Sean Strickland vs Khamzat Chimaev", "historical_n_bets": 599, "historical_roi_pct": 27.68, "implied_prob": 0.4167, "is_value": true, "kelly_pct": 3.49, "market_backtested": true, "our_prob": 0.498, "outcome_keys": ["B|KO|2", "B|DEC|DEC", "B|KO|3", "B|KO|5", "B|KO|4", "B|KO|1"], "payout_mult": 1.4, "sb_odds": 2.4, "stake_pct": 3.26}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.1817, "ev_pct": 53.61, "ev_per_unit": 0.5360650000000002, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.339, "is_value": true, "kelly_pct": 6.87, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 1.9500000000000002, "sb_odds": 2.95, "stake_pct": 3.11}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.1254, "ev_pct": 31.74, "ev_per_unit": 0.31737100000000007, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 276, "historical_roi_pct": 159.33, "implied_prob": 0.3953, "is_value": true, "kelly_pct": 5.19, "market_backtested": true, "our_prob": 0.5207, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 1.5299999999999998, "sb_odds": 2.53, "stake_pct": 3.11}, {"bet_type": "winning_round", "description": "Joshua Van wins by finish in Round 1", "edge": 0.1407, "ev_pct": 137.21, "ev_per_unit": 1.372175, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.1026, "is_value": true, "kelly_pct": 3.92, "market_backtested": true, "our_prob": 0.2433, "outcome_keys": ["B|SUB|1", "B|KO|1"], "payout_mult": 8.75, "sb_odds": 9.75, "stake_pct": 2.94}, {"bet_type": "method", "description": "Ilia Topuria wins by DEC", "edge": 0.2436, "ev_pct": 316.65, "ev_per_unit": 3.1665, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.0769, "is_value": true, "kelly_pct": 6.6, "market_backtested": true, "our_prob": 0.3205, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 12.0, "sb_odds": 13.0, "stake_pct": 2.8}, {"bet_type": "method_neutral", "description": "Fight goes to Decision", "edge": 0.4124, "ev_pct": 298.97, "ev_per_unit": 2.989675, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 72, "historical_roi_pct": 222.15, "implied_prob": 0.1379, "is_value": true, "kelly_pct": 11.96, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 6.25, "sb_odds": 7.25, "stake_pct": 2.8}, {"bet_type": "distance", "description": "Fight goes to decision", "edge": 0.3965, "ev_pct": 257.69, "ev_per_unit": 2.57695, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 89, "historical_roi_pct": 342.28, "implied_prob": 0.1538, "is_value": true, "kelly_pct": 11.71, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|DEC|DEC", "B|DEC|DEC"], "payout_mult": 5.5, "sb_odds": 6.5, "stake_pct": 2.8}, {"bet_type": "round_survival", "description": "Fight reaches Round 5", "edge": 0.3329, "ev_pct": 153.14, "ev_per_unit": 1.53138, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.2174, "is_value": true, "kelly_pct": 10.63, "market_backtested": true, "our_prob": 0.5503, "outcome_keys": ["A|KO|5", "A|DEC|DEC", "B|DEC|DEC", "A|SUB|5", "B|KO|5", "B|SUB|5"], "payout_mult": 3.5999999999999996, "sb_odds": 4.6, "stake_pct": 2.8}, {"bet_type": "round_survival", "description": "Fight reaches Round 4", "edge": 0.2366, "ev_pct": 72.63, "ev_per_unit": 0.726261, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Justin Gaethje vs Ilia Topuria", "historical_n_bets": 1023, "historical_roi_pct": 10.1, "implied_prob": 0.3257, "is_value": true, "kelly_pct": 8.77, "market_backtested": true, "our_prob": 0.5623, "outcome_keys": ["A|SUB|4", "A|DEC|DEC", "B|DEC|DEC", "B|KO|5", "A|KO|4", "B|SUB|5", "B|SUB|4", "A|KO|5", "A|SUB|5", "B|KO|4"], "payout_mult": 2.07, "sb_odds": 3.07, "stake_pct": 2.8}, {"bet_type": "method_combo", "description": "Alex Pereira wins by Sub or Decision", "edge": 0.149, "ev_pct": 93.12, "ev_per_unit": 0.9312499999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.16, "is_value": true, "kelly_pct": 4.43, "market_backtested": true, "our_prob": 0.309, "outcome_keys": ["B|SUB|2", "B|SUB|4", "B|SUB|1", "B|SUB|3", "B|DEC|DEC", "B|SUB|5"], "payout_mult": 5.25, "sb_odds": 6.25, "stake_pct": 2.76}, {"bet_type": "method", "description": "Alex Pereira wins by DEC", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 391, "historical_roi_pct": 110.26, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 2.52}, {"bet_type": "winning_round", "description": "Alex Pereira wins by Decision", "edge": 0.1418, "ev_pct": 113.44, "ev_per_unit": 1.1343999999999999, "event": "UFC Freedom 250: Topuria vs. Gaethje", "event_date": "2026-06-15", "fight": "Ciryl Gane vs Alex Pereira", "historical_n_bets": 53, "historical_roi_pct": 240.38, "implied_prob": 0.125, "is_value": true, "kelly_pct": 4.05, "market_backtested": true, "our_prob": 0.2668, "outcome_keys": ["B|DEC|DEC"], "payout_mult": 7.0, "sb_odds": 8.0, "stake_pct": 2.52}, {"bet_type": "winning_round", "description": "Fight ends by finish in Round 1", "edge": 0.0801, "ev_pct": 34.46, "ev_per_unit": 0.34460999999999986, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 230, "historical_roi_pct": 83.15, "implied_prob": 0.2326, "is_value": true, "kelly_pct": 2.61, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.3, "sb_odds": 4.3, "stake_pct": 1.96}, {"bet_type": "round_survival", "description": "Finish before Round 2", "edge": 0.0774, "ev_pct": 32.9, "ev_per_unit": 0.3289749999999998, "event": "UFC 328: Chimaev vs. Strickland", "event_date": "2026-05-09", "fight": "Tatsuro Taira vs Joshua Van", "historical_n_bets": 78, "historical_roi_pct": 78.72, "implied_prob": 0.2353, "is_value": true, "kelly_pct": 2.53, "market_backtested": true, "our_prob": 0.3127, "outcome_keys": ["B|SUB|1", "A|KO|1", "B|KO|1", "A|SUB|1"], "payout_mult": 3.25, "sb_odds": 4.25, "stake_pct": 1.9}], "strategy": "kelly", "summary": {"best_case_pct": 209.7, "expected_pnl_pct": 52.84, "n_bets": 17, "n_fights": 4, "total_stake_pct": 50.0, "worst_case_pct": -50.0}}}}</script>
 
     
   </div>
@@ -25314,7 +24284,7 @@ function _escapeHtml(s) {
 }
 function getBankroll() {
   const v = parseFloat(localStorage.getItem('apex_bankroll'));
-  return (Number.isFinite(v) && v > 0) ? v : 100;
+  return (Number.isFinite(v) && v > 0) ? v : 1000;
 }
 function setBankroll(value) {
   const num = parseFloat(value);
@@ -25343,15 +24313,6 @@ function applyBankroll() {
   // so changing one updates the others without each maintaining its own state.
   document.querySelectorAll('input.bankroll-input').forEach(inp => {
     if (parseFloat(inp.value) !== bk) inp.value = Math.round(bk);
-  });
-}
-function setEventStrategy(btn, strategy) {
-  const card = btn.closest('.bankroll-plan');
-  if (!card) return;
-  card.querySelectorAll('.bp-strategy-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  card.querySelectorAll('.bp-strategy-block').forEach(blk => {
-    blk.style.display = (blk.dataset.strategy === strategy) ? '' : 'none';
   });
 }
 function setTopStrategy(btn, strategy) {

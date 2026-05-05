@@ -3,6 +3,7 @@
 import pytest
 
 from ufc_predict.eval.bet_analysis import (
+    PORTFOLIO_MAX_BETS_PER_FIGHT,
     PORTFOLIO_MAX_PER_BET_PCT,
     PORTFOLIO_MAX_PER_FIGHT_PCT,
     PORTFOLIO_MAX_TOTAL_PCT,
@@ -88,6 +89,52 @@ def test_summary_sums_match_bets():
     assert s["n_fights"] == 2
 
 
+def test_caps_at_max_bets_per_fight():
+    # 8 legs on the same fight, all with overlapping outcome_keys (e.g.
+    # different "A wins by KO in round N" lines that all share A|KO|*).
+    # Should drop down to PORTFOLIO_MAX_BETS_PER_FIGHT after the conflict
+    # filter — even before the per-fight stake scaling kicks in.
+    bets = []
+    for r in range(1, 9):
+        b = _bet("A vs B", 0.55, 2.5, kelly_pct=2.0)
+        b["outcome_keys"] = [f"A|KO|{r}"]  # all share method=KO; mutually exclusive on round
+        bets.append(b)
+    # Outcome_keys are pairwise disjoint, so the filter keeps only the first.
+    p = build_portfolio(bets, strategy="kelly")
+    assert len(p["bets"]) == 1
+
+
+def test_drops_contradictory_bets_on_same_fight():
+    # The user's example: betting "Khamzat KO R1" alongside "fight goes
+    # to decision" — these can never both win. The lower-stake leg gets
+    # dropped by the conflict filter.
+    ko_r1 = _bet("Khamzat vs X", 0.4, 2.6, kelly_pct=4.0)
+    ko_r1["outcome_keys"] = ["A|KO|1"]
+    decision = _bet("Khamzat vs X", 0.35, 2.9, kelly_pct=2.0)
+    decision["outcome_keys"] = ["A|DEC|DEC", "B|DEC|DEC"]
+    p = build_portfolio([ko_r1, decision], strategy="kelly")
+    descs = [b["description"] for b in p["bets"]]
+    # Higher-stake leg (KO R1) is kept; the disjoint decision bet is dropped.
+    assert len(p["bets"]) == 1
+    assert "Khamzat vs X bet" in descs[0]
+
+
+def test_compatible_bets_on_same_fight_both_kept():
+    # "A wins by KO" (any round) and "A wins by KO in R2" share A|KO|2 —
+    # they CAN both win, so both should survive the conflict filter.
+    a_ko_any = _bet("A vs B", 0.4, 2.5, kelly_pct=3.0)
+    a_ko_any["outcome_keys"] = [f"A|KO|{r}" for r in range(1, 6)]
+    a_ko_r2 = _bet("A vs B", 0.15, 5.0, kelly_pct=2.0)
+    a_ko_r2["outcome_keys"] = ["A|KO|2"]
+    p = build_portfolio([a_ko_any, a_ko_r2], strategy="kelly")
+    assert len(p["bets"]) == 2
+
+
+def test_max_bets_per_fight_constant():
+    # Sanity: the constant matches user's "5 bets per fight" requirement.
+    assert PORTFOLIO_MAX_BETS_PER_FIGHT == 5
+
+
 def test_bets_sorted_by_stake_descending():
     bets = [
         _bet("Small", 0.55, 2.1, kelly_pct=1.2),
@@ -144,23 +191,6 @@ def _bet_with_keys(fight, our_prob, odds, kelly_pct, outcome_keys, **extra):
     b = _bet(fight, our_prob, odds, kelly_pct, **extra)
     b["outcome_keys"] = list(outcome_keys)
     return b
-
-
-def test_best_case_excludes_mutually_exclusive_wins():
-    # Two bets on the same fight: A by KO and A by SUB. They cannot both win.
-    # Each at 3% stake with 4.0 odds → payout_mult=3 → win-only payout = 9%.
-    # Old (broken) calc: best_case = 9 + 9 = 18. New: best_case = 9 - 3 = 6
-    # (one wins +9, the other loses -3).
-    bets = [
-        _bet_with_keys("A vs B", 0.3, 4.0, kelly_pct=3.0,
-                       outcome_keys={f"A|KO|{r}" for r in (1, 2, 3, 4, 5)}),
-        _bet_with_keys("A vs B", 0.25, 4.0, kelly_pct=3.0,
-                       outcome_keys={f"A|SUB|{r}" for r in (1, 2, 3, 4, 5)}),
-    ]
-    p = build_portfolio(bets, strategy="kelly")
-    assert p["summary"]["n_bets"] == 2
-    # Best case for each leg: stake*(odds-1) - other_stake = 3*3 - 3 = 6.
-    assert abs(p["summary"]["best_case_pct"] - 6.0) < 0.05
 
 
 def test_best_case_overlapping_bets_both_win():

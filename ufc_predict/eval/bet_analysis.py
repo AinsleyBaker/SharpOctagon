@@ -679,6 +679,42 @@ PORTFOLIO_MIN_BET_PCT       = 1.0
 # How many bets the "concentrated" strategy keeps. Picked to give 5–10
 # actionable stakes ($3–5 each on a $100 bankroll) instead of 30+ tiny ones.
 PORTFOLIO_TOP_N             = 8
+# Max legs per fight after conflict filtering. Without this cap a single
+# bout can hog 5+ correlated lines (KO method + winning round + inside
+# distance + …) which clutters the recommendation list.
+PORTFOLIO_MAX_BETS_PER_FIGHT = 5
+
+
+def _filter_fight_bets(
+    fight_bets: list[tuple[int, dict, float]],
+    max_count: int,
+) -> set[int]:
+    """Pick at most `max_count` bets per fight that can all win in some
+    common outcome. Returns the set of indices to keep.
+
+    Bets are ranked by stake desc; greedily kept while compatible with the
+    intersection of already-kept outcome_keys. A bet with empty outcome_keys
+    (legacy / moneyline-only) is treated as unconstrained — kept without
+    shrinking the compat set.
+    """
+    sorted_bets = sorted(fight_bets, key=lambda t: -t[2])
+    kept: set[int] = set()
+    compat: set[str] | None = None
+    for idx, bet, _stake in sorted_bets:
+        if len(kept) >= max_count:
+            break
+        keys = set(bet.get("outcome_keys") or [])
+        if not keys:
+            kept.add(idx)
+            continue
+        if compat is None:
+            kept.add(idx)
+            compat = keys
+        elif compat & keys:
+            kept.add(idx)
+            compat = compat & keys
+        # else: incompatible with already-kept legs — drop
+    return kept
 
 
 def _fight_best_case_pct(fight_bets: list[dict]) -> float:
@@ -727,6 +763,7 @@ def build_portfolio(
     max_total_pct: float = PORTFOLIO_MAX_TOTAL_PCT,
     min_bet_pct: float = PORTFOLIO_MIN_BET_PCT,
     top_n: int = PORTFOLIO_TOP_N,
+    max_bets_per_fight: int = PORTFOLIO_MAX_BETS_PER_FIGHT,
 ) -> dict:
     """Allocate bankroll across value bets.
 
@@ -784,6 +821,20 @@ def build_portfolio(
 
     # 2) Per-bet cap
     stakes = [min(s, max_per_bet_pct) for s in stakes]
+
+    # 2b) Per-fight conflict filter: keep at most `max_bets_per_fight` legs
+    # whose outcome_keys can all win in some common outcome. Drops e.g.
+    # "KO round 1" alongside "fight goes to decision" on the same bout.
+    fight_keys_pre = [b.get("fight") or f"_unk_{i}" for i, b in enumerate(bets)]
+    by_fight_idx: dict[str, list[tuple[int, dict, float]]] = {}
+    for i, (b, s) in enumerate(zip(bets, stakes)):
+        if s <= 0:
+            continue
+        by_fight_idx.setdefault(fight_keys_pre[i], []).append((i, b, s))
+    keep_idx: set[int] = set()
+    for fight_legs in by_fight_idx.values():
+        keep_idx |= _filter_fight_bets(fight_legs, max_bets_per_fight)
+    stakes = [s if i in keep_idx or s == 0 else 0.0 for i, s in enumerate(stakes)]
 
     # 3) Per-fight scaling — correlated legs on the same bout share a budget.
     fight_keys = [b.get("fight") or f"_unk_{i}" for i, b in enumerate(bets)]

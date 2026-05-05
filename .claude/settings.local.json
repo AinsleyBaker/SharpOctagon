@@ -22,7 +22,8 @@
       "Read(//tmp/**)",
       "Bash(git stash *)",
       "Bash(git reset *)",
-      "Bash(ruff check *)"
+      "Bash(ruff check *)",
+      "Bash(awk 'NR==17905 || NR==17906 || NR==17907' docs/index.html)"
     ]
   }
 }

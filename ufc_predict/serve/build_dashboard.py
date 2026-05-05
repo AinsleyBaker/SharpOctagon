@@ -940,27 +940,6 @@ def _enrich_bet_analysis(bout: dict) -> None:
     bout["value_bet_count"] = len(formatted)
 
 
-def _attach_event_portfolios(event: dict) -> None:
-    """Gather every value bet across the event's bouts and build Kelly + flat
-    bankroll allocations. Stored on the event for the template to render.
-    """
-    from ufc_predict.eval.bet_analysis import build_portfolio
-
-    raw_bets: list[dict] = []
-    for bout in event.get("bouts") or []:
-        fight_label = (
-            f"{bout.get('fighter_a_name', '')} vs {bout.get('fighter_b_name', '')}"
-        )
-        for bet in bout.get("bet_analysis") or []:
-            if not bet.get("is_value"):
-                continue
-            raw_bets.append({**bet, "fight": fight_label})
-
-    event["portfolio_kelly"]        = build_portfolio(raw_bets, strategy="kelly")
-    event["portfolio_flat"]         = build_portfolio(raw_bets, strategy="flat")
-    event["portfolio_concentrated"] = build_portfolio(raw_bets, strategy="concentrated")
-
-
 def build(output_dir: Path = OUTPUT_DIR) -> None:
     predictions = load_predictions()
     if not predictions:
@@ -1292,7 +1271,6 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
     # the template renders a "LIVE EVENT" badge in place of "Next Event".
     for event in events:
         event["is_live"] = any(b.get("is_live") for b in event.get("bouts", []))
-        _attach_event_portfolios(event)
 
     from ufc_predict.eval.bet_analysis import build_portfolio, top_value_bets
     top_bets = top_value_bets(predictions, n=200)  # show all value bets; UI filters by event

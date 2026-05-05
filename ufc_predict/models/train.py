@@ -54,11 +54,22 @@ FEATURE_COLS = [
     # Defensive + durability (Week 7) — fills the striker-vs-grappler blind
     # spot. td_def and sig_str_def measure how often opponents land on this
     # fighter; finish_loss_rate is a chin/grappling-defence proxy.
-    "diff_td_def", "diff_sig_str_def",
+    # sig_abs_per_min is the proper "strikes absorbed" metric (the legacy
+    # `sapm` is actually attempts; kept for back-compat but redundant).
+    "diff_td_def", "diff_sig_str_def", "diff_sig_abs_per_min",
     "diff_ko_loss_rate", "diff_sub_loss_rate", "diff_finish_loss_rate",
     # Style-mismatch interactions — explicit cross-features so the gradient
     # on small samples isn't forced to discover the interaction unaided.
     "diff_finish_threat", "diff_keep_standing", "diff_wrestled_pressure",
+    # Offence × opp-defence cross features — every offensive metric weighted
+    # by the opponent's complementary defence. e.g. A's striking volume only
+    # matters in proportion to (1 − B's sig-strike defence). These are the
+    # features that let the model learn matchup-specific predictions rather
+    # than averaging over a generic opponent.
+    "diff_expected_strikes_landed", "diff_expected_sig_acc",
+    "diff_expected_td_landed",
+    "diff_expected_ko_threat", "diff_expected_sub_threat",
+    "diff_expected_strikes_taken",
     # Physicals (Week 3) — UFC.com bio fills active-roster gaps
     "diff_reach_cm", "diff_height_cm",
     # Stance interaction (Loffing 2017): southpaw vs orthodox edge
@@ -143,6 +154,7 @@ MONOTONE_BY_FEATURE: dict[str, int] = {
     # Defensive + durability — A defends better / gets finished less → A wins
     "diff_td_def":                 +1,   # A stuffs more TDs = good for A
     "diff_sig_str_def":            +1,   # A absorbs less = good for A
+    "diff_sig_abs_per_min":        -1,   # A absorbs more strikes/min = bad
     "diff_ko_loss_rate":           -1,   # A gets KO'd more = bad for A
     "diff_sub_loss_rate":          -1,   # A gets subbed more = bad for A
     "diff_finish_loss_rate":       -1,   # A gets finished more = bad for A
@@ -150,6 +162,13 @@ MONOTONE_BY_FEATURE: dict[str, int] = {
     "diff_finish_threat":          +1,   # A more likely to finish B
     "diff_keep_standing":          +1,   # A dictates range better
     "diff_wrestled_pressure":      -1,   # A faces more wrestling threat = bad for A
+    # Offence × opp-defence cross features
+    "diff_expected_strikes_landed": +1,  # A lands more strikes against B's defence
+    "diff_expected_sig_acc":        +1,  # A is more accurate against B's defence
+    "diff_expected_td_landed":      +1,  # A's TD/min cuts through B's TDD better
+    "diff_expected_ko_threat":      +1,  # A's KO rate × B's chin
+    "diff_expected_sub_threat":     +1,  # A's sub rate × B's sub vulnerability
+    "diff_expected_strikes_taken":  -1,  # A absorbs more from B than B from A
     # Per-side context flags
     "a_short_notice":              -1,
     "b_short_notice":              +1,

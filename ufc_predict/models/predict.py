@@ -298,7 +298,7 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             "win_streak", "loss_streak", "fight_frequency_24m",
             "ewma_win_rate", "ewma_finish_rate", "ewma_slpm", "ewma_kd_per_fight",
             # Defensive + durability + style-mismatch (must mirror training)
-            "td_def", "sig_str_def",
+            "td_def", "sig_str_def", "sig_abs_per_min",
             "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
         ]
         for k in diff_keys:
@@ -355,7 +355,7 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         # Absolute per-fighter rates (prop model features + dashboard display)
         for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
                   "slpm", "sapm", "sig_acc", "ctrl_ratio",
-                  "td_def", "sig_str_def",
+                  "td_def", "sig_str_def", "sig_abs_per_min",
                   "ko_loss_rate", "sub_loss_rate", "finish_loss_rate", "never_finished"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
@@ -402,6 +402,72 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
             if not (pd.isna(a_wrestled_pressure) or pd.isna(b_wrestled_pressure))
             else np.nan
         )
+
+        # Offence × opp-defence cross features (mirror build_fight_feature_rows).
+        def _gated(volume, opp_def_rate):
+            if any(v is None or pd.isna(v) for v in (volume, opp_def_rate)):
+                return np.nan
+            return float(volume) * (1.0 - float(opp_def_rate))
+
+        def _diff(va, vb):
+            if pd.isna(va) or pd.isna(vb):
+                return np.nan
+            return va - vb
+
+        a_slpm_v = a_feat.get("slpm")
+        b_slpm_v = b_feat.get("slpm")
+        a_sigdef = a_feat.get("sig_str_def")
+        b_sigdef = b_feat.get("sig_str_def")
+        a_tdpm   = a_feat.get("td_per_min")
+        b_tdpm   = b_feat.get("td_per_min")
+        a_tddef  = a_feat.get("td_def")
+        b_tddef  = b_feat.get("td_def")
+        a_sigacc = a_feat.get("sig_acc")
+        b_sigacc = b_feat.get("sig_acc")
+        a_kor    = a_feat.get("ko_rate")
+        b_kor    = b_feat.get("ko_rate")
+        a_subr   = a_feat.get("sub_rate")
+        b_subr   = b_feat.get("sub_rate")
+        a_kloss  = a_feat.get("ko_loss_rate")
+        b_kloss  = b_feat.get("ko_loss_rate")
+        a_sloss  = a_feat.get("sub_loss_rate")
+        b_sloss  = b_feat.get("sub_loss_rate")
+
+        exp_a_strikes = _gated(a_slpm_v, b_sigdef)
+        exp_b_strikes = _gated(b_slpm_v, a_sigdef)
+        row["expected_a_strikes_landed"] = exp_a_strikes
+        row["expected_b_strikes_landed"] = exp_b_strikes
+        row["diff_expected_strikes_landed"] = _diff(exp_a_strikes, exp_b_strikes)
+
+        exp_a_sigacc = _gated(a_sigacc, b_sigdef)
+        exp_b_sigacc = _gated(b_sigacc, a_sigdef)
+        row["expected_a_sig_acc"] = exp_a_sigacc
+        row["expected_b_sig_acc"] = exp_b_sigacc
+        row["diff_expected_sig_acc"] = _diff(exp_a_sigacc, exp_b_sigacc)
+
+        exp_a_td = _gated(a_tdpm, b_tddef)
+        exp_b_td = _gated(b_tdpm, a_tddef)
+        row["expected_a_td_landed"] = exp_a_td
+        row["expected_b_td_landed"] = exp_b_td
+        row["diff_expected_td_landed"] = _diff(exp_a_td, exp_b_td)
+
+        exp_a_ko = _mul(a_kor, b_kloss)
+        exp_b_ko = _mul(b_kor, a_kloss)
+        row["expected_a_ko_threat"] = exp_a_ko
+        row["expected_b_ko_threat"] = exp_b_ko
+        row["diff_expected_ko_threat"] = _diff(exp_a_ko, exp_b_ko)
+
+        exp_a_sub = _mul(a_subr, b_sloss)
+        exp_b_sub = _mul(b_subr, a_sloss)
+        row["expected_a_sub_threat"] = exp_a_sub
+        row["expected_b_sub_threat"] = exp_b_sub
+        row["diff_expected_sub_threat"] = _diff(exp_a_sub, exp_b_sub)
+
+        exp_a_taken = _gated(b_slpm_v, a_sigdef)
+        exp_b_taken = _gated(a_slpm_v, b_sigdef)
+        row["expected_a_strikes_taken"] = exp_a_taken
+        row["expected_b_strikes_taken"] = exp_b_taken
+        row["diff_expected_strikes_taken"] = _diff(exp_a_taken, exp_b_taken)
 
         rows.append(row)
 
@@ -576,7 +642,7 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         for side in ("a", "b")
         for stat in ("ko_rate", "sub_rate", "finish_rate", "slpm", "sapm",
                      "sig_acc", "td_per_min", "sub_per_min", "ctrl_ratio",
-                     "td_def", "sig_str_def",
+                     "td_def", "sig_str_def", "sig_abs_per_min",
                      "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
                      "never_finished")
         if f"{side}_{stat}" in upcoming_df.columns

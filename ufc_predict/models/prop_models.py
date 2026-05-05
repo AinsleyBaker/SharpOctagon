@@ -48,6 +48,7 @@ PROP_EXTRA_COLS = [
     # rate → KO-by-X likelihood; never_finished is the chin proxy.
     "a_td_def",          "b_td_def",
     "a_sig_str_def",     "b_sig_str_def",
+    "a_sig_abs_per_min", "b_sig_abs_per_min",
     "a_ko_loss_rate",    "b_ko_loss_rate",
     "a_sub_loss_rate",   "b_sub_loss_rate",
     "a_finish_loss_rate","b_finish_loss_rate",
@@ -57,6 +58,18 @@ PROP_EXTRA_COLS = [
     "a_keep_standing",     "b_keep_standing",
     "a_wrestled_pressure", "b_wrestled_pressure",
     "diff_finish_threat",  "diff_keep_standing", "diff_wrestled_pressure",
+    # Offence × opp-defence cross features — fed to the prop model so
+    # method/round predictions also see matchup-weighted offence.
+    "expected_a_strikes_landed", "expected_b_strikes_landed",
+    "expected_a_sig_acc",        "expected_b_sig_acc",
+    "expected_a_td_landed",      "expected_b_td_landed",
+    "expected_a_ko_threat",      "expected_b_ko_threat",
+    "expected_a_sub_threat",     "expected_b_sub_threat",
+    "expected_a_strikes_taken",  "expected_b_strikes_taken",
+    "diff_expected_strikes_landed", "diff_expected_sig_acc",
+    "diff_expected_td_landed",
+    "diff_expected_ko_threat", "diff_expected_sub_threat",
+    "diff_expected_strikes_taken",
 ]
 
 # Three-way chronological split: booster / early-stop / calibration.

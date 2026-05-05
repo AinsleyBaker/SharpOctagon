@@ -192,6 +192,13 @@ def fighter_aso_stats(
         1.0 - df["opp_sig_landed"].fillna(0).sum() / opp_sig_att_total
         if opp_sig_att_total > 0 else float("nan")
     )
+    # Strikes truly absorbed per minute (opponent's LANDED on this fighter).
+    # Not to be confused with the legacy `sapm` field which is actually the
+    # fighter's own attempts per minute (= slpm / sig_acc).
+    sig_abs_per_min = (
+        df["opp_sig_landed"].fillna(0).sum() / total_min
+        if total_min > 0 else float("nan")
+    )
 
     # Durability — chin/grappling-defence proxy. Career rates of being
     # finished. never_finished is a hard 0/1 flag; rate features let the
@@ -265,6 +272,7 @@ def fighter_aso_stats(
         # asymmetries the offence-only feature set was blind to)
         "td_def": opp_td_def,
         "sig_str_def": sig_str_def,
+        "sig_abs_per_min": sig_abs_per_min,
         "ko_loss_rate": ko_loss_rate,
         "sub_loss_rate": sub_loss_rate,
         "finish_loss_rate": finish_loss_rate,
@@ -330,7 +338,7 @@ def _empty_features(fighter_id: str, as_of: date) -> dict:
         "days_since_last_fight": np.nan, "fight_frequency_24m": 0.0,
         "ewma_win_rate": np.nan, "ewma_finish_rate": np.nan,
         "ewma_slpm": np.nan, "ewma_kd_per_fight": np.nan,
-        "td_def": np.nan, "sig_str_def": np.nan,
+        "td_def": np.nan, "sig_str_def": np.nan, "sig_abs_per_min": np.nan,
         "ko_loss_rate": np.nan, "sub_loss_rate": np.nan,
         "finish_loss_rate": np.nan, "never_finished": 0,
     }
@@ -522,7 +530,7 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             # Defensive + durability — added so the model can see e.g. high
             # TDD vs high TD output (striker-vs-grappler asymmetry) and
             # finish history (chin / submission defence).
-            "td_def", "sig_str_def",
+            "td_def", "sig_str_def", "sig_abs_per_min",
             "ko_loss_rate", "sub_loss_rate", "finish_loss_rate",
         ]
 
@@ -586,7 +594,7 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
         # absolute rates retain the signal that "both fighters are KO artists".
         for k in ("ko_rate", "sub_rate", "finish_rate", "sub_per_min", "td_per_min",
                   "slpm", "sapm", "sig_acc", "ctrl_ratio",
-                  "td_def", "sig_str_def",
+                  "td_def", "sig_str_def", "sig_abs_per_min",
                   "ko_loss_rate", "sub_loss_rate", "finish_loss_rate", "never_finished"):
             row[f"a_{k}"] = a_feat.get(k, np.nan)
             row[f"b_{k}"] = b_feat.get(k, np.nan)
@@ -653,6 +661,103 @@ def build_fight_feature_rows(session: Session, since_year: int = 2001) -> pd.Dat
             else np.nan
         )
 
+        # ===== Offence × Opponent-Defence interactions ======================
+        # Pair every offensive metric with the opponent's matching defensive
+        # metric so the model sees "what A actually achieves against B" — not
+        # "what A averages over a generic opponent". Trees can learn this
+        # multiplicatively, but explicit cross features cut variance on small
+        # samples and surface as ranked feature importance.
+        a_sigdef = a_feat.get("sig_str_def")
+        b_sigdef = b_feat.get("sig_str_def")
+        a_kor    = a_feat.get("ko_rate")
+        b_kor    = b_feat.get("ko_rate")
+        a_subr   = a_feat.get("sub_rate")
+        b_subr   = b_feat.get("sub_rate")
+        a_kloss  = a_feat.get("ko_loss_rate")
+        b_kloss  = b_feat.get("ko_loss_rate")
+        a_sloss  = a_feat.get("sub_loss_rate")
+        b_sloss  = b_feat.get("sub_loss_rate")
+        a_sigacc = a_feat.get("sig_acc")
+        b_sigacc = b_feat.get("sig_acc")
+
+        def _gated(volume, opp_def_rate):
+            """volume × (1 - opponent's defence rate). NaN-safe."""
+            if any(v is None or pd.isna(v) for v in (volume, opp_def_rate)):
+                return np.nan
+            return float(volume) * (1.0 - float(opp_def_rate))
+
+        # Effective sig-strike volume — A's per-min landed × B's miss rate.
+        exp_a_strikes = _gated(a_slpm_v, b_sigdef)
+        exp_b_strikes = _gated(b_slpm_v, a_sigdef)
+        row["expected_a_strikes_landed"] = exp_a_strikes
+        row["expected_b_strikes_landed"] = exp_b_strikes
+        row["diff_expected_strikes_landed"] = (
+            (exp_a_strikes - exp_b_strikes)
+            if not (pd.isna(exp_a_strikes) or pd.isna(exp_b_strikes))
+            else np.nan
+        )
+
+        # Effective sig-strike accuracy — A's accuracy gated by B's defence.
+        # Captures "A is sniper-accurate but B is hard to hit".
+        exp_a_sigacc = _gated(a_sigacc, b_sigdef)
+        exp_b_sigacc = _gated(b_sigacc, a_sigdef)
+        row["expected_a_sig_acc"] = exp_a_sigacc
+        row["expected_b_sig_acc"] = exp_b_sigacc
+        row["diff_expected_sig_acc"] = (
+            (exp_a_sigacc - exp_b_sigacc)
+            if not (pd.isna(exp_a_sigacc) or pd.isna(exp_b_sigacc))
+            else np.nan
+        )
+
+        # Effective takedown volume — A's TD/min × (1 - B's TDD). The simple
+        # `wrestled_pressure` above is the opposite-direction view (defence);
+        # this is the offensive-direction view.
+        exp_a_td = _gated(a_tdpm, b_tddef)
+        exp_b_td = _gated(b_tdpm, a_tddef)
+        row["expected_a_td_landed"] = exp_a_td
+        row["expected_b_td_landed"] = exp_b_td
+        row["diff_expected_td_landed"] = (
+            (exp_a_td - exp_b_td)
+            if not (pd.isna(exp_a_td) or pd.isna(exp_b_td))
+            else np.nan
+        )
+
+        # Method-specific finish threats — A's KO/sub rate × B's KO/sub
+        # vulnerability. Replaces `finish_threat` (which was finish-rate
+        # blended) with finer-grained per-method signals the prop model
+        # benefits from most.
+        exp_a_ko = _mul(a_kor, b_kloss)
+        exp_b_ko = _mul(b_kor, a_kloss)
+        row["expected_a_ko_threat"] = exp_a_ko
+        row["expected_b_ko_threat"] = exp_b_ko
+        row["diff_expected_ko_threat"] = (
+            (exp_a_ko - exp_b_ko)
+            if not (pd.isna(exp_a_ko) or pd.isna(exp_b_ko))
+            else np.nan
+        )
+
+        exp_a_sub = _mul(a_subr, b_sloss)
+        exp_b_sub = _mul(b_subr, a_sloss)
+        row["expected_a_sub_threat"] = exp_a_sub
+        row["expected_b_sub_threat"] = exp_b_sub
+        row["diff_expected_sub_threat"] = (
+            (exp_a_sub - exp_b_sub)
+            if not (pd.isna(exp_a_sub) or pd.isna(exp_b_sub))
+            else np.nan
+        )
+
+        # Strikes A will take from B — opp's striking pace × my hit-ability.
+        # A high value here is a chin/durability red flag for A.
+        exp_a_taken = _gated(b_slpm_v, a_sigdef)
+        exp_b_taken = _gated(a_slpm_v, b_sigdef)
+        row["expected_a_strikes_taken"] = exp_a_taken
+        row["expected_b_strikes_taken"] = exp_b_taken
+        row["diff_expected_strikes_taken"] = (
+            (exp_a_taken - exp_b_taken)
+            if not (pd.isna(exp_a_taken) or pd.isna(exp_b_taken))
+            else np.nan
+        )
+
         rows.append(row)
 
         if (i + 1) % 500 == 0:
@@ -697,6 +802,7 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         # Defensive + durability (Week 7)
         ("a_td_def",          "b_td_def"),
         ("a_sig_str_def",     "b_sig_str_def"),
+        ("a_sig_abs_per_min", "b_sig_abs_per_min"),
         ("a_ko_loss_rate",    "b_ko_loss_rate"),
         ("a_sub_loss_rate",   "b_sub_loss_rate"),
         ("a_finish_loss_rate","b_finish_loss_rate"),
@@ -705,6 +811,13 @@ def symmetrize_rows(base: pd.DataFrame) -> pd.DataFrame:
         ("a_finish_threat",   "b_finish_threat"),
         ("a_keep_standing",   "b_keep_standing"),
         ("a_wrestled_pressure","b_wrestled_pressure"),
+        # Offence × opp-defence cross features
+        ("expected_a_strikes_landed", "expected_b_strikes_landed"),
+        ("expected_a_sig_acc",        "expected_b_sig_acc"),
+        ("expected_a_td_landed",      "expected_b_td_landed"),
+        ("expected_a_ko_threat",      "expected_b_ko_threat"),
+        ("expected_a_sub_threat",     "expected_b_sub_threat"),
+        ("expected_a_strikes_taken",  "expected_b_strikes_taken"),
         # Post-peak (Week 2)
         ("a_post_peak", "b_post_peak"),
         # Physicals (week 3)

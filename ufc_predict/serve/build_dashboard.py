@@ -1147,7 +1147,6 @@ def build(output_dir: Path = OUTPUT_DIR) -> None:
             bout["b_fighter_type"] = bout.get("b_fighter_type", "")
 
             # Stat color classes for the comparison table (raw values before formatting)
-            _raw = lambda k: bout.get(k)  # raw value from JSON (still numeric here)
             bout["col_streak"] = _stat_colors(
                 bout.get("a_win_streak"), bout.get("b_win_streak")
             )

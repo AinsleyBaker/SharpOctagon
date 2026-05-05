@@ -331,8 +331,13 @@ def build_upcoming_features(session: Session) -> pd.DataFrame:
         )
         a_st = (a_stance or "").strip().lower()
         b_st = (b_stance or "").strip().lower()
-        _is_o = lambda s: s in {"orthodox", "switch", ""}
-        _is_s = lambda s: s == "southpaw"
+
+        def _is_o(s):
+            return s in {"orthodox", "switch", ""}
+
+        def _is_s(s):
+            return s == "southpaw"
+
         row["a_southpaw_vs_b_orthodox"] = int(_is_s(a_st) and _is_o(b_st))
         row["a_orthodox_vs_b_southpaw"] = int(_is_o(a_st) and _is_s(b_st))
         row["both_southpaw"]            = int(_is_s(a_st) and _is_s(b_st))

@@ -11,8 +11,10 @@ from pathlib import Path
 import pandas as pd
 
 from ufc_predict.models.predict import (
-    calibrate_conformal, calibrate_conformal_mondrian,
-    calibrate_conformal_locally_weighted, save_conformal_quantiles,
+    calibrate_conformal,
+    calibrate_conformal_locally_weighted,
+    calibrate_conformal_mondrian,
+    save_conformal_quantiles,
 )
 
 log = logging.getLogger(__name__)

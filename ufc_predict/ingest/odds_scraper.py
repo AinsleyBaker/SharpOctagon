@@ -836,6 +836,7 @@ def update_upcoming_kelly(bouts: list[ScrapedBout], session: Session) -> None:
     """
     import json
     from pathlib import Path
+
     from ufc_predict.eval.evaluate import american_to_decimal, kelly_fraction_fn
 
     preds_path = Path("data/predictions.json")

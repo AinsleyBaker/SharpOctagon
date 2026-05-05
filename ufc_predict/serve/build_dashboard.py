@@ -747,8 +747,9 @@ def _enrich_past_events(past_events: list[dict]) -> list[dict]:
         return []
 
     try:
-        from ufc_predict.db.session import get_session_factory
         from sqlalchemy import text
+
+        from ufc_predict.db.session import get_session_factory
         factory = get_session_factory()
     except Exception:
         # No DB available — just mark events as past with no outcomes.

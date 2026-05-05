@@ -24,11 +24,13 @@ import pandas as pd
 from sqlalchemy.orm import Session
 
 from ufc_predict.db.models import Fighter, UpcomingBout
-from ufc_predict.eval.evaluate import kelly_fraction_fn, american_to_decimal
 from ufc_predict.eval.bet_analysis import analyze_all_fights
+from ufc_predict.eval.evaluate import american_to_decimal, kelly_fraction_fn
 from ufc_predict.features.aso_features import (
-    fighter_aso_stats, _fighter_age,
-    normalize_weight_class, post_peak_years,
+    _fighter_age,
+    fighter_aso_stats,
+    normalize_weight_class,
+    post_peak_years,
 )
 from ufc_predict.models.prop_models import load_prop_artifacts, predict_props
 from ufc_predict.models.train import (
@@ -387,7 +389,10 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     # inflated for days-since-last-fight so an inactive fighter's uncertainty
     # is reflected at predict time, mirroring the in-training inactivity rule.
     from ufc_predict.features.ratings import (
-        load_latest_ratings, lookup_ratings, load_latest_sos, lookup_sos,
+        load_latest_ratings,
+        load_latest_sos,
+        lookup_ratings,
+        lookup_sos,
     )
     ratings_snapshot = load_latest_ratings()
     sos_snapshot = load_latest_sos()
@@ -550,8 +555,11 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     predictions_list = _df_to_records(output, bout_id_to_props)
     try:
         from ufc_predict.ingest.sportsbet_scraper import (
-            cache_age_hours, fetch_ufc_markets, load_markets, save_markets,
+            cache_age_hours,
+            fetch_ufc_markets,
+            load_markets,
             match_odds_to_predictions,
+            save_markets,
         )
         # Prefer fresh data: live-fetch if cache is missing or older than the
         # threshold. Fall back to stale cache when live fetch fails (CI is

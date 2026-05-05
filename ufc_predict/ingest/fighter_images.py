@@ -172,9 +172,10 @@ def refresh_for_upcoming(db_url: str | None = None) -> dict[str, str]:
     Fetch image URLs for all fighters in upcoming bouts.
     Returns the updated cache dict.
     """
-    from ufc_predict.db.session import get_session_factory
-    from ufc_predict.db.models import Fighter, UpcomingBout
     from datetime import date
+
+    from ufc_predict.db.models import Fighter, UpcomingBout
+    from ufc_predict.db.session import get_session_factory
 
     cache = load_cache()
     factory = get_session_factory(db_url)

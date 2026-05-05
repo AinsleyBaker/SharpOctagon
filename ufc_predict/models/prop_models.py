@@ -100,8 +100,9 @@ def _load_labeled_matrix(db_url: str | None = None) -> pd.DataFrame:
     Load the feature matrix and attach method + round labels from DB.
     The feature matrix already has fight_id and label columns.
     """
-    from ufc_predict.db.session import get_session_factory
     from sqlalchemy import text
+
+    from ufc_predict.db.session import get_session_factory
 
     if not FEATURE_MATRIX_PATH.exists():
         raise FileNotFoundError(f"Feature matrix not found at {FEATURE_MATRIX_PATH}")
@@ -593,6 +594,7 @@ def run_cv(feature_cols: list[str], db_url: str | None = None,
 def run_training(db_url: str | None = None) -> None:
     """CLI entry point: train prop models and save artifacts."""
     import json
+
     from ufc_predict.models.train import FEATURE_COLS
 
     feature_cols_path = MODELS_DIR / "feature_cols.json"

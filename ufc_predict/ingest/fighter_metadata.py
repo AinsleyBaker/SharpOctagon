@@ -21,7 +21,10 @@ from pathlib import Path
 import requests
 
 from ufc_predict.ingest.fighter_images import (
-    download_image, fetch_image_url, fetch_wikipedia_image, _name_to_slug,
+    _name_to_slug,
+    download_image,
+    fetch_image_url,
+    fetch_wikipedia_image,
 )
 
 log = logging.getLogger(__name__)
@@ -245,9 +248,10 @@ def _fallback_record_from_db(name: str, session) -> tuple[str, dict]:
     If UFC.com didn't expose a record, compute it from our local fight DB.
     Returns (record_str, stats_dict).
     """
+    from datetime import date as _date
+
     from ufc_predict.db.models import Fighter
     from ufc_predict.features.aso_features import fighter_aso_stats
-    from datetime import date as _date
 
     fighter = session.query(Fighter).filter(Fighter.full_name == name).first()
     if not fighter:
@@ -270,10 +274,11 @@ def _full_stats_from_db(name: str, session) -> dict:
     Pull every field used by the dashboard stats panel for this fighter.
     Lets preview events (no predictions yet) still show meaningful data.
     """
+    import math
+    from datetime import date as _date
+
     from ufc_predict.db.models import Fighter
     from ufc_predict.features.aso_features import fighter_aso_stats
-    from datetime import date as _date
-    import math
 
     fighter = session.query(Fighter).filter(Fighter.full_name == name).first()
     if not fighter:
@@ -398,6 +403,7 @@ def enrich_physicals(
       limit: cap how many fighters to attempt this run.
     """
     from sqlalchemy import text
+
     from ufc_predict.db.models import Fighter
     from ufc_predict.db.session import get_session_factory
 

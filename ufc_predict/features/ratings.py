@@ -18,11 +18,11 @@ from __future__ import annotations
 import json
 import logging
 import math
+from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import DefaultDict
-from collections import defaultdict
 
 import pandas as pd
 

@@ -27,10 +27,13 @@ def ingest_sportsbet():
     """Fetch UFC odds from SportsBet Australia and update predictions.json."""
     import json
     from pathlib import Path
-    from ufc_predict.ingest.sportsbet_scraper import (
-        fetch_ufc_markets, match_odds_to_predictions, save_markets,
-    )
+
     from ufc_predict.eval.bet_analysis import analyze_all_fights
+    from ufc_predict.ingest.sportsbet_scraper import (
+        fetch_ufc_markets,
+        match_odds_to_predictions,
+        save_markets,
+    )
 
     preds_path = Path("data/predictions.json")
     if not preds_path.exists():

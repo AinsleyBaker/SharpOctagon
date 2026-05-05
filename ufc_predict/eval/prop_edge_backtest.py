@@ -26,8 +26,12 @@ import pandas as pd
 from sqlalchemy import text
 
 from ufc_predict.eval.evaluate import (
-    KELLY_FRACTION, STARTING_BANKROLL, american_odds_to_implied_prob,
-    american_to_decimal, kelly_fraction, remove_vig,
+    KELLY_FRACTION,
+    STARTING_BANKROLL,
+    american_odds_to_implied_prob,
+    american_to_decimal,
+    kelly_fraction,
+    remove_vig,
 )
 
 log = logging.getLogger(__name__)

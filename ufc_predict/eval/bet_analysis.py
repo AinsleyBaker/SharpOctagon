@@ -50,6 +50,26 @@ _BET_TYPE_TO_MARKET: dict[str, str] = {
     "winning_round":       "wins_round",  # primary mapping; ends_round also overlaps
     "alt_finish_timing":   "ends_round",
     "alt_round":           "wins_round",
+    # Method×round joint legs share the same edge profile as winning_round bets
+    # (both are "fighter-X-finishes-in-round-Y" outcomes); route them to the
+    # same backtested market class so the empirical-ROI gate applies.
+    "method_round":         "wins_round",
+    # Neutral version is the closest analogue to "ends_round" (which is also
+    # "did the fight end in round N" — backtested in prop_edge_backtest.json).
+    "method_round_neutral": "ends_round",
+    # Multi-round ranges roll up multiple wins_round legs into one priced bet
+    # — same model+market signal, just a wider hit window.
+    "method_round_range":   "wins_round",
+    # Totals markets — quantile-CDF derived. Each maps to a per-target
+    # market class so the totals_edge_backtest can produce per-class bucket
+    # ROIs and the gate stays granular.
+    "total_sig_strikes_combined": "total_sig_strikes_combined",
+    "total_sig_strikes_a":        "total_sig_strikes_a",
+    "total_sig_strikes_b":        "total_sig_strikes_b",
+    "total_takedowns_combined":   "total_takedowns_combined",
+    "total_takedowns_a":          "total_takedowns_a",
+    "total_takedowns_b":          "total_takedowns_b",
+    "total_knockdowns_combined":  "total_knockdowns_combined",
 }
 
 # Threshold for marking a bucket "historically profitable" — guard against
@@ -59,7 +79,12 @@ _MIN_BUCKET_ROI_PCT = 5.0
 
 
 def _load_backtests() -> tuple[list, dict]:
-    """Lazy-load both moneyline and prop backtest results."""
+    """Lazy-load moneyline + prop + totals backtest results.
+
+    Totals buckets are merged into the prop dict so the bet-type → market_class
+    mapping in `_BET_TYPE_TO_MARKET` resolves uniformly. Each totals market
+    class (e.g. ``total_sig_strikes_combined``) gets its own entry.
+    """
     global _BACKTEST_ML, _BACKTEST_PROPS
     if _BACKTEST_ML is not None and _BACKTEST_PROPS is not None:
         return _BACKTEST_ML, _BACKTEST_PROPS
@@ -96,6 +121,22 @@ def _load_backtests() -> tuple[list, dict]:
                 ))
         except (json.JSONDecodeError, KeyError, TypeError):
             _BACKTEST_PROPS = {}
+
+    # Totals — same shape as the prop backtest, merged into the same dict.
+    totals_path = Path("models/totals_edge_backtest.json")
+    if totals_path.exists():
+        try:
+            data = json.loads(totals_path.read_text(encoding="utf-8"))
+            for b in data.get("buckets", []):
+                if int(b.get("n", 0)) <= 0:
+                    continue
+                mc = b.get("market_class", "")
+                _BACKTEST_PROPS.setdefault(mc, []).append((
+                    float(b["edge_lo"]), float(b["edge_hi"]),
+                    float(b.get("flat_roi_pct", 0)), int(b.get("n", 0)),
+                ))
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
 
     return _BACKTEST_ML, _BACKTEST_PROPS
 
@@ -321,6 +362,49 @@ def _parse_total_rounds_line(
     if lname in ("over", "under"):
         return lname, 2.5
     return None
+
+
+def compute_method_round_joint(
+    props: dict, is_five_round: bool = False
+) -> dict[str, float]:
+    """Joint method×round probabilities derived from the prop and round heads.
+
+    Returns a dict with keys like ``A_KO_R2``, ``B_SUB_R3`` etc., one per
+    (side, finish_method, round) combination within the fight's max round.
+    Decisions don't apply (no round attribution).
+
+    Invariant (verified by tests): for each (side, method) pair,
+        Σ_r P(side wins by method in R_r) == prob_{side}_wins_{method}
+    when the round-head output covers all rounds in 1..max_round.
+
+    The implementation re-normalises the round-head P(R_r | finish) within
+    [1..max_round] so 3-round bouts don't have mass leaking to R4/R5 and
+    breaking the marginal sum.
+    """
+    out: dict[str, float] = {}
+    if not props:
+        return out
+    max_round = 5 if is_five_round else 3
+    prob_rounds = props.get("prob_rounds") or {}
+    prob_finish = float(props.get("prob_finish", 0.0))
+    if prob_finish <= 1e-9:
+        return out
+    raw = {}
+    total = 0.0
+    for r in range(1, max_round + 1):
+        v = float(prob_rounds.get(f"R{r}", 0.0)) / prob_finish
+        raw[r] = max(0.0, v)
+        total += raw[r]
+    if total <= 1e-9:
+        return out
+    cond = {r: raw[r] / total for r in raw}
+    for side in ("A", "B"):
+        p_ko = float(props.get(f"prob_{side.lower()}_wins_ko_tko", 0.0))
+        p_sub = float(props.get(f"prob_{side.lower()}_wins_sub", 0.0))
+        for r in range(1, max_round + 1):
+            out[f"{side}_KO_R{r}"] = p_ko * cond[r]
+            out[f"{side}_SUB_R{r}"] = p_sub * cond[r]
+    return out
 
 
 def _prob_over_under(
@@ -618,6 +702,163 @@ def analyze_fight_bets(prediction: dict) -> list[dict]:
         else:
             _add("winning_round", f"Fight ends by finish in Round {rnum}",
                  p_finish_rn, odds, _wk_finish_any(rounds=(rnum,)))
+
+    # ---- Method × round joint ("A wins by KO in R2") ---------------------
+    # The joint probabilities are exposed as model outputs even when no
+    # SportsBet line targets the exact combination — they're useful for
+    # downstream reporting (insights / portfolio analysis) and feed the
+    # priced bet emission below.
+    method_round_probs = compute_method_round_joint(props or {}, is_five_round)
+    prediction["_method_round_probs"] = method_round_probs  # for tests / inspection
+
+    # 1. Fighter-attributed method × round (single round per leg)
+    name_for = {"A": name_a, "B": name_b}
+    for entry in (sb.get("method_round_fighter") or []):
+        side = entry.get("side")
+        method = entry.get("method")  # "KO" or "SUB"
+        rnd = int(entry.get("round") or 0)
+        odds = float(entry.get("odds") or 0)
+        if side not in ("A", "B") or method not in ("KO", "SUB") or rnd < 1 or rnd > 5:
+            continue
+        key = f"{side}_{method}_R{rnd}"
+        our_p = float(method_round_probs.get(key, 0.0))
+        method_label = "KO/TKO" if method == "KO" else "Submission"
+        _add(
+            "method_round",
+            f"{name_for[side]} wins by {method_label} in R{rnd}",
+            our_p, odds,
+            _wk_method(side, method, (rnd,)),
+        )
+
+    # 2. Neutral method × round (either fighter)
+    for entry in (sb.get("method_round_neutral") or []):
+        method = entry.get("method")
+        rnd = int(entry.get("round") or 0)
+        odds = float(entry.get("odds") or 0)
+        if method not in ("KO", "SUB") or rnd < 1 or rnd > 5:
+            continue
+        key_a = f"A_{method}_R{rnd}"
+        key_b = f"B_{method}_R{rnd}"
+        our_p = (
+            float(method_round_probs.get(key_a, 0.0))
+            + float(method_round_probs.get(key_b, 0.0))
+        )
+        method_label = "KO/TKO" if method == "KO" else "Submission"
+        _add(
+            "method_round_neutral",
+            f"Fight ends by {method_label} in R{rnd}",
+            our_p, odds,
+            _wk_neutral_method(method, (rnd,)),
+        )
+
+    # 3. Fighter × method × round-range (e.g. "Topuria KO in Rounds 1-2")
+    for entry in (sb.get("method_round_ranges") or []):
+        side = entry.get("side")
+        method = entry.get("method")
+        rounds = tuple(entry.get("rounds") or ())
+        odds = float(entry.get("odds") or 0)
+        if side not in ("A", "B") or method not in ("KO", "SUB") or not rounds:
+            continue
+        our_p = sum(
+            float(method_round_probs.get(f"{side}_{method}_R{r}", 0.0))
+            for r in rounds
+        )
+        method_label = "KO/TKO" if method == "KO" else "Submission"
+        round_label = (
+            f"R{rounds[0]} or R{rounds[1]}"
+            if len(rounds) == 2
+            else "R" + ", R".join(str(r) for r in rounds[:-1]) + f" or R{rounds[-1]}"
+        )
+        _add(
+            "method_round_range",
+            f"{name_for[side]} wins by {method_label} in {round_label}",
+            our_p, odds,
+            _wk_method(side, method, rounds),
+        )
+
+    # ---- Round-survival pairs (explicit "reaches RN" + "ends before RN") --
+    # The earlier round_survival loop already emits these one-by-one when
+    # SportsBet posts both Yes/No selections. This pass guarantees that for
+    # every round we have prob mass for, BOTH legs of the pair are emitted
+    # even if only one was scraped — keeping the dedup logic able to collapse
+    # the price comparison cleanly. We mark the synthetic side with zero
+    # odds so it filters out unless real prices were already added.
+    if prob_rounds:
+        rs_market = sb.get("round_survival") or {}
+        seen_legs = set()
+        for k in rs_market:
+            m = re.search(r"Start R(\d)", k)
+            if m:
+                rn = int(m.group(1))
+                lname = k.lower()
+                seen_legs.add((rn, "yes" if "yes" in lname else "no"))
+        for rn in range(2, 6):
+            p_early = sum(prob_rounds.get(f"R{i}", 0) for i in range(1, rn))
+            p_survive = max(0.0, 1.0 - p_early)
+            for direction, label_p, keys in (
+                ("yes", p_survive,
+                 _wk_finish_any(rounds=range(rn, 6)) | _wk_dec_any()),
+                ("no", p_early, _wk_finish_any(rounds=range(1, rn))),
+            ):
+                if (rn, direction) in seen_legs:
+                    continue  # real price already posted
+                if label_p < 1e-4:
+                    continue  # nothing to bet on
+                desc = (
+                    f"Fight reaches Round {rn}"
+                    if direction == "yes"
+                    else f"Finish before Round {rn}"
+                )
+                _add("round_survival", desc, label_p, 0.0, keys)
+
+    # ---- Totals (sig strikes / takedowns / knockdowns over X.5) ----------
+    # Each entry from the SportsBet scraper has shape:
+    #     {"line": 165.5, "over_odds": 1.91, "under_odds": 1.83}
+    # Our P(over) comes from the totals quantile model's per-row CDF; the
+    # sentinel outcome_keys ``["TOTAL|target|side|line"]`` lets the dashboard
+    # grader score the bet against the actual fight stats.
+    totals_quantiles = prediction.get("totals_quantiles") or {}
+    if totals_quantiles:
+        from ufc_predict.models.totals_models import prob_over as _prob_over
+
+        target_labels = {
+            "total_sig_strikes_combined": "Total significant strikes",
+            "total_sig_strikes_a":        f"{name_a} significant strikes",
+            "total_sig_strikes_b":        f"{name_b} significant strikes",
+            "total_takedowns_combined":   "Total takedowns",
+            "total_takedowns_a":          f"{name_a} takedowns",
+            "total_takedowns_b":          f"{name_b} takedowns",
+            "total_knockdowns_combined":  "Total knockdowns",
+        }
+        for target, label in target_labels.items():
+            entries = sb.get(target) or []
+            quantiles = totals_quantiles.get(target)
+            if not entries or not quantiles:
+                continue
+            for entry in entries:
+                line = entry.get("line")
+                over_odds = entry.get("over_odds")
+                under_odds = entry.get("under_odds")
+                if line is None:
+                    continue
+                p_over = _prob_over(line, quantiles)
+                p_under = 1.0 - p_over
+                if over_odds:
+                    _add(
+                        target,
+                        f"{label} over {line}",
+                        p_over,
+                        float(over_odds),
+                        [f"TOTAL|{target}|over|{line}"],
+                    )
+                if under_odds:
+                    _add(
+                        target,
+                        f"{label} under {line}",
+                        p_under,
+                        float(under_odds),
+                        [f"TOTAL|{target}|under|{line}"],
+                    )
 
     # Deduplicate by outcome identity, not description. The same atomic outcome
     # (e.g. "fight goes to decision" → {A|DEC|DEC, B|DEC|DEC}) appears in

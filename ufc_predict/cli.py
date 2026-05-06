@@ -76,9 +76,18 @@ def train_props(db_url):
     run_training(db_url=db_url)
 
 
+@train.command("totals")
+@click.option("--db-url", default=None, help="Override DB URL")
+@click.option("--no-cv", is_flag=True, default=False, help="Skip OOF cross-validation")
+def train_totals(db_url, no_cv):
+    """Train totals quantile regression models (sig strikes / takedowns / knockdowns)."""
+    from ufc_predict.models.totals_models import run_training
+    run_training(db_url=db_url, run_cv_too=not no_cv)
+
+
 @predict.command("dashboard")
 def build_dashboard():
     """Regenerate the static HTML dashboard from predictions.json."""
     from ufc_predict.serve.build_dashboard import build
     build()
-    click.echo("Dashboard built → docs/index.html")
+    click.echo("Dashboard built -> docs/index.html")

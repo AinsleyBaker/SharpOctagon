@@ -503,6 +503,69 @@
   .dq-limited { color: var(--yellow); }
   .dq-sparse  { color: var(--muted); }
 
+  /* ─── Match insights ─── */
+  .insights-panel {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.85rem 1rem; margin-bottom: 0.9rem;
+  }
+  .insights-head {
+    font-size: var(--xs); text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--matrix); margin-bottom: 0.6rem;
+  }
+  .insights-factors { display: grid; grid-template-columns: 1fr; gap: 0.45rem; margin-bottom: 0.7rem; }
+  @media (min-width: 720px) {
+    .insights-factors { grid-template-columns: repeat(3, 1fr); }
+  }
+  .insight-factor {
+    background: #0a0a0c; border-left: 2px solid #2a2a2e; border-radius: 6px;
+    padding: 0.5rem 0.65rem;
+  }
+  .insight-factor.insight-side-a { border-left-color: var(--red); }
+  .insight-factor.insight-side-b { border-left-color: var(--blue); }
+  .insight-factor-head {
+    display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .insight-factor-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+  }
+  .insight-factor-mag {
+    flex: 0 0 60px; height: 4px; border-radius: 2px;
+    background: linear-gradient(to right, var(--matrix) var(--mag, 0%), #1a1a1d var(--mag, 0%));
+  }
+  .insight-factor-summary { font-size: var(--sm); color: #d8d8da; line-height: 1.35; }
+  .insights-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 0.9rem; margin-bottom: 0.6rem; }
+  .insight-bar { font-size: var(--xs); }
+  .insight-bar-label {
+    color: var(--muted); margin-bottom: 0.18rem;
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.6rem;
+  }
+  .insight-bar-row { display: flex; align-items: center; gap: 0.45rem; font-variant-numeric: tabular-nums; }
+  .insight-bar-val { min-width: 2.6rem; color: #888; font-size: var(--sm); }
+  .insight-bar-val.left { text-align: right; }
+  .insight-bar-val.right { text-align: left; }
+  .insight-bar-val.lead { color: #f0f0f2; font-weight: 600; }
+  .insight-bar-track {
+    flex: 1; height: 6px; background: #0e0e10; border-radius: 3px; overflow: hidden;
+    position: relative;
+  }
+  .insight-bar-fill {
+    position: absolute; top: 0; bottom: 0;
+  }
+  .insight-bar-a { left: 50%; background: var(--red); transform: translateX(-100%); }
+  .insight-bar-b { left: 50%; background: var(--blue); }
+  .insights-drivers {
+    list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem;
+  }
+  .insight-driver {
+    font-size: var(--sm); color: #c8c8ca; padding-left: 0.85rem;
+    position: relative;
+  }
+  .insight-driver::before {
+    content: ''; position: absolute; left: 0; top: 0.5rem; width: 4px; height: 4px;
+    background: var(--matrix); border-radius: 50%;
+  }
+
   /* ─── Bet table ─── */
   .bet-section {
     background: var(--card-2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
@@ -1208,6 +1271,49 @@
               </div>
 
             </div>
+
+            {# Match insights — top factors, stat bars, confidence drivers #}
+            {% if bout.insights and (bout.insights.top_factors or bout.insights.stat_bars) %}
+            <div class="insights-panel">
+              <div class="insights-head">⟁ Match insights</div>
+              {% if bout.insights.top_factors %}
+              <div class="insights-factors">
+                {% for f in bout.insights.top_factors %}
+                <div class="insight-factor insight-side-{{ f.direction }}">
+                  <div class="insight-factor-head">
+                    <span class="insight-factor-label">{{ f.label }}</span>
+                    <span class="insight-factor-mag" style="--mag: {{ (f.magnitude*100)|round(0) }}%"></span>
+                  </div>
+                  <div class="insight-factor-summary">{{ f.summary }}</div>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% if bout.insights.stat_bars %}
+              <div class="insights-bars">
+                {% for bar in bout.insights.stat_bars %}
+                <div class="insight-bar">
+                  <div class="insight-bar-label">{{ bar.label }}</div>
+                  <div class="insight-bar-row">
+                    <span class="insight-bar-val left {% if bar.advantage_side == 'a' %}lead{% endif %}">{{ bar.a_display }}</span>
+                    <div class="insight-bar-track">
+                      <div class="insight-bar-fill insight-bar-{{ bar.advantage_side }}" style="width: {{ bar.advantage_pct }}%"></div>
+                    </div>
+                    <span class="insight-bar-val right {% if bar.advantage_side == 'b' %}lead{% endif %}">{{ bar.b_display }}</span>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% if bout.insights.confidence_drivers %}
+              <ul class="insights-drivers">
+                {% for d in bout.insights.confidence_drivers %}
+                <li class="insight-driver">{{ d }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+            {% endif %}
 
             <!-- Bet table -->
             {% if bout.has_bets %}

@@ -144,6 +144,16 @@ _MARKET_MAP: dict[str, str] = {
 
 def _market_type(name: str) -> str:
     lname = name.lower()
+    # Totals markets (sig strikes / takedowns / knockdowns) parse via a
+    # dedicated path — _annotate_totals_markets — and must NOT be bucketed
+    # under total_rounds / over_under here. Without this guard, the
+    # "Significant Strikes Over/Under" market name matches "over/under" and
+    # leaks into total_rounds, breaking the totals quantile bet emission.
+    if any(kw in lname for kw in (
+        "significant strike", "sig strike", "sig. strike", "total strikes",
+        "total strike", "takedown", "knockdown",
+    )):
+        return "other"
     for key, mtype in _MARKET_MAP.items():
         if key in lname:
             return mtype
@@ -200,7 +210,287 @@ def _annotate_round_survival(raw_markets: list[dict], out: dict) -> None:
                 out["round_survival"][key] = price
 
 
-def _parse_markets(raw_markets: list[dict]) -> dict[str, dict[str, float]]:
+_TOTALS_LINE_RE = re.compile(r"(over|under)\s+(\d+\.?\d*)", re.IGNORECASE)
+
+
+def _classify_totals_market(mname: str, fa_raw: str, fb_raw: str) -> str | None:
+    """Identify which totals market a SportsBet market name represents.
+
+    Returns one of: total_sig_strikes_combined, total_sig_strikes_a,
+    total_sig_strikes_b, total_takedowns_combined, total_takedowns_a,
+    total_takedowns_b, total_knockdowns_combined — or None if the market
+    isn't a recognised totals market.
+    """
+    n = mname.lower()
+    has_strike = ("significant strike" in n or "sig strike" in n or "sig. strike" in n)
+    has_total_strike = "total strike" in n
+    is_takedown = "takedown" in n
+    is_knockdown = "knockdown" in n
+    if not (has_strike or has_total_strike or is_takedown or is_knockdown):
+        return None
+    if "over/under" not in n and "total " not in n and "totals " not in n:
+        # Some markets just say "Knockdowns Over Under" — still match
+        if "over" not in n and "under" not in n:
+            return None
+
+    fa = (fa_raw or "").lower()
+    fb = (fb_raw or "").lower()
+    fa_last = fa.split()[-1] if fa else ""
+    fb_last = fb.split()[-1] if fb else ""
+    is_fa = bool(fa_last and fa_last in n)
+    is_fb = bool(fb_last and fb_last in n)
+    # If both names match, neither is a per-fighter market — fall back to combined
+    if is_fa and is_fb:
+        is_fa = is_fb = False
+    side = "a" if is_fa else ("b" if is_fb else None)
+
+    if has_strike or has_total_strike:
+        if side == "a":
+            return "total_sig_strikes_a"
+        if side == "b":
+            return "total_sig_strikes_b"
+        return "total_sig_strikes_combined"
+    if is_takedown:
+        if side == "a":
+            return "total_takedowns_a"
+        if side == "b":
+            return "total_takedowns_b"
+        return "total_takedowns_combined"
+    if is_knockdown:
+        # Per-fighter knockdowns are rare; we collapse to combined since
+        # the model's _a/_b knockdown targets aren't separately exposed.
+        return "total_knockdowns_combined"
+    return None
+
+
+_METHOD_ROUND_FIGHTER_RE = re.compile(
+    r"^(?P<who>.+?)\s+(?P<method>KO/TKO|Submission|Sub)\s*&\s*Round\s+(?P<rnd>\d)\s*$",
+    re.IGNORECASE,
+)
+_METHOD_ROUND_NEUTRAL_RE = re.compile(
+    r"^(?P<method>KO/TKO|Submission|Sub)\s*&\s*Round\s+(?P<rnd>\d)\s*$",
+    re.IGNORECASE,
+)
+_ROUND_COMBO_RANGE_RE = re.compile(
+    r"^(?P<who>.+?)\s+to\s+win\s+by\s+(?P<method>KO/TKO|Submission|Sub)"
+    r"\s+in\s+Rounds?\s+(?P<rounds>[\d,\s]+(?:\s+or\s+\d+)?)\s*$",
+    re.IGNORECASE,
+)
+
+
+def _canon_method_token(token: str) -> str:
+    t = token.upper().replace(" ", "")
+    if "KO" in t or t == "TKO":
+        return "KO"
+    if "SUB" in t:
+        return "SUB"
+    return ""
+
+
+def _parse_round_range(spec: str) -> tuple[int, ...]:
+    """Parse SportsBet's round-range syntax. Examples:
+        "1 or 2"           -> (1, 2)
+        "1,2 or 3"         -> (1, 2, 3)
+        "2,3 or 4"         -> (2, 3, 4)
+    """
+    cleaned = spec.replace(",", " ").lower().replace(" or ", " ")
+    rounds: list[int] = []
+    for tok in cleaned.split():
+        try:
+            r = int(tok)
+            if 1 <= r <= 5:
+                rounds.append(r)
+        except ValueError:
+            continue
+    return tuple(sorted(set(rounds)))
+
+
+def _which_fighter(who: str, fa_raw: str, fb_raw: str) -> str | None:
+    """Map a 'who' token from a SportsBet selection to A/B based on the
+    raw fighter names captured at scrape time. Returns None when neither
+    name is a confident match.
+    """
+    fa = (fa_raw or "").lower()
+    fb = (fb_raw or "").lower()
+    fa_last = fa.split()[-1] if fa else ""
+    fb_last = fb.split()[-1] if fb else ""
+    w = who.lower()
+    score_a = max(
+        fuzz.token_set_ratio(fa, w),
+        fuzz.partial_ratio(fa_last, w) if fa_last else 0,
+    )
+    score_b = max(
+        fuzz.token_set_ratio(fb, w),
+        fuzz.partial_ratio(fb_last, w) if fb_last else 0,
+    )
+    if score_a >= 70 and score_a > score_b:
+        return "A"
+    if score_b >= 70 and score_b > score_a:
+        return "B"
+    return None
+
+
+def _annotate_method_round_markets(
+    raw_markets: list[dict],
+    out: dict,
+    fa_raw: str,
+    fb_raw: str,
+) -> None:
+    """Parse the four method×round markets SportsBet posts on big cards:
+
+        - "Method & Round Combo (N Rounds)"        — fighter + method + single round
+        - "Alt. Method & Round Combo (N Rounds)"   — neutral method + single round
+        - "KO/TKO Round Combos (N Rounds)"         — fighter, multi-round range
+        - "Submission Round Combos (N Rounds)"     — fighter, multi-round range
+
+    Output keys:
+        out["method_round_fighter"]  = list of dicts:
+            {"side": "A"|"B", "method": "KO"|"SUB", "round": int, "odds": float}
+        out["method_round_neutral"]  = list of dicts:
+            {"method": "KO"|"SUB", "round": int, "odds": float}
+        out["method_round_ranges"]   = list of dicts:
+            {"side": "A"|"B", "method": "KO"|"SUB", "rounds": tuple[int],
+             "odds": float, "label": str}
+    """
+    for m in raw_markets:
+        mname = (m.get("name") or m.get("marketName") or "").lower()
+        is_fighter_combo = (
+            "method & round combo" in mname and "alt." not in mname
+        )
+        is_neutral_combo = "alt. method & round combo" in mname
+        is_ko_range = "ko/tko round combos" in mname
+        is_sub_range = "submission round combos" in mname
+        if not (is_fighter_combo or is_neutral_combo or is_ko_range or is_sub_range):
+            continue
+
+        sels = m.get("selections") or m.get("outcomes") or []
+        for sel in sels:
+            sname = (sel.get("name") or "").strip()
+            price = _extract_price(sel)
+            if not sname or price is None:
+                continue
+
+            if is_fighter_combo:
+                match = _METHOD_ROUND_FIGHTER_RE.match(sname)
+                if not match:
+                    continue
+                method = _canon_method_token(match.group("method"))
+                if not method:
+                    continue
+                side = _which_fighter(match.group("who"), fa_raw, fb_raw)
+                if side is None:
+                    continue
+                out.setdefault("method_round_fighter", []).append({
+                    "side": side,
+                    "method": method,
+                    "round": int(match.group("rnd")),
+                    "odds": float(price),
+                    "raw_name": sname,
+                })
+
+            elif is_neutral_combo:
+                match = _METHOD_ROUND_NEUTRAL_RE.match(sname)
+                if not match:
+                    continue
+                method = _canon_method_token(match.group("method"))
+                if not method:
+                    continue
+                out.setdefault("method_round_neutral", []).append({
+                    "method": method,
+                    "round": int(match.group("rnd")),
+                    "odds": float(price),
+                    "raw_name": sname,
+                })
+
+            elif is_ko_range or is_sub_range:
+                match = _ROUND_COMBO_RANGE_RE.match(sname)
+                if not match:
+                    continue
+                method = _canon_method_token(match.group("method"))
+                if not method:
+                    continue
+                side = _which_fighter(match.group("who"), fa_raw, fb_raw)
+                if side is None:
+                    continue
+                rounds = _parse_round_range(match.group("rounds"))
+                if not rounds:
+                    continue
+                out.setdefault("method_round_ranges", []).append({
+                    "side": side,
+                    "method": method,
+                    "rounds": rounds,
+                    "odds": float(price),
+                    "label": sname,
+                })
+
+
+def _annotate_totals_markets(
+    raw_markets: list[dict],
+    out: dict,
+    fa_raw: str,
+    fb_raw: str,
+) -> None:
+    """Parse totals markets (sig strikes / takedowns / knockdowns) into a
+    canonical structure SportsBet doesn't directly expose.
+
+    Output schema for each canonical key:
+        out[key] = [
+            {"line": 165.5, "over_odds": 1.91, "under_odds": 1.83},
+            ...
+        ]
+
+    Multiple lines per market (alt totals) are preserved as separate entries.
+    Raw decimal odds are kept un-de-vigged so downstream code can decide
+    whether to remove the overround.
+    """
+    for m in raw_markets:
+        mname = m.get("name") or m.get("marketName") or ""
+        canonical = _classify_totals_market(mname, fa_raw, fb_raw)
+        if canonical is None:
+            continue
+        sels_raw = m.get("selections") or m.get("outcomes") or m.get("runners") or []
+        # Group selections by parsed line, capturing over/under prices.
+        by_line: dict[float, dict] = {}
+        for sel in sels_raw:
+            sname = (sel.get("name") or sel.get("selectionName") or "").strip()
+            price = _extract_price(sel)
+            if not sname or price is None:
+                continue
+            match = _TOTALS_LINE_RE.search(sname)
+            if not match:
+                # Some markets put the line in the market name and just label
+                # selections "Over" / "Under". Try to recover from market name.
+                line_match = re.search(r"(\d+\.?\d*)", mname)
+                if not line_match:
+                    continue
+                line = float(line_match.group(1))
+                direction = "over" if "over" in sname.lower() else (
+                    "under" if "under" in sname.lower() else None
+                )
+            else:
+                direction = match.group(1).lower()
+                line = float(match.group(2))
+            if direction not in ("over", "under"):
+                continue
+            entry = by_line.setdefault(line, {"line": line})
+            entry[f"{direction}_odds"] = float(price)
+
+        if not by_line:
+            continue
+        # Only emit lines with both sides priced — single-sided totals are
+        # almost always parser glitches. Allow single-sided as a fallback if
+        # nothing has both.
+        complete = [v for v in by_line.values() if "over_odds" in v and "under_odds" in v]
+        partial = [v for v in by_line.values() if v not in complete]
+        keep = complete or partial
+        out.setdefault(canonical, []).extend(keep)
+
+
+def _parse_markets(
+    raw_markets: list[dict],
+    fa_raw: str = "",
+    fb_raw: str = "",
+) -> dict[str, dict[str, float]]:
     out: dict[str, dict] = {}
     for m in raw_markets:
         mname = m.get("name") or m.get("marketName") or m.get("label") or ""
@@ -215,6 +505,13 @@ def _parse_markets(raw_markets: list[dict]) -> dict[str, dict[str, float]]:
             out[mtype].update(sels)
     # Round-survival markets need special handling (round number is in market name)
     _annotate_round_survival(raw_markets, out)
+    # Method×round joint markets — fighter-attributed, neutral, and multi-round
+    # ranges. These pair with our compute_method_round_joint() probabilities
+    # for the cleanest cross-fight EV comparison on big cards.
+    _annotate_method_round_markets(raw_markets, out, fa_raw, fb_raw)
+    # Totals markets (sig strikes / takedowns / knockdowns) — listed under
+    # idiosyncratic market names that don't fit _MARKET_MAP cleanly.
+    _annotate_totals_markets(raw_markets, out, fa_raw, fb_raw)
     return out
 
 
@@ -244,7 +541,7 @@ def fetch_ufc_markets() -> list[dict]:
             continue
 
         raw_markets = _fetch_markets(eid)
-        markets = _parse_markets(raw_markets)
+        markets = _parse_markets(raw_markets, fa, fb)
 
         if not markets.get("moneyline"):
             log.debug("No moneyline for event %s '%s v %s', skipping", eid, fa, fb)
@@ -324,6 +621,42 @@ def match_odds_to_predictions(
             fa_key = best_sb["fighter_b_raw"] if best_reversed else best_sb["fighter_a_raw"]
             fb_key = best_sb["fighter_a_raw"] if best_reversed else best_sb["fighter_b_raw"]
 
+            # Per-fighter totals are scraped under raw fa/fb keys; if the
+            # match was reversed, swap the _a/_b assignments accordingly.
+            tssa, tssb = "total_sig_strikes_a", "total_sig_strikes_b"
+            ttda, ttdb = "total_takedowns_a", "total_takedowns_b"
+            if best_reversed:
+                tot_ss_a = markets.get(tssb, [])
+                tot_ss_b = markets.get(tssa, [])
+                tot_td_a = markets.get(ttdb, [])
+                tot_td_b = markets.get(ttda, [])
+            else:
+                tot_ss_a = markets.get(tssa, [])
+                tot_ss_b = markets.get(tssb, [])
+                tot_td_a = markets.get(ttda, [])
+                tot_td_b = markets.get(ttdb, [])
+
+            # Method×round market entries carry their A/B side based on the
+            # raw scraper-time fighter assignment. When the prediction maps
+            # to SportsBet's red/blue in reverse, every "A" → "B" and vice
+            # versa so the prediction-side bet emission stays consistent.
+            def _flip_side_entries(entries, side_key="side"):
+                if not best_reversed:
+                    return entries
+                flipped = []
+                for e in entries:
+                    e2 = dict(e)
+                    if e2.get(side_key) == "A":
+                        e2[side_key] = "B"
+                    elif e2.get(side_key) == "B":
+                        e2[side_key] = "A"
+                    flipped.append(e2)
+                return flipped
+
+            mr_fighter = _flip_side_entries(markets.get("method_round_fighter", []))
+            mr_neutral = list(markets.get("method_round_neutral", []))
+            mr_ranges = _flip_side_entries(markets.get("method_round_ranges", []))
+
             pred["sportsbet_odds"] = {
                 "source": "sportsbet.com.au",
                 "fight_name_raw": best_sb.get("fight_name"),
@@ -340,6 +673,18 @@ def match_odds_to_predictions(
                 "round_survival":    markets.get("round_survival", {}),
                 "alt_finish_timing": markets.get("alt_finish_timing", {}),
                 "alt_round":         markets.get("alt_round", {}),
+                # Totals — list[{line, over_odds, under_odds}], possibly empty
+                "total_sig_strikes_combined": markets.get("total_sig_strikes_combined", []),
+                "total_sig_strikes_a":        tot_ss_a,
+                "total_sig_strikes_b":        tot_ss_b,
+                "total_takedowns_combined":   markets.get("total_takedowns_combined", []),
+                "total_takedowns_a":          tot_td_a,
+                "total_takedowns_b":          tot_td_b,
+                "total_knockdowns_combined":  markets.get("total_knockdowns_combined", []),
+                # Method×round joint markets (only present on big cards)
+                "method_round_fighter": mr_fighter,
+                "method_round_neutral": mr_neutral,
+                "method_round_ranges":  mr_ranges,
             }
             log.info(
                 "Matched '%s vs %s' ↔ '%s' (score=%d)",

@@ -35,7 +35,13 @@
       "Bash(ufc-train props *)",
       "Bash(git *)",
       "Bash(GIT_EDITOR=true git -C \"C:/Users/Godfather/Documents/UFCPredict\" rebase --continue)",
-      "Bash(GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git -c core.editor=true rebase --continue)"
+      "Bash(GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git -c core.editor=true rebase --continue)",
+      "Bash(ufc-train totals *)",
+      "Bash(tasklist)",
+      "Bash(pytest -q tests/test_round_totals_insights.py)",
+      "Bash(pytest -q)",
+      "Bash(ufc-predict dashboard *)",
+      "Bash(ufc-ingest sportsbet *)"
     ]
   }
 }

@@ -578,6 +578,35 @@ def save_artifacts(
         json.dump(feature_cols, f)
 
     metrics.to_csv(MODEL_DIR / "cv_metrics.csv", index=False)
+
+    # Dump gain-based feature importances so the insights module can rank
+    # matchup factors without re-importing LGBM. Mean of the production
+    # booster + every bag in the ensemble — bag-mean smooths out rank noise
+    # from any one bootstrap sample.
+    try:
+        importances: dict[str, float] = {}
+        boosters = [model] + [b for (b, _iso) in (ensemble or [])]
+        for booster in boosters:
+            try:
+                names = list(booster.booster_.feature_name())
+                gains = booster.booster_.feature_importance(importance_type="gain").tolist()
+            except Exception:
+                names = list(booster.feature_name_) if hasattr(booster, "feature_name_") else []
+                gains = (
+                    list(booster.feature_importances_)
+                    if hasattr(booster, "feature_importances_") else []
+                )
+            for n, g in zip(names, gains):
+                importances[n] = importances.get(n, 0.0) + float(g)
+        # Average across boosters
+        n_b = max(1, len(boosters))
+        importances = {k: round(v / n_b, 4) for k, v in importances.items()}
+        with open(MODEL_DIR / "feature_importances.json", "w") as f:
+            json.dump(importances, f, indent=2, sort_keys=True)
+        log.info("Feature importances saved (%d features)", len(importances))
+    except Exception as exc:
+        log.warning("Could not compute feature importances: %s", exc)
+
     log.info("Artifacts saved to %s/", MODEL_DIR)
 
 

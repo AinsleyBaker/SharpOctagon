@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-05-06",
+  "overall": "WARN",
+  "checks": [
+    {
+      "code": "A.1",
+      "status": "WARN",
+      "message": "22 of 8484 eligible fights missing round=0 rows (<10% \u2014 likely backfill gaps)",
+      "missing": 22,
+      "eligible": 8484
+    },
+    {
+      "code": "A.2",
+      "status": "PASS",
+      "message": "round=0 totals match sum of per-round (within \u00b12) \u2014 worst column sig_strikes_landed has 0/17216 violations",
+      "col_violations": {
+        "sig_strikes_landed": 0,
+        "total_strikes_landed": 0,
+        "takedowns_landed": 0,
+        "knockdowns": 0
+      }
+    },
+    {
+      "code": "A.3",
+      "status": "PASS",
+      "message": "fight_stats_round.fight_id has no NULLs"
+    },
+    {
+      "code": "A.4",
+      "status": "PASS",
+      "message": "all fight_stats_round.fighter_id values resolve to fighters"
+    },
+    {
+      "code": "B.1",
+      "status": "PASS",
+      "message": "feature matrix shape (16328, 142) \u2014 within expected range"
+    },
+    {
+      "code": "B.2top",
+      "status": "PASS",
+      "message": "top NaN columns: {'closing_odds_red': 88.85, 'closing_odds_blue': 88.85, 'diff_keep_standing': 34.08, 'diff_wrestled_pressure': 34.08, 'diff_expected_td_landed': 34.08, 'diff_td_def': 34.08, 'expected_a_td_landed': 29.37, 'expected_b_td_landed': 29.37, 'a_wrestled_pressure': 29.37, 'b_wrestled_pressure': 29.37}",
+      "top_nan_pct": {
+        "closing_odds_red": 88.85,
+        "closing_odds_blue": 88.85,
+        "diff_keep_standing": 34.08,
+        "diff_wrestled_pressure": 34.08,
+        "diff_expected_td_landed": 34.08,
+        "diff_td_def": 34.08,
+        "expected_a_td_landed": 29.37,
+        "expected_b_td_landed": 29.37,
+        "a_wrestled_pressure": 29.37,
+        "b_wrestled_pressure": 29.37
+      }
+    },
+    {
+      "code": "B.2crit",
+      "status": "WARN",
+      "message": "4 critical columns have NaN in [30.0%, 60.0%]",
+      "soft_offenders": {
+        "diff_td_def": 34.07643312101911,
+        "diff_keep_standing": 34.07643312101911,
+        "diff_wrestled_pressure": 34.07643312101911,
+        "diff_expected_td_landed": 34.07643312101911
+      }
+    },
+    {
+      "code": "B.3",
+      "status": "PASS",
+      "message": "feature matrix is already chronologically sorted by date"
+    },
+    {
+      "code": "B.4",
+      "status": "PASS",
+      "message": "every fight_id appears \u2264 2 times (symmetrisation intact)"
+    },
+    {
+      "code": "B.5",
+      "status": "PASS",
+      "message": "all 49 diff_* cols have |\u03bc| < 0.1\u00b7\u03c3"
+    },
+    {
+      "code": "C.1",
+      "status": "PASS",
+      "message": "no FEATURE_COLS/PROP_EXTRA_COLS shadow fight_stats_round"
+    },
+    {
+      "code": "C.2",
+      "status": "PASS",
+      "message": "0/50 sampled rows have minor a_n_fights divergence (acceptable)"
+    },
+    {
+      "code": "D.1",
+      "status": "PASS",
+      "message": "all 20 cached fights have moneyline market"
+    },
+    {
+      "code": "D.2",
+      "status": "WARN",
+      "message": "unexpected market keys observed (will be silently skipped): ['method_round_fighter', 'method_round_neutral', 'method_round_ranges']",
+      "unexpected": [
+        "method_round_fighter",
+        "method_round_neutral",
+        "method_round_ranges"
+      ]
+    },
+    {
+      "code": "E.1",
+      "status": "PASS",
+      "message": "grader correctly scores moneyline \u2713 A and \u2717 B"
+    },
+    {
+      "code": "F.1",
+      "status": "PASS",
+      "message": "OOF log-loss 0.6492 within sanity bounds",
+      "log_loss": 0.6492037555936336
+    }
+  ]
+}

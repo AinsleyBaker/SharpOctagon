@@ -676,8 +676,29 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
         for i, (_, row) in enumerate(upcoming_df.iterrows())
     }
 
+    # -- Totals quantile predictions (sig strikes / takedowns / knockdowns) -
+    bout_id_to_totals: dict = {}
+    try:
+        from ufc_predict.models.totals_models import (
+            load_totals_artifacts,
+            predict_totals,
+        )
+        totals_artifacts = load_totals_artifacts()
+        if totals_artifacts:
+            totals_pred = predict_totals(upcoming_df, totals_artifacts)
+            for i, (_, row) in enumerate(upcoming_df.iterrows()):
+                bid = row["upcoming_bout_id"]
+                per_target: dict = {}
+                for target, arrays in totals_pred.items():
+                    per_target[target] = {
+                        k: float(v[i]) for k, v in arrays.items()
+                    }
+                bout_id_to_totals[bid] = per_target
+    except Exception as exc:  # pragma: no cover — optional module
+        log.warning("totals predictions unavailable (%s) — skipping totals bets", exc)
+
     # -- SportsBet odds + EV analysis --------------------------------------
-    predictions_list = _df_to_records(output, bout_id_to_props)
+    predictions_list = _df_to_records(output, bout_id_to_props, bout_id_to_totals)
     try:
         from ufc_predict.ingest.sportsbet_scraper import (
             cache_age_hours,
@@ -719,6 +740,13 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     # -- EV analysis -------------------------------------------------------
     predictions_list = analyze_all_fights(predictions_list)
 
+    # -- Match insights (deterministic, rule-based) ------------------------
+    try:
+        from ufc_predict.eval.insights import attach_insights
+        predictions_list = attach_insights(predictions_list)
+    except Exception as exc:  # pragma: no cover — defensive
+        log.warning("insights attachment failed: %s", exc)
+
     _save_predictions_list(predictions_list)
 
     # -- Snapshot for post-fight evaluation --------------------------------
@@ -733,13 +761,18 @@ def run_predictions(db_url: str | None = None) -> pd.DataFrame:
     return output
 
 
-def _df_to_records(df: pd.DataFrame, bout_id_to_props: dict | None = None) -> list[dict]:
+def _df_to_records(
+    df: pd.DataFrame,
+    bout_id_to_props: dict | None = None,
+    bout_id_to_totals: dict | None = None,
+) -> list[dict]:
     records = []
     for _, row in df.iterrows():
         r = row.to_dict()
         r["event_date"] = str(r["event_date"])
         bid = r.get("upcoming_bout_id", "")
         r["props"] = (bout_id_to_props or {}).get(bid) or {}
+        r["totals_quantiles"] = (bout_id_to_totals or {}).get(bid) or {}
         records.append(r)
     return records
 

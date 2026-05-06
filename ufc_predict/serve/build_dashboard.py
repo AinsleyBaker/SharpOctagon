@@ -52,7 +52,11 @@ def load_predictions() -> list[dict]:
     # raw inputs (sportsbet_odds, props, fighter probs) are still authoritative,
     # so recomputing keeps the dashboard in lockstep with the code.
     from ufc_predict.eval.bet_analysis import analyze_all_fights
-    return analyze_all_fights(preds)
+    from ufc_predict.eval.insights import attach_insights
+    preds = analyze_all_fights(preds)
+    # Insights are deterministic and cheap — recompute too so a dashboard
+    # rebuild picks up new factor/driver rules without a full re-predict.
+    return attach_insights(preds)
 
 
 def load_fighter_images() -> dict[str, str]:
@@ -968,8 +972,64 @@ def _actual_outcome_key(bout: dict) -> str | None:
     return f"{side}|{method}|{rnd_int}"
 
 
+def _actual_totals(bout: dict) -> dict[str, float]:
+    """Pull the seven totals targets out of a past-event bout's joined stats.
+
+    ``actual_stats_a`` / ``actual_stats_b`` are attached during
+    ``_enrich_past_events`` from the bulk-loaded fight_stats_round round=0
+    rows. Returns a dict keyed by the same target names that bet_analysis
+    emits (``total_sig_strikes_combined``, ...). Missing data → empty dict.
+    """
+    sa = bout.get("actual_stats_a") or {}
+    sb = bout.get("actual_stats_b") or {}
+    if not sa and not sb:
+        return {}
+
+    def _g(d: dict, k: str) -> float:
+        v = d.get(k)
+        try:
+            return float(v) if v is not None else 0.0
+        except (TypeError, ValueError):
+            return 0.0
+
+    return {
+        "total_sig_strikes_a":        _g(sa, "sig_strikes_landed"),
+        "total_sig_strikes_b":        _g(sb, "sig_strikes_landed"),
+        "total_sig_strikes_combined": _g(sa, "sig_strikes_landed") + _g(sb, "sig_strikes_landed"),
+        "total_takedowns_a":          _g(sa, "takedowns_landed"),
+        "total_takedowns_b":          _g(sb, "takedowns_landed"),
+        "total_takedowns_combined":   _g(sa, "takedowns_landed") + _g(sb, "takedowns_landed"),
+        "total_knockdowns_combined":  _g(sa, "knockdowns") + _g(sb, "knockdowns"),
+    }
+
+
+def _grade_totals_key(key: str, actual_totals: dict) -> str | None:
+    """Grade a single ``TOTAL|target|side|line`` outcome key.
+
+    Returns 'won' / 'lost' / None if the actual data is missing.
+    """
+    parts = key.split("|")
+    if len(parts) != 4:
+        return None
+    _, target, side, line_str = parts
+    if target not in actual_totals:
+        return None
+    try:
+        line = float(line_str)
+    except ValueError:
+        return None
+    actual = actual_totals[target]
+    side = side.lower()
+    if side == "over":
+        return "won" if actual > line else "lost"
+    if side == "under":
+        return "won" if actual < line else "lost"
+    return None
+
+
 def _grade_bet(bet: dict, actual_key: str | None,
-               actual_side: str | None = None) -> str | None:
+               actual_side: str | None = None,
+               actual_totals: dict | None = None) -> str | None:
     """
     Return 'won' / 'lost' / None for a single bet given the actual outcome key.
 
@@ -978,10 +1038,28 @@ def _grade_bet(bet: dict, actual_key: str | None,
     grade any bet whose outcome_keys are all on a single side — moneyline,
     "X wins by KO or Decision", "X wins in Round Y", etc. Method-neutral
     bets (e.g. "Fight goes to Decision") stay un-graded until method lands.
+
+    Totals bets carry a sentinel key ``TOTAL|target|side|line`` and are
+    graded against ``actual_totals`` (per-fighter sig strikes, takedowns,
+    knockdowns from fight_stats_round round=0).
     """
     keys = bet.get("outcome_keys") or []
     if not keys:
         return None
+
+    # Totals sentinel: if every outcome_key is a TOTAL|..., grade via the
+    # actual_totals dict instead of the standard outcome key set.
+    if all(isinstance(k, str) and k.startswith("TOTAL|") for k in keys):
+        if not actual_totals:
+            return None
+        # All TOTAL keys for one bet should grade identically (we emit one
+        # per bet); use the first that resolves.
+        for k in keys:
+            res = _grade_totals_key(k, actual_totals)
+            if res is not None:
+                return res
+        return None
+
     if actual_key:
         return "won" if actual_key in keys else "lost"
     # No canonical key — try side-only grading.
@@ -1008,9 +1086,10 @@ def _attach_graded_bets(bout: dict) -> None:
 
     actual_key = _actual_outcome_key(bout)
     actual_side = bout.get("actual_winner_side")
+    actual_totals = _actual_totals(bout)
     graded: list[dict] = []
     for bet in bets:
-        result = _grade_bet(bet, actual_key, actual_side)
+        result = _grade_bet(bet, actual_key, actual_side, actual_totals)
         graded.append({
             "description":  bet.get("description") or "",
             "bet_type":     bet.get("bet_type") or "",

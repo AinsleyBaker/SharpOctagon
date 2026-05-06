@@ -1,0 +1,15 @@
+{
+  "n_bets_total": 0,
+  "market_classes": [],
+  "markets_backtested": {
+    "total_sig_strikes_combined": false,
+    "total_sig_strikes_a": false,
+    "total_sig_strikes_b": false,
+    "total_takedowns_combined": false,
+    "total_takedowns_a": false,
+    "total_takedowns_b": false,
+    "total_knockdowns_combined": false
+  },
+  "buckets": [],
+  "note": "BFO does not currently scrape sig-strike / takedown / knockdown totals odds. Markets without historical data fall through to the default EV-gate in bet_analysis (positive EV + edge >= MIN_EDGE)."
+}

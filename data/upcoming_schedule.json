@@ -652,6 +652,18 @@
     "event_date": "2026-05-30",
     "bouts": [
       {
+        "fighter_a": "Zhu Kangjie",
+        "fighter_b": "Ramon Taveras",
+        "weight_class": "Featherweight",
+        "is_title_bout": false,
+        "is_five_round": false,
+        "start_time_iso": "2026-05-30T11:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sat, May 30th at 7:00 AM EDT",
+        "espn_round": 0
+      },
+      {
         "fighter_a": "Loma Lookboonmee",
         "fighter_b": "Jaqueline Amorim",
         "weight_class": "W Strawweight",
@@ -727,18 +739,6 @@
         "fighter_a": "Alex Perez",
         "fighter_b": "Sumudaerji",
         "weight_class": "Flyweight",
-        "is_title_bout": false,
-        "is_five_round": false,
-        "start_time_iso": "2026-05-30T11:00Z",
-        "espn_status": "STATUS_SCHEDULED",
-        "espn_winner_name": "",
-        "espn_method": "Sat, May 30th at 7:00 AM EDT",
-        "espn_round": 0
-      },
-      {
-        "fighter_a": "Zhu Kangjie",
-        "fighter_b": "Ramon Taveras",
-        "weight_class": "Featherweight",
         "is_title_bout": false,
         "is_five_round": false,
         "start_time_iso": "2026-05-30T11:00Z",
@@ -1116,7 +1116,7 @@
     ]
   },
   {
-    "event_name": "UFC Fight Night: Baku",
+    "event_name": "UFC Fight Night: Fiziev vs. Torres",
     "event_date": "2026-06-27",
     "bouts": [
       {
@@ -1132,9 +1132,21 @@
         "espn_round": 0
       },
       {
-        "fighter_a": "TBA",
-        "fighter_b": "Opponent TBA",
-        "weight_class": "",
+        "fighter_a": "Michel Pereira",
+        "fighter_b": "Shara Magomedov",
+        "weight_class": "Middleweight",
+        "is_title_bout": false,
+        "is_five_round": false,
+        "start_time_iso": "2026-06-27T16:00Z",
+        "espn_status": "STATUS_SCHEDULED",
+        "espn_winner_name": "",
+        "espn_method": "Sat, June 27th at 12:00 PM EDT",
+        "espn_round": 0
+      },
+      {
+        "fighter_a": "Rafael Fiziev",
+        "fighter_b": "Manuel Torres",
+        "weight_class": "Lightweight",
         "is_title_bout": false,
         "is_five_round": true,
         "start_time_iso": "2026-06-27T16:00Z",

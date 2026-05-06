@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-05-05T00:45:22.976950+00:00",
+  "fetched_at": "2026-05-06T06:45:47.317715+00:00",
   "fights": [
     {
       "sportsbet_event_id": "10443567",
@@ -139,8 +139,8 @@
       "start_time": 1778379300,
       "markets": {
         "moneyline": {
-          "Alexander Volkov": 1.59,
-          "Waldo Cortes-Acosta": 2.37
+          "Alexander Volkov": 1.56,
+          "Waldo Cortes-Acosta": 2.44
         }
       }
     },
@@ -152,12 +152,12 @@
       "start_time": 1778381100,
       "markets": {
         "moneyline": {
-          "Joshua Van": 2.44,
+          "Joshua Van": 2.43,
           "Tatsuro Taira": 1.56
         },
         "method": {
-          "Joshua Van by KO/TKO": 4.4,
-          "Joshua Van by Points": 5.6,
+          "Joshua Van by KO/TKO": 4.1,
+          "Joshua Van by Points": 6.0,
           "Joshua Van by Submission": 19.0,
           "Draw": 51.0,
           "Tatsuro Taira by KO/TKO": 8.0,
@@ -167,10 +167,10 @@
         "winning_round": {
           "Joshua Van to Win in Round 1": 9.75,
           "Joshua Van to Win in Round 2": 13.0,
-          "Joshua Van to Win in Round 3": 17.0,
-          "Joshua Van to Win in Round 4": 21.0,
-          "Joshua Van to Win in Round 5": 26.0,
-          "Joshua Van to Win by Decision": 5.6,
+          "Joshua Van to Win in Round 3": 15.0,
+          "Joshua Van to Win in Round 4": 19.0,
+          "Joshua Van to Win in Round 5": 23.0,
+          "Joshua Van to Win by Decision": 6.0,
           "Draw": 51.0,
           "Tatsuro Taira to Win in Round 1": 6.5,
           "Tatsuro Taira to Win in Round 2": 9.25,
@@ -180,52 +180,550 @@
           "Tatsuro Taira to Win by Decision": 4.0,
           "Round 1": 4.3,
           "Round 2": 6.0,
-          "Round 3": 7.5,
-          "Round 4": 8.75,
-          "Round 5": 11.0,
-          "Joshua Van Round 1, 2, or 3": 4.9,
-          "Joshua Van Round 4, 5, or by Decision": 4.25,
+          "Round 3": 7.25,
+          "Round 4": 8.25,
+          "Round 5": 10.5,
+          "Joshua Van Round 1, 2, or 3": 4.8,
+          "Joshua Van Round 4, 5, or by Decision": 4.3,
           "Tatsuro Taira Round 1, 2, or 3": 3.2,
           "Tatsuro Taira Round 4, 5, or by Decision": 2.8
         },
         "method_combo": {
-          "Joshua Van by KO/TKO or Submission": 3.8,
-          "Joshua Van by KO/TKO or on Points": 2.6,
-          "Joshua Van by Submission or on Points": 4.7,
+          "Joshua Van by KO/TKO or Submission": 3.6,
+          "Joshua Van by KO/TKO or on Points": 2.55,
+          "Joshua Van by Submission or on Points": 5.1,
           "Draw": 51.0,
           "Tatsuro Taira by KO/TKO or Submission": 2.35,
           "Tatsuro Taira by KO/TKO or on Points": 2.8,
           "Tatsuro Taira by Submission or on Points": 1.85
         },
         "method_neutral": {
-          "KO/TKO": 3.0,
+          "KO/TKO": 2.85,
           "Submission": 2.85,
-          "Points": 2.35
+          "Points": 2.45
         },
         "distance": {
-          "Yes": 2.42,
-          "No": 1.52
+          "Yes": 2.53,
+          "No": 1.48
         },
         "moneyline_no_dec": {
-          "Joshua Van": 2.45,
-          "Tatsuro Taira": 1.5
+          "Joshua Van": 2.3,
+          "Tatsuro Taira": 1.56
         },
         "alt_finish_timing": {
-          "Round 1, 2, or 3": 2.04,
-          "Round 4, 5, or by Decision": 1.72
+          "Round 1, 2, or 3": 2.01,
+          "Round 4, 5, or by Decision": 1.74
         },
         "round_survival": {
-          "Yes": 2.06,
-          "No": 1.71,
+          "Yes": 2.11,
+          "No": 1.67,
           "Start R2 Yes": 1.2,
           "Start R2 No": 4.25,
           "Start R3 Yes": 1.43,
           "Start R3 No": 2.69,
-          "Start R4 Yes": 1.72,
-          "Start R4 No": 2.04,
-          "Start R5 Yes": 2.06,
-          "Start R5 No": 1.71
-        }
+          "Start R4 Yes": 1.74,
+          "Start R4 No": 2.01,
+          "Start R5 Yes": 2.11,
+          "Start R5 No": 1.67
+        },
+        "method_round_fighter": [
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 1,
+            "odds": 11.0,
+            "raw_name": "Joshua Van KO/TKO & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 2,
+            "odds": 15.0,
+            "raw_name": "Joshua Van KO/TKO & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 3,
+            "odds": 17.0,
+            "raw_name": "Joshua Van KO/TKO & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 4,
+            "odds": 21.0,
+            "raw_name": "Joshua Van KO/TKO & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 5,
+            "odds": 26.0,
+            "raw_name": "Joshua Van KO/TKO & Round 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 1,
+            "odds": 51.0,
+            "raw_name": "Joshua Van Submission & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 2,
+            "odds": 81.0,
+            "raw_name": "Joshua Van Submission & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 3,
+            "odds": 91.0,
+            "raw_name": "Joshua Van Submission & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 4,
+            "odds": 101.0,
+            "raw_name": "Joshua Van Submission & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 5,
+            "odds": 151.0,
+            "raw_name": "Joshua Van Submission & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 1,
+            "odds": 19.0,
+            "raw_name": "Tatsuro Taira KO/TKO & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 2,
+            "odds": 29.0,
+            "raw_name": "Tatsuro Taira KO/TKO & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 3,
+            "odds": 34.0,
+            "raw_name": "Tatsuro Taira KO/TKO & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 4,
+            "odds": 41.0,
+            "raw_name": "Tatsuro Taira KO/TKO & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 5,
+            "odds": 51.0,
+            "raw_name": "Tatsuro Taira KO/TKO & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 1,
+            "odds": 8.5,
+            "raw_name": "Tatsuro Taira Submission & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 2,
+            "odds": 12.0,
+            "raw_name": "Tatsuro Taira Submission & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 3,
+            "odds": 14.0,
+            "raw_name": "Tatsuro Taira Submission & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 4,
+            "odds": 16.0,
+            "raw_name": "Tatsuro Taira Submission & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 5,
+            "odds": 21.0,
+            "raw_name": "Tatsuro Taira Submission & Round 5"
+          }
+        ],
+        "method_round_ranges": [
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 7.0,
+            "label": "Joshua Van to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 5.5,
+            "label": "Joshua Van to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 9.0,
+            "label": "Joshua Van to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 6.75,
+            "label": "Joshua Van to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 10.5,
+            "label": "Joshua Van to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 8.25,
+            "label": "Joshua Van to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 13.0,
+            "label": "Joshua Van to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 13.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 10.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 17.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 13.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 19.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 16.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 23.0,
+            "label": "Tatsuro Taira to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 34.0,
+            "label": "Joshua Van to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 26.0,
+            "label": "Joshua Van to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 46.0,
+            "label": "Joshua Van to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 34.0,
+            "label": "Joshua Van to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 51.0,
+            "label": "Joshua Van to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 41.0,
+            "label": "Joshua Van to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 67.0,
+            "label": "Joshua Van to win by Submission in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 5.5,
+            "label": "Tatsuro Taira to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 4.3,
+            "label": "Tatsuro Taira to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 7.25,
+            "label": "Tatsuro Taira to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 5.5,
+            "label": "Tatsuro Taira to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 8.5,
+            "label": "Tatsuro Taira to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 6.75,
+            "label": "Tatsuro Taira to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 10.0,
+            "label": "Tatsuro Taira to win by Submission in Rounds 4 or 5"
+          }
+        ],
+        "method_round_neutral": [
+          {
+            "method": "KO",
+            "round": 1,
+            "odds": 7.75,
+            "raw_name": "KO/TKO & Round 1"
+          },
+          {
+            "method": "KO",
+            "round": 2,
+            "odds": 11.0,
+            "raw_name": "KO/TKO & Round 2"
+          },
+          {
+            "method": "KO",
+            "round": 3,
+            "odds": 12.5,
+            "raw_name": "KO/TKO & Round 3"
+          },
+          {
+            "method": "KO",
+            "round": 4,
+            "odds": 15.0,
+            "raw_name": "KO/TKO & Round 4"
+          },
+          {
+            "method": "KO",
+            "round": 5,
+            "odds": 19.0,
+            "raw_name": "KO/TKO & Round 5"
+          },
+          {
+            "method": "SUB",
+            "round": 1,
+            "odds": 7.75,
+            "raw_name": "Submission & Round 1"
+          },
+          {
+            "method": "SUB",
+            "round": 2,
+            "odds": 11.0,
+            "raw_name": "Submission & Round 2"
+          },
+          {
+            "method": "SUB",
+            "round": 3,
+            "odds": 13.0,
+            "raw_name": "Submission & Round 3"
+          },
+          {
+            "method": "SUB",
+            "round": 4,
+            "odds": 15.0,
+            "raw_name": "Submission & Round 4"
+          },
+          {
+            "method": "SUB",
+            "round": 5,
+            "odds": 19.0,
+            "raw_name": "Submission & Round 5"
+          }
+        ]
       }
     },
     {
@@ -240,80 +738,578 @@
           "Sean Strickland": 5.1
         },
         "method": {
-          "Khamzat Chimaev by KO/TKO": 5.25,
-          "Khamzat Chimaev by Points": 4.2,
-          "Khamzat Chimaev by Submission": 2.12,
+          "Khamzat Chimaev by KO/TKO": 5.6,
+          "Khamzat Chimaev by Points": 4.3,
+          "Khamzat Chimaev by Submission": 2.05,
           "Draw": 51.0,
-          "Sean Strickland by KO/TKO": 12.0,
-          "Sean Strickland by Points": 7.25,
+          "Sean Strickland by KO/TKO": 11.5,
+          "Sean Strickland by Points": 7.5,
           "Sean Strickland by Submission": 61.0
         },
         "winning_round": {
-          "Khamzat Chimaev to Win in Round 1": 4.0,
-          "Khamzat Chimaev to Win in Round 2": 5.0,
+          "Khamzat Chimaev to Win in Round 1": 3.9,
+          "Khamzat Chimaev to Win in Round 2": 4.8,
           "Khamzat Chimaev to Win in Round 3": 8.75,
-          "Khamzat Chimaev to Win in Round 4": 12.0,
-          "Khamzat Chimaev to Win in Round 5": 16.0,
-          "Khamzat Chimaev to Win by Decision": 4.2,
+          "Khamzat Chimaev to Win in Round 4": 13.0,
+          "Khamzat Chimaev to Win in Round 5": 17.0,
+          "Khamzat Chimaev to Win by Decision": 4.3,
           "Draw": 51.0,
           "Sean Strickland to Win in Round 1": 41.0,
           "Sean Strickland to Win in Round 2": 41.0,
           "Sean Strickland to Win in Round 3": 41.0,
-          "Sean Strickland to Win in Round 4": 46.0,
+          "Sean Strickland to Win in Round 4": 41.0,
           "Sean Strickland to Win in Round 5": 46.0,
-          "Sean Strickland to Win by Decision": 7.25,
-          "Round 1": 3.8,
-          "Round 2": 4.6,
+          "Sean Strickland to Win by Decision": 7.5,
+          "Round 1": 3.6,
+          "Round 2": 4.4,
           "Round 3": 7.75,
-          "Round 4": 10.0,
-          "Round 5": 12.5,
-          "Khamzat Chimaev Round 1, 2, or 3": 1.9,
-          "Khamzat Chimaev Round 4, 5, or by Decision": 2.85,
-          "Sean Strickland Round 1, 2, or 3": 16.0,
+          "Round 4": 11.0,
+          "Round 5": 13.0,
+          "Khamzat Chimaev Round 1, 2, or 3": 1.84,
+          "Khamzat Chimaev Round 4, 5, or by Decision": 3.0,
+          "Sean Strickland Round 1, 2, or 3": 15.0,
           "Sean Strickland Round 4, 5, or by Decision": 6.0
         },
         "method_combo": {
-          "Khamzat Chimaev by KO/TKO or Submission": 1.56,
-          "Khamzat Chimaev by KO/TKO or on Points": 2.4,
-          "Khamzat Chimaev by Submission or on Points": 1.46,
+          "Khamzat Chimaev by KO/TKO or Submission": 1.55,
+          "Khamzat Chimaev by KO/TKO or on Points": 2.55,
+          "Khamzat Chimaev by Submission or on Points": 1.42,
           "Draw": 51.0,
-          "Sean Strickland by KO/TKO or Submission": 10.5,
+          "Sean Strickland by KO/TKO or Submission": 10.0,
           "Sean Strickland by KO/TKO or on Points": 5.0,
-          "Sean Strickland by Submission or on Points": 6.75
+          "Sean Strickland by Submission or on Points": 7.0
         },
         "method_neutral": {
-          "KO/TKO": 3.9,
-          "Submission": 2.1,
-          "Points": 2.7
+          "KO/TKO": 4.1,
+          "Submission": 2.02,
+          "Points": 2.75
         },
         "distance": {
-          "Yes": 2.78,
-          "No": 1.41
+          "Yes": 2.86,
+          "No": 1.39
         },
         "total_rounds": {
-          "Over": 1.72,
-          "Under": 2.0
+          "Over": 1.83,
+          "Under": 1.9
         },
         "moneyline_no_dec": {
           "Khamzat Chimaev": 1.07,
           "Sean Strickland": 7.0
         },
         "alt_finish_timing": {
-          "Round 1, 2, or 3": 1.76,
-          "Round 4, 5, or by Decision": 1.98
+          "Round 1, 2, or 3": 1.7,
+          "Round 4, 5, or by Decision": 2.06
         },
         "round_survival": {
-          "Yes": 2.37,
-          "No": 1.54,
-          "Start R2 Yes": 1.22,
-          "Start R2 No": 4.0,
-          "Start R3 Yes": 1.63,
-          "Start R3 No": 2.19,
-          "Start R4 Yes": 1.98,
-          "Start R4 No": 1.76,
-          "Start R5 Yes": 2.37,
-          "Start R5 No": 1.54
-        }
+          "Yes": 2.44,
+          "No": 1.51,
+          "Start R2 Yes": 1.25,
+          "Start R2 No": 3.7,
+          "Start R3 Yes": 1.67,
+          "Start R3 No": 2.11,
+          "Start R4 Yes": 2.06,
+          "Start R4 No": 1.7,
+          "Start R5 Yes": 2.44,
+          "Start R5 No": 1.51
+        },
+        "method_round_fighter": [
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 1,
+            "odds": 12.5,
+            "raw_name": "Khamzat Chimaev KO/TKO & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 2,
+            "odds": 15.0,
+            "raw_name": "Khamzat Chimaev KO/TKO & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 3,
+            "odds": 29.0,
+            "raw_name": "Khamzat Chimaev KO/TKO & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 4,
+            "odds": 46.0,
+            "raw_name": "Khamzat Chimaev KO/TKO & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 5,
+            "odds": 61.0,
+            "raw_name": "Khamzat Chimaev KO/TKO & Round 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 1,
+            "odds": 5.1,
+            "raw_name": "Khamzat Chimaev Submission & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 2,
+            "odds": 6.25,
+            "raw_name": "Khamzat Chimaev Submission & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 3,
+            "odds": 11.0,
+            "raw_name": "Khamzat Chimaev Submission & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 4,
+            "odds": 17.0,
+            "raw_name": "Khamzat Chimaev Submission & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 5,
+            "odds": 21.0,
+            "raw_name": "Khamzat Chimaev Submission & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 1,
+            "odds": 46.0,
+            "raw_name": "Sean Strickland KO/TKO & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 2,
+            "odds": 46.0,
+            "raw_name": "Sean Strickland KO/TKO & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 3,
+            "odds": 46.0,
+            "raw_name": "Sean Strickland KO/TKO & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 4,
+            "odds": 51.0,
+            "raw_name": "Sean Strickland KO/TKO & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 5,
+            "odds": 51.0,
+            "raw_name": "Sean Strickland KO/TKO & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 1,
+            "odds": 251.0,
+            "raw_name": "Sean Strickland Submission & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 2,
+            "odds": 251.0,
+            "raw_name": "Sean Strickland Submission & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 3,
+            "odds": 251.0,
+            "raw_name": "Sean Strickland Submission & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 4,
+            "odds": 301.0,
+            "raw_name": "Sean Strickland Submission & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 5,
+            "odds": 301.0,
+            "raw_name": "Sean Strickland Submission & Round 5"
+          }
+        ],
+        "method_round_ranges": [
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 7.75,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 6.5,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 11.0,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 9.5,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 19.0,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 15.0,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 26.0,
+            "label": "Khamzat Chimaev to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 23.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 18.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 23.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 18.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 26.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 18.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 26.0,
+            "label": "Sean Strickland to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 2.95,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 2.4,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 4.3,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 3.6,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 7.5,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 6.0,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 10.5,
+            "label": "Khamzat Chimaev to win by Submission in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 126.0,
+            "label": "Sean Strickland to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 101.0,
+            "label": "Sean Strickland to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 151.0,
+            "label": "Sean Strickland to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 101.0,
+            "label": "Sean Strickland to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 151.0,
+            "label": "Sean Strickland to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 101.0,
+            "label": "Sean Strickland to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 151.0,
+            "label": "Sean Strickland to win by Submission in Rounds 4 or 5"
+          }
+        ],
+        "method_round_neutral": [
+          {
+            "method": "KO",
+            "round": 1,
+            "odds": 10.5,
+            "raw_name": "KO/TKO & Round 1"
+          },
+          {
+            "method": "KO",
+            "round": 2,
+            "odds": 12.5,
+            "raw_name": "KO/TKO & Round 2"
+          },
+          {
+            "method": "KO",
+            "round": 3,
+            "odds": 19.0,
+            "raw_name": "KO/TKO & Round 3"
+          },
+          {
+            "method": "KO",
+            "round": 4,
+            "odds": 23.0,
+            "raw_name": "KO/TKO & Round 4"
+          },
+          {
+            "method": "KO",
+            "round": 5,
+            "odds": 29.0,
+            "raw_name": "KO/TKO & Round 5"
+          },
+          {
+            "method": "SUB",
+            "round": 1,
+            "odds": 5.0,
+            "raw_name": "Submission & Round 1"
+          },
+          {
+            "method": "SUB",
+            "round": 2,
+            "odds": 6.0,
+            "raw_name": "Submission & Round 2"
+          },
+          {
+            "method": "SUB",
+            "round": 3,
+            "odds": 11.0,
+            "raw_name": "Submission & Round 3"
+          },
+          {
+            "method": "SUB",
+            "round": 4,
+            "odds": 16.0,
+            "raw_name": "Submission & Round 4"
+          },
+          {
+            "method": "SUB",
+            "round": 5,
+            "odds": 21.0,
+            "raw_name": "Submission & Round 5"
+          }
+        ]
       }
     },
     {
@@ -466,7 +1462,505 @@
           "Start R4 No": 1.71,
           "Start R5 Yes": 2.53,
           "Start R5 No": 1.48
-        }
+        },
+        "method_round_fighter": [
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 1,
+            "odds": 6.75,
+            "raw_name": "Alex Pereira KO/TKO & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 2,
+            "odds": 8.0,
+            "raw_name": "Alex Pereira KO/TKO & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 3,
+            "odds": 11.5,
+            "raw_name": "Alex Pereira KO/TKO & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 4,
+            "odds": 19.0,
+            "raw_name": "Alex Pereira KO/TKO & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 5,
+            "odds": 26.0,
+            "raw_name": "Alex Pereira KO/TKO & Round 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 1,
+            "odds": 51.0,
+            "raw_name": "Alex Pereira Submission & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 2,
+            "odds": 61.0,
+            "raw_name": "Alex Pereira Submission & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 3,
+            "odds": 101.0,
+            "raw_name": "Alex Pereira Submission & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 4,
+            "odds": 176.0,
+            "raw_name": "Alex Pereira Submission & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 5,
+            "odds": 226.0,
+            "raw_name": "Alex Pereira Submission & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 1,
+            "odds": 11.0,
+            "raw_name": "Ciryl Gane KO/TKO & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 2,
+            "odds": 12.5,
+            "raw_name": "Ciryl Gane KO/TKO & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 3,
+            "odds": 16.0,
+            "raw_name": "Ciryl Gane KO/TKO & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 4,
+            "odds": 19.0,
+            "raw_name": "Ciryl Gane KO/TKO & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 5,
+            "odds": 26.0,
+            "raw_name": "Ciryl Gane KO/TKO & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 1,
+            "odds": 31.0,
+            "raw_name": "Ciryl Gane Submission & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 2,
+            "odds": 34.0,
+            "raw_name": "Ciryl Gane Submission & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 3,
+            "odds": 46.0,
+            "raw_name": "Ciryl Gane Submission & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 4,
+            "odds": 51.0,
+            "raw_name": "Ciryl Gane Submission & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 5,
+            "odds": 71.0,
+            "raw_name": "Ciryl Gane Submission & Round 5"
+          }
+        ],
+        "method_round_ranges": [
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 4.0,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 3.1,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 5.2,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 4.3,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 8.0,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 6.5,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 12.0,
+            "label": "Alex Pereira to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 6.5,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 5.0,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 7.75,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 6.0,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 9.75,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 7.75,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 12.0,
+            "label": "Ciryl Gane to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 31.0,
+            "label": "Alex Pereira to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 23.0,
+            "label": "Alex Pereira to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 41.0,
+            "label": "Alex Pereira to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 34.0,
+            "label": "Alex Pereira to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 67.0,
+            "label": "Alex Pereira to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 51.0,
+            "label": "Alex Pereira to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 101.0,
+            "label": "Alex Pereira to win by Submission in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 17.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 13.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 21.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 16.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 26.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 21.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 34.0,
+            "label": "Ciryl Gane to win by Submission in Rounds 4 or 5"
+          }
+        ],
+        "method_round_neutral": [
+          {
+            "method": "KO",
+            "round": 1,
+            "odds": 4.6,
+            "raw_name": "KO/TKO & Round 1"
+          },
+          {
+            "method": "KO",
+            "round": 2,
+            "odds": 5.3,
+            "raw_name": "KO/TKO & Round 2"
+          },
+          {
+            "method": "KO",
+            "round": 3,
+            "odds": 7.5,
+            "raw_name": "KO/TKO & Round 3"
+          },
+          {
+            "method": "KO",
+            "round": 4,
+            "odds": 10.5,
+            "raw_name": "KO/TKO & Round 4"
+          },
+          {
+            "method": "KO",
+            "round": 5,
+            "odds": 14.0,
+            "raw_name": "KO/TKO & Round 5"
+          },
+          {
+            "method": "SUB",
+            "round": 1,
+            "odds": 21.0,
+            "raw_name": "Submission & Round 1"
+          },
+          {
+            "method": "SUB",
+            "round": 2,
+            "odds": 23.0,
+            "raw_name": "Submission & Round 2"
+          },
+          {
+            "method": "SUB",
+            "round": 3,
+            "odds": 31.0,
+            "raw_name": "Submission & Round 3"
+          },
+          {
+            "method": "SUB",
+            "round": 4,
+            "odds": 41.0,
+            "raw_name": "Submission & Round 4"
+          },
+          {
+            "method": "SUB",
+            "round": 5,
+            "odds": 61.0,
+            "raw_name": "Submission & Round 5"
+          }
+        ]
       }
     },
     {
@@ -554,7 +2048,505 @@
           "Start R4 No": 1.34,
           "Start R5 Yes": 4.6,
           "Start R5 No": 1.17
-        }
+        },
+        "method_round_fighter": [
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 1,
+            "odds": 3.9,
+            "raw_name": "Ilia Topuria KO/TKO & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 2,
+            "odds": 5.4,
+            "raw_name": "Ilia Topuria KO/TKO & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 3,
+            "odds": 7.5,
+            "raw_name": "Ilia Topuria KO/TKO & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 4,
+            "odds": 10.5,
+            "raw_name": "Ilia Topuria KO/TKO & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "round": 5,
+            "odds": 13.0,
+            "raw_name": "Ilia Topuria KO/TKO & Round 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 1,
+            "odds": 13.0,
+            "raw_name": "Ilia Topuria Submission & Round 1"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 2,
+            "odds": 18.0,
+            "raw_name": "Ilia Topuria Submission & Round 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 3,
+            "odds": 26.0,
+            "raw_name": "Ilia Topuria Submission & Round 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 4,
+            "odds": 34.0,
+            "raw_name": "Ilia Topuria Submission & Round 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "round": 5,
+            "odds": 46.0,
+            "raw_name": "Ilia Topuria Submission & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 1,
+            "odds": 26.0,
+            "raw_name": "Justin Gaethje KO/TKO & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 2,
+            "odds": 29.0,
+            "raw_name": "Justin Gaethje KO/TKO & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 3,
+            "odds": 34.0,
+            "raw_name": "Justin Gaethje KO/TKO & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 4,
+            "odds": 41.0,
+            "raw_name": "Justin Gaethje KO/TKO & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "round": 5,
+            "odds": 46.0,
+            "raw_name": "Justin Gaethje KO/TKO & Round 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 1,
+            "odds": 126.0,
+            "raw_name": "Justin Gaethje Submission & Round 1"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 2,
+            "odds": 176.0,
+            "raw_name": "Justin Gaethje Submission & Round 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 3,
+            "odds": 201.0,
+            "raw_name": "Justin Gaethje Submission & Round 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 4,
+            "odds": 226.0,
+            "raw_name": "Justin Gaethje Submission & Round 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "round": 5,
+            "odds": 251.0,
+            "raw_name": "Justin Gaethje Submission & Round 5"
+          }
+        ],
+        "method_round_ranges": [
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 2.35,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 1.86,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 3.35,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 2.65,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 4.8,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 3.8,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 6.5,
+            "label": "Ilia Topuria to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 15.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 11.5,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 17.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 13.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 19.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 15.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "KO",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 23.0,
+            "label": "Justin Gaethje to win by KO/TKO in Rounds 4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 8.25,
+            "label": "Ilia Topuria to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 6.75,
+            "label": "Ilia Topuria to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 11.5,
+            "label": "Ilia Topuria to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 9.5,
+            "label": "Ilia Topuria to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 16.0,
+            "label": "Ilia Topuria to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 13.0,
+            "label": "Ilia Topuria to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "A",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 21.0,
+            "label": "Ilia Topuria to win by Submission in Rounds 4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2
+            ],
+            "odds": 81.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 1 or 2"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              1,
+              2,
+              3
+            ],
+            "odds": 51.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 1,2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3
+            ],
+            "odds": 91.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 2 or 3"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              2,
+              3,
+              4
+            ],
+            "odds": 71.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 2,3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4
+            ],
+            "odds": 101.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 3 or 4"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              3,
+              4,
+              5
+            ],
+            "odds": 81.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 3,4 or 5"
+          },
+          {
+            "side": "B",
+            "method": "SUB",
+            "rounds": [
+              4,
+              5
+            ],
+            "odds": 126.0,
+            "label": "Justin Gaethje to win by Submission in Rounds 4 or 5"
+          }
+        ],
+        "method_round_neutral": [
+          {
+            "method": "KO",
+            "round": 1,
+            "odds": 3.5,
+            "raw_name": "KO/TKO & Round 1"
+          },
+          {
+            "method": "KO",
+            "round": 2,
+            "odds": 4.8,
+            "raw_name": "KO/TKO & Round 2"
+          },
+          {
+            "method": "KO",
+            "round": 3,
+            "odds": 6.5,
+            "raw_name": "KO/TKO & Round 3"
+          },
+          {
+            "method": "KO",
+            "round": 4,
+            "odds": 9.0,
+            "raw_name": "KO/TKO & Round 4"
+          },
+          {
+            "method": "KO",
+            "round": 5,
+            "odds": 11.5,
+            "raw_name": "KO/TKO & Round 5"
+          },
+          {
+            "method": "SUB",
+            "round": 1,
+            "odds": 12.5,
+            "raw_name": "Submission & Round 1"
+          },
+          {
+            "method": "SUB",
+            "round": 2,
+            "odds": 16.0,
+            "raw_name": "Submission & Round 2"
+          },
+          {
+            "method": "SUB",
+            "round": 3,
+            "odds": 23.0,
+            "raw_name": "Submission & Round 3"
+          },
+          {
+            "method": "SUB",
+            "round": 4,
+            "odds": 31.0,
+            "raw_name": "Submission & Round 4"
+          },
+          {
+            "method": "SUB",
+            "round": 5,
+            "odds": 41.0,
+            "raw_name": "Submission & Round 5"
+          }
+        ]
       }
     }
   ]
